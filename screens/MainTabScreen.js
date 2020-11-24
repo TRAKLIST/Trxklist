@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "./Home.js";
@@ -10,9 +10,10 @@ import PostScreen from "./PostScreen.js";
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Feather from "react-native-vector-icons/Feather";
+import Octicons from "react-native-vector-icons/Octicons";
 import UserStore from "../stores/UserStore.js";
 import { observer } from "mobx-react";
+import axios from 'axios'
 
 const HomeStack = createStackNavigator();
 const UpdatesStack = createStackNavigator();
@@ -20,55 +21,35 @@ const PostStack = createStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
+let recommend = []
+
 const MainTabScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
+      barStyle={{ backgroundColor: '#EAEAEB' }}
       activeColor="#007bff"
-      inactiveColor="black"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
-        name="Home"
+        name="Swipe"
         component={HomeStackScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Swipe",
           tabBarColor: "#fff",
           tabBarIcon: ({ color }) => (
-            <Icon1 name="chart-timeline-variant" color={color} size={26} />
+            <Icon1 name="gesture-swipe" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
         name="Me"
-        component={ProfileScreen}
+        component={HomeStackScreen}
         options={{
           tabBarLabel: "Me",
           tabBarColor: "#fff",
           tabBarIcon: ({ color }) => (
             <Icon name="ios-person" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Discover"
-        component={PostStackScreen}
-        options={{
-          tabBarLabel: "Discover",
-          tabBarColor: "#fff",
-          tabBarIcon: ({ color }) => (
-            <Icon name="ios-musical-notes" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Inbox"
-        component={UserStackScreen}
-        options={{
-          tabBarLabel: "Messages",
-          tabBarColor: "#fff",
-          tabBarIcon: ({ color }) => (
-            <Icon1 name="message-reply-text" color={color} size={26} />
           ),
         }}
       />
@@ -91,39 +72,74 @@ export default observer(MainTabScreen);
 
 const HomeStackScreen = ({ navigation }) => {
   const [postScreen, setPostScreen] = React.useState(false);
+  const [recommendArray, setRecommendArray] = React.useState([])
+
+  useEffect;
+
+  useEffect(() => {
+    axios.get(`https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`, {
+      headers: {
+        Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`
+      }
+    }).then((res) => {
+      // console.log(res.data)
+      res.data.tracks.map((track) => {
+        let recommended = {
+          name: track.name,
+          popularity: track.popularity,
+          id: track.id,
+          explicit: track.explicit,
+          artistName: track.artists[0].name,
+          albumName: track.album.name,
+          image: track.album.images[0].url,
+          albumID: track.album.id
+        }
+        // console.log(recommended)
+
+        recommend.push(recommended)
+      })
+      console.log(recommend)
+      console.log('guy')
+      setRecommendArray([...recommendArray, recommend])
+
+      console.log(recommendArray)
+      console.log('dem')
+
+    })
+  }, []);
+
   return (
     // console.log(JSON.parse(UserStore.userDetails.credentials.topArtists)),
     <HomeStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: "#F4F7F5",
         },
         headerTintColor: "#007bff",
       }}
     >
       <HomeStack.Screen
         name="Home"
-        component={() => <HomeScreen postScreen={postScreen}></HomeScreen>}
+        component={HomeScreen}
         options={{
-          title: "meloDIFY",
+          title: "[ swʌɪp•ɪf•ʌɪ ]",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
               size={30}
-              backgroundColor="#fff"
-              color="#21295c"
+              backgroundColor="#F4F7F5"
+              color="#007bff"
               onPress={() => navigation.openDrawer()}
               style={{ marginLeft: 5 }}
             ></Icon.Button>
           ),
           headerRight: () => (
-            <Icon.Button
-              name="ios-menu"
+            <Octicons.Button
+              name="settings"
               size={25}
-              backgroundColor="#fff"
+              backgroundColor="#F4F7F5"
               color="#007bff"
-              onPress={() => setPostScreen(!postScreen)}
-            ></Icon.Button>
+            ></Octicons.Button>
           ),
         }}
       />

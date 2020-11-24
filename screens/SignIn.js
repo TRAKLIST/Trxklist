@@ -26,7 +26,7 @@ import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import spotifyAPI from "../components/SpotifyAPI";
 import base64 from "react-native-base64";
 import { Buffer } from "buffer";
-import img1 from "/Users/tsb99/Documents/App-Dev/projMELO/images/Sonar1st.png";
+// import img1 from "/Users/tsb99/Documents/App-Dev/projMELO/images/Sonar1st.png";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import { acc } from "react-native-reanimated";
