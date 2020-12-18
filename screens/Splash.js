@@ -15,7 +15,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
-import img from "../images/Sonar1STnontransparent.png";
+import img from "../images/djwho.png";
 
 const SplashScreen = ({ navigation }) => {
   return (
@@ -27,17 +27,18 @@ const SplashScreen = ({ navigation }) => {
           animation="bounceIn"
           // duration="1500"
           style={styles.logo}
-          resizeMode="stretch"
+          resizeMode="contain"
           source={img}
         />
+        {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.title}>Welcome to SONAR.</Text>
+        <Text style={styles.title}>Welcome to Traklist.</Text>
         <Text style={styles.text}>Stay in the loop. Find new music.</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
             <LinearGradient
-              colors={["#007bff", "#0077f6"]}
+              colors={["#137C38","#137C38"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Get Started</Text>
@@ -46,7 +47,7 @@ const SplashScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <SafeAreaView style={styles.bottom}>
-          <Text>Carousel</Text>
+          {/* <Text>Carousel</Text> */}
         </SafeAreaView>
       </Animatable.View>
     </View>
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 120,
   },
   title: {
-    color: "#21295c",
+    color: "#516758",
     fontSize: 30,
     fontWeight: "bold",
   },

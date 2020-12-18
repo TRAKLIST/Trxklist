@@ -101,12 +101,12 @@ const SecondRoute = (card) => {
                 <View style={{ top: 20, position: 'absolute', color: '#fff', alignContent: 'center' }}>
                   <Text numberOfLines={1} style={{ color: '#fff', textAlign: 'center' }}>RELEASE DATE</Text>
                   <Text numberOfLines={1} style={{ color: 'grey', textAlign: 'center' }}>{card.releaseDate}</Text>
-                  {
+                  {/* {
                     card.explicit ?
                       <MaterialIcons name='explicit' size={25} color='grey' style={{ alignSelf: 'center', bottom: 0, position: 'relative' }} />
                       :
                       null
-                  }
+                  } */}
                 </View>
                 <Text numberOfLines={1} style={{ fontSize: 15, textTransform: "uppercase", color: '#3A5A40', fontWeight: 'bold', }}>
                   {(card.artistPopularity < 5) ? "" : (card.artistPopularity < 7) ? "" : (card.artistPopularity < 10) ? "" : (card.artistPopularity < 20) ? "" : (card.artistPopularity < 35) ? "" : (card.artistPopularity < 50) ? "Tune" : (card.artistPopularity < 70) ? "Bop" : (card.artistPopularity < 90) ? "Hot" : (card.artistPopularity < 95) ? "Banger" : "Banger"}
@@ -223,8 +223,8 @@ export class HomeScreen extends Component {
               </Animatable.View>
               <View style={{ width: Dimensions.get('window').width / 2, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ top: 20, position: 'absolute', color: '#fff' }}>
-                  <Text numberOfLines={1} style={{ color: '#fff', textAlign: 'center' }}>{card.artistName}</Text>
-                  <Text numberOfLines={1} style={{ color: 'grey', }}>{`${card.followers} followers`}</Text>
+                  <Text numberOfLines={1} style={{ color: '#fff', textAlign: 'center', fontWeight : 'bold' }}>{card.artistName}</Text>
+                  <Text numberOfLines={1} style={{ color: 'grey', fontWeight : '400' }}>{`${card.followers} followers`}</Text>
                 </View>
 
 
@@ -761,6 +761,46 @@ export class HomeScreen extends Component {
                     </View>
                   </LinearGradient> */}
 
+                    <View style={{ width : '100%', bottom: 5, position: 'absolute', flexDirection: 'row', alignSelf: 'center', padding : 10, backgroundColor : 'whitesmoke', opacity : 0.8, justifyContent : 'center', borderRadius : 15 }}>
+                      {/* <View style={{ bottom: -30, position: 'relative', flexDirection: 'row' }}> */}
+                      <TouchableOpacity style={{ marginRight: 20, marginBottom : 0 }}>
+                        <LinearGradient
+                          colors={["#000", "#21295c"]}
+                          style={styles.signIn}
+                        >
+                          <Entypo name='spotify' size={30} style={{ padding: 0, color: '#1DB954', padding: 4 }} />
+                        </LinearGradient>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={{ marginRight: 20 }}>
+                        <LinearGradient
+                          colors={["#000", "#21295c"]}
+                          style={styles.signIn}
+                        >
+                          <Entypo name='soundcloud' size={30} style={{ padding: 0, color: '#1DB954', padding: 4 }} />
+                        </LinearGradient>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={{ marginRight: 20 }}>
+                        <LinearGradient
+                          colors={["#000", "#21295c"]}
+                          style={styles.signIn}
+                        >
+                          <MaterialCommunityIcons name='instagram' size={30} style={{ padding: 0, color: '#1DB954', padding: 4 }} />
+                        </LinearGradient>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={{ marginRight: 20 }}>
+                        <LinearGradient
+                          colors={["#000", "#21295c"]}
+                          style={styles.signIn}>
+
+                          <MaterialCommunityIcons name='twitter' size={30} style={{ padding: 0, color: '#1DB954', padding: 4 }} />
+                        </LinearGradient>
+                      </TouchableOpacity>
+
+                    </View>
+
                   </ImageBackground>
                   {/* <View style = {{backgroundImage : 'url("paper.gif")'}}>
                   <Image source={{ uri: card.image }} style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width, borderRadius: 10 }} />
@@ -830,7 +870,7 @@ export class HomeScreen extends Component {
 
         </View>
 
-        <ActivityIndicator size="large" color="#1DB954" style={{ marginTop: 200 }} />
+        <ActivityIndicator size="large" color="#1DB954" style={{ top : 300, position : 'absolute', alignSelf : 'center' }} />
 
       </Swiper>
     )
@@ -842,13 +882,13 @@ export class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         {/* <StatusBar backgroundColor="#007bff" barStyle="dark-content" /> */}
-        <LinearGradient colors={["#A7A2A9", "#000", "#F4F7F5", "#A7A2A9", "#000000"]} style={styles.header}>
+        <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
           {/* <Text style={{ top: 0, position: 'absolute' }}>dshw</Text> */}
-          <SafeAreaView style={{ width: Dimensions.get('window').width, top : 0, position : 'absolute' }}>
+          <SafeAreaView style={{ width: Dimensions.get('window').width, top: 0, position: 'absolute' }}>
             {
               this.state.cuurentCard != undefined ?
                 <View style={{ width: Dimensions.get('window').width, }}>
-                  <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }}>
                     <Text numberOfLines={1} style={{ color: '#fff', fontWeight: 'bold' }}>{" "}{this.state.cuurentCard.name}</Text>
                     {
                       this.state.cuurentCard.explicit ?
@@ -860,7 +900,7 @@ export class HomeScreen extends Component {
 
 
 
-                  <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }}>
                     {/* {
                     <View style={{ backgroundColor: '#1DB954', alignSelf: 'flex-start', padding: 3, marginTop: 3, borderRadius: 3, justifyContent: 'center' }}>
                       <Text numberOfLines={1} style={{ color: '#fff', fontWeight: 'bold' }}>{this.state.cuurentCard.artistName}</Text>
@@ -891,45 +931,7 @@ export class HomeScreen extends Component {
 
           {swiper}
 
-          <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', alignSelf: 'center' }}>
-            {/* <View style={{ bottom: -30, position: 'relative', flexDirection: 'row' }}> */}
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <LinearGradient
-                colors={["#000", "#21295c"]}
-                style={styles.signIn}
-              >
-                <Entypo name='spotify' size={30} style={{ padding: 0, color: '#1DB954', padding: 5 }} />
-              </LinearGradient>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <LinearGradient
-                colors={["#000", "#21295c"]}
-                style={styles.signIn}
-              >
-                <Entypo name='soundcloud' size={30} style={{ padding: 0, color: '#1DB954', padding: 5 }} />
-              </LinearGradient>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <LinearGradient
-                colors={["#000", "#21295c"]}
-                style={styles.signIn}
-              >
-                <MaterialCommunityIcons name='instagram' size={30} style={{ padding: 0, color: '#1DB954', padding: 5 }} />
-              </LinearGradient>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <LinearGradient
-                colors={["#000", "#21295c"]}
-                style={styles.signIn}>
-
-                <MaterialCommunityIcons name='twitter' size={30} style={{ padding: 0, color: '#1DB954', padding: 5 }} />
-              </LinearGradient>
-            </TouchableOpacity>
-
-          </View>
           {/* </View> */}
         </LinearGradient>
         <View style={styles.footer}>
@@ -953,10 +955,10 @@ export default observer(HomeScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "grey"
   },
   card: {
-    height: 350,
+    flex : 0.61,
     borderRadius: 4,
     // borderWidth: 3,
     borderRightWidth: 0,
