@@ -6,8 +6,11 @@ import UpdatesScreen from "./Updates.js";
 import ProfileScreen from "./Profile.js";
 import SpotifyScreen from "./Spotify.js";
 import PostScreen from "./PostScreen.js";
+import SearchScreen from "./Search.js"
+import Timeline from './Timeline.js'
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
+import MI from "react-native-vector-icons/MaterialIcons"
 import Icon from "react-native-vector-icons/Ionicons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Octicons from "react-native-vector-icons/Octicons";
@@ -28,39 +31,39 @@ const MainTabScreen = () => {
     <Tab.Navigator
       initialRouteName="Feed"
       barStyle={{ backgroundColor: '#EAEAEB' }}
-      activeColor="#007bff"
+      activeColor="#1DB954"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
         name="Swipe"
-        component={HomeStackScreen}
+        component={HomeScreen}
         options={{
-          tabBarLabel: "Swipe",
+          tabBarLabel: "",
           tabBarColor: "#fff",
           tabBarIcon: ({ color }) => (
             <Icon1 name="gesture-swipe" color={color} size={26} />
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Me"
-        component={HomeStackScreen}
+        component={TimelineStackScreen}
         options={{
-          tabBarLabel: "Me",
-          tabBarColor: "#fff",
+          tabBarLabel: "",
+          tabBarColor: "#004BA8",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-person" color={color} size={26} />
+            <MI name="track-changes" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Spotify"
         component={SpotifyStackScreen}
         options={{
-          tabBarLabel: "Spotify",
+          tabBarLabel: "",
           tabBarColor: "#1DB954",
           tabBarIcon: ({ color }) => (
-            <Icon1 name="spotify" color={color} size={26} />
+            <Octicons name="search" color={color} size={26} />
           ),
         }}
       />
@@ -71,64 +74,29 @@ const MainTabScreen = () => {
 export default observer(MainTabScreen);
 
 const HomeStackScreen = ({ navigation }) => {
-  const [postScreen, setPostScreen] = React.useState(false);
-  const [recommendArray, setRecommendArray] = React.useState([])
 
-  useEffect;
-
-  useEffect(() => {
-    axios.get(`https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`, {
-      headers: {
-        Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`
-      }
-    }).then((res) => {
-      // console.log(res.data)
-      res.data.tracks.map((track) => {
-        let recommended = {
-          name: track.name,
-          popularity: track.popularity,
-          id: track.id,
-          explicit: track.explicit,
-          artistName: track.artists[0].name,
-          albumName: track.album.name,
-          image: track.album.images[0].url,
-          albumID: track.album.id
-        }
-        // console.log(recommended)
-
-        recommend.push(recommended)
-      })
-      console.log(recommend)
-      console.log('guy')
-      setRecommendArray([...recommendArray, recommend])
-
-      console.log(recommendArray)
-      console.log('dem')
-
-    })
-  }, []);
 
   return (
     // console.log(JSON.parse(UserStore.userDetails.credentials.topArtists)),
     <HomeStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#F4F7F5",
+          backgroundColor: "#A7A2A9",
         },
-        headerTintColor: "#007bff",
+        headerTintColor: "#000",
       }}
     >
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: "[ swʌɪp•ɪf•ʌɪ ]",
+          title: "[ • swʌɪp • ]",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
               size={30}
-              backgroundColor="#F4F7F5"
-              color="#007bff"
+              backgroundColor="#A7A2A9"
+              color="#fff"
               onPress={() => navigation.openDrawer()}
               style={{ marginLeft: 5 }}
             ></Icon.Button>
@@ -137,8 +105,8 @@ const HomeStackScreen = ({ navigation }) => {
             <Octicons.Button
               name="settings"
               size={25}
-              backgroundColor="#F4F7F5"
-              color="#007bff"
+              backgroundColor="#A7A2A9"
+              color="#fff"
             ></Octicons.Button>
           ),
         }}
@@ -150,26 +118,26 @@ const HomeStackScreen = ({ navigation }) => {
   );
 };
 
-const PostStackScreen = ({ navigation }) => (
+const TimelineStackScreen = ({ navigation }) => (
   <PostStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: "#191e3c",
+        backgroundColor: "#F4F7F5",
       },
-      headerTintColor: "#007bff",
+      headerTintColor: "#134074",
     }}
   >
     <PostStack.Screen
-      name="Post"
-      component={PostScreen}
+      name="[ • swʌɪp • ]"
+      component={Timeline}
       options={{
-        title: "Post",
+        title: "[ • swʌɪp • ]",
         headerLeft: () => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#191e3c"
-            color="#007bff"
+            backgroundColor="#F4F7F5"
+            color="#1DB954"
             onPress={() => navigation.openDrawer()}
           ></Icon.Button>
         ),
@@ -238,24 +206,33 @@ const SpotifyStackScreen = ({ navigation }) => (
   <UpdatesStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: "#1DB954",
+        backgroundColor: "#F4F7F5",
       },
-      headerTintColor: "white",
+      headerTintColor: "#007bff",
     }}
   >
     <UpdatesStack.Screen
       name="Spotify"
-      component={SpotifyScreen}
+      component={SearchScreen}
       options={{
-        title: "Certified Lover Boy : A Side",
+        title: "[ • swʌɪp • ]",
         headerLeft: () => (
           <Icon.Button
             name="ios-menu"
-            size={25}
-            backgroundColor="#1DB954"
-            color="#191e3c"
+            size={30}
+            backgroundColor="#F4F7F5"
+            color="#007bff"
             onPress={() => navigation.openDrawer()}
+            style={{ marginLeft: 5 }}
           ></Icon.Button>
+        ),
+        headerRight: () => (
+          <Octicons.Button
+            name="settings"
+            size={25}
+            backgroundColor="#F4F7F5"
+            color="#007bff"
+          ></Octicons.Button>
         ),
       }}
     />

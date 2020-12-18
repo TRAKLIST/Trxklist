@@ -21,7 +21,8 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#007bff" barStyle="light-content" />
-      <View style={styles.header}>
+      {/* <View style={styles.header}> */}
+      <LinearGradient colors={['#EAEAEB', "#000",]} style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
           // duration="1500"
@@ -29,7 +30,7 @@ const SplashScreen = ({ navigation }) => {
           resizeMode="stretch"
           source={img}
         />
-      </View>
+      </LinearGradient>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <Text style={styles.title}>Welcome to SONAR.</Text>
         <Text style={styles.text}>Stay in the loop. Find new music.</Text>
@@ -69,9 +70,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    backgroundColor: "#000",
+    // borderTopLeftRadius: 30,
+    // borderTopRightRadius: 30,
     paddingVertical: 50,
     paddingHorizontal: 30,
   },

@@ -36,17 +36,33 @@ class LoadingPage extends Component {
 
     // console.log(UserStore.spotifyUserDetails.access_token);
 
-    // axios
-    //   .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
-    //     headers: {
-    //       Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
-    //     },
-    //   })
-    //   .then((res) => {
-    //     UserStore.userDetails = res.data;
-    //     // console.log(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+        headers: {
+          Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+        },
+      })
+      .then((res) => {
+        let following = []
+        // UserStore.userDetails = res.data;
+        res.data.following.map((item) => {
+          axios
+            .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/${item.recipient}`, {
+              headers: {
+                Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+              },
+            })
+            .then((res) => {
+              // console.log(res.data.user, 'yikuy')
+              // UserStore.userDetails = res.data;
+              UserStore.followingDetails = [...UserStore.followingDetails, res.data.user]
+              // following.push(res.data.user)
+            })
+            .catch((err) => console.log(err));
+        })
+        console.log(UserStore.followingDetails, 'gang')
+      })
+      .catch((err) => console.log(err));
 
     spotifyAPI.getMyTopArtists().then((data) => {           // for recommendation
       // console.log(data)
@@ -89,7 +105,9 @@ class LoadingPage extends Component {
       UserStore.str = str
       console.log(str)
     })
+
     UserStore.loading = false;
+
   }
 
   render() {
