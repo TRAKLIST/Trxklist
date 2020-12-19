@@ -106,6 +106,17 @@ class LoadingPage extends Component {
       console.log(str)
     })
 
+    // console.log(UserStore.spotifyUserDetails.user_id, 'chedfefwck')
+
+    spotifyAPI
+      .getUser(UserStore.spotifyUserDetails.user_id)
+      .then((response) => {
+        // this.setState({ profilePic: response.images[0].url });
+        // console.log(response.images[0].url, 'dsfuy')
+        UserStore.image = response.images[0].url, 'dsfuy'
+      })
+      .catch((err) => console.log(err));
+
     UserStore.loading = false;
 
   }

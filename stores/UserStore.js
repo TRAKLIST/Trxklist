@@ -18,6 +18,7 @@ class UserStore {
       endPost: false,
       str: '',
       currentCard: {},
+      image : ''
     });
   }
 }

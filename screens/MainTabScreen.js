@@ -58,7 +58,7 @@ const MainTabScreen = () => {
       /> */}
       <Tab.Screen
         name="Spotify"
-        component={SpotifyStackScreen}
+        component={SearchScreen}
         options={{
           tabBarLabel: "",
           tabBarColor: "#1DB954",
