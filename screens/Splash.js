@@ -34,7 +34,7 @@ const SplashScreen = ({ navigation }) => {
       </LinearGradient>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <Text style={styles.title}>Welcome to Traklist.</Text>
-        <Text style={styles.text}>Stay in the loop. Find new music.</Text>
+        <Text style={styles.text}>Stay in the loop • Find new music</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
             <LinearGradient
@@ -92,10 +92,11 @@ const styles = StyleSheet.create({
     color: "grey",
     marginTop: 5,
     fontSize: 20,
+    fontWeight : 'bold'
   },
   button: {
     alignItems: "flex-end",
-    marginTop: 30,
+    marginTop: 50,
   },
   signIn: {
     width: 150,

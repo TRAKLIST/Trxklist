@@ -61,7 +61,7 @@ const MainTabScreen = () => {
         component={SearchScreen}
         options={{
           tabBarLabel: "",
-          tabBarColor: "#1DB954",
+          tabBarColor: "red",
           tabBarIcon: ({ color }) => (
             <Octicons name="search" color={color} size={26} />
           ),

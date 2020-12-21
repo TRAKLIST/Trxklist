@@ -150,7 +150,7 @@ const SecondRoute = (spotifyUserDetails) => {
   return (
     <View style={[styles.scene]}>
       <View style={{ marginTop: 70 }}>
-        <Text style={[styles.text_footer]}>e-mail</Text>
+        <Text style={[styles.text_footer]}>email</Text>
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#fff" size={20} />
           <TextInput
@@ -410,7 +410,7 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "grey",
+    backgroundColor: "#1DB954",
   },
   header: {
     flex: 1,
@@ -435,6 +435,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "green",
     fontSize: 18,
+    fontWeight : 'bold'
   },
   action: {
     flexDirection: "row",

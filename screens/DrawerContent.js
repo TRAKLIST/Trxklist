@@ -130,7 +130,7 @@ export function DrawerContent(props) {
           )}
           label="Sign Out"
           onPress={() => {
-            UserStore.isLoggedIn == false;
+            UserStore.isLoggedIn = false;
           }}
         />
       </Drawer.Section>
