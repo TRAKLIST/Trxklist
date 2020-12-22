@@ -28,7 +28,7 @@ const SplashScreen = ({ navigation }) => {
           // duration="1500"
           style={styles.logo}
           resizeMode="contain"
-          source={img}
+          // source={img}
         />
         {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
@@ -68,7 +68,7 @@ const SplashScreen = ({ navigation }) => {
                   colors={["black", "black"]}
                   style={[styles.signIn , {marginTop : 5}]}
                 >
-                  <Text style={{ color: "#ADADAD", fontSize: "16", fontWeight : '400' }}>
+                  <Text style={{ color: "#ADADAD", fontSize: "17", fontWeight : '600' }}>
                     sign back in
                   </Text>
                   <MaterialIcons name="navigate-next" color="#fff" size={20} />
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   logo: {
     width: height_logo,
     height: height_logo,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#fff",
     borderRadius: 120,
   },
   title: {
