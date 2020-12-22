@@ -16,6 +16,7 @@ import {
   Dimensions,
 } from "react-native";
 
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable";
@@ -117,9 +118,7 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
               </Text>
             </View>
             <View style={{ flex: 4, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "#1DB954", opacity: 0.6 }}
-              >
+              <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
                 {spotifyUserDetails.user_name}
               </Text>
             </View>
@@ -134,7 +133,7 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
             </View>
             <View style={{ flex: 4, padding: 5 }}>
               <Text
-                style={{ fontWeight: "bold", color: "#1DB954", opacity: 0.6 }}
+                style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}
                 numberOfLines={1}
               >
                 {spotifyUserDetails.user_email}
@@ -154,7 +153,7 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
                 numberOfLines={1}
                 style={{
                   fontWeight: "bold",
-                  color: "#1DB954",
+                  color: "#999",
                   opacity: 0.6,
                   textDecorationLine: "underline",
                 }}
@@ -173,9 +172,7 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
               </Text>
             </View>
             <View style={{ flex: 4, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "#1DB954", opacity: 0.6 }}
-              >
+              <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
                 {spotifyUserDetails.country}
               </Text>
             </View>
@@ -207,25 +204,30 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
         imageStyle={{ borderRadius: 30 }}
         source={{ uri: lastPlayed.image }}
       >
+        {/* {spotifyUserDetails != null && ( */}
         <View
           style={{
             backgroundColor: "green",
             top: 5,
             borderRadius: 10,
             margin: 15,
-            padding : 10,
+            padding: 10,
             opacity: 0.8,
-            alignSelf : 'flex-start',
-            borderColor : '#fff', borderWidth : 3
+            alignSelf: "flex-start",
+            borderColor: "#fff",
+            borderWidth: 3,
           }}
         >
-          <Text
-            style={{ color: "#fff", padding: 0, fontWeight: "bold" }}
-          >{`played ${lastPlayed.trackName} `}</Text>
-          <Text style={{ color: "#fff", marginTop: 5, fontWeight: "bold" }}>
-            {dayjs(lastPlayed.playedAt).fromNow()}
-          </Text>
+          <View>
+            <Text
+              style={{ color: "#fff", padding: 0, fontWeight: "bold" }}
+            >{`played ${lastPlayed.trackName} `}</Text>
+            <Text style={{ color: "#fff", marginTop: 5, fontWeight: "bold" }}>
+              {dayjs(lastPlayed.playedAt).fromNow()}
+            </Text>
+          </View>
         </View>
+        {/* )} */}
       </ImageBackground>
     </LinearGradient>
   );
@@ -312,11 +314,25 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
     });
   };
   return (
-    <View style={[styles.scene]}>
+    <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
       <View style={{ marginTop: 70 }}>
-        <Text style={[styles.text_footer]}>email</Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            opacity: 0.6,
+            fontSize: 18,
+          }}
+        >
+          email
+        </Text>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color="#fff" size={20} />
+          <FontAwesome
+            name="user-o"
+            color="#fff"
+            size={20}
+            style={{ opacity: 0.6 }}
+          />
           <TextInput
             placeholder="Your Email"
             style={styles.textInput}
@@ -325,14 +341,34 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
-              <Feather name="check-circle" color="green" size={20} />
+              <Feather
+                name="check-circle"
+                color="#fff"
+                size={20}
+                style={{ opacity: 0.6 }}
+              />
             </Animatable.View>
           ) : null}
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 35 }]}>password</Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            opacity: 0.6,
+            fontSize: 18,
+            marginTop: 35,
+          }}
+        >
+          password
+        </Text>
         <View style={styles.action}>
-          <FontAwesome name="lock" color="#fff" size={20} />
+          <FontAwesome
+            name="lock"
+            color="#fff"
+            size={20}
+            style={{ opacity: 0.6 }}
+          />
           <TextInput
             placeholder="Your Password"
             secureTextEntry={data.secureTextEntry ? true : false}
@@ -342,9 +378,19 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
           />
           <TouchableOpacity onPress={updateSecureTextEntry}>
             {data.secureTextEntry ? (
-              <Feather name="eye-off" color="grey" size={20} />
+              <Feather
+                name="eye-off"
+                color="#fff"
+                size={20}
+                style={{ opacity: 0.6 }}
+              />
             ) : (
-              <Feather name="eye" color="grey" size={20} />
+              <Feather
+                name="eye"
+                color="#fff"
+                size={20}
+                style={{ opacity: 0.6 }}
+              />
             )}
           </TouchableOpacity>
         </View>
@@ -352,19 +398,21 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
 
       <View style={styles.button}>
         <TouchableOpacity style={styles.signIn} onPress={signIn}>
-          <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
-            <Text style={[styles.textSign, { color: "#fff" }]}>Sign In</Text>
+          <LinearGradient colors={["#292929", "#292929"]} style={styles.signIn}>
+            <Text style={[styles.textSign, { color: "#000" }]}>
+              enter traklist.
+            </Text>
           </LinearGradient>
         </TouchableOpacity>
-
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUpScreen")}
-          style={[
-            styles.signIn,
-            { borderColor: "#1DB954", borderWidth: 1, marginTop: 15 },
-          ]}
+          style={{ flexDirection: "row" }}
         >
-          <Text style={[styles.textSign, { color: "#1DB954" }]}>Sign Up</Text>
+          <Text style={{ color: "#ADADAD", fontSize: "17", fontWeight: "600" }}>
+            create an account
+          </Text>
+          <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
+          {/* <Text style={[styles.textSign, { color: "#1DB954" }]}>Sign Up</Text> */}
         </TouchableOpacity>
       </View>
 
@@ -389,7 +437,7 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
           />
           <Feather name="check-circle" color="green" size={20} />
         </View> */}
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -593,6 +641,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 3,
+    marginTop: 5,
     backgroundColor: "grey",
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
@@ -612,9 +661,10 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
     marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
-    paddingBottom: 5,
+    borderBottomWidth: 3,
+    borderBottomColor: "#292929",
+    borderRadius: 5,
+    paddingBottom: 7,
   },
   actionError: {
     flexDirection: "row",
@@ -635,14 +685,14 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 90,
+    marginTop: 110,
   },
   signIn: {
     width: "80%",
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 15,
-    marginTop: 10,
+    marginTop: 0,
     marginRight: 10,
     marginLeft: 10,
     padding: 10,
@@ -650,6 +700,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    alignSelf: "center",
   },
   logo: {
     height: "100%",

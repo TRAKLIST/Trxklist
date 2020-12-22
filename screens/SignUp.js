@@ -149,7 +149,7 @@ const SignUpScreen = ({ navigation }) => {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           // console.log(spotifyUserDetails);
           // access_token & refresh_token
           const { access_token, refresh_token } = res.data;
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
     marginTop: 10,
-    borderBottomWidth: 2,
+    borderBottomWidth: 0,
     borderBottomColor: "green",
     paddingBottom: 5,
   },
