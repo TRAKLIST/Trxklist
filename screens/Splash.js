@@ -22,7 +22,7 @@ const SplashScreen = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#007bff" barStyle="light-content" />
       {/* <View style={styles.header}> */}
-      <LinearGradient colors={['#EAEAEB', "#000",]} style={styles.header}>
+      <LinearGradient colors={["#EAEAEB", "#000"]} style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
           // duration="1500"
@@ -33,30 +33,36 @@ const SplashScreen = ({ navigation }) => {
         {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.title}>Welcome to Traklist.</Text>
-        <Text style={styles.text}>Stay in the loop • Find new music</Text>
-        <View style={styles.button}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
-            <LinearGradient
-              colors={["#137C38","#137C38"]}
-              style={styles.signIn}
-            >
-              <Text style={styles.textSign}>Sign In</Text>
-              <MaterialIcons name="navigate-next" color="#fff" size={20} />
-            </LinearGradient>
-          </TouchableOpacity>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.title}>TRAKLIST.</Text>
+          <Text style={styles.text}>stay in the loop • find new music</Text>
         </View>
-        <View style = {{alignSelf : 'flex-end', marginTop : 10}}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUpScreen")}>
-            <LinearGradient
-              colors={["#137C38","#137C38"]}
-              style={styles.signIn}
+
+        <View style={{ flexDirection: "column", bottom :80, position : 'absolute', alignSelf : 'center' }}>
+          <View style={[styles.button]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignInScreen")}
             >
-              <Text style={styles.textSign}>Sign Up</Text>
-              <MaterialIcons name="navigate-next" color="#fff" size={20} />
-            </LinearGradient>
-          </TouchableOpacity>
+              <LinearGradient colors={["green", "green"]} style={styles.signIn}>
+                <Text style={styles.textSign}>get started</Text>
+                {/* <MaterialIcons name="navigate-next" color="#000" size={20} /> */}
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+          <View style={{ alignSelf: "center" }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignUpScreen")}
+            >
+              <LinearGradient colors={["black", "black"]} style={styles.signIn}>
+                <Text style={{ color: "#fff", fontSize: "16" }}>
+                  sign back in
+                </Text>
+                <MaterialIcons name="navigate-next" color="#fff" size={20} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
         </View>
+
         <SafeAreaView style={styles.bottom}>
           {/* <Text>Carousel</Text> */}
         </SafeAreaView>
@@ -76,12 +82,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
   },
   header: {
-    flex: 2,
+    flex: 8,
     justifyContent: "center",
     alignItems: "center",
   },
   footer: {
-    flex: 1,
+    flex: 8,
     backgroundColor: "#000",
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
@@ -95,18 +101,18 @@ const styles = StyleSheet.create({
     borderRadius: 120,
   },
   title: {
-    color: "#516758",
-    fontSize: 30,
+    color: "green",
+    fontSize: 35,
     fontWeight: "bold",
   },
   text: {
-    color: "grey",
+    color: "#516758",
     marginTop: 5,
     fontSize: 20,
-    fontWeight : 'bold'
+    fontWeight: "600",
   },
   button: {
-    alignItems: "flex-end",
+    alignItems: "center",
     marginTop: 50,
   },
   signIn: {
@@ -114,12 +120,15 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20,
+    borderRadius: 10,
     flexDirection: "row",
   },
   textSign: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
+    fontSize: 18,
+    alignItems: "center",
+    textAlign: "center",
   },
   bottom: {
     position: "absolute",

@@ -293,8 +293,8 @@ const SignInScreen = ({ navigation }) => {
         // For usage in bare and standalone
         // native: "exp://192.168.0.67:19000/",
         // native: "exp://172.29.71.10:19000",
-        native: "exp://192.168.0.35:19000",
-        // native: "exp://expo.io/@tsb/projects/swaipify/",
+        // native: "exp://192.168.0.35:19000",
+        native: "exp://expo.io/@tsb/projects/swaipify/",
       }),
     },
     discovery

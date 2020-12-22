@@ -138,8 +138,8 @@ const SignUpScreen = ({ navigation }) => {
             redirect_uri: makeRedirectUri({
               // For usage in bare and standalone
               // native: "exp://192.168.0.67:19000/",
-              native: "exp://192.168.0.35:19000",
-              // native: "exp://expo.io/@tsb/projects/swaipify/",
+            //   native: "exp://192.168.0.35:19000",
+              native: "exp://expo.io/@tsb/projects/swaipify/",
               // native: "exp://172.29.71.10:19000",
             }),
             client_id: "fdb4803bdd0843918698fea00b452d03",
