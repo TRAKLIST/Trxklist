@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,85 +7,283 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Dimensions,
   Button,
   Platform,
   StatusBar,
+  ImageBackground,
 } from "react-native";
 
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import qs from "qs";
+import {
+  makeRedirectUri,
+  useAuthRequest,
+  AuthSession,
+} from "expo-auth-session";
+import * as WebBrowser from "expo-web-browser";
+import UserStore from "../stores/UserStore";
+import { observer } from "mobx-react";
+import spotifyAPI from "../components/SpotifyAPI";
+import axios from "axios";
 
-const SignInScreen = ({ navigation }) => {
-  const [data, setData] = React.useState({
-    email: "",
-    password: "",
-    confirm_password: "",
-    check_textInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
+WebBrowser.maybeCompleteAuthSession();
+
+// Endpoint
+const discovery = {
+  authorizationEndpoint: "https://accounts.spotify.com/authorize",
+  tokenEndpoint: "https://accounts.spotify.com/api/token",
+};
+
+const SignUpScreen = ({ navigation }) => {
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: "fdb4803bdd0843918698fea00b452d03",
+      scopes: [
+        "user-read-private",
+        "user-read-email",
+        "user-read-playback-state",
+        "user-library-modify",
+        "user-library-read",
+        "streaming",
+        "user-read-recently-played",
+        "user-follow-modify",
+        "user-top-read",
+        "playlist-modify-public",
+        "playlist-modify-private",
+        "user-follow-read",
+        "user-modify-playback-state",
+      ],
+      // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
+      // this must be set to false
+      usePKCE: false,
+      // For usage in managed apps using the proxy
+      redirectUri: makeRedirectUri({
+        // For usage in bare and standalone
+        // native: "exp://192.168.0.67:19000/",
+        // native: "exp://172.29.71.10:19000",
+        native: "exp://192.168.0.35:19000",
+        // native: "exp://expo.io/@tsb/projects/swaipify/",
+      }),
+    },
+    discovery
+  );
+  const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
+
+  const getSpotifyDetails = (access_token, refresh_token) => {
+    spotifyAPI.getMe().then((response) => {
+      var getMe = {
+        user_name: response.display_name,
+        user_image: !(
+          response.images === undefined || response.images.length == 0
+        )
+          ? response.images[0].url
+          : null,
+        user_id: response.id,
+        user_email: response.email,
+        access_token: access_token,
+        refresh_token: refresh_token,
+      };
+      setSpotifyUserDetails(getMe);
+      UserStore.spotifyUserDetails = getMe;
+    });
+  };
+
+  const renderScene = SceneMap({
+    first: () => FirstRoute(),
+    second: () => SecondRoute(navigation),
   });
 
-  const textInputChange = (val) => {
-    if (val.length != 0) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-      });
-    }
-  };
+  const [index, setIndex] = React.useState(0);
 
-  const handleConfirmPasswordChange = (val) => {
-    setData({
-      ...data,
-      confirm_password: val,
-    });
-  };
+  const [routes] = React.useState([
+    { key: "first", title: "Spotify" },
+    { key: "second", title: "Traklist" },
+  ]);
 
-  const handlePasswordChange = (val) => {
-    setData({
-      ...data,
-      password: val,
-    });
-  };
+  const initialLayout = { width: Dimensions.get("window").width };
 
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: "#1DB954" }}
+      style={{ backgroundColor: "black" }}
+      renderLabel={({ route, focused, color }) => (
+        <Text style={{ color, margin: 8, fontWeight: "bold" }}>
+          {route.title}
+        </Text>
+      )}
+      activeColor="green"
+    />
+  );
 
-  const updateConfirmSecureTextEntry = () => {
-    setData({
-      ...data,
-      confirm_secureTextEntry: !data.confirm_secureTextEntry,
-    });
-  };
-  return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      <View style={styles.header}>
-        <Text style={styles.text_header}></Text>
+  const FirstRoute = () => {
+    React.useEffect(() => {
+      if (response?.type === "success") {
+        const { code } = response.params;
+        // alert(code);
+
+        axios({
+          method: "post",
+          url: "https://accounts.spotify.com/api/token",
+          data: qs.stringify({
+            grant_type: "authorization_code",
+            code: code,
+            redirect_uri: makeRedirectUri({
+              // For usage in bare and standalone
+              // native: "exp://192.168.0.67:19000/",
+              native: "exp://192.168.0.35:19000",
+              // native: "exp://expo.io/@tsb/projects/swaipify/",
+              // native: "exp://172.29.71.10:19000",
+            }),
+            client_id: "fdb4803bdd0843918698fea00b452d03",
+            client_secret: "e7c47d49963b4758885d3dddc1931dde",
+          }),
+          headers: {
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        }).then((res) => {
+          // console.log(res.data);
+          console.log(spotifyUserDetails);
+          // access_token & refresh_token
+          const { access_token, refresh_token } = res.data;
+          // alert(access_token, refresh_token)
+          spotifyAPI.setAccessToken(access_token);
+          getSpotifyDetails(access_token, refresh_token);
+          // SpotifySDK.loginWithSession(access_token, )
+          // console.log(res.data)
+        });
+        //   .catch((err) => console.log(err));
+      }
+    }, [response]);
+
+    return (
+        <View style={([styles.scene], { paddingHorizontal: 5, marginTop: 20 })}>
+
+        <TouchableOpacity
+          disabled={!request}
+          onPress={() => {
+            promptAsync();
+          }}
+        >
+          <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
+            <MaterialCommunityIcons name="spotify" color="#fff" size={20} />
+            {!spotifyUserDetails.user_email && (
+              <Text style={[styles.textSign, { color: "#fff" }]}>
+                Verify your Spotify Account
+              </Text>
+            )}
+            {spotifyUserDetails.user_email && (
+              <Text style={[styles.textSign, { color: "#fff" }]}>Not You?</Text>
+            )}
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={[styles.text_footer, { color: "#21295c" }]}>meloID</Text>
+    );
+  };
+
+  const SecondRoute = (navigation) => {
+    const [authorizationCode, setAuthorizationCode] = useState("");
+
+    const signUp = () => {
+      const newUserData = {
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirm_password,
+        meloID: data.meloID,
+        spotifyID: spotifyUserDetails.user_id,
+      };
+
+      axios
+        .post("https://europe-west1-projectmelo.cloudfunctions.net/api/signup", newUserData)
+        .then((res) => {
+          console.log(res.data);
+          UserStore.authCode = res.data.token;
+          UserStore.isLoggedIn = true;
+        })
+        .catch((err) => console.log(err));
+      console.log(UserStore.isLoggedIn);
+    };
+
+    const [data, setData] = React.useState({
+      meloID: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+      check_textInputChange: false,
+      secureTextEntry: true,
+    });
+
+    const emailInputChange = (val) => {
+      if (val.length != 0) {
+        setData({
+          ...data,
+          email: val,
+          check_textInputChange: true,
+        });
+      } else {
+        setData({
+          ...data,
+          email: val,
+          check_textInputChange: false,
+        });
+      }
+      console.log(data);
+    };
+
+    const handleMeloIDChange = (val) => {
+      setData({
+        ...data,
+        meloID: val,
+      });
+      console.log(data);
+    };
+
+    const handlePasswordChange = (val) => {
+      setData({
+        ...data,
+        password: val,
+      });
+      console.log(data);
+    };
+
+    const handleConfirmPasswordChange = (val) => {
+      setData({
+        ...data,
+        confirm_password: val,
+      });
+      console.log(data);
+    };
+
+    const updateConfirmSecureTextEntry = () => {
+      setData({
+        ...data,
+        confirm_secureTextEntry: !data.confirm_secureTextEntry,
+      });
+    };
+
+    const updateSecureTextEntry = () => {
+      setData({
+        ...data,
+        secureTextEntry: !data.secureTextEntry,
+      });
+    };
+    return (
+      <View style={([styles.scene], { paddingHorizontal: 10, marginTop: 20 })}>
+        <Text style={[styles.text_footer, { color: "#fff" }]}>meloID</Text>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color="#05375a" size={20} />
+          <FontAwesome name="user-o" color="#fff" size={20} />
           <TextInput
             placeholder="Your meloID"
             style={styles.textInput}
             autoCapitalize="none"
-            // onChangeText={(val) => textInputChange(val)}
+            onChangeText={(val) => handleMeloIDChange(val)}
           />
           {/* {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -94,16 +292,16 @@ const SignInScreen = ({ navigation }) => {
           ) : null} */}
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 35, color: "#21295c" }]}>
-          e-mail
+        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
+          email
         </Text>
         <View style={styles.action}>
-          <FontAwesome name="envelope-o" color="#05375a" size={20} />
+          <FontAwesome name="envelope-o" color="#fff" size={20} />
           <TextInput
             placeholder="Your Email"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
+            onChangeText={(val) => emailInputChange(val)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -112,11 +310,11 @@ const SignInScreen = ({ navigation }) => {
           ) : null}
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 35, color: "#21295c" }]}>
+        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
           password
         </Text>
         <View style={styles.action}>
-          <FontAwesome name="lock" color="#05375a" size={20} />
+          <FontAwesome name="lock" color="#fff" size={20} />
           <TextInput
             placeholder="Your Password"
             secureTextEntry={data.secureTextEntry ? true : false}
@@ -133,11 +331,11 @@ const SignInScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 35, color: "#21295c" }]}>
+        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
           confirm password
         </Text>
         <View style={styles.action}>
-          <FontAwesome name="lock" color="#05375a" size={20} />
+          <FontAwesome name="lock" color="#fff" size={20} />
           <TextInput
             placeholder="Your Password"
             secureTextEntry={data.confirm_secureTextEntry ? true : false}
@@ -154,29 +352,52 @@ const SignInScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.button}>
-          <LinearGradient colors={["#007bff", "#0077f6"]} style={styles.signIn}>
-            <Text style={[styles.textSign, { color: "#fff" }]}>Next</Text>
+        <TouchableOpacity onPress={signUp}>
+            <View style={styles.button}>
+          <LinearGradient colors={["green", "green"]} style={styles.signIn}>
+            <Text style={[styles.textSign, { color: "#fff" }]}>
+              Sign Me Up!
+            </Text>
           </LinearGradient>
 
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={[
               styles.signIn,
-              { borderColor: "#007bff", borderWidth: 1, marginTop: 15 },
+              { borderColor: "green", borderWidth: 1, marginTop: 15 },
             ]}
           >
-            <Text style={[styles.textSign, { color: "#007bff", fontSize: 15 }]}>
+            <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
               Already have an account? Log in
             </Text>
           </TouchableOpacity>
         </View>
+        </TouchableOpacity>
+        
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* <StatusBar backgroundColor="#009387" barStyle="light-content" /> */}
+      <ImageBackground style={styles.header}>
+        <Text style={styles.text_header}></Text>
+      </ImageBackground>
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          renderTabBar={renderTabBar}
+        />
       </Animatable.View>
     </View>
   );
 };
 
-export default SignInScreen;
+export default observer(SignUpScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -190,12 +411,12 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   footer: {
-    flex: 3,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    flex: 12,
+    backgroundColor: "#000",
+    // borderTopLeftRadius: 30,
+    // borderTopRightRadius: 30,
+    paddingHorizontal: 5,
+    // paddingVertical: 30,
   },
   text_header: {
     color: "#fff",
@@ -205,12 +426,13 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    fontWeight : 'bold'
   },
   action: {
     flexDirection: "row",
     marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
+    borderBottomWidth: 2,
+    borderBottomColor: "green",
     paddingBottom: 5,
   },
   actionError: {
@@ -224,7 +446,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
-    color: "#05375a",
+    color: "#fff",
   },
   errorMsg: {
     color: "#FF0000",
@@ -232,14 +454,14 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 80,
   },
   signIn: {
     width: "100%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   textSign: {
     fontSize: 18,

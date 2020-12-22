@@ -67,7 +67,7 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync) => (
   </View>
 );
 
-const SecondRoute = (spotifyUserDetails) => {
+const SecondRoute = (spotifyUserDetails, navigation) => {
   const [authorizationCode, setAuthorizationCode] = useState("");
 
   const signIn = () => {
@@ -249,7 +249,7 @@ const SignInScreen = ({ navigation }) => {
 
   const renderScene = SceneMap({
     first: () => FirstRoute(request, spotifyUserDetails, promptAsync),
-    second: () => SecondRoute(spotifyUserDetails),
+    second: () => SecondRoute(spotifyUserDetails, navigation),
   });
 
   const renderTabBar = props => (
@@ -343,7 +343,7 @@ const SignInScreen = ({ navigation }) => {
     spotifyAPI.getMe().then((response) => {
       var getMe = {
         user_name: response.display_name,
-        user_image: response.images[0].url,
+        user_image: !(response.images === undefined || response.images.length == 0) ? response.images[0].url: null,
         user_id: response.id,
         user_email: response.email,
         access_token: access_token,
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     // paddingVertical: 30,
   },
   text_header: {

@@ -125,7 +125,7 @@ function Search() {
                             return (
                                 UserStore.followingDetails.map((users) => {
                                     // if(users.meloID.toLowerCase() !== UserStore.userDetails.credentials.meloID){
-                                        users.meloID
+                                    users.meloID
                                     // }
                                 })
                             )
@@ -163,51 +163,53 @@ function Search() {
 
 
                         return (
-                            <View style={{ margin: 8, flexDirection: 'row', borderRadius: 10, opacity: 1, borderWidth: 3, borderColor: '#fff', backgroundColor: 'green' }}>
+                            <View style={{ margin: 8, flexDirection: 'row', borderRadius: 10, opacity: 1, borderWidth: 2, borderColor: '#fff' }}>
 
                                 {/* <View style={{ borderLeftWidth: 0, borderColor: '#1DB954', padding: 5 }} /> */}
 
-
-                                <ImageBackground style={{ flex: 1, justifyContent: 'center', height: 60, width: '100%', marginRight: 10, opacity: 1 }} imageStyle={{ borderTopLeftRadius: 30, borderBottomRightRadius: 30, borderBottomLeftRadius: 7 }} source={{ uri: user.image }}>
+                                <View>
+                                    
+                                </View>
+                                <ImageBackground style={{ flex: 1, justifyContent: 'center', height: 60, width: '100%', marginRight: 0, opacity: 1 }} imageStyle={{ borderTopLeftRadius: 7, borderBottomRightRadius: 7, borderBottomLeftRadius: 7, borderTopRightRadius: 7 }} source={{ uri: user.image }}>
                                     <View style={{ justifyContent: 'center', flex: 2, padding: 5, paddingLeft: 20 }}>
                                         <View style={{ borderRadius: 5, justifyContent: 'center' }} >
                                             <Text style={{ color: '#fff', alignSelf: 'flex-start', padding: 5, backgroundColor: '#1DB954', fontWeight: 'bold', fontSize: 15, fontFamily: 'sans-serif', opacity: 0.7, borderRadius: 5, overflow: 'hidden' }}>{user.user}</Text>
                                         </View>
-                                        <Text style={{ marginLeft: 5, color: '#fff', fontWeight: 'normal', fontStyle: 'italic', fontSize: 14, fontFamily: 'sans-serif', fontWeight: '450' }}>{user.bio}</Text>
+                                        <Text style={{ marginLeft: 5, color: '#fff', fontWeight: 'normal', fontStyle: 'italic', fontSize: 14, fontFamily: 'sans-serif', fontWeight: '450', fontWeight : '500' }}>{user.bio}</Text>
                                     </View>
                                     {/* <Button title = "follow" style = {{margin : 5, right : 0, position : 'absolute'}}/> */}
-                                    
+
                                     {
 
 
                                         // UserStore.followingDetails.map((users) => {
-                                            UserStore.followingDetails.some((users) => user.user == users.meloID) == true ?
-                                                (
-                                                    <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute', backgroundColor :'#A72608', borderRadius : 30 }} onPress ={() => unfollow(user.user)}>
-                                                        <SimpleLineIcons name="user-unfollow" size={25} color='#1DB954' style={{ padding: 10 }} />
-                                                    </TouchableOpacity>
-                                                )
-                                                : 
-                                                (
-                                                    <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute', backgroundColor :'green', borderRadius : 30 }} onPress = {() => follow(user.user)}>
-                                                        <SimpleLineIcons name="user-follow" size={25} color='#1DB954' style={{ padding: 10 }} />
-                                                    </TouchableOpacity>
-                                                )
+                                        UserStore.followingDetails.some((users) => user.user == users.meloID) == true ?
+                                            (
+                                                <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute', backgroundColor: '#A72608', borderRadius: 10 }} onPress={() => unfollow(user.user)}>
+                                                    <SimpleLineIcons name="user-unfollow" size={25} color='#1DB954' style={{ padding: 10 }} />
+                                                </TouchableOpacity>
+                                            )
+                                            :
+                                            (
+                                                <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute', backgroundColor: 'green', borderRadius: 10 }} onPress={() => follow(user.user)}>
+                                                    <SimpleLineIcons name="user-follow" size={25} color='#1DB954' style={{ padding: 10 }} />
+                                                </TouchableOpacity>
+                                            )
                                         // }
                                         // )
-                                    //     })
-                                    //         variable = UserStore.followingDetails.some(user.user == users.meloID),
-                                    //     UserStore.followingDetails.some(user.user == users.meloID) ? true
-                                    //             return (
-                                    //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-                                    //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-                                    // </TouchableOpacity>
-                                    //             )
-                                    //             : null
-                                    //         }
-                                    //     })
+                                        //     })
+                                        //         variable = UserStore.followingDetails.some(user.user == users.meloID),
+                                        //     UserStore.followingDetails.some(user.user == users.meloID) ? true
+                                        //             return (
+                                        //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
+                                        //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
+                                        // </TouchableOpacity>
+                                        //             )
+                                        //             : null
+                                        //         }
+                                        //     })
 
-                                    //     UserStore.followingDetails.some((users) => {
+                                        //     UserStore.followingDetails.some((users) => {
                                         //         if (user.user == users.meloID) {
                                         //     setFollowing(true)
                                         //             return (
@@ -237,6 +239,8 @@ function Search() {
 
                                 </ImageBackground>
 
+                                <View />
+
 
 
                             </View>
@@ -265,7 +269,7 @@ function Search() {
 
     return (
         <View style={styles.container}>
-            <LinearGradient colors={["#000", "#8D8D92"]} style={styles.header}>
+            <LinearGradient colors={["#000", "#A7A2A9"]} style={styles.header}>
 
                 <StatusBar backgroundColor="#009387" barStyle="light-content" />
                 <View style={styles.action}>
@@ -281,18 +285,18 @@ function Search() {
 
 
             </LinearGradient>
-            <LinearGradient colors={["#8D8D92", "#000", "#000", "#EAEAEB", "#8D8D92"]} style={styles.footer}>
+            <LinearGradient colors={["#A7A2A9", "#A7A2A9", "#000", "#000", "#8D8D92", '#EAEAEB']} style={styles.footer}>
                 <ScrollView
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#1DB954" />
                     }
                 >
 
-                    <LinearGradient colors={["#8D8D92", "#000", "#000", "#8D8D92", "#000", "#A7A2A9"]} style={{ height: Dimensions.get('window').height, backgroundColor: 'grey', margin: 5, borderRadius: 20, opacity: 0.6 }}>
+                    <LinearGradient colors={["#A7A2A9", "#fff"]} style={{ height: Dimensions.get('window').height, backgroundColor: 'grey', margin: 5, borderRadius: 20, opacity: 0.9 }}>
 
 
-                        <View style={{ margin: 15, padding: 5, borderBottomWidth: 0, borderColor: '#1DB954', opacity: 1, backgroundColor : '#1DB954', borderRadius : 20 }}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Profiles</Text>
+                        <View style={{ margin: 15, padding: 5, borderBottomWidth: 3, borderColor: '#fff', opacity: 1, color : '#', borderRadius: 0 }}>
+                            <Text style={{ color: '#fff', fontWeight: '900', fontSize : 16 }}>profiles</Text>
                         </View>
 
                         {list}
@@ -328,7 +332,7 @@ export default observer(Search)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#8D8D92",
+        backgroundColor: "#EAEAEB",
     },
     header: {
         justifyContent: "flex-end",
@@ -340,7 +344,7 @@ const styles = StyleSheet.create({
         flex: 3,
         backgroundColor: "transparent",
         paddingHorizontal: 5,
-        borderRadius: 20
+        // borderRadius: 20
         // paddingVertical: 30,
     },
     text_header: {
