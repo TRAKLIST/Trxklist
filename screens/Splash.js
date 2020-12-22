@@ -22,7 +22,7 @@ const SplashScreen = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#007bff" barStyle="light-content" />
       {/* <View style={styles.header}> */}
-      <LinearGradient colors={["#EAEAEB", "#000"]} style={styles.header}>
+      <LinearGradient colors={["#EAEAEB", "grey"]} style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
           // duration="1500"
@@ -32,41 +32,56 @@ const SplashScreen = ({ navigation }) => {
         />
         {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.title}>TRAKLIST.</Text>
-          <Text style={styles.text}>stay in the loop • find new music</Text>
-        </View>
-
-        <View style={{ flexDirection: "column", bottom :80, position : 'absolute', alignSelf : 'center' }}>
-          <View style={[styles.button]}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignInScreen")}
-            >
-              <LinearGradient colors={["green", "green"]} style={styles.signIn}>
-                <Text style={styles.textSign}>get started</Text>
-                {/* <MaterialIcons name="navigate-next" color="#000" size={20} /> */}
-              </LinearGradient>
-            </TouchableOpacity>
+      <LinearGradient colors={["grey","#000", "#000"]} style={styles.footer}>
+        <Animatable.View animation="fadeInUpBig" style = {{flex : 1 }}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.title}>TRAKLIST.</Text>
+            <Text style={styles.text}>stay in the loop • find new music</Text>
           </View>
-          <View style={{ alignSelf: "center" }}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen")}
-            >
-              <LinearGradient colors={["black", "black"]} style={styles.signIn}>
-                <Text style={{ color: "#fff", fontSize: "16" }}>
-                  sign back in
-                </Text>
-                <MaterialIcons name="navigate-next" color="#fff" size={20} />
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        <SafeAreaView style={styles.bottom}>
-          {/* <Text>Carousel</Text> */}
-        </SafeAreaView>
-      </Animatable.View>
+          <View
+            style={{
+              flexDirection: "column",
+              bottom: 80,
+              position: "absolute",
+              alignSelf: "center",
+            }}
+          >
+            <View style={[styles.button]}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SignUpScreen")}
+              >
+                <LinearGradient
+                  colors={["#292929", "#292929"]}
+                  style={styles.signIn}
+                >
+                  <Text style={styles.textSign}>get started</Text>
+                  {/* <MaterialIcons name="navigate-next" color="#000" size={20} /> */}
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+            <View style={{ alignSelf: "center" }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SignInScreen")}
+              >
+                <LinearGradient
+                  colors={["black", "black"]}
+                  style={[styles.signIn , {marginTop : 5}]}
+                >
+                  <Text style={{ color: "#ADADAD", fontSize: "16", fontWeight : '400' }}>
+                    sign back in
+                  </Text>
+                  <MaterialIcons name="navigate-next" color="#fff" size={20} />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <SafeAreaView style={styles.bottom}>
+            {/* <Text>Carousel</Text> */}
+          </SafeAreaView>
+        </Animatable.View>
+      </LinearGradient>
     </View>
   );
 };
@@ -101,12 +116,12 @@ const styles = StyleSheet.create({
     borderRadius: 120,
   },
   title: {
-    color: "green",
+    color: "#292929",
     fontSize: 35,
     fontWeight: "bold",
   },
   text: {
-    color: "#516758",
+    color: "#ADADAD",
     marginTop: 5,
     fontSize: 20,
     fontWeight: "600",

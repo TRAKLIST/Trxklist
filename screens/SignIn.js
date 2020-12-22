@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   Image,
+  Linking,
   Button,
   Platform,
   ImageBackground,
@@ -23,7 +24,11 @@ import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 import qs from "qs";
 import * as WebBrowser from "expo-web-browser";
-import { makeRedirectUri, useAuthRequest, AuthSession } from "expo-auth-session";
+import {
+  makeRedirectUri,
+  useAuthRequest,
+  AuthSession,
+} from "expo-auth-session";
 import spotifyAPI from "../components/SpotifyAPI";
 import base64 from "react-native-base64";
 import { Buffer } from "buffer";
@@ -31,8 +36,7 @@ import { Buffer } from "buffer";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import { acc } from "react-native-reanimated";
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -43,7 +47,7 @@ const discovery = {
 };
 
 const FirstRoute = (request, spotifyUserDetails, promptAsync) => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]}>
+  <View style={[styles.scene, { backgroundColor: "#000" }]}>
     <TouchableOpacity
       disabled={!request}
       onPress={() => {
@@ -58,12 +62,72 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync) => (
           </Text>
         )}
         {spotifyUserDetails.user_email && (
-          <Text style={[styles.textSign, { color: "#fff" }]}>
-            Not You?
-          </Text>
+          <Text style={[styles.textSign, { color: "#fff" }]}>Not You?</Text>
         )}
       </LinearGradient>
     </TouchableOpacity>
+
+    <View>
+      <View style={{ margin: 20, backgroundColor: "#000" }}>
+        <View style={{ margin: 20, backgroundColor: "#fff", borderRadius: 15, }}>
+          <View style={{ flexDirection: "row", margin: 10 }}>
+            <View style={{ flex: 3, padding: 5 }}>
+              <Text>Name</Text>
+            </View>
+            <View style={{ flex: 4, padding: 5 }}>
+              <Text>{spotifyUserDetails.user_name}</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", margin: 10 }}>
+            <View style={{ flex: 3, padding: 5 }}>
+              <Text>Email</Text>
+            </View>
+            <View style={{ flex: 4, padding: 5 }}>
+              <Text numberOfLines={1}>{spotifyUserDetails.user_email}</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", margin: 10 }}>
+            <View style={{ flex: 3, padding: 5 }}>
+              <Text>Spotify URI</Text>
+            </View>
+            <View style={{ flex: 4, padding: 5 }}>
+              <Text
+                style={{ color: "blue", textDecorationLine : 'underline' }}
+                onPress={() => Linking.openURL(spotifyUserDetails.profile_link)}
+              >
+                {spotifyUserDetails.profile_link}
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", margin: 10 }}>
+            <View style={{ flex: 3, padding: 5 }}>
+              <Text>Country</Text>
+            </View>
+            <View style={{ flex: 4, padding: 5 }}>
+              <Text>{spotifyUserDetails.country}</Text>
+            </View>
+          </View>
+
+          {/* user_name: response.display_name,
+        user_image: !(response.images === undefined || response.images.length == 0) ? response.images[0].url: null,
+        user_id: response.id,
+        user_email: response.email,
+        access_token: access_token,
+        refresh_token: refresh_token,
+        profile_link : response.external_urls.spotify,
+        followTotal : response.followers.total, */}
+        </View>
+      </View>
+      
+    </View>
+
+    <View style = {[styles.button, {paddingHorizontal : 40}]}>
+          <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
+            <Text style={[styles.textSign, { color: "#fff" }]}>Next</Text>
+          </LinearGradient>
+        
+    </View>
+    
   </View>
 );
 
@@ -180,22 +244,16 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
             {data.secureTextEntry ? (
               <Feather name="eye-off" color="grey" size={20} />
             ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
+              <Feather name="eye" color="grey" size={20} />
+            )}
           </TouchableOpacity>
         </View>
       </View>
 
-
       <View style={styles.button}>
         <TouchableOpacity style={styles.signIn} onPress={signIn}>
-          <LinearGradient
-            colors={["#1DB954", "green"]}
-            style={styles.signIn}
-          >
-            <Text style={[styles.textSign, { color: "#fff" }]}>
-              Sign In
-                </Text>
+          <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
+            <Text style={[styles.textSign, { color: "#fff" }]}>Sign In</Text>
           </LinearGradient>
         </TouchableOpacity>
 
@@ -206,9 +264,7 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
             { borderColor: "#1DB954", borderWidth: 1, marginTop: 15 },
           ]}
         >
-          <Text style={[styles.textSign, { color: "#1DB954" }]}>
-            Sign Up
-        </Text>
+          <Text style={[styles.textSign, { color: "#1DB954" }]}>Sign Up</Text>
         </TouchableOpacity>
       </View>
 
@@ -234,17 +290,17 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
           <Feather name="check-circle" color="green" size={20} />
         </View> */}
     </View>
-  )
+  );
 };
 
-const initialLayout = { width: Dimensions.get('window').width };
+const initialLayout = { width: Dimensions.get("window").width };
 
 const SignInScreen = ({ navigation }) => {
   const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Spotify' },
-    { key: 'second', title: 'Traklist' },
+    { key: "first", title: "Spotify" },
+    { key: "second", title: "Traklist" },
   ]);
 
   const renderScene = SceneMap({
@@ -252,20 +308,19 @@ const SignInScreen = ({ navigation }) => {
     second: () => SecondRoute(spotifyUserDetails, navigation),
   });
 
-  const renderTabBar = props => (
+  const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: '#1DB954' }}
-      style={{ backgroundColor: 'black' }}
+      indicatorStyle={{ backgroundColor: "#1DB954" }}
+      style={{ backgroundColor: "black" }}
       renderLabel={({ route, focused, color }) => (
-        <Text style={{ color, margin: 8, fontWeight: 'bold' }}>
+        <Text style={{ color, margin: 8, fontWeight: "bold" }}>
           {route.title}
         </Text>
       )}
-      activeColor='green'
+      activeColor="green"
     />
   );
-
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -341,64 +396,66 @@ const SignInScreen = ({ navigation }) => {
 
   const getSpotifyDetails = (access_token, refresh_token) => {
     spotifyAPI.getMe().then((response) => {
+      console.log(response);
       var getMe = {
         user_name: response.display_name,
-        user_image: !(response.images === undefined || response.images.length == 0) ? response.images[0].url: null,
+        user_image: !(
+          response.images === undefined || response.images.length == 0
+        )
+          ? response.images[0].url
+          : null,
         user_id: response.id,
         user_email: response.email,
         access_token: access_token,
         refresh_token: refresh_token,
+        profile_link: response.external_urls.spotify,
+        followTotal: response.followers.total,
+        country: response.country,
       };
       setSpotifyUserDetails(getMe);
       UserStore.spotifyUserDetails = getMe;
     });
   };
 
-
-
   return (
-    (
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#009387" barStyle="light-content" />
-        {/* <View style={styles.header}> */}
-        <LinearGradient colors={['#EAEAEB', "#000",]} style={styles.header}>
-          {spotifyUserDetails.user_image && (
-            // <Animatable.View
-            //   style={{
-            //     borderRadius: 15,
-            //     padding: 10,
-            //   }}
-            //   animation="fadeInUpBig"
-            // >
-            //   <Image
-            //     style={{borderRadius : 20}}
-            //     resizeMode="contain"
-            //     source={{
-            //       uri: spotifyUserDetails.user_image,
-            //     }}
-            //   />
-            // </Animatable.View>
-            <Animatable.View
-              animation="fadeInUpBig"
-            >
-              <ImageBackground source={{ uri: spotifyUserDetails.user_image }} style={{ height: '100%', width: '100%' }}>
-
-              </ImageBackground>
-            </Animatable.View>
-
-          )}
-        </LinearGradient>
-        <Animatable.View style={styles.footer} animation="fadeInUpBig">
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={initialLayout}
-            renderTabBar={renderTabBar}
-          />
-        </Animatable.View>
-      </View>
-    )
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#009387" barStyle="light-content" />
+      {/* <View style={styles.header}> */}
+      <LinearGradient colors={["#EAEAEB", "#000"]} style={styles.header}>
+        {spotifyUserDetails.user_image && (
+          // <Animatable.View
+          //   style={{
+          //     borderRadius: 15,
+          //     padding: 10,
+          //   }}
+          //   animation="fadeInUpBig"
+          // >
+          //   <Image
+          //     style={{borderRadius : 20}}
+          //     resizeMode="contain"
+          //     source={{
+          //       uri: spotifyUserDetails.user_image,
+          //     }}
+          //   />
+          // </Animatable.View>
+          <Animatable.View animation="fadeInUpBig">
+            <ImageBackground
+              source={{ uri: spotifyUserDetails.user_image }}
+              style={{ height: "100%", width: "100%" }}
+            ></ImageBackground>
+          </Animatable.View>
+        )}
+      </LinearGradient>
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          renderTabBar={renderTabBar}
+        />
+      </Animatable.View>
+    </View>
   );
 };
 
@@ -435,7 +492,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "green",
     fontSize: 18,
-    fontWeight : 'bold'
+    fontWeight: "bold",
   },
   action: {
     flexDirection: "row",
@@ -481,6 +538,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "whitesmoke",
     borderRadius: 40,
     borderWidth: 3,
-    borderColor: '#fff'
+    borderColor: "#fff",
   },
+  spotifyAuth : {
+    color : 'green'
+  }
 });

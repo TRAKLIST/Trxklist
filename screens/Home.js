@@ -188,9 +188,10 @@ export class HomeScreen extends Component {
                   <Text numberOfLines={1} style={{ color: 'grey', fontWeight: '400' }}>{`${card.followers} followers`}</Text>
                 </View>
 
+                  {/* Support an independent artist */}
                 <View style={{ bottom: -30, position: 'relative', flexDirection: 'column' }}>
                   <Text numberOfLines={1} style={{ fontSize: 14, padding: 3, textTransform: "uppercase", color: '#3A5A40', fontWeight: 'bold', textAlign: 'center' }}>
-                    {(card.artistPopularity < 5) ? "Novice Amateur" : (card.artistPopularity < 7) ? "Amateur" : (card.artistPopularity < 10) ? "Advanced Amateur" : (card.artistPopularity < 20) ? "Novice Pro" : (card.artistPopularity < 35) ? "Pro" : (card.artistPopularity < 50) ? "Next Up" : (card.artistPopularity < 70) ? "Blown?" : (card.artistPopularity < 90) ? "Fame" : (card.artistPopularity < 95) ? "Icon" : "VIP"}
+                    {(card.artistPopularity < 5) ? "Independent" : (card.artistPopularity < 7) ? "Independent" : (card.artistPopularity < 10) ? "Independent" : (card.artistPopularity < 20) ? "Independent" : (card.artistPopularity < 35) ? "Pro" : (card.artistPopularity < 50) ? "Next Up" : (card.artistPopularity < 70) ? "Blown?" : (card.artistPopularity < 90) ? "Fame" : (card.artistPopularity < 95) ? "Icon" : "VIP"}
                   </Text>
                   <ProgressBar progress={card.artistPopularity / 100} color='#1DB954' style={{ width: 100, height: 15 }} />
                 </View>

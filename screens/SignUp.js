@@ -149,8 +149,8 @@ const SignUpScreen = ({ navigation }) => {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }).then((res) => {
-          // console.log(res.data);
-          console.log(spotifyUserDetails);
+          console.log(res.data);
+          // console.log(spotifyUserDetails);
           // access_token & refresh_token
           const { access_token, refresh_token } = res.data;
           // alert(access_token, refresh_token)
@@ -381,8 +381,8 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor="#009387" barStyle="light-content" /> */}
-      <ImageBackground style={styles.header}>
-        <Text style={styles.text_header}></Text>
+      <ImageBackground style={styles.header} source = {{uri : spotifyUserDetails.user_image}}>
+        {/* <Text style={styles.text_header}></Text> */}
       </ImageBackground>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <TabView
