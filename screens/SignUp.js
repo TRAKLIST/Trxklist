@@ -1,32 +1,23 @@
 import React, { useState } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   TouchableOpacity,
   Text,
   TextInput,
   Dimensions,
-  Button,
   Platform,
-  StatusBar,
   ImageBackground,
 } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import qs from "qs";
-import {
-  makeRedirectUri,
-  useAuthRequest,
-  AuthSession,
-} from "expo-auth-session";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
@@ -138,7 +129,7 @@ const SignUpScreen = ({ navigation }) => {
             redirect_uri: makeRedirectUri({
               // For usage in bare and standalone
               // native: "exp://192.168.0.67:19000/",
-            //   native: "exp://192.168.0.35:19000",
+              //   native: "exp://192.168.0.35:19000",
               native: "exp://expo.io/@tsb/projects/swaipify/",
               // native: "exp://172.29.71.10:19000",
             }),
@@ -149,23 +140,15 @@ const SignUpScreen = ({ navigation }) => {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }).then((res) => {
-          // console.log(res.data);
-          // console.log(spotifyUserDetails);
-          // access_token & refresh_token
           const { access_token, refresh_token } = res.data;
-          // alert(access_token, refresh_token)
           spotifyAPI.setAccessToken(access_token);
           getSpotifyDetails(access_token, refresh_token);
-          // SpotifySDK.loginWithSession(access_token, )
-          // console.log(res.data)
         });
-        //   .catch((err) => console.log(err));
       }
     }, [response]);
 
     return (
-        <View style={([styles.scene], { paddingHorizontal: 5, marginTop: 20 })}>
-
+      <View style={([styles.scene], { paddingHorizontal: 5, marginTop: 20 })}>
         <TouchableOpacity
           disabled={!request}
           onPress={() => {
@@ -201,7 +184,10 @@ const SignUpScreen = ({ navigation }) => {
       };
 
       axios
-        .post("https://europe-west1-projectmelo.cloudfunctions.net/api/signup", newUserData)
+        .post(
+          "https://europe-west1-projectmelo.cloudfunctions.net/api/signup",
+          newUserData
+        )
         .then((res) => {
           console.log(res.data);
           UserStore.authCode = res.data.token;
@@ -285,11 +271,6 @@ const SignUpScreen = ({ navigation }) => {
             autoCapitalize="none"
             onChangeText={(val) => handleMeloIDChange(val)}
           />
-          {/* {data.check_textInputChange ? (
-            <Animatable.View animation="bounceIn">
-              <Feather name="check-circle" color="green" size={20} />
-            </Animatable.View>
-          ) : null} */}
         </View>
 
         <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
@@ -353,37 +334,36 @@ const SignUpScreen = ({ navigation }) => {
         </View>
 
         <TouchableOpacity onPress={signUp}>
-            <View style={styles.button}>
-          <LinearGradient colors={["green", "green"]} style={styles.signIn}>
-            <Text style={[styles.textSign, { color: "#fff" }]}>
-              Sign Me Up!
-            </Text>
-          </LinearGradient>
+          <View style={styles.button}>
+            <LinearGradient colors={["green", "green"]} style={styles.signIn}>
+              <Text style={[styles.textSign, { color: "#fff" }]}>
+                Sign Me Up!
+              </Text>
+            </LinearGradient>
 
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={[
-              styles.signIn,
-              { borderColor: "green", borderWidth: 1, marginTop: 15 },
-            ]}
-          >
-            <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
-              Already have an account? Log in
-            </Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={[
+                styles.signIn,
+                { borderColor: "green", borderWidth: 1, marginTop: 15 },
+              ]}
+            >
+              <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
+                Already have an account? Log in
+              </Text>
+            </TouchableOpacity>
+          </View>
         </TouchableOpacity>
-        
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      {/* <StatusBar backgroundColor="#009387" barStyle="light-content" /> */}
-      <ImageBackground style={styles.header} source = {{uri : spotifyUserDetails.user_image}}>
-        {/* <Text style={styles.text_header}></Text> */}
-      </ImageBackground>
+      <ImageBackground
+        style={styles.header}
+        source={{ uri: spotifyUserDetails.user_image }}
+      ></ImageBackground>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <TabView
           navigationState={{ index, routes }}
@@ -413,10 +393,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 12,
     backgroundColor: "#000",
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
     paddingHorizontal: 5,
-    // paddingVertical: 30,
   },
   text_header: {
     color: "#fff",
@@ -426,7 +403,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "#05375a",
     fontSize: 18,
-    fontWeight : 'bold'
+    fontWeight: "bold",
   },
   action: {
     flexDirection: "row",
@@ -461,7 +438,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    // borderRadius: 10,
   },
   textSign: {
     fontSize: 18,

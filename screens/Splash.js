@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  Image,
-  Button,
   StatusBar,
   TouchableOpacity,
   Dimensions,
@@ -15,7 +12,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
-import img from "../images/djwho.png";
 
 const SplashScreen = ({ navigation }) => {
   return (
@@ -32,8 +28,8 @@ const SplashScreen = ({ navigation }) => {
         />
         {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
-      <LinearGradient colors={["grey","#000", "#000"]} style={styles.footer}>
-        <Animatable.View animation="fadeInUpBig" style = {{flex : 1 }}>
+      <LinearGradient colors={["grey", "#000", "#000"]} style={styles.footer}>
+        <Animatable.View animation="fadeInUpBig" style={{ flex: 1 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.title}>TRAKLIST.</Text>
             <Text style={styles.text}>stay in the loop • find new music</Text>
@@ -66,9 +62,15 @@ const SplashScreen = ({ navigation }) => {
               >
                 <LinearGradient
                   colors={["black", "black"]}
-                  style={[styles.signIn , {marginTop : 5}]}
+                  style={[styles.signIn, { marginTop: 5 }]}
                 >
-                  <Text style={{ color: "#ADADAD", fontSize: "17", fontWeight : '600' }}>
+                  <Text
+                    style={{
+                      color: "#ADADAD",
+                      fontSize: "17",
+                      fontWeight: "600",
+                    }}
+                  >
                     sign back in
                   </Text>
                   <MaterialIcons name="navigate-next" color="#fff" size={20} />

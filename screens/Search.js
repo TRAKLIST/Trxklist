@@ -55,7 +55,7 @@ function Search() {
                 `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${recipient}/follow`,
                 {
                     headers: {
-                        Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+                        Authorization: `Bearer ${UserStore.authCode}`,
                     },
                 }
             )
@@ -72,7 +72,7 @@ function Search() {
                 `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${recipient}/unfollow`,
                 {
                     headers: {
-                        Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+                        Authorization: `Bearer ${UserStore.authCode}`,
                     },
                 }
             )
@@ -89,7 +89,7 @@ function Search() {
                 `https://europe-west1-projectmelo.cloudfunctions.net/api/users`,
                 {
                     headers: {
-                        Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+                        Authorization: `Bearer ${UserStore.authCode}`,
                     },
                 }
             )

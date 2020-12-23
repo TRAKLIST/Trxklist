@@ -7,7 +7,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerContent } from "./screens/DrawerContent";
 
 import MainTabScreen from "./screens/MainTabScreen";
-import PostScreen from "./screens/PostScreen";
 import RootStackScreen from "./screens/RootStackScreen";
 import LoadingPage from "./screens/LoadingPage";
 import { AuthSession } from "expo";
@@ -25,7 +24,6 @@ function App() {
             drawerContent={(props) => <DrawerContent {...props} />}
           >
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-            <Drawer.Screen name="PostDrawer" component={PostScreen} />
           </Drawer.Navigator>
         ) : (
           <Drawer.Navigator

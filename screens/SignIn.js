@@ -1,15 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   TouchableOpacity,
   Text,
   TextInput,
-  Image,
   Linking,
-  Button,
   Platform,
   ImageBackground,
   StatusBar,
@@ -35,7 +31,6 @@ import {
 import spotifyAPI from "../components/SpotifyAPI";
 import base64 from "react-native-base64";
 import { Buffer } from "buffer";
-// import img1 from "/Users/tsb99/Documents/App-Dev/projMELO/images/Sonar1st.png";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import { acc } from "react-native-reanimated";
@@ -52,7 +47,6 @@ const discovery = {
 const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
   dayjs.extend(relativeTime);
   return (
-    // <View style={[styles.scene, { backgroundColor: "#000" }]}>
     <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
       <TouchableOpacity
         disabled={!request}
@@ -177,24 +171,8 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
               </Text>
             </View>
           </View>
-
-          {/* user_name: response.display_name,
-        user_image: !(response.images === undefined || response.images.length == 0) ? response.images[0].url: null,
-        user_id: response.id,
-        user_email: response.email,
-        access_token: access_token,
-        refresh_token: refresh_token,
-        profile_link : response.external_urls.spotify,
-        followTotal : response.followers.total, */}
         </View>
-        {/* </View> */}
       </View>
-
-      {/* <View style={[styles.button, { paddingHorizontal: 40 }]}>
-      <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
-        <Text style={[styles.textSign, { color: "#fff" }]}>Next</Text>
-      </LinearGradient>
-    </View> */}
 
       <ImageBackground
         style={{
@@ -204,7 +182,6 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
         imageStyle={{ borderRadius: 30 }}
         source={{ uri: lastPlayed.image }}
       >
-        {/* {spotifyUserDetails != null && ( */}
         <View
           style={{
             backgroundColor: "green",
@@ -227,7 +204,6 @@ const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
             </Text>
           </View>
         </View>
-        {/* )} */}
       </ImageBackground>
     </LinearGradient>
   );
@@ -248,17 +224,11 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
         userData
       )
       .then((res) => {
-        // console.log(res.data);
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
 
-        // sessionStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        // this.setState({
-        //   loading: false,
-        // });
         if (userData.email == spotifyUserDetails.user_email) {
           console.log("logged in");
-          // global 'logged in signal'
 
           UserStore.isLoggedIn = true;
         } else {
@@ -266,14 +236,9 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
             `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
           );
         }
-        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
-        // this.setState({
-        //   errors: err,
-        //   loading: false,
-        // });
       });
   };
 
@@ -412,31 +377,8 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
             create an account
           </Text>
           <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
-          {/* <Text style={[styles.textSign, { color: "#1DB954" }]}>Sign Up</Text> */}
         </TouchableOpacity>
       </View>
-
-      {/* <Text style={(styles.text_footer, { marginTop: 35 })}>Password</Text>
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color="#05375a" size={20} />
-          <TextInput
-            placeholder="Your Email"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={() => textInputChange(val)}
-          />
-          <Feather name="check-circle" color="green" size={20} />
-        </View>
-
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color="#05375a" size={20} />
-          <TextInput
-            placeholder="Your Email"
-            style={styles.textInput}
-            autoCapitalize="none"
-          />
-          <Feather name="check-circle" color="green" size={20} />
-        </View> */}
     </LinearGradient>
   );
 };
@@ -531,14 +473,9 @@ const SignInScreen = ({ navigation }) => {
         },
       })
         .then((res) => {
-          // console.log(res.data);
-          // access_token & refresh_token
           const { access_token, refresh_token } = res.data;
-          // alert(access_token, refresh_token)
           spotifyAPI.setAccessToken(access_token);
           getSpotifyDetails(access_token, refresh_token);
-          // SpotifySDK.loginWithSession(access_token, )
-          // console.log(res.data)
         })
         .catch((err) => alert(err));
     }
@@ -583,24 +520,8 @@ const SignInScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      {/* <View style={styles.header}> */}
       <LinearGradient colors={["#EAEAEB", "grey"]} style={styles.header}>
         {spotifyUserDetails.user_image && (
-          // <Animatable.View
-          //   style={{
-          //     borderRadius: 15,
-          //     padding: 10,
-          //   }}
-          //   animation="fadeInUpBig"
-          // >
-          //   <Image
-          //     style={{borderRadius : 20}}
-          //     resizeMode="contain"
-          //     source={{
-          //       uri: spotifyUserDetails.user_image,
-          //     }}
-          //   />
-          // </Animatable.View>
           <Animatable.View animation="fadeInUpBig">
             <ImageBackground
               source={{ uri: spotifyUserDetails.user_image }}
@@ -635,18 +556,12 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     justifyContent: "flex-end",
-    // paddingHorizontal: 20,
-    // paddingBottom: 25,
-    // paddingTop: 50,
   },
   footer: {
     flex: 3,
     marginTop: 5,
     backgroundColor: "grey",
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
     paddingHorizontal: 10,
-    // paddingVertical: 30,
   },
   text_header: {
     color: "#fff",
@@ -704,7 +619,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: "100%",
-    // backgroundColor: "whitesmoke",
     borderRadius: 40,
     borderWidth: 3,
     borderColor: "#fff",

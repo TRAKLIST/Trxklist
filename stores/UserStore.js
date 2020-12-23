@@ -6,19 +6,13 @@ import { extendObservable } from "mobx";
 class UserStore {
   constructor() {
     extendObservable(this, {
-      username: "",
       authCode: "",
       loading: true,
       isLoggedIn: false,
       userDetails: [],
       spotifyUserDetails: {},
-      allPosts: [],
       followingDetails: [],
-      trackDetails: {},
-      endPost: false,
       str: '',
-      currentCard: {},
-      image : ''
     });
   }
 }

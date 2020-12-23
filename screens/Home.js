@@ -53,15 +53,11 @@ function wait(timeout) {
   });
 }
 
-let recommend = [];
-
 let getArtist = {};
 
 let recommended = {};
 
 let audioFeatures = {};
-
-let topArtists_following = [];
 
 const SecondRoute = (card) => {
   if (card != null) {
@@ -387,8 +383,6 @@ export class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    // console.log(UserStore.image, 'gyu')
-
     wait(2000).then(() => {
       this.interval = setInterval(() => {
         axios
@@ -498,8 +492,6 @@ export class HomeScreen extends Component {
                                       audioFeatures: this.state.audioFeatures,
                                       topArtists_following: this.state
                                         .topArtist_flw,
-                                      //topTracks_following : array of image links
-                                      //recommended_following : array of image links
                                     };
                                     this.setState({ topArtist_flw: [] });
                                     // console.log(recommended, 'tobio', recommended.artistName)
@@ -531,9 +523,6 @@ export class HomeScreen extends Component {
                             image: track.album.images[0].url,
                             albumID: track.album.id,
                             audioFeatures: this.state.audioFeatures,
-                            // topArtists_following: this.state.topArtist_flw
-                            //topTracks_following : array of image links
-                            //recommended_following : array of image links
                           };
                           // console.log(recommended, 'tobio', recommended.artistName)
                           this.setState({
@@ -774,26 +763,6 @@ export class HomeScreen extends Component {
         stackSize={3}
         stackSeparation={12}
       >
-        <View style={{ flexDirection: "row", alignSelf: "center" }}>
-          {/* <TouchableOpacity style={{ alignItems: 'center', margin: 10 }}>
-            <LinearGradient colors={["#21295c", "grey"]} style={styles.signIn}>
-              <MaterialCommunityIcons name="content-save-outline" color="#fff" size={22} />
-            </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={{ alignItems: 'center', margin: 10 }}>
-            <LinearGradient colors={["#007bff", "grey"]} style={styles.signIn}>
-              <FontAwesome name="refresh" color="#fff" size={22} />
-            </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={{ alignItems: 'center', margin: 10 }}>
-            <LinearGradient colors={["#21295c", "grey"]} style={styles.signIn}>
-              <Ionicons name="md-share" color="#fff" size={22} />
-            </LinearGradient>
-          </TouchableOpacity> */}
-        </View>
-
         <ActivityIndicator
           size="large"
           color="#1DB954"
@@ -807,7 +776,6 @@ export class HomeScreen extends Component {
     if (this.state.loading == false) {
       return (
         <View style={styles.container}>
-          {/* <StatusBar backgroundColor="#007bff" barStyle="dark-content" /> */}
           <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
             <SafeAreaView
               style={{
@@ -866,7 +834,6 @@ export class HomeScreen extends Component {
                           flexDirection: "row",
                         }}
                       >
-                        {/* <MaterialIcons name='album' size={20} style={{ padding: 0, color: '#1DB954' }} /> */}
                         <Text
                           numberOfLines={1}
                           style={{ color: "#44CF6C", fontWeight: "bold" }}
@@ -876,7 +843,6 @@ export class HomeScreen extends Component {
                           size={16}
                           style={{ padding: 0, color: "#44CF6C" }}
                         />
-                        {/* <Text numberOfLines={1} style={{ color: '#1DB954' }}>{" "}{this.state.cuurentCard.albumName}</Text> */}
                       </View>
                     ) : (
                       <View
@@ -902,7 +868,6 @@ export class HomeScreen extends Component {
             {swiper}
           </LinearGradient>
 
-          {/* <View style={styles.footer}> */}
           <LinearGradient
             colors={["#000", "#8D8D92", "#EAEAEB"]}
             style={styles.footer}
@@ -920,11 +885,12 @@ export class HomeScreen extends Component {
     } else {
       return (
         <View style={styles.container}>
-          {/* <StatusBar backgroundColor="#007bff" barStyle="dark-content" /> */}
           <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
             <View>
-              <View style = {{alignItems : 'center', margin : 10}}>
-                <Text style = {{ fontWeight : 'bold', color : 'grey'}}>LOADING RECOMMENDATIONS...</Text>
+              <View style={{ alignItems: "center", margin: 10 }}>
+                <Text style={{ fontWeight: "bold", color: "grey" }}>
+                  LOADING RECOMMENDATIONS...
+                </Text>
               </View>
               <View>
                 <ActivityIndicator size="large" color="blue" />
@@ -932,7 +898,6 @@ export class HomeScreen extends Component {
             </View>
           </LinearGradient>
 
-          {/* <View style={styles.footer}> */}
           <LinearGradient
             colors={["#000", "#8D8D92", "#EAEAEB"]}
             style={styles.footer}
@@ -953,16 +918,11 @@ const styles = StyleSheet.create({
   card: {
     flex: 0.61,
     borderRadius: 20,
-    // borderWidth: 3,
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderTopWidth: 0,
     borderBottomWidth: 2.5,
     borderBottomColor: "#1DB954",
-    // borderRightColor : ,
-    // borderRightColor : ,
-    // borderRightColor : ,
-    // borderColor: "#1DB954",
     justifyContent: "center",
     backgroundColor: "transparent",
     marginTop: 20,
@@ -994,7 +954,6 @@ const styles = StyleSheet.create({
   header: {
     flex: 3,
     justifyContent: "center",
-    // paddingHorizontal: 20,
     paddingBottom: 20,
     paddingTop: 50,
   },
@@ -1007,7 +966,6 @@ const styles = StyleSheet.create({
   },
   signIn: {
     padding: 0,
-    // justifyContent: "center",
     alignContent: "center",
     borderRadius: 10,
   },
