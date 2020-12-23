@@ -219,50 +219,6 @@ export class HomeScreen extends Component {
     // console.log(UserStore.followingDetails[0])
     this.setState({ following_details: UserStore.followingDetails })
 
-    this.interval = setInterval(() => {
-      spotifyAPI.getMyRecentlyPlayedTracks().then((data) => {
-        let items = []
-        // console.log(data, 'deeio')
-        data.items.map((item) => {
-          let recentlyPlayed = {
-            id: item.track.id,
-            playedAt: item.played_at,
-            albumName: item.track.album.name,
-            artistName: item.track.artists[0].name,
-            trackName: item.track.name,
-            image: item.track.album.images[0].url,
-            spotifyID: UserStore.spotifyUserDetails.user_name
-          }
-          items.push(recentlyPlayed)
-          //to firebase
-
-        })
-        axios.post('https://europe-west1-projectmelo.cloudfunctions.net/api/user', {
-          bio: '',
-          website: '',
-          location: '',
-          bookmarked: '',
-          playlists: '',
-          recentlyPlayed: JSON.stringify(items),
-          topArtists: '',
-          topTracks: '',
-          image : UserStore.image
-        },
-          {
-            headers: {
-              Authorization: `Bearer ${UserStore.authCode}`,
-            }
-          })
-          .then(res => {
-            // console.log(res.data)
-          })
-          .catch(err => console.log('err'))
-        // console.log(items, 'yohy')
-      })
-        .catch(err => console.log("saduh"))
-    }, 30000);
-
-
     wait(2000).then(() => {
       this.interval = setInterval(() => {
         axios.get(`https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`, {

@@ -14,15 +14,16 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
+
 import Post from "../components/Post";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
-import spotifyAPI from '../components/SpotifyAPI'
+import spotifyAPI from "../components/SpotifyAPI";
 
 // let topArtists = {}
 // let topArtistsArray = []
-let str = ''
-let recommend = []
+let str = "";
+let recommend = [];
 
 class LoadingPage extends Component {
   componentDidMount() {
@@ -43,46 +44,54 @@ class LoadingPage extends Component {
         },
       })
       .then((res) => {
-        let following = []
+        let following = [];
         // UserStore.userDetails = res.data;
         res.data.following.map((item) => {
           axios
-            .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/${item.recipient}`, {
-              headers: {
-                Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
-              },
-            })
+            .get(
+              `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${item.recipient}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+                },
+              }
+            )
             .then((res) => {
               // console.log(res.data.user, 'yikuy')
               // UserStore.userDetails = res.data;
-              UserStore.followingDetails = [...UserStore.followingDetails, res.data.user]
+              UserStore.followingDetails = [
+                ...UserStore.followingDetails,
+                res.data.user,
+              ];
               // following.push(res.data.user)
             })
             .catch((err) => console.log(err));
-        })
-        console.log(UserStore.followingDetails, 'gang')
+        });
+        console.log(UserStore.followingDetails, "gang");
       })
       .catch((err) => console.log(err));
 
-    spotifyAPI.getMyTopArtists().then((data) => {           // for recommendation
+    spotifyAPI.getMyTopArtists().then((data) => {
+      // for recommendation
       // console.log(data)
-      let topArtistsArray = []
+      let topArtistsArray = [];
       data.items.map((item) => {
         let topArtists = {
           artistName: item.name,
           image: item.images[0].url,
-          id: item.id
-        }
-        topArtistsArray.push(topArtists)
+          id: item.id,
+        };
+        topArtistsArray.push(topArtists);
         // UserStore.topArtists = topArtistsArray
         // console.log(topArtistsArray)
-      })
-    })
+      });
+    });
 
-    spotifyAPI.getMyTopTracks({ limit: 3 }).then((data) => {                       // for profile
+    spotifyAPI.getMyTopTracks({ limit: 3 }).then((data) => {
+      // for profile
       // console.log(data.items)
 
-      let items = []
+      let items = [];
       data.items.map((item) => {
         let topTracks = {
           name: item.name,
@@ -90,21 +99,21 @@ class LoadingPage extends Component {
           artistName: item.artists[0].name,
           trackName: item.name,
           image: item.album.images[0].url,
-          id: item.id
-        }
-        items.push(topTracks)
+          id: item.id,
+        };
+        items.push(topTracks);
         // UserStore.topTracks = items
         // console.log(items)
-      })
+      });
 
-      items.map(item => {
-        if (str == '') {
-          str = `${item.id}`
-        } else str = `${str},${item.id}`
-      })
-      UserStore.str = str
-      console.log(str)
-    })
+      items.map((item) => {
+        if (str == "") {
+          str = `${item.id}`;
+        } else str = `${str},${item.id}`;
+      });
+      UserStore.str = str;
+      console.log(str);
+    });
 
     // console.log(UserStore.spotifyUserDetails.user_id, 'chedfefwck')
 
@@ -113,12 +122,57 @@ class LoadingPage extends Component {
       .then((response) => {
         // this.setState({ profilePic: response.images[0].url });
         // console.log(response.images[0].url, 'dsfuy')
-        UserStore.image = response.images[0].url, 'dsfuy'
+        (UserStore.image = response.images[0].url), "dsfuy";
       })
       .catch((err) => console.log(err));
 
-    UserStore.loading = false;
+    spotifyAPI
+      .getMyRecentlyPlayedTracks()
+      .then((data) => {
+        let items = [];
+        // console.log(data, 'deeio')
+        data.items.map((item) => {
+          let recentlyPlayed = {
+            id: item.track.id,
+            playedAt: item.played_at,
+            albumName: item.track.album.name,
+            artistName: item.track.artists[0].name,
+            trackName: item.track.name,
+            image: item.track.album.images[0].url,
+            spotifyID: UserStore.spotifyUserDetails.user_name,
+          };
+          items.push(recentlyPlayed);
+          //to firebase
+        });
+        axios
+          .post(
+            "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
+            {
+              bio: "",
+              website: "",
+              location: "",
+              bookmarked: "",
+              playlists: "",
+              recentlyPlayed: JSON.stringify(items),
+              topArtists: "",
+              topTracks: "",
+              image: UserStore.spotifyUserDetails.user_image,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${UserStore.authCode}`,
+              },
+            }
+          )
+          .then((res) => {
+            // console.log(res.data)
+          })
+          .catch((err) => console.log("err"));
+        // console.log(items, 'yohy')
+      })
+      .catch((err) => console.log("saduh"));
 
+    UserStore.loading = false;
   }
 
   render() {
