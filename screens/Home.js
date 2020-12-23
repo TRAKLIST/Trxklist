@@ -222,7 +222,6 @@ export class HomeScreen extends Component {
       ],
       cuurentCard: {},
       audioFeatures: {},
-      following_details: [],
       profilePic: "",
       topArtist_flw: [],
       loading: true,
@@ -389,8 +388,6 @@ export class HomeScreen extends Component {
 
   componentDidMount() {
     // console.log(UserStore.image, 'gyu')
-    // console.log(UserStore.followingDetails[0])
-    this.setState({ following_details: UserStore.followingDetails });
 
     wait(2000).then(() => {
       this.interval = setInterval(() => {

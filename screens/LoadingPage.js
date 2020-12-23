@@ -14,7 +14,6 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
-
 import Post from "../components/Post";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
@@ -24,6 +23,26 @@ import spotifyAPI from "../components/SpotifyAPI";
 // let topArtistsArray = []
 let str = "";
 let recommend = [];
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 class LoadingPage extends Component {
   componentDidMount() {
@@ -87,7 +106,7 @@ class LoadingPage extends Component {
       });
     });
 
-    spotifyAPI.getMyTopTracks({ limit: 3 }).then((data) => {
+    spotifyAPI.getMyTopTracks().then((data) => {
       // for profile
       // console.log(data.items)
 
@@ -106,11 +125,24 @@ class LoadingPage extends Component {
         // console.log(items)
       });
 
-      items.map((item) => {
+      // Randomise array
+      console.log(items, 'first');
+      shuffle(items);
+      console.log(items, 'finish');
+
+      // Recommendations - pick 3
+      for (i = 0; i < 3; i++) {
         if (str == "") {
-          str = `${item.id}`;
-        } else str = `${str},${item.id}`;
-      });
+          str = `${items[i].id}`;
+        } else str = `${str},${items[i].id}`;
+
+      }
+      
+      // items.map((item) => {
+      //   if (str == "") {
+      //     str = `${item.id}`;
+      //   } else str = `${str},${item.id}`;
+      // });
       UserStore.str = str;
       console.log(str);
     });
@@ -125,52 +157,6 @@ class LoadingPage extends Component {
         (UserStore.image = response.images[0].url), "dsfuy";
       })
       .catch((err) => console.log(err));
-
-    spotifyAPI
-      .getMyRecentlyPlayedTracks()
-      .then((data) => {
-        let items = [];
-        // console.log(data, 'deeio')
-        data.items.map((item) => {
-          let recentlyPlayed = {
-            id: item.track.id,
-            playedAt: item.played_at,
-            albumName: item.track.album.name,
-            artistName: item.track.artists[0].name,
-            trackName: item.track.name,
-            image: item.track.album.images[0].url,
-            spotifyID: UserStore.spotifyUserDetails.user_name,
-          };
-          items.push(recentlyPlayed);
-          //to firebase
-        });
-        axios
-          .post(
-            "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
-            {
-              bio: "",
-              website: "",
-              location: "",
-              bookmarked: "",
-              playlists: "",
-              recentlyPlayed: JSON.stringify(items),
-              topArtists: "",
-              topTracks: "",
-              image: UserStore.spotifyUserDetails.user_image,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${UserStore.authCode}`,
-              },
-            }
-          )
-          .then((res) => {
-            // console.log(res.data)
-          })
-          .catch((err) => console.log("err"));
-        // console.log(items, 'yohy')
-      })
-      .catch((err) => console.log("saduh"));
 
     UserStore.loading = false;
   }
