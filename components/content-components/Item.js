@@ -110,8 +110,8 @@ export default function Item(props) {
 
 
     return (
-        <View style={{ flexDirection: 'column', padding: 0, backgroundColor: '#007bff', marginBottom: 0, borderRadius: 5, borderBottomWidth: 1, borderColor: '#fff' }}>
-            <LinearGradient colors={["grey", '#1F1F1F']} style={{ borderRadius: 0 }}>
+        <View style={{ flexDirection: 'column', padding: 0, marginBottom: 0, borderRadius: 5, borderBottomWidth: 1, borderColor: '#fff' }}>
+            <View style={{ borderRadius: 0 }}>
                 <View style={[styles.action, { margin: 5 }]}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image source={{ uri: UserStore.spotifyUserDetails.user_image }} style={{ width: 30, height: 30, borderRadius: 20 }} />
@@ -210,7 +210,7 @@ export default function Item(props) {
                 <View style={styles.action1}>
                     <Text style={{ fontWeight: 'bold', backgroundColor: 'whitesmoke', margin: 2, padding: 5, color: 'grey' }}>{dayjs(props.time).fromNow()}</Text>
                 </View>
-            </LinearGradient>
+            </View>
 
         </View>
     )

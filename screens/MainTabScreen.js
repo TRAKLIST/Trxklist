@@ -43,7 +43,7 @@ const MainTabScreen = () => {
       />
       {/* <Tab.Screen
         name="Me"
-        component={TimelineStackScreen}
+        component={Timeline}
         options={{
           tabBarLabel: "",
           tabBarColor: "#004BA8",
