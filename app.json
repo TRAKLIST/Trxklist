@@ -2,6 +2,7 @@
   "expo": {
     "name": "SWAIPIFY",
     "slug": "swaipify",
+    "owner": "traklist",
     "scheme": "myapp",
     "version": "1.0.0",
     "orientation": "portrait",
