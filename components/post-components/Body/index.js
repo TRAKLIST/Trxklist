@@ -5,7 +5,6 @@ import ProfilePicture from "../../ProfilePicture";
 import Icon from "react-native-vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-// import { v4 as uuidv4 } from "uuid";
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
   let tracklist = thisTrack.track ? (
