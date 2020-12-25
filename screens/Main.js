@@ -37,8 +37,8 @@ export default function Main() {
     <Text>Loading</Text>
   );
   return (
-    <View>
+    <ScrollView>
       <View style={{ backgroundColor: "#000" }}>{recentPostsMarkup}</View>
-    </View>
+    </ScrollView>
   );
 }

@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { Image, Text, View, ScrollView } from "react-native";
 import styles from "./styles";
-import { v4 as uuidv4 } from "uuid";
 
 const Body = ({ thisTrack, caption, status }) => {
   let tracklist = thisTrack.track ? (
     thisTrack.track.map((track) => (
-      <Text key={uuidv4()} style={styles.track}>
+      <Text style={styles.track}>
         {track}
       </Text>
     ))

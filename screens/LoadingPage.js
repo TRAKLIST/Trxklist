@@ -44,6 +44,14 @@ function shuffle(array) {
 class LoadingPage extends Component {
   componentDidMount() {
     axios
+      .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
+      .then((res) => {
+        // console.log(res.data);
+        UserStore.allPosts = res.data;
+      })
+      .catch((err) => console.log(err));
+
+    axios
       .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
         headers: {
           Authorization: `Bearer ${UserStore.authCode}`,

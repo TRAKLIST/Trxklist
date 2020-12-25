@@ -23,7 +23,6 @@ import UserStore from "../stores/UserStore";
 import Item from "../components/content-components/Item";
 import { observer } from "mobx-react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 let array = [];
 let array1 = [];
