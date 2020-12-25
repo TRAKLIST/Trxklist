@@ -53,6 +53,8 @@ function wait(timeout) {
   });
 }
 
+let topArtists_following = []
+
 let getArtist = {};
 
 let recommended = {};
@@ -776,7 +778,7 @@ export class HomeScreen extends Component {
     if (this.state.loading == false) {
       return (
         <View style={styles.container}>
-          <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
+          <LinearGradient colors={["#000", "#A7A2A9", "#000"]} style={styles.header}>
             <SafeAreaView
               style={{
                 width: Dimensions.get("window").width,

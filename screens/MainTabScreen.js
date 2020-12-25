@@ -6,6 +6,7 @@ import UpdatesScreen from "./Updates.js";
 import SpotifyScreen from "./Spotify.js";
 import SearchScreen from "./Search.js";
 import Timeline from "./Timeline.js";
+import Main from "./Main"
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -30,6 +31,17 @@ const MainTabScreen = () => {
       activeColor="#1DB954"
       style={{ backgroundColor: "tomato" }}
     >
+      <Tab.Screen
+        name="Main"
+        component={Main}
+        options={{
+          tabBarLabel: "",
+          tabBarColor: "#004BA8",
+          tabBarIcon: ({ color }) => (
+            <MI name="home" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Swipe"
         component={HomeScreen}
