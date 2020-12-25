@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
   },
   image2: {
-    width: Dimensions.get("window").width,
     height: Dimensions.get("window").width,
+    borderRadius : 20
   },
   block: {
     flex: 1,
@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   titleContainer: {
-    alignItems: "flex-end",
-    backgroundColor: "#fff",
-    marginRight: 10,
+    // alignItems: "center",
+    backgroundColor: "#000",
+    // marginRight: 10,
+    opacity : 0.8
   },
   track: {
     marginTop: 2,
@@ -42,11 +43,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    color: "#007bff",
+    color: "#fff",
     margin: 2,
     fontFamily: "Arial",
     fontWeight: "bold",
     backgroundColor: "transparent",
+    textAlign : 'center'
   },
   artist: {
     fontSize: 13,
@@ -58,9 +60,11 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#007bff",
+    color: "green",
     padding: 5,
     fontFamily: "Arial",
+    textAlign : 'center',
+    flex : 1
   },
 });
 

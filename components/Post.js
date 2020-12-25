@@ -95,20 +95,25 @@ export class Post extends Component {
     return (
       <View
         style={{
-          borderTopWidth: 2,
-          borderColor: "#007bff",
-          backgroundColor: "#fff",
+          borderTopWidth: 1.5,
+          borderBottomWidth: 1.5,
+          borderRadius : 10,
+          borderColor: "green",
+          backgroundColor: "#000",
+          paddingVertical : 10
         }}
       >
-        <Header
+        {/* <Header
           imageUri={this.state.profilePic}
           name={this.props.post.meloID}
           postedAt={this.props.post.createdAt}
-        />
+          imageUri={this.state.profilePic}
+        /> */}
         <Body
           thisTrack={this.state.thisTrack}
           caption={this.props.post.body}
           status={this.props.post.status}
+          imageUri={this.state.profilePic}
         />
         <Footer
           likesCount={this.props.post.likeCount}
@@ -116,6 +121,7 @@ export class Post extends Component {
           postID={this.props.post.postID}
           status={this.props.post.status}
           trackID={this.props.post.trackID}
+          postedAt={this.props.post.createdAt}
         />
       </View>
     );
