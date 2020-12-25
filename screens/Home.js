@@ -385,6 +385,7 @@ export class HomeScreen extends Component {
   };
 
   componentDidMount() {
+    console.log(UserStore.followingDetails)
     wait(2000).then(() => {
       this.interval = setInterval(() => {
         axios

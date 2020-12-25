@@ -27,11 +27,17 @@ import StickyItemFlatList from "@gorhom/sticky-item";
 import * as Animatable from "react-native-animatable";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+let data = [];
 // dummy data
-const data = [...Array(20)]
+UserStore.followingDetails
+  .map((user) => {
+    data.push(user.image);
+  })
   .fill(0)
   .map((_, index) => ({ id: `item-${index}` }));
+console.log(data);
 
 // configs
 const ITEM_WIDTH = 100;
@@ -57,35 +63,61 @@ const StickyItemView = ({
     // based on the animated value `x`
   };
 
-  return <Animatable.View style={amazingAnimation} />;
+  return (
+    <Animatable.View style={amazingAnimation}>
+      <ImageBackground
+        source={{ uri: UserStore.spotifyUserDetails.user_image }}
+        style={{
+          width: 65,
+          height: 65,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        imageStyle={{ borderRadius: 30 }}
+      >
+        <FontAwesome
+          name="plus-circle"
+          size={65}
+          style={{
+            // color: "#1DB954",
+            // padding: 4,
+            // alignSelf: "center",
+            borderRadius: 20,
+            opacity: 0.75,
+          }}
+        />
+      </ImageBackground>
+    </Animatable.View>
+  );
 };
 
 const renderItem = ({ item, index }) => (
-  <View
+  <ImageBackground
     key={`item-${index}`}
+    source={{ uri: data[index] }}
     style={{
-      backgroundColor: "green",
       width: ITEM_WIDTH,
       height: ITEM_HEIGHT,
-      borderRadius: 30,
     }}
-  />
+    imageStyle={{ borderRadius: 30 }}
+  ></ImageBackground>
 );
 
 const renderItemSticky = ({ item, index }) => (
-  <View
+  <ImageBackground
     key={`item-${index}`}
+    source={{ uri: data[index] }}
     style={{
-      backgroundColor: "green",
       width: 65,
       height: 65,
-      borderRadius: 30,
     }}
-  />
+    imageStyle={{ borderRadius: 30 }}
+  ></ImageBackground>
 );
-const handleStickyItemPress = () => Alert.alert("Sticky Item Pressed");
 
-export default function Main() {
+function Main() {
+  const [openPostScreen, setOpenPostScreen] = React.useState(false);
+  const handleStickyItemPress = () => setOpenPostScreen(true);
   let recentPostsMarkup = UserStore.allPosts ? (
     UserStore.allPosts.map((post) => (
       <View
@@ -97,74 +129,66 @@ export default function Main() {
   ) : (
     <Text>Loading</Text>
   );
-  return (
-    <View style={{ backgroundColor: "black", flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        {/* <StickyItemFlatList
-        itemWidth={ITEM_WIDTH}
-        itemHeight={ITEM_HEIGHT}
-        separatorSize={SEPARATOR_SIZE}
-        borderRadius={BORDER_RADIUS}
-        stickyItemWidth={STICKY_ITEM_WIDTH}
-        stickyItemHeight={STICKY_ITEM_HEIGHT}
-        stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-        stickyItemContent={StickyItemView}
-        onStickyItemPress={handleStickyItemPress}
-        data={data}
-        renderItem={renderItem}
-      /> */}
-        {/* <ScrollView>
-        <View style={{ backgroundColor: "#000" }}>{recentPostsMarkup}</View>
-      </ScrollView> */}
-
-        <ParallaxScrollView
-          // backgroundColor="blue"
-          contentBackgroundColor="black"
-          parallaxHeaderHeight={110}
-          renderStickyHeader={() => (
-            <View style={{ padding: 5 }}>
-              <StickyItemFlatList
-                itemWidth={65}
-                itemHeight={65}
-                separatorSize={SEPARATOR_SIZE}
-                borderRadius={BORDER_RADIUS}
-                stickyItemWidth={STICKY_ITEM_WIDTH}
-                stickyItemHeight={STICKY_ITEM_HEIGHT}
-                stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-                stickyItemContent={StickyItemView}
-                onStickyItemPress={handleStickyItemPress}
-                data={data}
-                renderItem={renderItemSticky}
-              />
+  if (!openPostScreen) {
+    return (
+      <View style={{ backgroundColor: "black", flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ParallaxScrollView
+            backgroundColor="black"
+            contentBackgroundColor="black"
+            parallaxHeaderHeight={80}
+            renderStickyHeader={() => (
+              <View style={{ padding: 5 }}>
+                <StickyItemFlatList
+                  itemWidth={65}
+                  itemHeight={65}
+                  separatorSize={SEPARATOR_SIZE}
+                  borderRadius={BORDER_RADIUS}
+                  stickyItemWidth={STICKY_ITEM_WIDTH}
+                  stickyItemHeight={STICKY_ITEM_HEIGHT}
+                  stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
+                  stickyItemContent={StickyItemView}
+                  onStickyItemPress={handleStickyItemPress}
+                  data={data}
+                  renderItem={renderItemSticky}
+                />
+              </View>
+            )}
+            stickyHeaderHeight={75}
+            // renderBackground = {0}
+            // renderForeground={() => (
+            //   <View style={{ padding: 5 }}>
+            //     <StickyItemFlatList
+            //       itemWidth={ITEM_WIDTH}
+            //       itemHeight={ITEM_HEIGHT}
+            //       separatorSize={SEPARATOR_SIZE}
+            //       borderRadius={BORDER_RADIUS}
+            //       stickyItemWidth={STICKY_ITEM_WIDTH}
+            //       stickyItemHeight={STICKY_ITEM_HEIGHT}
+            //       stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
+            //       stickyItemContent={StickyItemView}
+            //       onStickyItemPress={handleStickyItemPress}
+            //       data={data}
+            //       renderItem={renderItem}
+            //     />
+            //   </View>
+            // )}
+          >
+            <View style={{ paddingTop: 10 }}>
+              <LinearGradient
+                colors={["#000", "#8D8D92", "#EAEAEB", "#8D8D92", "#000"]}
+              >
+                <View>{recentPostsMarkup}</View>
+                {/* explore */}
+              </LinearGradient>
             </View>
-          )}
-          stickyHeaderHeight={80}
-          renderForeground={() => (
-            <View style={{ padding: 5 }}>
-              <StickyItemFlatList
-                itemWidth={ITEM_WIDTH}
-                itemHeight={ITEM_HEIGHT}
-                separatorSize={SEPARATOR_SIZE}
-                borderRadius={BORDER_RADIUS}
-                stickyItemWidth={STICKY_ITEM_WIDTH}
-                stickyItemHeight={STICKY_ITEM_HEIGHT}
-                stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-                stickyItemContent={StickyItemView}
-                onStickyItemPress={handleStickyItemPress}
-                data={data}
-                renderItem={renderItem}
-              />
-            </View>
-          )}
-        >
-          <View style={{ paddingTop: 10 }}>
-            <LinearGradient colors={["#000", "#8D8D92", "#EAEAEB", "#8D8D92", "#000"]}>
-              <View>{recentPostsMarkup}</View>
-              {/* explore */}
-            </LinearGradient>
-          </View>
-        </ParallaxScrollView>
-      </SafeAreaView>
-    </View>
-  );
+          </ParallaxScrollView>
+        </SafeAreaView>
+      </View>
+    );
+  } else {
+    return
+  }
 }
+
+export default observer(Main);
