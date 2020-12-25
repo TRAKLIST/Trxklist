@@ -5070,6 +5070,13 @@
     "color" "^3.1.2"
     "react-native-safe-area-view" "^0.14.9"
 
+"react-native-parallax-scroll-view@^0.21.3":
+  "integrity" "sha512-oVbZPijNGYGcpU2z7k/ZOOnl0vYxch7qtVvaJpH4+wLVnEP49NC2diCzjFGz8PE0yEcgyeTdkpdUK8RTD3QEew=="
+  "resolved" "https://registry.npmjs.org/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.21.3.tgz"
+  "version" "0.21.3"
+  dependencies:
+    "prop-types" "^15.6.0"
+
 "react-native-reanimated@*", "react-native-reanimated@>=1.8.0", "react-native-reanimated@~1.13.0":
   "integrity" "sha512-O+WhgxSjOIzcVdAAvx+h2DY331Ek1knKlaq+jsNLpC1fhRy9XTdOObovgob/aF2ve9uJfPEawCx8381g/tUJZQ=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-1.13.2.tgz"

@@ -95,12 +95,12 @@ export class Post extends Component {
     return (
       <View
         style={{
-          borderTopWidth: 1.5,
-          borderBottomWidth: 1.5,
+          // borderTopWidth: 1.5,
+          // borderBottomWidth: 1.5,
           borderRadius : 10,
           borderColor: "green",
           backgroundColor: "#000",
-          paddingVertical : 10
+          paddingVertical : 10,
         }}
       >
         {/* <Header

@@ -250,27 +250,7 @@ const Footer = ({
   return (
     <View style={styles.container}>
       <View style={styles.iconsContainer}>
-        <View style={styles.leftIcons}>
-          <TouchableOpacity onPress={onSavePressed}>
-            <View style={styles.iconContainer2}>
-              {isSaved ? (
-                <MaterialCommunityIcons
-                  name="content-save"
-                  size={25}
-                  color={"#44CF6C"}
-                  style={{ margin: 8 }}
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="content-save-outline"
-                  size={25}
-                  color={"#44CF6C"}
-                  style={{ margin: 8 }}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
-
+        <View style={[styles.leftIcons, {marginLeft : 10, borderBottomWidth : 2, borderColor : 'green'}]}>
           <TouchableOpacity onPress={onLikePressed}>
             <View style={styles.iconContainer2}>
               {isLiked ? (
@@ -278,14 +258,14 @@ const Footer = ({
                   name="heart"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ margin: 8 }}
+                  style={{ marginTop: 8, paddingBottom : 4 }}
                 />
               ) : (
                 <ADIcon
                   name="hearto"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ margin: 8 }}
+                  style={{ marginTop: 8, paddingBottom : 4 }}
                 />
               )}
               {/* {likesCount == !8 ? (
@@ -295,24 +275,45 @@ const Footer = ({
                 )} */}
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          
+          <TouchableOpacity onPress={onSavePressed}>
+            <View style={styles.iconContainer2}>
+              {isSaved ? (
+                <MaterialCommunityIcons
+                  name="content-save"
+                  size={27}
+                  color={"#44CF6C"}
+                  style={{ marginTop: 8, paddingBottom : 4  }}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="content-save-outline"
+                  size={27}
+                  color={"#44CF6C"}
+                  style={{ marginTop: 8, paddingBottom : 4  }}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity>
             <View style={styles.iconContainer2}>
               <FontistoIcon
                 name="comment"
                 size={25}
                 color={"#44CF6C"}
-                style={{ margin: 8 }}
+                style={{ marginTop: 8  }}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity onPress={onSavePressed}>
             <View style={styles.iconContainer2}>
               <Feather
                 name="share-2"
-                size={25}
+                size={24}
                 color={"#44CF6C"}
-                style={{ margin: 8 }}
+                style={{ marginTop: 8, paddingBottom : 4  }}
               />
             </View>
           </TouchableOpacity>
@@ -332,8 +333,8 @@ const Footer = ({
           </View> */}
         </View>
 
-        <View style={styles.iconContainer2}>
-          <Text style = {{color : '#71677C', fontWeight : 'bold', textTransform : 'uppercase'}}>{dayjs(postedAt).fromNow()}</Text>
+        <View style={[styles.iconContainer2, {marginRight : 10, borderBottomWidth : 2, borderColor : 'green'}]}>
+          <Text style = {{color : '#71677C', fontWeight : 'bold', textTransform : 'uppercase', fontSize : 13, fontStyle : 'italic'}}>{dayjs(postedAt).fromNow()}</Text>
         </View>
       </View>
     </View>
