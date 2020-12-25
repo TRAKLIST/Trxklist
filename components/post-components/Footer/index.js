@@ -11,6 +11,9 @@ import axios from "axios";
 import UserStore from "../../../stores/UserStore";
 import { observer } from "mobx-react";
 import spotifyAPI from "../../SpotifyAPI";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const Footer = ({
   likesCount: likesCountProp,
@@ -19,6 +22,7 @@ const Footer = ({
   postID,
   status,
   trackID,
+  postedAt
 }) => {
   useEffect;
   const [isLiked, setIsLike] = useState(false);
@@ -164,6 +168,8 @@ const Footer = ({
     }
   };
 
+  dayjs.extend(relativeTime);
+
   useEffect(() => {
     axios
       .get(
@@ -245,32 +251,73 @@ const Footer = ({
     <View style={styles.container}>
       <View style={styles.iconsContainer}>
         <View style={styles.leftIcons}>
-          <TouchableWithoutFeedback onPress={onLikePressed}>
+          <TouchableOpacity onPress={onSavePressed}>
+            <View style={styles.iconContainer2}>
+              {isSaved ? (
+                <MaterialCommunityIcons
+                  name="content-save"
+                  size={25}
+                  color={"#44CF6C"}
+                  style={{ margin: 8 }}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="content-save-outline"
+                  size={25}
+                  color={"#44CF6C"}
+                  style={{ margin: 8 }}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={onLikePressed}>
             <View style={styles.iconContainer2}>
               {isLiked ? (
                 <ADIcon
                   name="heart"
                   size={25}
-                  color={"#e73838"}
+                  color={"#44CF6C"}
                   style={{ margin: 8 }}
                 />
               ) : (
-                  <ADIcon
-                    name="hearto"
-                    size={25}
-                    color={"#21295c"}
-                    style={{ margin: 8 }}
-                  />
-                )}
-              {likesCount == !0 ? (
+                <ADIcon
+                  name="hearto"
+                  size={25}
+                  color={"#44CF6C"}
+                  style={{ margin: 8 }}
+                />
+              )}
+              {/* {likesCount == !8 ? (
                 <Text style={styles.number}>{likesCount}</Text>
               ) : (
                   <View style={styles.number}></View>
-                )}
+                )} */}
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.iconContainer2}>
+              <FontistoIcon
+                name="comment"
+                size={25}
+                color={"#44CF6C"}
+                style={{ margin: 8 }}
+              />
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.iconContainer2}>
+          <TouchableOpacity onPress={onSavePressed}>
+            <View style={styles.iconContainer2}>
+              <Feather
+                name="share-2"
+                size={25}
+                color={"#44CF6C"}
+                style={{ margin: 8 }}
+              />
+            </View>
+          </TouchableOpacity>
+
+          {/* <View style={styles.iconContainer2}>
             <FontistoIcon
               name="comment"
               size={23}
@@ -280,38 +327,13 @@ const Footer = ({
             {commentCount == !0 ? (
               <Text style={styles.number}>{commentCount}</Text>
             ) : (
-                <View style={styles.number}></View>
-              )}
-          </View>
+              <View style={styles.number}></View>
+            )}
+          </View> */}
         </View>
 
         <View style={styles.iconContainer2}>
-          <TouchableWithoutFeedback onPress={onSavePressed}>
-            <View style={styles.iconContainer2}>
-              {isSaved ? (
-                <MaterialCommunityIcons
-                  name="content-save"
-                  size={25}
-                  color={"#1DB954"}
-                  style={{ margin: 8 }}
-                />
-              ) : (
-                  <MaterialCommunityIcons
-                    name="content-save-outline"
-                    size={25}
-                    color={"#21295c"}
-                    style={{ margin: 8 }}
-                  />
-                )}
-            </View>
-          </TouchableWithoutFeedback>
-
-          <Feather
-            name="share-2"
-            size={25}
-            color={"#21295c"}
-            style={{ margin: 8 }}
-          />
+          <Text style = {{color : '#71677C', fontWeight : 'bold', textTransform : 'uppercase'}}>{dayjs(postedAt).fromNow()}</Text>
         </View>
       </View>
     </View>

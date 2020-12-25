@@ -37,8 +37,10 @@ export default function Main() {
     <Text>Loading</Text>
   );
   return (
-    <ScrollView>
-      <View style={{ backgroundColor: "#000" }}>{recentPostsMarkup}</View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{ backgroundColor: "#000" }}>{recentPostsMarkup}</View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

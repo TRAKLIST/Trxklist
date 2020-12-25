@@ -2,12 +2,13 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
   },
   iconsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 10,
+    marginTop : 5
   },
   iconContainer2: {
     flexDirection: "row",
