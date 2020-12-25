@@ -13,7 +13,7 @@ class UserStore {
       spotifyUserDetails: {},
       followingDetails: [],
       str: '',
-      allPosts : []
+      allPosts : [],
     });
   }
 }
