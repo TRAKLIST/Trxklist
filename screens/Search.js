@@ -23,8 +23,11 @@ import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import axios from "axios";
 import spotifyAPI from "../components/SpotifyAPI";
+import ADIcon from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 let list;
+let array = [];
 
 function wait(timeout) {
   return new Promise((res) => {
@@ -40,29 +43,30 @@ function Search() {
   const [trackItems, setTrackItems] = React.useState([]);
 
   const search = () => {
+    // setTrackItems([]);
     let trackQuery = {};
     // console.log(val);
 
     spotifyAPI.searchTracks(searchTerm).then((data) => {
-      // console.log(data)
-      setTrackItems([])
-      data.tracks.items.map(
-        (item) => (
-          (trackQuery = {
-            id: item.id,
-            title: item.name,
-            artist: item.artists[0].name,
-            artistID: item.artists[0].id,
-            albumName: item.album.name,
-            image: item.album.images[0].url,
-            releaseDate: item.album.release_date,
-            popularity: item.popularity,
-            duration: item.duration_ms,
-          }),
-          setTrackItems([...trackItems, trackQuery])
-        )
-      );
-      console.log(trackItems);
+      array = [];
+      // console.log(data);
+      data.tracks.items.map((item) => {
+        let trackQuery = {
+          id: item.id,
+          title: item.name,
+          artist: item.artists[0].name,
+          artistID: item.artists[0].id,
+          albumName: item.album.name,
+          image: item.album.images[0].url,
+          releaseDate: item.album.release_date,
+          popularity: item.popularity,
+          duration: item.duration_ms,
+        };
+        // console.log(trackQuery)
+        array.push(trackQuery);
+        // setTrackItems([...trackItems, trackQuery]);
+      });
+      console.log(array);
     });
   };
 
@@ -391,7 +395,7 @@ function Search() {
           <LinearGradient
             colors={["#A7A2A9", "#fff"]}
             style={{
-              height: Dimensions.get("window").height,
+              minHeight: Dimensions.get("window").height,
               backgroundColor: "grey",
               margin: 5,
               borderRadius: 20,
@@ -436,7 +440,7 @@ function Search() {
 
             <View
               style={{
-                margin: 15,
+                margin: 10,
                 padding: 5,
                 borderBottomWidth: 3,
                 borderColor: "#fff",
@@ -448,12 +452,84 @@ function Search() {
               <Text style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}>
                 tracks
               </Text>
-              {trackItems.map((track) => {
-                <Text>{track.title}</Text>;
+              {array.map((track) => {
+                return (
+                    <View style={{ flexDirection: "row", margin: 5, width : '100%'}}>
+                      <View style = {{ flex: 1 }}>
+                        <Image
+                          source={{ uri: track.image }}
+                          style={{ height: 50, width: 50, borderRadius: 30 }}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          padding: 10,
+                          marginBottom: 3,
+                          flex: 2,
+                        }}
+                      >
+                        <Text numberOfLines={1}>{track.title}</Text>
+                        <Text numberOfLines = {1}>{track.artist}</Text>
+                      </View>
+                      <View style={{ flex: 1, flexDirection: "row", }}>
+                        {/* icons */}
+
+                        <TouchableOpacity style = {{ justifyContent : 'center', margin : 5 }}>
+                          <View style={styles.iconContainer2}>
+                            {/* {isSaved ? (
+                              <MaterialCommunityIcons
+                                name="content-save"
+                                size={27}
+                                color={"#44CF6C"}
+                                style={{ marginTop: 8, paddingBottom: 4 }}
+                              />
+                            ) : (
+                              <MaterialCommunityIcons
+                                name="content-save-outline"
+                                size={27}
+                                color={"#44CF6C"}
+                                style={{ marginTop: 8, paddingBottom: 4 }}
+                              />
+                            )} */}
+                            <MaterialCommunityIcons
+                              name="content-save-outline"
+                              size={27}
+                              color={"#44CF6C"}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style = {{ justifyContent : 'center', margin : 5 }}>
+                          <View style={[styles.iconContainer2]}>
+                            {/* {isLiked ? (
+                              <ADIcon
+                                name="heart"
+                                size={25}
+                                color={"#44CF6C"}
+                                style={{ marginTop: 8, paddingBottom: 4 }}
+                              />
+                            ) : (
+                              <ADIcon
+                                name="hearto"
+                                size={25}
+                                color={"#44CF6C"}
+                                style={{ marginTop: 8, paddingBottom: 4 }}
+                              />
+                            )} */}
+                            <ADIcon
+                              name="hearto"
+                              size={25}
+                              color={"#44CF6C"}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                );
               })}
             </View>
 
-            <View
+            {/* <View
               style={{
                 margin: 15,
                 padding: 5,
@@ -483,7 +559,7 @@ function Search() {
               <Text style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}>
                 albums
               </Text>
-            </View>
+            </View> */}
           </LinearGradient>
         </ScrollView>
       </LinearGradient>
@@ -567,5 +643,10 @@ const styles = StyleSheet.create({
     height: "100%",
     // backgroundColor: "whitesmoke",
     borderRadius: 20,
+  },
+  iconContainer2: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 2,
   },
 });
