@@ -31,98 +31,12 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../components/SpotifyAPI";
-import Body from "../components/post-components/Body"
-import Footer from "../components/post-components/Footer"
+import Body from "../components/post-components/Body";
+import Footer from "../components/post-components/Footer";
 
 let trackQuery = {};
 
 const initialLayout = { width: Dimensions.get("window").width };
-
-let data = [];
-// dummy data
-UserStore.followingDetails
-  .map((user) => {
-    data.push(user.image);
-  })
-  .fill(0)
-  .map((_, index) => ({ id: `item-${index}` }));
-console.log(data);
-
-// configs
-const ITEM_WIDTH = 100;
-const ITEM_HEIGHT = 100;
-const STICKY_ITEM_WIDTH = 24;
-const STICKY_ITEM_HEIGHT = 24;
-const STICKY_ITEM_BACKGROUNDS = ["#222", "#000"];
-const SEPARATOR_SIZE = 8;
-const BORDER_RADIUS = 30;
-
-const StickyItemView = ({
-  x,
-  threshold,
-  itemWidth,
-  itemHeight,
-  stickyItemWidth,
-  stickyItemHeight,
-  separatorSize,
-  isRTL,
-}) => {
-  const amazingAnimation = {
-    // here you add your custom interactive animation
-    // based on the animated value `x`
-  };
-
-  return (
-    <Animatable.View style={amazingAnimation}>
-      <ImageBackground
-        source={{ uri: UserStore.spotifyUserDetails.user_image }}
-        style={{
-          width: 65,
-          height: 65,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        imageStyle={{ borderRadius: 30 }}
-      >
-        <FontAwesome
-          name="plus-circle"
-          size={65}
-          style={{
-            // color: "#1DB954",
-            // padding: 4,
-            // alignSelf: "center",
-            borderRadius: 20,
-            opacity: 0.75,
-          }}
-        />
-      </ImageBackground>
-    </Animatable.View>
-  );
-};
-
-const renderItem = ({ item, index }) => (
-  <ImageBackground
-    key={`item-${index}`}
-    source={{ uri: data[index] }}
-    style={{
-      width: ITEM_WIDTH,
-      height: ITEM_HEIGHT,
-    }}
-    imageStyle={{ borderRadius: 30 }}
-  ></ImageBackground>
-);
-
-const renderItemSticky = ({ item, index }) => (
-  <ImageBackground
-    key={`item-${index}`}
-    source={{ uri: data[index] }}
-    style={{
-      width: 65,
-      height: 65,
-    }}
-    imageStyle={{ borderRadius: 30 }}
-  ></ImageBackground>
-);
 
 function Main() {
   const [trackDetails, setTrackDetails] = React.useState({});
@@ -136,6 +50,92 @@ function Main() {
     { key: "second", title: "Caption" },
     { key: "third", title: "Preview" },
   ]);
+
+  let data = [];
+  // dummy data
+  UserStore.followingDetails
+    .map((user) => {
+      data.push(user.image);
+    })
+    .fill(0)
+    .map((_, index) => ({ id: `item-${index}` }));
+  console.log(data);
+
+  // configs
+  const ITEM_WIDTH = 100;
+  const ITEM_HEIGHT = 100;
+  const STICKY_ITEM_WIDTH = 24;
+  const STICKY_ITEM_HEIGHT = 24;
+  const STICKY_ITEM_BACKGROUNDS = ["#222", "#000"];
+  const SEPARATOR_SIZE = 8;
+  const BORDER_RADIUS = 30;
+
+  const StickyItemView = ({
+    x,
+    threshold,
+    itemWidth,
+    itemHeight,
+    stickyItemWidth,
+    stickyItemHeight,
+    separatorSize,
+    isRTL,
+  }) => {
+    const amazingAnimation = {
+      // here you add your custom interactive animation
+      // based on the animated value `x`
+    };
+
+    return (
+      <Animatable.View style={amazingAnimation}>
+        <ImageBackground
+          source={{ uri: UserStore.spotifyUserDetails.user_image }}
+          style={{
+            width: 65,
+            height: 65,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          imageStyle={{ borderRadius: 30 }}
+        >
+          <FontAwesome
+            name="plus-circle"
+            size={65}
+            style={{
+              // color: "#1DB954",
+              // padding: 4,
+              // alignSelf: "center",
+              borderRadius: 20,
+              opacity: 0.75,
+            }}
+          />
+        </ImageBackground>
+      </Animatable.View>
+    );
+  };
+
+  const renderItem = ({ item, index }) => (
+    <ImageBackground
+      key={`item-${index}`}
+      source={{ uri: data[index] }}
+      style={{
+        width: ITEM_WIDTH,
+        height: ITEM_HEIGHT,
+      }}
+      imageStyle={{ borderRadius: 30 }}
+    ></ImageBackground>
+  );
+
+  const renderItemSticky = ({ item, index }) => (
+    <ImageBackground
+      key={`item-${index}`}
+      source={{ uri: data[index] }}
+      style={{
+        width: 65,
+        height: 65,
+      }}
+      imageStyle={{ borderRadius: 30 }}
+    ></ImageBackground>
+  );
   const select = (item) => {
     setTrackDetails(item);
     setIndex(1);
@@ -406,7 +406,7 @@ function Main() {
         <Footer
           likesCount={0}
           commentCount={0}
-          postID={'uuidv4()'}
+          postID={"uuidv4()"}
           status={"Track"}
           trackID={trackDetails.id}
         />
@@ -486,7 +486,7 @@ function Main() {
           >
             <View style={{ paddingTop: 10 }}>
               <LinearGradient
-                colors={["#000", "#8D8D92", "#EAEAEB", "#8D8D92", "#000"]}
+                colors={["#000", "#8D8D92", "#292928", "#8D8D92", "#000"]}
               >
                 <View>{recentPostsMarkup}</View>
                 {/* explore */}
