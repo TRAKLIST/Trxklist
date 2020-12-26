@@ -44,6 +44,7 @@ function Search() {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [userDetails, setUserDetails] = React.useState([]);
   const [lyricsPage, setLyricsPage] = React.useState(false);
+  const [trackIndex, setTrackIndex] = React.useState();
   const [trackItems, setTrackItems] = React.useState([]);
 
   const search = () => {
@@ -65,22 +66,28 @@ function Search() {
             `https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_isrc=${item.external_ids.isrc}&apikey=7a375fb4e8e03a7c2f911057ebeb14d9`
           )
           .then((res) => {
-            console.log(res.data, 'regfw');
+            console.log(JSON.parse(res.data.substring(9, res.data.length - 2)).message.body.lyrics.lyrics_body, "regfw")
+            return JSON.parse(res.data.substring(9, res.data.length - 2)).message.body.lyrics.lyrics_body;
+          })
+          .then((res) => {
+            let trackQuery = {
+              id: item.id,
+              title: item.name,
+              artist: item.artists[0].name,
+              artistID: item.artists[0].id,
+              albumName: item.album.name,
+              image: item.album.images[0].url,
+              releaseDate: item.album.release_date,
+              popularity: item.popularity,
+              duration: item.duration_ms,
+              isrc: item.external_ids.isrc,
+              lyrics: res,
+            };
+            array.push(trackQuery);
           });
-        let trackQuery = {
-          id: item.id,
-          title: item.name,
-          artist: item.artists[0].name,
-          artistID: item.artists[0].id,
-          albumName: item.album.name,
-          image: item.album.images[0].url,
-          releaseDate: item.album.release_date,
-          popularity: item.popularity,
-          duration: item.duration_ms,
-          isrc: item.external_ids.isrc,
-        };
+
         // console.log(trackQuery)
-        array.push(trackQuery);
+
         // setTrackItems([...trackItems, trackQuery]);
       });
       // console.log(array);
@@ -101,7 +108,7 @@ function Search() {
         array1.push(artistQuery);
         // setTrackItems([...trackItems, trackQuery]);
       });
-      console.log(array);
+      // console.log(array);
     });
 
     spotifyAPI.searchAlbums(searchTerm).then((data) => {
@@ -137,6 +144,11 @@ function Search() {
     //   });
     //   // console.log(array);
     // });
+  };
+
+  const lyricsToggle = (index) => {
+    setTrackIndex(index);
+    setLyricsPage(true);
   };
 
   const follow = (recipient) => {
@@ -527,9 +539,9 @@ function Search() {
                 >
                   tracks
                 </Text>
-                {array.map((track) => {
+                {array.map((track, index) => {
                   return (
-                    <TouchableOpacity onPress={() => setLyricsPage(true)}>
+                    <TouchableOpacity onPress={() => lyricsToggle(index)}>
                       <View
                         style={{
                           flexDirection: "row",
@@ -832,9 +844,11 @@ function Search() {
             </LinearGradient>
           </ScrollView>
         ) : (
-          <Animatable.View animation="bounceInUp">
+          <Animatable.View animation="bounceInUp" style = {{backgroundColor : '#000'}} >
             <Button title="return" onPress={() => setLyricsPage(false)} />
-            <Text>Hi</Text>
+            <ScrollView>
+              <Text style = {{color : '#fff'}}>{array[trackIndex].lyrics}</Text>
+            </ScrollView>
           </Animatable.View>
         )}
       </LinearGradient>
