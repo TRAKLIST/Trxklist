@@ -48,10 +48,25 @@ function Search() {
 
   const search = () => {
     // musixmatch
+    // axios
+    //   .get(
+    //     `https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_isrc=${trackQuery.isrc}&apikey=7a375fb4e8e03a7c2f911057ebeb14d9`
+    //   )
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
+
     spotifyAPI.searchTracks(searchTerm).then((data) => {
       array = [];
       console.log(data);
       data.tracks.items.map((item) => {
+        axios
+          .get(
+            `https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_isrc=${item.external_ids.isrc}&apikey=7a375fb4e8e03a7c2f911057ebeb14d9`
+          )
+          .then((res) => {
+            console.log(res.data, 'regfw');
+          });
         let trackQuery = {
           id: item.id,
           title: item.name,
@@ -818,7 +833,7 @@ function Search() {
           </ScrollView>
         ) : (
           <Animatable.View animation="bounceInUp">
-            <Button title = "return" onPress = {() => setLyricsPage(false)} />
+            <Button title="return" onPress={() => setLyricsPage(false)} />
             <Text>Hi</Text>
           </Animatable.View>
         )}
