@@ -4,11 +4,41 @@ import styles from "./styles";
 import ProfilePicture from "../../ProfilePicture";
 import Icon from "react-native-vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
   let tracklist = thisTrack.track ? (
-    thisTrack.track.map((track) => <Text style={styles.track}>{track}</Text>)
+    thisTrack.track.map((track) => (
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 7, justifyContent: "center" }}>
+          <Text
+            style={[
+              styles.track,
+              { padding: 5, borderRadius: 5, overflow: "hidden" },
+            ]}
+            numberOfLines={1}
+          >
+            {track}
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1.5,
+            alignItems: "flex-end",
+            justifyContent: "center",
+            padding: 0,
+          }}
+        >
+          <TouchableOpacity>
+            <MaterialCommunityIcons
+              name="content-save-outline"
+              size={28}
+              color={"#44CF6C"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    ))
   ) : (
     <Text>Loading</Text>
   );
@@ -17,9 +47,9 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
       // <Text source={{ uri: imageUri }} style={styles.image}>
       <View>
         <ImageBackground
-          style={[styles.image2, {alignItems : 'center'}]}
+          style={[styles.image2, { alignItems: "center" }]}
           source={{ uri: thisTrack.image }}
-          imageStyle = {{borderRadius :15}}
+          imageStyle={{ borderRadius: 15 }}
         >
           <View
             style={[
@@ -80,7 +110,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
               bottom: 0,
               position: "absolute",
               backgroundColor: "#000",
-              width : '100%',
+              width: "100%",
               opacity: 0.8,
               padding: 10,
               // borderRadius: 15,
@@ -104,24 +134,66 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
   } else {
     return (
       <View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.name}>{thisTrack.name}</Text>
+        <View
+          style={[
+            styles.titleContainer,
+            {
+              flexDirection: "row",
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
+            },
+          ]}
+        >
+          <View style={{ flex: 1 }}>
+            <ProfilePicture uri={imageUri} size={40} />
+          </View>
+          <View style={{ alignSelf: "center", marginLeft: 0, flex: 5 }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 15,
+                color: "#fff",
+                margin: 2,
+                fontFamily: "Arial",
+                fontWeight: "bold",
+                backgroundColor: "transparent",
+                textAlign: "center",
+              }}
+            >
+              {thisTrack.name}
+            </Text>
+            <View>
+              <Text
+                numberOfLines={1}
+                style={{
+                  fontWeight: "bold",
+                  color: "#44CF6C",
+                  padding: 3,
+                  textAlign: "center",
+                }}
+              >
+                {thisTrack.artist}
+              </Text>
+            </View>
+          </View>
           <View
             style={{
-              backgroundColor: "#007bff",
-              marginBottom: 5,
+              justifyContent: "center",
+              marginLeft: 0,
+              flex: 1,
+              alignItems: "center",
             }}
           >
-            <Text style={styles.artist}>{thisTrack.artist}</Text>
+            <TouchableOpacity>
+              <Icon name="dots-three-vertical" size={16} color="#fff" />
+            </TouchableOpacity>
           </View>
         </View>
 
         <View
           style={{
             flexDirection: "row",
-            marginTop: 3,
-            marginBottom: 3,
-            backgroundColor: "#fff",
+            margin : 5
           }}
         >
           <View>
@@ -129,12 +201,25 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
           </View>
 
           <View style={styles.block}>
-            <ScrollView style={{ height: 150 }}>{tracklist}</ScrollView>
+            <ScrollView
+              style={{ height: 150, backgroundColor: "#000", padding: 5 }}
+            >
+              {tracklist}
+            </ScrollView>
           </View>
         </View>
 
-        <View>
-          <View style={{ backgroundColor: "#007bff" }}>
+        <View
+          style={{
+            backgroundColor: "#000",
+            opacity: 0.8,
+            padding: 10,
+            // borderRadius: 15,
+            marginLeft: 10,
+            marginRight: 10,
+          }}
+        >
+          <View>
             <Text style={styles.caption}>{caption}</Text>
           </View>
         </View>
