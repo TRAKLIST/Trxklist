@@ -26,6 +26,7 @@ import axios from "axios";
 import spotifyAPI from "../components/SpotifyAPI";
 import ADIcon from "react-native-vector-icons/AntDesign";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import ParallaxScrollView from "react-native-parallax-scroll-view";
 
 let list;
 let array = [];
@@ -437,23 +438,24 @@ function Search() {
     }, [refreshing]);
   });
 
-  return (
-    <View style={styles.container}>
-      <LinearGradient colors={["#000", "#000"]} style={styles.header}>
-        <StatusBar backgroundColor="#009387" barStyle="light-content" />
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Search for users..."
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(val) => setSearchTerm(val)}
-          />
-          <TouchableOpacity style={{ flex: 1 }} onPress={search}>
-            <LinearGradient
-              colors={["#000", "#21295c"]}
-              style={[styles.signIn]}
-            >
-              {/* <Entypo
+  if (lyricsPage == false) {
+    return (
+      <View style={styles.container}>
+        <LinearGradient colors={["#000", "#000"]} style={styles.header}>
+          <StatusBar backgroundColor="#009387" barStyle="light-content" />
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Search for users..."
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => setSearchTerm(val)}
+            />
+            <TouchableOpacity style={{ flex: 1 }} onPress={search}>
+              <LinearGradient
+                colors={["#000", "#21295c"]}
+                style={[styles.signIn]}
+              >
+                {/* <Entypo
               name="spotify"
               size={30}
               style={{
@@ -462,12 +464,12 @@ function Search() {
                 alignSelf: "center",
               }}
             /> */}
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
-      <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
-        {lyricsPage == false ? (
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+        <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
+          {/* {lyricsPage == false ? ( */}
           <Animatable.View
             animation="bounceInUp"
             style={{
@@ -507,7 +509,12 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign :'center' }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "900",
+                      fontSize: 16,
+                      textAlign: "center",
+                    }}
                   >
                     profiles
                   </Text>
@@ -545,7 +552,12 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "900",
+                      fontSize: 16,
+                      textAlign: "center",
+                    }}
                   >
                     tracks
                   </Text>
@@ -577,8 +589,18 @@ function Search() {
                               flex: 2,
                             }}
                           >
-                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{track.title}</Text>
-                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{track.artist}</Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {track.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
+                            >
+                              {track.artist}
+                            </Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
                             {/* icons */}
@@ -654,7 +676,12 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "900",
+                      fontSize: 16,
+                      textAlign: "center",
+                    }}
                   >
                     artists
                   </Text>
@@ -689,10 +716,15 @@ function Search() {
                           >
                             {/* <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{album.title}</Text>
                             <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{album.artist}</Text> */}
-                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{artist.title}</Text>
                             <Text
                               numberOfLines={1}
-                              style = {{ color: "#44CF6C", fontWeight: "bold" }}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {artist.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
                             >{`${artist.followers} followers`}</Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
@@ -769,7 +801,12 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "900",
+                      fontSize: 16,
+                      textAlign: "center",
+                    }}
                   >
                     albums
                   </Text>
@@ -802,8 +839,18 @@ function Search() {
                               flex: 2,
                             }}
                           >
-                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{album.title}</Text>
-                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{album.artist}</Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {album.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
+                            >
+                              {album.artist}
+                            </Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
                             {/* icons */}
@@ -869,27 +916,60 @@ function Search() {
               </LinearGradient>
             </ScrollView>
           </Animatable.View>
-        ) : (
-          <Animatable.View
-            animation="bounceInUp"
-            style={{
-              backgroundColor: "#000",
-              height: "100%",
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-            }}
-          >
-            <Button title="return" onPress={() => setLyricsPage(false)} />
-            <ScrollView style={{ padding: 5 }}>
-              <Text style={{ color: "#fff", fontSize: 20 }}>
-                {array[trackIndex].lyrics}
-              </Text>
-            </ScrollView>
-          </Animatable.View>
-        )}
-      </LinearGradient>
-    </View>
-  );
+          {/* ) : null} */}
+        </LinearGradient>
+      </View>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1, backgroundColor : '#292929' }}>
+        <ParallaxScrollView
+          backgroundColor="#292929"
+          contentBackgroundColor="#292929"
+          parallaxHeaderHeight={300}
+          renderBackground={() => (
+            <ImageBackground
+              source={{ uri: array[trackIndex].image }}
+              style={{
+                height: 300,
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              imageStyle={{
+                borderBottomLeftRadius: 15,
+                borderBottomRightRadius: 15,
+                paddingHorizontal : 10
+              }}
+            >
+              {/* <Text>Hello World!</Text> */}
+            </ImageBackground>
+          )}
+        >
+          <View>
+            {/* <Text>Scroll me</Text> */}
+            <Animatable.View
+              animation="bounceInUp"
+              style={{
+                backgroundColor: "#292929",
+                height: "100%",
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                paddingHorizontal : 10
+              }}
+            >
+              <Button title="return" onPress={() => setLyricsPage(false)} />
+              <ScrollView style={{ padding: 5 }}>
+                <Text style={{ color: "#CCCCCC", fontSize: 20 }}>
+                  {array[trackIndex].lyrics}
+                </Text>
+              </ScrollView>
+            </Animatable.View>
+          </View>
+        </ParallaxScrollView>
+      </View>
+    );
+  }
 }
 
 export default observer(Search);
