@@ -17,6 +17,7 @@ import {
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Octicons from "react-native-vector-icons/Octicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import * as Animatable from "react-native-animatable";
@@ -353,7 +354,7 @@ function Search() {
                             right: 15,
                             position: "absolute",
                             backgroundColor: "#A72608",
-                            borderRadius: 10,
+                            borderRadius: 30,
                           }}
                           onPress={() => unfollow(user.user)}
                         >
@@ -372,7 +373,7 @@ function Search() {
                             right: 15,
                             position: "absolute",
                             backgroundColor: "green",
-                            borderRadius: 10,
+                            borderRadius: 30,
                           }}
                           onPress={() => follow(user.user)}
                         >
@@ -445,9 +446,9 @@ function Search() {
       <View style={styles.container}>
         <LinearGradient colors={["#000", "#000"]} style={styles.header}>
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
-          <View style={[styles.action, {backgroundColor : '#292929'}]}>
+          <View style={[styles.action, { backgroundColor: "#292929" }]}>
             <TextInput
-              placeholder="Search for users..."
+              placeholder="Search for users and music"
               style={[styles.textInput]}
               autoCapitalize="none"
               onChangeText={(val) => setSearchTerm(val)}
@@ -457,15 +458,15 @@ function Search() {
                 colors={["#000", "#21295c"]}
                 style={[styles.signIn]}
               >
-                {/* <Entypo
-              name="spotify"
-              size={30}
-              style={{
-                color: "#1DB954",
-                padding: 4,
-                alignSelf: "center",
-              }}
-            /> */}
+                <ADIcon
+                  name="find"
+                  size={30}
+                  style={{
+                    color: "#1DB954",
+                    padding: 4,
+                    alignSelf: "center",
+                  }}
+                />
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -510,7 +511,7 @@ function Search() {
                     borderRadius: 0,
                   }}
                 >
-                  <Text
+                  {/* <Text
                     style={{
                       color: "#fff",
                       fontWeight: "900",
@@ -519,7 +520,7 @@ function Search() {
                     }}
                   >
                     profiles
-                  </Text>
+                  </Text> */}
 
                   {list}
                 </View>
@@ -553,7 +554,7 @@ function Search() {
                     borderRadius: 0,
                   }}
                 >
-                  <Text
+                  {/* <Text
                     style={{
                       color: "#fff",
                       fontWeight: "900",
@@ -562,7 +563,7 @@ function Search() {
                     }}
                   >
                     tracks
-                  </Text>
+                  </Text> */}
                   {array.map((track, index) => {
                     return (
                       <TouchableOpacity onPress={() => lyricsToggle(index)}>
@@ -652,8 +653,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <ADIcon
-                                  name="hearto"
+                                <FontAwesome
+                                  name="plus-circle"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -677,7 +678,7 @@ function Search() {
                     borderRadius: 0,
                   }}
                 >
-                  <Text
+                  {/* <Text
                     style={{
                       color: "#fff",
                       fontWeight: "900",
@@ -686,7 +687,7 @@ function Search() {
                     }}
                   >
                     artists
-                  </Text>
+                  </Text> */}
 
                   {array1.map((artist) => {
                     return (
@@ -777,8 +778,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <ADIcon
-                                  name="hearto"
+                                <FontAwesome
+                                  name="plus-circle"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -802,7 +803,7 @@ function Search() {
                     borderRadius: 0,
                   }}
                 >
-                  <Text
+                  {/* <Text
                     style={{
                       color: "#fff",
                       fontWeight: "900",
@@ -811,7 +812,7 @@ function Search() {
                     }}
                   >
                     albums
-                  </Text>
+                  </Text> */}
 
                   {array2.map((album) => {
                     return (
@@ -902,8 +903,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <ADIcon
-                                  name="hearto"
+                                <FontAwesome
+                                  name="plus-circle"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -1120,8 +1121,9 @@ const styles = StyleSheet.create({
     flex: 5,
     marginTop: Platform.OS === "ios" ? 0 : -12,
     padding: 10,
-    color: "#05375a",
+    color: "#fff",
     borderRadius: 10,
+    fontWeight: "bold",
   },
   errorMsg: {
     color: "#FF0000",
