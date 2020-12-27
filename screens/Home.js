@@ -779,7 +779,7 @@ export class HomeScreen extends Component {
     if (this.state.loading == false) {
       return (
         <View style={styles.container}>
-          <LinearGradient colors={["#000", "#A7A2A9", "#000"]} style={styles.header}>
+          <LinearGradient colors={["#000", "#292929", "#000"]} style={styles.header}>
             <SafeAreaView
               style={{
                 width: Dimensions.get("window").width,
@@ -872,7 +872,7 @@ export class HomeScreen extends Component {
           </LinearGradient>
 
           <LinearGradient
-            colors={["#000", "#8D8D92", "#EAEAEB"]}
+            colors={["#000", "#292929"]}
             style={styles.footer}
           >
             <TabView

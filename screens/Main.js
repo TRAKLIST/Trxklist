@@ -27,7 +27,7 @@ import * as Animatable from "react-native-animatable";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../components/SpotifyAPI";
@@ -208,47 +208,62 @@ function Main() {
     const select = (item) => {
       setTrackDetails(item);
       setIndex(1);
-      setCaptionHeader(true)
-      setPickerHeader(false)
+      setCaptionHeader(true);
+      setPickerHeader(false);
       // console.log(item);
     };
 
     let track_s = queryList ? (
       queryList.map((item) => (
         <TouchableOpacity onPress={() => select(item)}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", opacity: 0.7 }}>
             <View style={{ padding: 10 }}>
               <Image
                 source={{ uri: item.image }}
                 style={{
-                  height: 80,
-                  width: 80,
+                  height: 65,
+                  width: 65,
                   borderRadius: 50,
                   borderWidth: 3,
                   borderColor: "green",
+                  justifyContent: "center",
                 }}
               />
             </View>
-            <View style={styles.track}>
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.track,
-                  { padding: 0, paddingTop: 10, paddingBottom: 10 },
-                ]}
-              >
-                {item.name}
-              </Text>
-              <Text
-                style={{
-                  color: "grey",
-                  backgroundColor: "#fff",
-                  padding: 5,
-                  alignSelf: "flex-start",
-                }}
-              >
-                {item.artist}
-              </Text>
+            <View
+              style={[
+                { backgroundColor: "transparent", justifyContent: "center" },
+              ]}
+            >
+              <View>
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.track,
+                    {
+                      padding: 0,
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                      backgroundColor: "transparent",
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: "grey",
+                    // backgroundColor: "#fff",
+                    padding: 5,
+                    alignSelf: "flex-start",
+                    fontWeight: "500",
+                  }}
+                >
+                  {item.artist}
+                </Text>
+              </View>
             </View>
           </View>
         </TouchableOpacity>
@@ -283,8 +298,12 @@ function Main() {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.block}>
-          <ScrollView>{track_s}</ScrollView>
+        <View>
+          <ScrollView>
+            <LinearGradient colors={["#000", "#292928", "#000"]}>
+              {track_s}
+            </LinearGradient>
+          </ScrollView>
         </View>
       </Animatable.View>
     );
@@ -303,9 +322,7 @@ function Main() {
       console.log(caption.caption);
     };
     return (
-      <Animatable.View
-        style={[styles.scene, { backgroundColor: "#000" }]}
-      >
+      <Animatable.View style={[styles.scene, { backgroundColor: "#000" }]}>
         {/* <View
           style={{
             flexDirection: "row",
@@ -465,11 +482,9 @@ function Main() {
 
         <TouchableOpacity
           style={{
-            bottom: 5,
-            position: "absolute",
-            width: "80%",
+            marginTop: 5,
             alignSelf: "center",
-            borderWidth: 3,
+            borderWidth: 0,
             borderRadius: 15,
             borderColor: "#fff",
           }}
@@ -479,16 +494,14 @@ function Main() {
               spotifyID: UserStore.spotifyUserDetails.user_id,
               body: caption_prev,
               status: "Track",
-            })
+            });
             // refresh
-            setOpenPostScreen(false)
-          }
-            
-          }
+            setOpenPostScreen(false);
+          }}
         >
-          <LinearGradient colors={["#21295c", "#007bff"]} style={styles.signIn}>
+          <LinearGradient colors={["#000", "#292929"]} style={styles.signIn}>
             {/* <MaterialCommunityIcons name="spotify" color="#fff" size={20} /> */}
-            <Text style={[styles.textSign, { color: "#fff" }]}>Post</Text>
+            <MaterialCommunityIcons name="spotify" color="#fff" size={30} />
           </LinearGradient>
         </TouchableOpacity>
       </Animatable.View>
@@ -541,9 +554,7 @@ function Main() {
             )}
           >
             <View style={{ paddingTop: 10 }}>
-              <LinearGradient
-                colors={["#000", "#8D8D92", "#292928", "#8D8D92", "#000"]}
-              >
+              <LinearGradient colors={["#000", "#292928",  "#292928", "#292928", "#292928", "#000"]}>
                 <View>{recentPostsMarkup}</View>
                 {/* explore */}
               </LinearGradient>
@@ -558,6 +569,20 @@ function Main() {
       second: SecondRoute,
       third: ThirdRoute,
     });
+
+    const renderTabBar = (props) => (
+      <TabBar
+        {...props}
+        indicatorStyle={{ backgroundColor: "#1DB954" }}
+        style={{ backgroundColor: "black" }}
+        renderLabel={({ route, focused, color }) => (
+          <Text style={{ color, margin: 8, fontWeight: "bold" }}>
+            {route.title}
+          </Text>
+        )}
+        activeColor="green"
+      />
+    );
 
     const onIndexChange = (index) => {
       setIndex(index);
@@ -574,14 +599,17 @@ function Main() {
       }
     };
     return (
-      <View style={{ flex: 1 }}>
+      <LinearGradient
+        colors={["#000", "#292928", "#000"]}
+        style={{ flex: 1, paddingHorizontal: 10 }}
+      >
         {captionHeader == false && pickerHeader == true ? (
           <View style={[styles.header, { backgroundColor: "#000" }]}>
             <Button
-              title="go back"
+              title="return"
               onPress={() => {
                 setOpenPostScreen(false);
-                setCaption('')
+                setCaption("");
               }}
             />
             <Picker
@@ -589,7 +617,11 @@ function Main() {
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedValue(itemValue)
               }
-              style={{ backgroundColor: "whitesmoke", borderRadius: 20 }}
+              style={{
+                backgroundColor: "whitesmoke",
+                borderRadius: 20,
+                flex: 1,
+              }}
             >
               <Picker.Item label="Lyric" value="lyric" />
               <Picker.Item label="Playlist" value="playlist" />
@@ -600,6 +632,13 @@ function Main() {
           </View>
         ) : captionHeader == true && pickerHeader == false ? (
           <View style={[styles.header, { backgroundColor: "#000" }]}>
+            <Button
+              title="return"
+              onPress={() => {
+                setOpenPostScreen(false);
+                setCaption("");
+              }}
+            />
             <Image
               source={{ uri: UserStore.spotifyUserDetails.user_image }}
               style={{
@@ -621,7 +660,7 @@ function Main() {
               style={{
                 padding: 20,
                 justifyContent: "center",
-                backgroundColor: "white",
+                backgroundColor: "#292929",
                 borderRadius: 20,
                 margin: 5,
                 borderWidth: 3,
@@ -640,9 +679,10 @@ function Main() {
             renderScene={renderScene}
             onIndexChange={(index) => onIndexChange(index)}
             initialLayout={initialLayout}
+            renderTabBar={renderTabBar}
           />
         </SafeAreaView>
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -663,7 +703,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1.9,
-    backgroundColor: "#fff",
+    backgroundColor: "#292929",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     // paddingHorizontal: 20,
