@@ -248,7 +248,7 @@ const Footer = ({
     }
   }, []);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {marginBottom : 10}]}>
       <View style={styles.iconsContainer}>
         <View style={[styles.leftIcons, {marginLeft : 10, borderBottomWidth : 2, borderColor : 'green'}]}>
           <TouchableOpacity onPress={onLikePressed}>

@@ -53,7 +53,7 @@ function wait(timeout) {
   });
 }
 
-let topArtists_following = []
+let topArtists_following = [];
 
 let getArtist = {};
 
@@ -348,9 +348,9 @@ export class HomeScreen extends Component {
                       : card.artistPopularity < 20
                       ? "Independent"
                       : card.artistPopularity < 35
-                      ? "Pro"
+                      ? "Hustler"
                       : card.artistPopularity < 50
-                      ? "Next Up"
+                      ? "Next Up?"
                       : card.artistPopularity < 70
                       ? "Blown?"
                       : card.artistPopularity < 90
@@ -385,7 +385,7 @@ export class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    console.log(UserStore.followingDetails)
+    console.log(UserStore.followingDetails);
     wait(2000).then(() => {
       this.interval = setInterval(() => {
         axios
@@ -779,7 +779,10 @@ export class HomeScreen extends Component {
     if (this.state.loading == false) {
       return (
         <View style={styles.container}>
-          <LinearGradient colors={["#000", "#292929", "#000"]} style={styles.header}>
+          <LinearGradient
+            colors={["#000", "#292929", "#000"]}
+            style={styles.header}
+          >
             <SafeAreaView
               style={{
                 width: Dimensions.get("window").width,
@@ -871,16 +874,17 @@ export class HomeScreen extends Component {
             {swiper}
           </LinearGradient>
 
-          <LinearGradient
-            colors={["#000", "#292929"]}
-            style={styles.footer}
-          >
+          <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
             <TabView
               navigationState={{ index, routes }}
               renderScene={this.renderScene(this.state.cuurentCard)}
               onIndexChange={(index) => this.setState({ index })}
               initialLayout={initialLayout}
               renderTabBar={renderTabBar}
+              sceneContainerStyle={{
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
             />
           </LinearGradient>
         </View>

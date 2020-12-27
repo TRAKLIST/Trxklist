@@ -29,8 +29,8 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
                 position: "absolute",
                 width: "100%",
                 padding: 0,
-                // borderBottomLeftRadius: 15,
-                // borderBottomRightRadius: 15,
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
               },
             ]}
           >

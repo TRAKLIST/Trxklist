@@ -510,14 +510,26 @@ function Main() {
 
   if (!openPostScreen) {
     return (
-      <View style={{ backgroundColor: "black", flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: "#292929", flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#292929" }}>
           <ParallaxScrollView
-            backgroundColor="black"
-            contentBackgroundColor="black"
-            parallaxHeaderHeight={80}
+            backgroundColor="#292929"
+            contentBackgroundColor="#292929"
+            parallaxHeaderHeight={95}
             renderStickyHeader={() => (
-              <View style={{ padding: 5 }}>
+              <View
+                style={{
+                  padding: 5,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 10,
+                  backgroundColor: "#272D2D",
+                  borderWidth: 2,
+                  borderColor: "green",
+                  borderRadius: 15,
+                  borderStyle : 'dotted'
+                }}
+              >
                 <StickyItemFlatList
                   itemWidth={65}
                   itemHeight={65}
@@ -533,13 +545,25 @@ function Main() {
                 />
               </View>
             )}
-            stickyHeaderHeight={75}
+            stickyHeaderHeight={90}
             // renderBackground = {0}
             renderForeground={() => (
-              <View style={{ padding: 5 }}>
+              <View
+                style={{
+                  padding: 5,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 10,
+                  backgroundColor: "#272D2D",
+                  borderWidth: 2,
+                  borderColor: "green",
+                  borderRadius: 15,
+                  borderStyle : 'dotted'
+                }}
+              >
                 <StickyItemFlatList
-                  itemWidth={ITEM_WIDTH}
-                  itemHeight={ITEM_HEIGHT}
+                  itemWidth={65}
+                  itemHeight={65}
                   separatorSize={SEPARATOR_SIZE}
                   borderRadius={BORDER_RADIUS}
                   stickyItemWidth={STICKY_ITEM_WIDTH}
@@ -548,13 +572,15 @@ function Main() {
                   stickyItemContent={StickyItemView}
                   onStickyItemPress={handleStickyItemPress}
                   data={data}
-                  renderItem={renderItem}
+                  renderItem={renderItemSticky}
                 />
               </View>
             )}
           >
             <View style={{ paddingTop: 10 }}>
-              <LinearGradient colors={["#000", "#292928",  "#292928", "#292928", "#292928", "#000"]}>
+              <LinearGradient
+                colors={["#292929", "#292929", "#292929", "#292929", "#292929"]}
+              >
                 <View>{recentPostsMarkup}</View>
                 {/* explore */}
               </LinearGradient>

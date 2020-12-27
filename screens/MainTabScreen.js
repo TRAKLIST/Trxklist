@@ -27,8 +27,8 @@ const MainTabScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
-      barStyle={{ backgroundColor: "#EAEAEB" }}
-      activeColor="#1DB954"
+      barStyle={{ backgroundColor: "#292929" }}
+      activeColor="green"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen

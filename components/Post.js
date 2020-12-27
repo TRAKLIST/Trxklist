@@ -100,7 +100,8 @@ export class Post extends Component {
           borderRadius : 10,
           borderColor: "green",
           backgroundColor: "#000",
-          paddingVertical : 10,
+          borderWidth : 0
+          // paddingVertical : 10,
         }}
       >
         {/* <Header
