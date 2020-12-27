@@ -323,7 +323,7 @@ export class HomeScreen extends Component {
                 {/* Support an independent artist */}
                 <View
                   style={{
-                    bottom: -30,
+                    bottom: 0,
                     position: "relative",
                     flexDirection: "column",
                   }}
@@ -364,6 +364,96 @@ export class HomeScreen extends Component {
                     color="#1DB954"
                     style={{ width: 100, height: 15 }}
                   />
+                </View>
+
+                <View
+                  style={{
+                    bottom: 10,
+                    position: "absolute",
+                    flexDirection: "row",
+                    alignSelf: "center",
+                    backgroundColor: "whitesmoke",
+                    opacity: 0.8,
+                    borderRadius: 15,
+                  }}
+                >
+                  <View style={{ alignSelf: "center", margin: 5 }}>
+                    <TouchableOpacity
+                      style={{ marginRight: 0, marginBottom: 0 }}
+                    >
+                      <LinearGradient
+                        colors={["#000", "#21295c"]}
+                        style={styles.signIn}
+                      >
+                        <Entypo
+                          name="spotify"
+                          size={20}
+                          style={{
+                            color: "#1DB954",
+                            padding: 4,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: "center", margin: 5 }}>
+                    <TouchableOpacity style={{ marginRight: 0 }}>
+                      <LinearGradient
+                        colors={["#000", "#21295c"]}
+                        style={styles.signIn}
+                      >
+                        <Entypo
+                          name="soundcloud"
+                          size={20}
+                          style={{
+                            color: "#1DB954",
+                            padding: 4,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: "center", margin: 5 }}>
+                    <TouchableOpacity style={{ marginRight: 0 }}>
+                      <LinearGradient
+                        colors={["#000", "#21295c"]}
+                        style={styles.signIn}
+                      >
+                        <MaterialCommunityIcons
+                          name="instagram"
+                          size={20}
+                          style={{
+                            color: "#1DB954",
+                            padding: 4,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: "center", margin: 5 }}>
+                    <TouchableOpacity style={{ marginRight: 0 }}>
+                      <LinearGradient
+                        colors={["#000", "#21295c"]}
+                        style={styles.signIn}
+                      >
+                        <MaterialCommunityIcons
+                          name="twitter"
+                          size={20}
+                          style={{
+                            color: "#1DB954",
+                            padding: 4,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
@@ -652,97 +742,7 @@ export class HomeScreen extends Component {
                     source={{ uri: card.image }}
                     style={{ height: "100%", width: "100%" }}
                     imageStyle={{ borderRadius: 15 }}
-                  >
-                    <View
-                      style={{
-                        bottom: 7,
-                        position: "absolute",
-                        flexDirection: "row",
-                        alignSelf: "center",
-                        backgroundColor: "whitesmoke",
-                        opacity: 0.8,
-                        borderRadius: 15,
-                      }}
-                    >
-                      <View style={{ alignSelf: "center", margin: 10 }}>
-                        <TouchableOpacity
-                          style={{ marginRight: 0, marginBottom: 0 }}
-                        >
-                          <LinearGradient
-                            colors={["#000", "#21295c"]}
-                            style={styles.signIn}
-                          >
-                            <Entypo
-                              name="spotify"
-                              size={30}
-                              style={{
-                                color: "#1DB954",
-                                padding: 4,
-                                alignSelf: "center",
-                              }}
-                            />
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View style={{ alignSelf: "center", margin: 10 }}>
-                        <TouchableOpacity style={{ marginRight: 0 }}>
-                          <LinearGradient
-                            colors={["#000", "#21295c"]}
-                            style={styles.signIn}
-                          >
-                            <Entypo
-                              name="soundcloud"
-                              size={30}
-                              style={{
-                                color: "#1DB954",
-                                padding: 4,
-                                alignSelf: "center",
-                              }}
-                            />
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View style={{ alignSelf: "center", margin: 10 }}>
-                        <TouchableOpacity style={{ marginRight: 0 }}>
-                          <LinearGradient
-                            colors={["#000", "#21295c"]}
-                            style={styles.signIn}
-                          >
-                            <MaterialCommunityIcons
-                              name="instagram"
-                              size={30}
-                              style={{
-                                color: "#1DB954",
-                                padding: 4,
-                                alignSelf: "center",
-                              }}
-                            />
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View style={{ alignSelf: "center", margin: 10 }}>
-                        <TouchableOpacity style={{ marginRight: 0 }}>
-                          <LinearGradient
-                            colors={["#000", "#21295c"]}
-                            style={styles.signIn}
-                          >
-                            <MaterialCommunityIcons
-                              name="twitter"
-                              size={30}
-                              style={{
-                                color: "#1DB954",
-                                padding: 4,
-                                alignSelf: "center",
-                              }}
-                            />
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </ImageBackground>
+                  ></ImageBackground>
                 </Animatable.View>
               </View>
             );

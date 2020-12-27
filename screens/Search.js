@@ -439,7 +439,7 @@ function Search() {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#000", "#A7A2A9"]} style={styles.header}>
+      <LinearGradient colors={["#000", "#000"]} style={styles.header}>
         <StatusBar backgroundColor="#009387" barStyle="light-content" />
         <View style={styles.action}>
           <TextInput
@@ -466,10 +466,7 @@ function Search() {
           </TouchableOpacity>
         </View>
       </LinearGradient>
-      <LinearGradient
-        colors={["#A7A2A9", "#A7A2A9", "#000", "#000", "#8D8D92", "#EAEAEB"]}
-        style={styles.footer}
-      >
+      <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
         {lyricsPage == false ? (
           <Animatable.View
             animation="bounceInUp"
@@ -489,7 +486,7 @@ function Search() {
               }
             >
               <LinearGradient
-                colors={["#A7A2A9", "#fff"]}
+                colors={["#292929", "#292929"]}
                 style={{
                   minHeight: Dimensions.get("window").height,
                   backgroundColor: "grey",
@@ -510,13 +507,13 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}
+                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign :'center' }}
                   >
                     profiles
                   </Text>
-                </View>
 
-                {list}
+                  {list}
+                </View>
 
                 {/* <View style={{ margin: 15, padding: 5, borderBottomWidth: 1.5, borderColor: '#1DB954' }}>
                           <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>Tracks</Text>
@@ -548,7 +545,7 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}
+                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
                   >
                     tracks
                   </Text>
@@ -566,8 +563,8 @@ function Search() {
                             <Image
                               source={{ uri: track.image }}
                               style={{
-                                height: 50,
-                                width: 50,
+                                height: 65,
+                                width: 65,
                                 borderRadius: 30,
                               }}
                             />
@@ -575,13 +572,13 @@ function Search() {
                           <View
                             style={{
                               justifyContent: "center",
-                              padding: 10,
+                              padding: 0,
                               marginBottom: 3,
                               flex: 2,
                             }}
                           >
-                            <Text numberOfLines={1}>{track.title}</Text>
-                            <Text numberOfLines={1}>{track.artist}</Text>
+                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{track.title}</Text>
+                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{track.artist}</Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
                             {/* icons */}
@@ -657,7 +654,7 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}
+                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
                   >
                     artists
                   </Text>
@@ -676,8 +673,8 @@ function Search() {
                             <Image
                               source={{ uri: artist.image }}
                               style={{
-                                height: 50,
-                                width: 50,
+                                height: 65,
+                                width: 65,
                                 borderRadius: 30,
                               }}
                             />
@@ -690,9 +687,12 @@ function Search() {
                               flex: 2,
                             }}
                           >
-                            <Text numberOfLines={1}>{artist.title}</Text>
+                            {/* <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{album.title}</Text>
+                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{album.artist}</Text> */}
+                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{artist.title}</Text>
                             <Text
                               numberOfLines={1}
+                              style = {{ color: "#44CF6C", fontWeight: "bold" }}
                             >{`${artist.followers} followers`}</Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
@@ -769,7 +769,7 @@ function Search() {
                   }}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "900", fontSize: 16 }}
+                    style={{ color: "#fff", fontWeight: "900", fontSize: 16, textAlign : 'center' }}
                   >
                     albums
                   </Text>
@@ -788,8 +788,8 @@ function Search() {
                             <Image
                               source={{ uri: album.image }}
                               style={{
-                                height: 50,
-                                width: 50,
+                                height: 65,
+                                width: 65,
                                 borderRadius: 30,
                               }}
                             />
@@ -802,8 +802,8 @@ function Search() {
                               flex: 2,
                             }}
                           >
-                            <Text numberOfLines={1}>{album.title}</Text>
-                            <Text numberOfLines={1}>{album.artist}</Text>
+                            <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{album.title}</Text>
+                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{album.artist}</Text>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
                             {/* icons */}
