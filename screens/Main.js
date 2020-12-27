@@ -39,6 +39,9 @@ let trackQuery = {};
 const initialLayout = { width: Dimensions.get("window").width };
 
 function Main() {
+  const [caption, setCaption] = React.useState("");
+  const [pickerHeader, setPickerHeader] = React.useState(true);
+  const [captionHeader, setCaptionHeader] = React.useState(false);
   const [trackDetails, setTrackDetails] = React.useState({});
   const [caption_prev, setCaption_prev] = React.useState("");
   const [openPostScreen, setOpenPostScreen] = React.useState(false);
@@ -50,6 +53,16 @@ function Main() {
     { key: "second", title: "Caption" },
     { key: "third", title: "Preview" },
   ]);
+  const finalize = () => {
+    setCaption_prev(caption);
+    // setIndex(2);
+    // console.log(caption.caption);
+  };
+  const handleCaptionChange = (val) => {
+    setCaption(val);
+    console.log(caption.caption);
+    // setCaption_prev(caption);
+  };
 
   let data = [];
   // dummy data
@@ -62,8 +75,8 @@ function Main() {
   console.log(data);
 
   // configs
-  const ITEM_WIDTH = 100;
-  const ITEM_HEIGHT = 100;
+  const ITEM_WIDTH = 65;
+  const ITEM_HEIGHT = 65;
   const STICKY_ITEM_WIDTH = 24;
   const STICKY_ITEM_HEIGHT = 24;
   const STICKY_ITEM_BACKGROUNDS = ["#222", "#000"];
@@ -136,11 +149,11 @@ function Main() {
       imageStyle={{ borderRadius: 30 }}
     ></ImageBackground>
   );
-  const select = (item) => {
-    setTrackDetails(item);
-    setIndex(1);
-    // console.log(item);
-  };
+  // const select = (item) => {
+  //   setTrackDetails(item);
+  //   setIndex(1);
+  //   // console.log(item);
+  // };
   let recentPostsMarkup = UserStore.allPosts ? (
     UserStore.allPosts.map((post) => (
       <View
@@ -195,6 +208,8 @@ function Main() {
     const select = (item) => {
       setTrackDetails(item);
       setIndex(1);
+      setCaptionHeader(true)
+      setPickerHeader(false)
       // console.log(item);
     };
 
@@ -202,19 +217,34 @@ function Main() {
       queryList.map((item) => (
         <TouchableOpacity onPress={() => select(item)}>
           <View style={{ flexDirection: "row" }}>
-            <View style={{ marginTop: 2, marginRight: 2 }}>
+            <View style={{ padding: 10 }}>
               <Image
                 source={{ uri: item.image }}
-                style={{ height: 100, width: 100 }}
+                style={{
+                  height: 80,
+                  width: 80,
+                  borderRadius: 50,
+                  borderWidth: 3,
+                  borderColor: "green",
+                }}
               />
             </View>
             <View style={styles.track}>
-              <Text style={styles.track}>{item.name}</Text>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.track,
+                  { padding: 0, paddingTop: 10, paddingBottom: 10 },
+                ]}
+              >
+                {item.name}
+              </Text>
               <Text
                 style={{
                   color: "grey",
                   backgroundColor: "#fff",
                   padding: 5,
+                  alignSelf: "flex-start",
                 }}
               >
                 {item.artist}
@@ -228,13 +258,17 @@ function Main() {
     );
 
     return (
-      <View style={{ flex: 1 }}>
+      <Animatable.View
+        animation="bounceInUp"
+        style={{ flex: 1, backgroundColor: "#000" }}
+      >
         <View style={styles.action}>
           <View style={{ margin: 20, flex: 3 }}>
             <TextInput
               placeholder="Search for music"
               autoCapitalize="none"
               onChangeText={(val) => handleTrackChange(val)}
+              style={{ color: "#fff" }}
             />
           </View>
 
@@ -252,25 +286,27 @@ function Main() {
         <View style={styles.block}>
           <ScrollView>{track_s}</ScrollView>
         </View>
-      </View>
+      </Animatable.View>
     );
   };
 
   const SecondRoute = () => {
-    const [caption, setCaption] = React.useState("");
-    const handleCaptionChange = (val) => {
-      setCaption({ ...caption, caption: val });
-      console.log(caption.caption);
-      // setCaption_prev(caption);
-    };
+    // const [caption, setCaption] = React.useState("");
+    // const handleCaptionChange = (val) => {
+    //   setCaption({ ...caption, caption: val });
+    //   console.log(caption.caption);
+    //   // setCaption_prev(caption);
+    // };
     const finalize = (caption) => {
       setCaption_prev(caption.caption);
       setIndex(2);
       console.log(caption.caption);
     };
     return (
-      <View style={[styles.scene, { backgroundColor: "#007bff" }]}>
-        <View
+      <Animatable.View
+        style={[styles.scene, { backgroundColor: "#000" }]}
+      >
+        {/* <View
           style={{
             flexDirection: "row",
             borderBottomWidth: 1,
@@ -353,11 +389,24 @@ function Main() {
           onPress={() => finalize(caption)}
         >
           <LinearGradient colors={["#21295c", "#007bff"]} style={styles.signIn}>
-            {/* <MaterialCommunityIcons name="spotify" color="#fff" size={20} /> */}
             <Text style={[styles.textSign, { color: "#fff" }]}>Finalize</Text>
           </LinearGradient>
-        </TouchableOpacity>
-      </View>
+        </TouchableOpacity> */}
+
+        <Body
+          thisTrack={trackDetails}
+          caption={caption}
+          status={"Track"}
+          imageUri={UserStore.spotifyUserDetails.user_image}
+        />
+        <Footer
+          likesCount={0}
+          commentCount={0}
+          postID={"uuidv4()"}
+          status={"Track"}
+          trackID={trackDetails.id}
+        />
+      </Animatable.View>
     );
   };
 
@@ -392,14 +441,17 @@ function Main() {
         .catch((err) => console.log(err));
     };
     return (
-      <View style={[styles.scene, { backgroundColor: "#ff" }]}>
+      <Animatable.View
+        animation="bounceInUp"
+        style={[styles.scene, { backgroundColor: "#000" }]}
+      >
         {/* <Header
           imageUri={UserStore.spotifyUserDetails.user_image}
           name={UserStore.userDetails.credentials.meloID}
         /> */}
         <Body
           thisTrack={trackDetails}
-          caption={caption_prev}
+          caption={caption}
           status={"Track"}
           imageUri={UserStore.spotifyUserDetails.user_image}
         />
@@ -421,13 +473,17 @@ function Main() {
             borderRadius: 15,
             borderColor: "#fff",
           }}
-          onPress={() =>
+          onPress={() => {
             makePost({
               trackID: trackDetails.id,
               spotifyID: UserStore.spotifyUserDetails.user_id,
               body: caption_prev,
               status: "Track",
             })
+            // refresh
+            setOpenPostScreen(false)
+          }
+            
           }
         >
           <LinearGradient colors={["#21295c", "#007bff"]} style={styles.signIn}>
@@ -435,7 +491,7 @@ function Main() {
             <Text style={[styles.textSign, { color: "#fff" }]}>Post</Text>
           </LinearGradient>
         </TouchableOpacity>
-      </View>
+      </Animatable.View>
     );
   };
 
@@ -466,23 +522,23 @@ function Main() {
             )}
             stickyHeaderHeight={75}
             // renderBackground = {0}
-            // renderForeground={() => (
-            //   <View style={{ padding: 5 }}>
-            //     <StickyItemFlatList
-            //       itemWidth={ITEM_WIDTH}
-            //       itemHeight={ITEM_HEIGHT}
-            //       separatorSize={SEPARATOR_SIZE}
-            //       borderRadius={BORDER_RADIUS}
-            //       stickyItemWidth={STICKY_ITEM_WIDTH}
-            //       stickyItemHeight={STICKY_ITEM_HEIGHT}
-            //       stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-            //       stickyItemContent={StickyItemView}
-            //       onStickyItemPress={handleStickyItemPress}
-            //       data={data}
-            //       renderItem={renderItem}
-            //     />
-            //   </View>
-            // )}
+            renderForeground={() => (
+              <View style={{ padding: 5 }}>
+                <StickyItemFlatList
+                  itemWidth={ITEM_WIDTH}
+                  itemHeight={ITEM_HEIGHT}
+                  separatorSize={SEPARATOR_SIZE}
+                  borderRadius={BORDER_RADIUS}
+                  stickyItemWidth={STICKY_ITEM_WIDTH}
+                  stickyItemHeight={STICKY_ITEM_HEIGHT}
+                  stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
+                  stickyItemContent={StickyItemView}
+                  onStickyItemPress={handleStickyItemPress}
+                  data={data}
+                  renderItem={renderItem}
+                />
+              </View>
+            )}
           >
             <View style={{ paddingTop: 10 }}>
               <LinearGradient
@@ -502,32 +558,90 @@ function Main() {
       second: SecondRoute,
       third: ThirdRoute,
     });
+
+    const onIndexChange = (index) => {
+      setIndex(index);
+      console.log(index, "indghr");
+      if (index == 0) {
+        setPickerHeader(true);
+        setCaptionHeader(false);
+      } else if (index == 1) {
+        setPickerHeader(false);
+        setCaptionHeader(true);
+      } else {
+        setPickerHeader(false);
+        setCaptionHeader(false);
+      }
+    };
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.header}>
-          <Button title="go back" onPress={() => setOpenPostScreen(false)} />
-          <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }
-            style={{ backgroundColor: "whitesmoke", borderRadius: 20 }}
-          >
-            <Picker.Item label="Lyric" value="lyric" />
-            <Picker.Item label="Playlist" value="playlist" />
-            <Picker.Item label="Track" value="track" />
-            <Picker.Item label="Album" value="album" />
-            <Picker.Item label="Artist" value="artist" />
-          </Picker>
-        </View>
-        <View style={styles.footer}>
+        {captionHeader == false && pickerHeader == true ? (
+          <View style={[styles.header, { backgroundColor: "#000" }]}>
+            <Button
+              title="go back"
+              onPress={() => {
+                setOpenPostScreen(false);
+                setCaption('')
+              }}
+            />
+            <Picker
+              selectedValue={selectedValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }
+              style={{ backgroundColor: "whitesmoke", borderRadius: 20 }}
+            >
+              <Picker.Item label="Lyric" value="lyric" />
+              <Picker.Item label="Playlist" value="playlist" />
+              <Picker.Item label="Track" value="track" />
+              <Picker.Item label="Album" value="album" />
+              <Picker.Item label="Artist" value="artist" />
+            </Picker>
+          </View>
+        ) : captionHeader == true && pickerHeader == false ? (
+          <View style={[styles.header, { backgroundColor: "#000" }]}>
+            <Image
+              source={{ uri: UserStore.spotifyUserDetails.user_image }}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 30,
+                alignSelf: "center",
+              }}
+            />
+            <View style={{ marginBottom: 3 }} />
+            <TextInput
+              // multiline
+              placeholder="Caption your post"
+              autoCapitalize="none"
+              value={caption}
+              // multiline="true"
+              // numberOfLines={4}
+              onChangeText={(val) => handleCaptionChange(val)}
+              style={{
+                padding: 20,
+                justifyContent: "center",
+                backgroundColor: "white",
+                borderRadius: 20,
+                margin: 5,
+                borderWidth: 3,
+                // borderColor: "green",
+                flex: 1,
+                textAlign: "center",
+                fontSize: 30,
+              }}
+            />
+            {/* <Button title = "Finalize" onPress = {finalize}/> */}
+          </View>
+        ) : captionHeader == true && pickerHeader == false ? null : null}
+        <SafeAreaView style={styles.footer}>
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
-            onIndexChange={setIndex}
+            onIndexChange={(index) => onIndexChange(index)}
             initialLayout={initialLayout}
           />
-        </View>
+        </SafeAreaView>
       </View>
     );
   }
@@ -569,7 +683,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginRight: 2,
     padding: 10,
-    backgroundColor: "#007bff",
+    backgroundColor: "#000",
     fontSize: 15,
     fontWeight: "bold",
     color: "#fff",
