@@ -27,6 +27,8 @@ import spotifyAPI from "../components/SpotifyAPI";
 import ADIcon from "react-native-vector-icons/AntDesign";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
+import Icon from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 let list;
 let array = [];
@@ -443,10 +445,10 @@ function Search() {
       <View style={styles.container}>
         <LinearGradient colors={["#000", "#000"]} style={styles.header}>
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
-          <View style={styles.action}>
+          <View style={[styles.action, {backgroundColor : '#292929'}]}>
             <TextInput
               placeholder="Search for users..."
-              style={styles.textInput}
+              style={[styles.textInput]}
               autoCapitalize="none"
               onChangeText={(val) => setSearchTerm(val)}
             />
@@ -922,12 +924,31 @@ function Search() {
     );
   } else {
     return (
-      <View style={{ flex: 1, backgroundColor : '#292929' }}>
+      <View style={{ flex: 1, backgroundColor: "#292929" }}>
         <ParallaxScrollView
           backgroundColor="#292929"
           contentBackgroundColor="#292929"
           parallaxHeaderHeight={300}
-          renderBackground={() => (
+          // renderBackground={() => (
+          //   <ImageBackground
+          //     // source={{ uri: array[trackIndex].image }}
+          //     source = {{uri : 'https://media.npr.org/assets/img/2020/05/01/dsc_9182_re-1-_wide-de77c30d600c1cfa4ba6e822db63328b5125c113-s800-c85.jpg'}}
+          //     style={{
+          //       height: 300,
+          //       flex: 1,
+          //       alignItems: "center",
+          //       justifyContent: "center",
+          //     }}
+          //     imageStyle={{
+          //       // borderBottomLeftRadius: 15,
+          //       // borderBottomRightRadius: 15,
+          //       borderRadius: 15,
+          //       paddingHorizontal: 10,
+          //     }}
+          //   >
+          //   </ImageBackground>
+          // )}
+          renderForeground={() => (
             <ImageBackground
               source={{ uri: array[trackIndex].image }}
               style={{
@@ -937,12 +958,90 @@ function Search() {
                 justifyContent: "center",
               }}
               imageStyle={{
-                borderBottomLeftRadius: 15,
-                borderBottomRightRadius: 15,
-                paddingHorizontal : 10
+                // borderBottomLeftRadius: 15,
+                // borderBottomRightRadius: 15,
+                borderRadius: 15,
+                paddingHorizontal: 10,
               }}
             >
-              {/* <Text>Hello World!</Text> */}
+              <SafeAreaView
+                style={[
+                  styles.titleContainer,
+                  {
+                    top: 0,
+                    position: "absolute",
+                    width: "100%",
+                    padding: 10,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    backgroundColor: "#000",
+                    opacity: 0.7,
+                  },
+                ]}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity onPress={() => setLyricsPage(false)}>
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        padding: 10,
+                      }}
+                    >
+                      {/* <Image
+                      source={{ uri: UserStore.spotifyUserDetails.user_image }}
+                      style={{ borderRadius: 20, height: 50, width: 50 }}
+                    /> */}
+                      <Icon name="back" size={20} color="#fff" />
+                    </View>
+                  </TouchableOpacity>
+
+                  <View style={{ alignSelf: "center", marginLeft: 0, flex: 5 }}>
+                    <View>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "#fff",
+                          fontWeight: "bold",
+                        }}
+                        numberOfLines={1}
+                      >
+                        {array[trackIndex].title}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 0,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          color: "#44CF6C",
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                        numberOfLines={1}
+                      >
+                        {`${array[trackIndex].artist}`}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginLeft: 0,
+                      flex: 1,
+                      alignItems: "center",
+                    }}
+                  >
+                    <TouchableOpacity>
+                      <Icon name="dots-three-vertical" size={20} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </SafeAreaView>
             </ImageBackground>
           )}
         >
@@ -955,11 +1054,11 @@ function Search() {
                 height: "100%",
                 borderTopLeftRadius: 15,
                 borderTopRightRadius: 15,
-                paddingHorizontal : 10
+                paddingHorizontal: 10,
               }}
             >
-              <Button title="return" onPress={() => setLyricsPage(false)} />
-              <ScrollView style={{ padding: 5 }}>
+              {/* <Button title="return" onPress={() => setLyricsPage(false)} /> */}
+              <ScrollView style={{ padding: 5, marginTop: 5 }}>
                 <Text style={{ color: "#CCCCCC", fontSize: 20 }}>
                   {array[trackIndex].lyrics}
                 </Text>
