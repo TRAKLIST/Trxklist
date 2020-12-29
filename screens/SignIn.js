@@ -5,11 +5,12 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
-  Linking,
   Platform,
   ImageBackground,
   StatusBar,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
   SafeAreaView,
 } from "react-native";
 
@@ -36,6 +37,7 @@ import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import { acc } from "react-native-reanimated";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+// import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -437,207 +439,227 @@ const SignInScreen = ({ navigation }) => {
                 resizeMode="contain"
                 // source={img}
               />
-              <Text style = {{textAlign : 'center', marginTop : 5, fontSize : 20, fontWeight : 'bold', color : '#292929'}}>TRAKLIST.</Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: 5,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "#292929",
+                }}
+              >
+                TRAKLIST.
+              </Text>
             </View>
           )}
         </SafeAreaView>
       </LinearGradient>
+
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        {/* <TabView
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          {/* <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
         /> */}
-        <LinearGradient colors={["grey", "#292929"]} style={styles.footer}>
-          <View style={{ marginTop: 25 }}>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "white",
-                opacity: 0.6,
-                fontSize: 18,
-                marginLeft: 15,
-                marginBottom: 5,
-              }}
-            >
-              email
-            </Text>
-            <View
-              style={{
-                backgroundColor: "#292929",
-                borderRadius: 30,
-                flexDirection: "row",
-                padding: 10,
-                opacity: 0.4,
-              }}
-            >
-              <FontAwesome
-                name="user-o"
-                color="#fff"
-                size={20}
-                style={{ opacity: 0.6 }}
-              />
-              <TextInput
-                placeholder="Your Email"
-                style={styles.textInput}
-                autoCapitalize="none"
-                onChangeText={(val) => textInputChange(val)}
-              />
-              {data.check_textInputChange ? (
-                <Animatable.View animation="bounceIn">
-                  <Feather
-                    name="check-circle"
-                    color="#fff"
-                    size={20}
-                    style={{ opacity: 0.6 }}
-                  />
-                </Animatable.View>
-              ) : null}
+          <LinearGradient colors={["grey", "#292929"]} style={styles.footer}>
+            {/* <KeyboardAvoidingView behavior="padding"> */}
+            <View style={{ marginTop: 25 }}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "white",
+                  opacity: 0.6,
+                  fontSize: 18,
+                  marginLeft: 15,
+                  marginBottom: 5,
+                }}
+              >
+                email
+              </Text>
+              <View
+                style={{
+                  backgroundColor: "#292929",
+                  borderRadius: 30,
+                  flexDirection: "row",
+                  padding: 10,
+                  opacity: 0.4,
+                }}
+              >
+                <FontAwesome
+                  name="user-o"
+                  color="#fff"
+                  size={20}
+                  style={{ opacity: 0.6 }}
+                />
+                <TextInput
+                  placeholder="Your Email"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={(val) => textInputChange(val)}
+                />
+                {data.check_textInputChange ? (
+                  <Animatable.View animation="bounceIn">
+                    <Feather
+                      name="check-circle"
+                      color="#fff"
+                      size={20}
+                      style={{ opacity: 0.6 }}
+                    />
+                  </Animatable.View>
+                ) : null}
+              </View>
+
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "white",
+                  opacity: 0.6,
+                  fontSize: 18,
+                  marginLeft: 15,
+                  marginBottom: 5,
+                  marginTop: 35,
+                }}
+              >
+                password
+              </Text>
+              <View
+                style={{
+                  backgroundColor: "#292929",
+                  borderRadius: 30,
+                  flexDirection: "row",
+                  padding: 10,
+                  opacity: 0.4,
+                }}
+              >
+                <FontAwesome
+                  name="lock"
+                  color="#fff"
+                  size={20}
+                  style={{ opacity: 0.6 }}
+                />
+                <TextInput
+                  placeholder="Your Password"
+                  secureTextEntry={data.secureTextEntry ? true : false}
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={(val) => handlePasswordChange(val)}
+                />
+                <TouchableOpacity onPress={updateSecureTextEntry}>
+                  {data.secureTextEntry ? (
+                    <Feather
+                      name="eye-off"
+                      color="#fff"
+                      size={20}
+                      style={{ opacity: 0.6 }}
+                    />
+                  ) : (
+                    <Feather
+                      name="eye"
+                      color="#fff"
+                      size={20}
+                      style={{ opacity: 0.6 }}
+                    />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
 
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "white",
-                opacity: 0.6,
-                fontSize: 18,
-                marginLeft: 15,
-                marginBottom: 5,
-                marginTop: 35,
-              }}
-            >
-              password
-            </Text>
-            <View
-              style={{
-                backgroundColor: "#292929",
-                borderRadius: 30,
-                flexDirection: "row",
-                padding: 10,
-                opacity: 0.4,
-              }}
-            >
-              <FontAwesome
-                name="lock"
-                color="#fff"
-                size={20}
-                style={{ opacity: 0.6 }}
-              />
-              <TextInput
-                placeholder="Your Password"
-                secureTextEntry={data.secureTextEntry ? true : false}
-                style={styles.textInput}
-                autoCapitalize="none"
-                onChangeText={(val) => handlePasswordChange(val)}
-              />
-              <TouchableOpacity onPress={updateSecureTextEntry}>
-                {data.secureTextEntry ? (
-                  <Feather
-                    name="eye-off"
-                    color="#fff"
-                    size={20}
-                    style={{ opacity: 0.6 }}
-                  />
-                ) : (
-                  <Feather
-                    name="eye"
-                    color="#fff"
-                    size={20}
-                    style={{ opacity: 0.6 }}
-                  />
-                )}
+            <View style={styles.button}>
+              <TouchableOpacity style={styles.signIn} onPress={signIn}>
+                <LinearGradient
+                  colors={["#292929", "#292929"]}
+                  style={styles.signIn}
+                >
+                  <Text style={[styles.textSign, { color: "#000" }]}>
+                    enter traklist.
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SignUpScreen")}
+                style={{ flexDirection: "row" }}
+              >
+                <Text
+                  style={{
+                    color: "#ADADAD",
+                    fontSize: "17",
+                    fontWeight: "600",
+                  }}
+                >
+                  create an account
+                </Text>
+                <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
               </TouchableOpacity>
             </View>
-          </View>
-
-          <View style={styles.button}>
-            <TouchableOpacity style={styles.signIn} onPress={signIn}>
-              <LinearGradient
-                colors={["#292929", "#292929"]}
-                style={styles.signIn}
-              >
-                <Text style={[styles.textSign, { color: "#000" }]}>
-                  enter traklist.
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen")}
-              style={{ flexDirection: "row" }}
+            {/*  */}
+            {/* </KeyboardAvoidingView> */}
+            <View
+              style={{
+                marginTop: 30,
+                borderTopWidth: 1,
+                borderColor: "#292929",
+              }}
             >
-              <Text
-                style={{ color: "#ADADAD", fontSize: "17", fontWeight: "600" }}
-              >
-                create an account
-              </Text>
-              <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
-            </TouchableOpacity>
-          </View>
+              {/* <Text style = {{color : '#ADADAD', fontWeight : 'bold'}}>alternatively...</Text> */}
 
-          <View
-            style={{
-              alignItems: "center",
-              marginTop: 30,
-              borderTopWidth: 1,
-              borderColor: "#292929",
-              padding: 20,
-            }}
-          >
-            {/* <Text style = {{color : '#ADADAD', fontWeight : 'bold'}}>alternatively...</Text> */}
-            <TouchableOpacity style={styles.signIn} onPress={signIn}>
-              <LinearGradient
-                colors={["#1DB954", "#1DB954"]}
-                style={[styles.signIn, { flexDirection: "row" }]}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    { color: "#fff", fontWeight: "500" },
-                  ]}
-                >
-                  sign in with {""}
-                </Text>
-                <Fontisto name="spotify" color="#fff" size={20} />
-              </LinearGradient>
-            </TouchableOpacity>
+              <View style={{ marginTop: 65 }}>
+                <TouchableOpacity style={styles.signIn} onPress={signIn}>
+                  <LinearGradient
+                    colors={["#1DB954", "#1DB954"]}
+                    style={[styles.signIn, { flexDirection: "row" }]}
+                  >
+                    <Text
+                      style={[
+                        styles.textSign,
+                        { color: "#fff", fontWeight: "500" },
+                      ]}
+                    >
+                      sign in with {""}
+                    </Text>
+                    <Fontisto name="spotify" color="#fff" size={20} />
+                  </LinearGradient>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles.signIn} onPress={signIn}>
-              <LinearGradient
-                colors={["#fc3158", "#fc3158"]}
-                style={[styles.signIn, { flexDirection: "row" }]}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    { color: "#fff", fontWeight: "500" },
-                  ]}
-                >
-                  sign in with{" "}
-                </Text>
-                <Fontisto name="applemusic" color="#fff" size={20} />
-              </LinearGradient>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.signIn} onPress={signIn}>
+                  <LinearGradient
+                    colors={["#fc3158", "#fc3158"]}
+                    style={[styles.signIn, { flexDirection: "row" }]}
+                  >
+                    <Text
+                      style={[
+                        styles.textSign,
+                        { color: "#fff", fontWeight: "500" },
+                      ]}
+                    >
+                      sign in with{" "}
+                    </Text>
+                    <Fontisto name="applemusic" color="#fff" size={20} />
+                  </LinearGradient>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles.signIn} onPress={signIn}>
-              <LinearGradient
-                colors={["#ff7700", "#ff7700"]}
-                style={[styles.signIn, { flexDirection: "row" }]}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    { color: "#fff", fontWeight: "500" },
-                  ]}
-                >
-                  sign in with{" "}
-                </Text>
-                <Fontisto name="soundcloud" color="#fff" size={20} />
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
+                <TouchableOpacity style={styles.signIn} onPress={signIn}>
+                  <LinearGradient
+                    colors={["#ff7700", "#ff7700"]}
+                    style={[styles.signIn, { flexDirection: "row" }]}
+                  >
+                    <Text
+                      style={[
+                        styles.textSign,
+                        { color: "#fff", fontWeight: "500" },
+                      ]}
+                    >
+                      sign in with{" "}
+                    </Text>
+                    <Fontisto name="soundcloud" color="#fff" size={20} />
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </LinearGradient>
+        </TouchableWithoutFeedback>
       </Animatable.View>
     </View>
   );
@@ -700,7 +722,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 15,
   },
   signIn: {
     width: "80%",
