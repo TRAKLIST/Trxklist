@@ -265,7 +265,7 @@ const SignInScreen = ({ navigation }) => {
               },
             })
               .then((res) => {
-                console.log(res.data.access_token, "rtwrsefih");
+                // console.log(res.data.access_token, "rtwrsefih");
                 spotifyAPI.setAccessToken(res.data.access_token);
                 getSpotifyDetails(
                   res.data.access_token,
@@ -413,13 +413,81 @@ const SignInScreen = ({ navigation }) => {
           spotifyAPI.setAccessToken(access_token);
           getSpotifyDetails(access_token, refresh_token);
         })
+        .then(() => {
+          // sign in
+          axios
+            .post(
+              "https://europe-west1-projectmelo.cloudfunctions.net/api/login2",
+              {
+                email: spotifyUserDetails.user_email,
+                refresh_token: spotifyUserDetails.refresh_token,
+              }
+            )
+            .then((res) => {
+              console.log(res.data, "dfw");
+
+              setAuthorizationCode(res.data.token);
+              UserStore.authCode = res.data.token;
+              UserStore.isLoggedIn = true;
+              // axios
+              //   .get(
+              //     "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
+              //     {
+              //       headers: {
+              //         Authorization: `Bearer ${res.data.token}`,
+              //       },
+              //     }
+              //   )
+              //   .then((response) => {
+              //     // console.log(response.data.credentials.refresh_token)
+              //     axios({
+              //       method: "post",
+              //       url: "https://accounts.spotify.com/api/token",
+              //       data: qs.stringify({
+              //         grant_type: "refresh_token",
+              //         refresh_token: response.data.credentials.refresh_token,
+              //         client_id: "fdb4803bdd0843918698fea00b452d03",
+              //         client_secret: "e7c47d49963b4758885d3dddc1931dde",
+              //       }),
+              //       headers: {
+              //         "content-type":
+              //           "application/x-www-form-urlencoded;charset=utf-8",
+              //       },
+              //     })
+              //       .then((res) => {
+              //         console.log(res.data.access_token, "rtwrsefih");
+              //         spotifyAPI.setAccessToken(res.data.access_token);
+              //         getSpotifyDetails(
+              //           res.data.access_token,
+              //           response.data.credentials.refresh_token
+              //         );
+              //         UserStore.isLoggedIn = true;
+              //       })
+              //       .catch((err) => alert(err));
+              //   });
+
+              // UserStore.isLoggedIn = true;
+              // if (userData.email == spotifyUserDetails.user_email) {
+              //   console.log("logged in");
+
+              //   UserStore.isLoggedIn = true;
+              // } else {
+              //   alert(
+              //     `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
+              //   );
+              // }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
         .catch((err) => alert(err));
     }
   }, [response]);
 
   const getSpotifyDetails = (access_token, refresh_token) => {
     spotifyAPI.getMe().then((response) => {
-      console.log(response);
+      // console.log(response);
       var getMe = {
         user_name: response.display_name,
         user_image: !(
@@ -448,7 +516,7 @@ const SignInScreen = ({ navigation }) => {
         image: data.items[0].track.album.images[0].url,
         spotifyID: UserStore.spotifyUserDetails.user_name,
       };
-      console.log(recentlyPlayed);
+      // console.log(recentlyPlayed);
       setLastPlayed(recentlyPlayed);
     });
   };
@@ -648,20 +716,36 @@ const SignInScreen = ({ navigation }) => {
                     promptAsync();
                   }}
                 >
-                  <LinearGradient
-                    colors={["#1DB954", "#1DB954"]}
-                    style={[styles.signIn, { flexDirection: "row" }]}
-                  >
-                    <Text
-                      style={[
-                        styles.textSign,
-                        { color: "#fff", fontWeight: "500" },
-                      ]}
+                  {!spotifyUserDetails.user_image ? (
+                    <LinearGradient
+                      colors={["#1DB954", "#1DB954"]}
+                      style={[styles.signIn, { flexDirection: "row" }]}
                     >
-                      sign in with {""}
-                    </Text>
-                    <Fontisto name="spotify" color="#fff" size={20} />
-                  </LinearGradient>
+                      <Text
+                        style={[
+                          styles.textSign,
+                          { color: "#fff", fontWeight: "500" },
+                        ]}
+                      >
+                        sign in with {""}
+                      </Text>
+                      <Fontisto name="spotify" color="#fff" size={20} />
+                    </LinearGradient>
+                  ) : (
+                    <LinearGradient
+                      colors={["#1DB954", "#1DB954"]}
+                      style={[styles.signIn, { flexDirection: "row" }]}
+                    >
+                      <Text
+                        style={[
+                          styles.textSign,
+                          { color: "#fff", fontWeight: "500" },
+                        ]}
+                      >
+                        enter traklist. {""}
+                      </Text>
+                    </LinearGradient>
+                  )}
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
