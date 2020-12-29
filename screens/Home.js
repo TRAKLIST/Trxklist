@@ -4,29 +4,39 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   ActivityIndicator,
   Dimensions,
-  TouchableOpacity,
   ImageBackground,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
-
-import { ProgressBar } from "react-native-paper";
 import * as Animatable from "react-native-animatable";
-import { ProgressChart } from "react-native-chart-kit";
 import Swiper from "react-native-deck-swiper";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { TabView, SceneMap } from "react-native-tab-view";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Entypo from "react-native-vector-icons/Entypo";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import spotifyAPI from "../components/SpotifyAPI";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import axios from "axios";
+
+const {
+  first_route,
+  second_route,
+  render_tab_bar,
+  save_track,
+} = require("../handlers/home");
+
+let getArtist = {};
+let recommended = {};
+let audioFeatures = {};
+
+const initialLayout = { width: Dimensions.get("window").width };
+const FirstRoute = (card) => first_route(card);
+const SecondRoute = (card) => second_route(card);
+const renderTabBar = (props) => render_tab_bar(props);
+const saveTrack = (id) => save_track(id);
 
 function wait(timeout) {
   return new Promise((res) => {
@@ -34,171 +44,18 @@ function wait(timeout) {
   });
 }
 
-let getArtist = {};
-
-let recommended = {};
-
-let audioFeatures = {};
-
-const SecondRoute = (card) => {
-  if (card != null) {
-    if (card.audioFeatures != null) {
-      let {
-        acousticness,
-        danceability,
-        energy,
-        instrumentalness,
-        liveness,
-        speechiness,
-      } = card.audioFeatures;
-      return (
-        <View style={[styles.scene]}>
-          <LinearGradient colors={["#000", "#8D8D92", "#EAEAEB"]}>
-            <View style={{ flexDirection: "row" }}>
-              <View
-                style={{
-                  width: Dimensions.get("window").width / 2,
-                  justifyContent: "center",
-                  marginBottom: 30,
-                }}
-              >
-                <ProgressChart
-                  data={{
-                    labels: [
-                      "acousticness",
-                      "danceability",
-                      "energy",
-                      "instrumentalness",
-                      "liveness",
-                      "speechiness",
-                    ],
-                    data: [
-                      acousticness,
-                      danceability,
-                      energy,
-                      instrumentalness,
-                      liveness,
-                      speechiness,
-                    ],
-                  }}
-                  width={Dimensions.get("window").width / 2}
-                  height={Dimensions.get("window").width / 2}
-                  strokeWidth={5}
-                  radius={10}
-                  chartConfig={{
-                    backgroundGradientFrom: "transparent",
-                    backgroundGradientFromOpacity: 0,
-                    backgroundGradientTo: "transparent",
-                    backgroundGradientToOpacity: 0,
-                    color: (opacity = 0.5) => `rgba(29, 185, 84, ${opacity})`,
-                    strokeWidth: 2,
-                    barPercentage: 0.5,
-                    useShadowColorFromDataset: false,
-                  }}
-                  hideLegend={true}
-                />
-              </View>
-              <View
-                style={{
-                  width: Dimensions.get("window").width / 2,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    top: 20,
-                    position: "absolute",
-                    color: "#fff",
-                    alignContent: "center",
-                  }}
-                >
-                  <Text
-                    numberOfLines={1}
-                    style={{ color: "#fff", textAlign: "center" }}
-                  >
-                    RELEASE DATE
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={{ color: "grey", textAlign: "center" }}
-                  >
-                    {card.releaseDate}
-                  </Text>
-                </View>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: 15,
-                    textTransform: "uppercase",
-                    color: "#3A5A40",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {card.artistPopularity < 5
-                    ? ""
-                    : card.artistPopularity < 7
-                    ? ""
-                    : card.artistPopularity < 10
-                    ? ""
-                    : card.artistPopularity < 20
-                    ? ""
-                    : card.artistPopularity < 35
-                    ? ""
-                    : card.artistPopularity < 50
-                    ? "Tune"
-                    : card.artistPopularity < 70
-                    ? "Bop"
-                    : card.artistPopularity < 90
-                    ? "Hot"
-                    : card.artistPopularity < 95
-                    ? "Banger"
-                    : "Banger"}
-                </Text>
-                <ProgressBar
-                  progress={card.artistPopularity / 100}
-                  color="#1DB954"
-                  style={{ width: 100, height: 15 }}
-                />
-              </View>
-            </View>
-          </LinearGradient>
-        </View>
-      );
-    } else return null;
-  } else return null;
-};
-
-const initialLayout = { width: Dimensions.get("window").width };
-
-const renderTabBar = (props) => (
-  <TabBar
-    {...props}
-    indicatorStyle={{ backgroundColor: "#1DB954" }}
-    style={{ backgroundColor: "black" }}
-    renderLabel={({ route, focused, color }) => (
-      <Text style={{ color, margin: 8, fontWeight: "bold" }}>
-        {route.title}
-      </Text>
-    )}
-    activeColor="green"
-  />
-);
-
 export class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       recommendations: [],
       index: 0,
-      index_carousel: 0,
       routes: [
         { key: "first", title: "ARTIST" },
         { key: "second", title: "TRACK" },
       ],
       cuurentCard: {},
       audioFeatures: {},
-      profilePic: "",
       topArtist_flw: [],
       loading: true,
     };
@@ -206,251 +63,9 @@ export class HomeScreen extends Component {
 
   renderScene = (card) =>
     SceneMap({
-      first: () => this.FirstRoute(card),
+      first: () => FirstRoute(card),
       second: () => SecondRoute(card),
     });
-
-  FirstRoute = (card, topArtist_flw_img) => {
-    if (card != null) {
-      // console.log(card)
-      // console.log(card.topArtists_following, 't')
-
-      return (
-        <View style={[styles.scene]}>
-          <LinearGradient colors={["#000", "#8D8D92", "#EAEAEB"]}>
-            <View style={{ flexDirection: "row" }}>
-              <Animatable.View
-                animation={"bounceIn"}
-                style={{
-                  width: Dimensions.get("window").width / 2 - 10,
-                  justifyContent: "center",
-                }}
-              >
-                <ImageBackground
-                  source={{ uri: card.artistImage }}
-                  style={{ height: "100%", width: "100%" }}
-                  imageStyle={{ borderTopRightRadius: 15 }}
-                >
-                  <View
-                    style={{
-                      bottom: 0,
-                      flexDirection: "row",
-                      position: "absolute",
-                      backgroundColor: "whitesmoke",
-                      borderTopRightRadius: 5,
-                      borderTopLefttRadius: 5,
-                      width: "100%",
-                      opacity: "0.8",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {card.topArtists_following != undefined
-                      ? card.topArtists_following.map((item) => (
-                          <View
-                            style={{
-                              alignSelf: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Image
-                              source={{ uri: item.image }}
-                              style={{
-                                height: 30,
-                                width: 30,
-                                borderRadius: 10,
-                                borderColor: "#fff",
-                                marginTop: 5,
-                                alignSelf: "center",
-                                opacity: 1,
-                                borderWidth: 2,
-                                borderColor: "#1DB954",
-                                margin: 5,
-                              }}
-                            />
-                          </View>
-                        ))
-                      : null}
-                  </View>
-                </ImageBackground>
-              </Animatable.View>
-
-              <View
-                style={{
-                  width: Dimensions.get("window").width / 2,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ top: 20, position: "absolute", color: "#fff" }}>
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      color: "#fff",
-                      textAlign: "center",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {card.artistName}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={{ color: "grey", fontWeight: "400" }}
-                  >{`${card.followers} followers`}</Text>
-                </View>
-
-                {/* Support an independent artist */}
-                <View
-                  style={{
-                    bottom: 0,
-                    position: "relative",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      fontSize: 14,
-                      padding: 3,
-                      textTransform: "uppercase",
-                      color: "#3A5A40",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {card.artistPopularity < 5
-                      ? "Independent"
-                      : card.artistPopularity < 7
-                      ? "Independent"
-                      : card.artistPopularity < 10
-                      ? "Independent"
-                      : card.artistPopularity < 20
-                      ? "Independent"
-                      : card.artistPopularity < 35
-                      ? "Hustler"
-                      : card.artistPopularity < 50
-                      ? "Next Up?"
-                      : card.artistPopularity < 70
-                      ? "Blown?"
-                      : card.artistPopularity < 90
-                      ? "Fame"
-                      : card.artistPopularity < 95
-                      ? "Icon"
-                      : "VIP"}
-                  </Text>
-                  <ProgressBar
-                    progress={card.artistPopularity / 100}
-                    color="#1DB954"
-                    style={{ width: 100, height: 15 }}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    bottom: 10,
-                    position: "absolute",
-                    flexDirection: "row",
-                    alignSelf: "center",
-                    backgroundColor: "whitesmoke",
-                    opacity: 0.8,
-                    borderRadius: 15,
-                  }}
-                >
-                  <View style={{ alignSelf: "center", margin: 5 }}>
-                    <TouchableOpacity
-                      style={{ marginRight: 0, marginBottom: 0 }}
-                    >
-                      <LinearGradient
-                        colors={["#000", "#21295c"]}
-                        style={styles.signIn}
-                      >
-                        <Entypo
-                          name="spotify"
-                          size={20}
-                          style={{
-                            color: "#1DB954",
-                            padding: 4,
-                            alignSelf: "center",
-                          }}
-                        />
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={{ alignSelf: "center", margin: 5 }}>
-                    <TouchableOpacity style={{ marginRight: 0 }}>
-                      <LinearGradient
-                        colors={["#000", "#21295c"]}
-                        style={styles.signIn}
-                      >
-                        <Entypo
-                          name="soundcloud"
-                          size={20}
-                          style={{
-                            color: "#1DB954",
-                            padding: 4,
-                            alignSelf: "center",
-                          }}
-                        />
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={{ alignSelf: "center", margin: 5 }}>
-                    <TouchableOpacity style={{ marginRight: 0 }}>
-                      <LinearGradient
-                        colors={["#000", "#21295c"]}
-                        style={styles.signIn}
-                      >
-                        <MaterialCommunityIcons
-                          name="instagram"
-                          size={20}
-                          style={{
-                            color: "#1DB954",
-                            padding: 4,
-                            alignSelf: "center",
-                          }}
-                        />
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={{ alignSelf: "center", margin: 5 }}>
-                    <TouchableOpacity style={{ marginRight: 0 }}>
-                      <LinearGradient
-                        colors={["#000", "#21295c"]}
-                        style={styles.signIn}
-                      >
-                        <MaterialCommunityIcons
-                          name="twitter"
-                          size={20}
-                          style={{
-                            color: "#1DB954",
-                            padding: 4,
-                            alignSelf: "center",
-                          }}
-                        />
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </LinearGradient>
-        </View>
-      );
-    } else return null;
-  };
-
-  _renderItem = ({ item, index }) => {
-    return (
-      <View style={{ borderRadius: 5 }}>
-        <Image
-          style={{ alignSelf: "center", height: 50, width: 50 }}
-          source={{ uri: item.image }}
-        />
-      </View>
-    );
-  };
 
   componentDidMount() {
     console.log(UserStore.followingDetails);
@@ -617,17 +232,6 @@ export class HomeScreen extends Component {
     });
   }
 
-  saveTrack = (id) => {
-    spotifyAPI
-      .addToMySavedTracks([id])
-      .then((response) => {
-        // console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   render() {
     let swiper = this.state.recommendations ? (
       <Swiper
@@ -652,12 +256,12 @@ export class HomeScreen extends Component {
           }
         }}
         onSwiped={(cardIndex) => {
-          topArtists_following = [];
+          // topArtists_following = [];
         }}
         // onSwipedAll={() => this.setState({loading : true})}
         verticalSwipe={false}
         onSwipedRight={() => {
-          this.saveTrack(this.state.cuurentCard.id);
+          saveTrack(this.state.cuurentCard.id);
           alert(
             `'${this.state.cuurentCard.name}' by ${this.state.cuurentCard.artistName} has been saved to your Spotify library`
           );
@@ -676,6 +280,7 @@ export class HomeScreen extends Component {
     ) : (
       <ActivityIndicator size="large" />
     );
+
     const { index, routes } = this.state;
     if (this.state.loading == false) {
       return (
