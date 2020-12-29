@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "./Home.js";
-import UpdatesScreen from "./Updates.js";
-import SpotifyScreen from "./Spotify.js";
 import SearchScreen from "./Search.js";
 import Timeline from "./Timeline.js";
 import Main from "./Main"
@@ -15,7 +13,6 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import Octicons from "react-native-vector-icons/Octicons";
 import UserStore from "../stores/UserStore.js";
 import { observer } from "mobx-react";
-import axios from "axios";
 
 const HomeStack = createStackNavigator();
 const UpdatesStack = createStackNavigator();
