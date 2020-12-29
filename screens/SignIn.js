@@ -241,7 +241,42 @@ const SignInScreen = ({ navigation }) => {
       .then((res) => {
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
-        UserStore.isLoggedIn = true;
+
+        axios
+          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+            headers: {
+              Authorization: `Bearer ${res.data.token}`,
+            },
+          })
+          .then((response) => {
+            // console.log(response.data.credentials.refresh_token)
+            axios({
+              method: "post",
+              url: "https://accounts.spotify.com/api/token",
+              data: qs.stringify({
+                grant_type: "refresh_token",
+                refresh_token: response.data.credentials.refresh_token,
+                client_id: "fdb4803bdd0843918698fea00b452d03",
+                client_secret: "e7c47d49963b4758885d3dddc1931dde",
+              }),
+              headers: {
+                "content-type":
+                  "application/x-www-form-urlencoded;charset=utf-8",
+              },
+            })
+              .then((res) => {
+                console.log(res.data.access_token, "rtwrsefih");
+                spotifyAPI.setAccessToken(res.data.access_token);
+                getSpotifyDetails(
+                  res.data.access_token,
+                  response.data.credentials.refresh_token
+                );
+                UserStore.isLoggedIn = true;
+              })
+              .catch((err) => alert(err));
+          });
+
+        // UserStore.isLoggedIn = true;
         // if (userData.email == spotifyUserDetails.user_email) {
         //   console.log("logged in");
 
@@ -606,7 +641,13 @@ const SignInScreen = ({ navigation }) => {
               {/* <Text style = {{color : '#ADADAD', fontWeight : 'bold'}}>alternatively...</Text> */}
 
               <View style={{ marginTop: 65 }}>
-                <TouchableOpacity style={styles.signIn} onPress={signIn}>
+                <TouchableOpacity
+                  style={styles.signIn}
+                  disabled={!request}
+                  onPress={() => {
+                    promptAsync();
+                  }}
+                >
                   <LinearGradient
                     colors={["#1DB954", "#1DB954"]}
                     style={[styles.signIn, { flexDirection: "row" }]}

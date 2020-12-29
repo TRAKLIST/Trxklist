@@ -182,6 +182,7 @@ const SignUpScreen = ({ navigation }) => {
         confirmPassword: data.confirm_password,
         meloID: data.meloID,
         spotifyID: spotifyUserDetails.user_id,
+        refresh_token : spotifyUserDetails.refresh_token
       };
 
       axios
