@@ -4,16 +4,11 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  RefreshControl,
   Text,
   Image,
   Button,
-  ActivityIndicator,
-  FlatList,
   Dimensions,
-  Modal,
   TouchableOpacity,
-  StatusBar,
   TextInput,
   ImageBackground,
 } from "react-native";
@@ -492,7 +487,7 @@ function Main() {
             makePost({
               trackID: trackDetails.id,
               spotifyID: UserStore.spotifyUserDetails.user_id,
-              body: caption_prev,
+              body: caption,
               status: "Track",
             });
             // refresh
