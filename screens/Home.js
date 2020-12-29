@@ -2,58 +2,37 @@ import React, { Component } from "react";
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  RefreshControl,
   Text,
   Image,
-  Button,
   ActivityIndicator,
-  FlatList,
   Dimensions,
-  Modal,
   TouchableOpacity,
-  StatusBar,
-  Picker,
-  TextInput,
   ImageBackground,
 } from "react-native";
+
 import { LinearGradient } from "expo-linear-gradient";
+
 import { ProgressBar } from "react-native-paper";
+import * as Animatable from "react-native-animatable";
+import { ProgressChart } from "react-native-chart-kit";
+import Swiper from "react-native-deck-swiper";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import * as Animatable from "react-native-animatable";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import Swiper from "react-native-deck-swiper";
+
 import spotifyAPI from "../components/SpotifyAPI";
-import Carousel, { Pagination } from "react-native-snap-carousel";
-
-import { v4 as uuidv4 } from "uuid";
-
-import Post from "../components/Post";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import axios from "axios";
-
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
 
 function wait(timeout) {
   return new Promise((res) => {
     setTimeout(res, timeout);
   });
 }
-
-let topArtists_following = [];
 
 let getArtist = {};
 
@@ -72,7 +51,6 @@ const SecondRoute = (card) => {
         liveness,
         speechiness,
       } = card.audioFeatures;
-      // console.log(card.audioFeatures, 'teij')
       return (
         <View style={[styles.scene]}>
           <LinearGradient colors={["#000", "#8D8D92", "#EAEAEB"]}>
@@ -93,7 +71,7 @@ const SecondRoute = (card) => {
                       "instrumentalness",
                       "liveness",
                       "speechiness",
-                    ], // optional
+                    ],
                     data: [
                       acousticness,
                       danceability,
@@ -113,9 +91,9 @@ const SecondRoute = (card) => {
                     backgroundGradientTo: "transparent",
                     backgroundGradientToOpacity: 0,
                     color: (opacity = 0.5) => `rgba(29, 185, 84, ${opacity})`,
-                    strokeWidth: 2, // optional, default 3
+                    strokeWidth: 2,
                     barPercentage: 0.5,
-                    useShadowColorFromDataset: false, // optional
+                    useShadowColorFromDataset: false,
                   }}
                   hideLegend={true}
                 />
@@ -650,81 +628,6 @@ export class HomeScreen extends Component {
       });
   };
 
-  // followArtist = (id) => {
-  //   spotifyAPI
-  //     .followArtists([id])
-  //     .then((response) => {
-  //       console.log(response, 'dyi');
-  //     })
-  //     .catch((err) => {
-  //       console.log('damns');
-  //     });
-  // }
-
-  // reRender = () => {
-  //   axios.get(`https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`
-  //     }
-  //   }).then((res) => {
-  //     // console.log(res.data)
-  //     res.data.tracks.map((track) => {
-
-  //       spotifyAPI.getArtist(track.artists[0].id)
-  //         .then((response) => {
-  //           getArtist = {
-  //             followers: response.followers.total,
-  //             image: response.images[0].url,
-  //             popularity: response.popularity,
-  //             id: response.id
-  //           }
-  //           return getArtist
-  //         })
-  //         .then((response) => {
-  //           spotifyAPI.getAudioFeaturesForTrack(track.id).then((data) => {
-  //             audioFeatures = {
-  //               acousticness: data.acousticness,
-  //               danceability: data.danceability,
-  //               energy: data.energy,
-  //               instrumentalness: data.instrumentalness,
-  //               liveness: data.liveness,
-  //               loudness: data.loudness,
-  //               speechiness: data.speechiness,
-  //               valence: data.valence
-  //             }
-  //             this.setState({ audioFeatures: audioFeatures }, () => {
-  //               recommended = {
-  //                 name: track.name,
-  //                 releaseDate: track.album.release_date,
-  //                 popularity: track.popularity,
-  //                 id: track.id,
-  //                 artistID: response.id,
-  //                 explicit: track.explicit,
-  //                 artistName: track.artists[0].name,
-  //                 followers: response.followers,
-  //                 artistPopularity: response.popularity,
-  //                 artistImage: response.image,
-  //                 albumName: track.album.name,
-  //                 image: track.album.images[0].url,
-  //                 albumID: track.album.id,
-  //                 audioFeatures: this.state.audioFeatures
-  //               }
-  //               // console.log(recommended, 'tobio')
-  //               this.setState({ recommendations: [...this.state.recommendations, recommended] })
-  //             })
-  //           })
-
-  //         })
-  //         .catch(err => console.log("saduh"))
-  //       // recommend.push(recommended)
-
-  //     })
-  //     // console.log(this.state.recommendations)
-  //     // console.log('yuh')
-
-  //   })
-  // }
-
   render() {
     let swiper = this.state.recommendations ? (
       <Swiper
@@ -751,9 +654,7 @@ export class HomeScreen extends Component {
         onSwiped={(cardIndex) => {
           topArtists_following = [];
         }}
-        onSwipedAll={this.reRender}
-        // onSwipedTop={() => this.saveTrack(this.state.cuurentCard.id)}
-        // onSwipedBottom={() => this.followArtist(this.state.cuurentCard.artistID)}
+        // onSwipedAll={() => this.setState({loading : true})}
         verticalSwipe={false}
         onSwipedRight={() => {
           this.saveTrack(this.state.cuurentCard.id);

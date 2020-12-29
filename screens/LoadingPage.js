@@ -1,20 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Image,
-  Button,
-  Platform,
-  StatusBar,
-  Dimensions,
-} from "react-native";
-import Post from "../components/Post";
+import { SafeAreaView, Text } from "react-native";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import spotifyAPI from "../components/SpotifyAPI";
@@ -43,6 +29,7 @@ function shuffle(array) {
 
 class LoadingPage extends Component {
   componentDidMount() {
+    // add a timer
     axios
       .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
       .then((res) => {
@@ -118,11 +105,6 @@ class LoadingPage extends Component {
         } else str = `${str},${items[i].id}`;
       }
 
-      // items.map((item) => {
-      //   if (str == "") {
-      //     str = `${item.id}`;
-      //   } else str = `${str},${item.id}`;
-      // });
       UserStore.str = str;
       console.log(str);
     });
