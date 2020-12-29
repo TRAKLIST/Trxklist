@@ -40,7 +40,6 @@ exports.first_route = () => {
     setQueryList([]);
     spotifyAPI.searchTracks(query).then(
       (data) => {
-        // console.log(data);
         data.tracks.items.map((item) => {
           let trackQuery = {
             id: item.id,
@@ -63,12 +62,7 @@ exports.first_route = () => {
   };
 
   const select = (item) => {
-    // setTrackDetails(item); // UserStore
     UserStore.trackDetails = item;
-    // setIndex(1);
-    // setCaptionHeader(true);
-    // setPickerHeader(false);
-    // console.log(item);
   };
 
   let track_s = queryList ? (
@@ -202,7 +196,6 @@ exports.third_route = (caption) => {
           .then((res) => {
             console.log(res.data);
             UserStore.allPosts = res.data;
-            //navigate home
           })
           .catch((err) => console.log(err));
       })
