@@ -10,11 +10,12 @@ import {
   ImageBackground,
   StatusBar,
   Dimensions,
+  SafeAreaView,
 } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
 import * as Animatable from "react-native-animatable";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -44,172 +45,184 @@ const discovery = {
   tokenEndpoint: "https://accounts.spotify.com/api/token",
 };
 
-const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
-  dayjs.extend(relativeTime);
-  return (
-    <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
-      <TouchableOpacity
-        disabled={!request}
-        onPress={() => {
-          promptAsync();
-        }}
-      >
-        <LinearGradient
-          colors={["#1DB954", "green"]}
-          style={[styles.signIn, { flexDirection: "row" }]}
-        >
-          <View style={{ left: 20, position: "absolute" }}>
-            <MaterialCommunityIcons
-              name="spotify"
-              color="#fff"
-              size={20}
-              style={{ alignSelf: "center", margin: 7 }}
-            />
-          </View>
+// const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
+//   dayjs.extend(relativeTime);
+//   return (
+//     <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
+//       <TouchableOpacity
+//         disabled={!request}
+//         onPress={() => {
+//           promptAsync();
+//         }}
+//       >
+//         <LinearGradient
+//           colors={["#1DB954", "green"]}
+//           style={[styles.signIn, { flexDirection: "row" }]}
+//         >
+//           <View style={{ left: 20, position: "absolute" }}>
+//             <MaterialCommunityIcons
+//               name="spotify"
+//               color="#fff"
+//               size={20}
+//               style={{ alignSelf: "center", margin: 7 }}
+//             />
+//           </View>
 
-          {!spotifyUserDetails.user_email && (
-            <Text
-              style={[
-                styles.textSign,
-                {
-                  color: "#fff",
-                  alignSelf: "center",
-                  fontSize: 13,
-                  textTransform: "uppercase",
-                },
-              ]}
-            >
-              Verify Spotify
-            </Text>
-          )}
-          {spotifyUserDetails.user_email && (
-            <Text
-              style={[
-                styles.textSign,
-                {
-                  color: "#fff",
-                  alignSelf: "center",
-                  fontSize: 13,
-                  textTransform: "uppercase",
-                },
-              ]}
-            >
-              Not You?
-            </Text>
-          )}
-        </LinearGradient>
-      </TouchableOpacity>
+//           {!spotifyUserDetails.user_email && (
+//             <Text
+//               style={[
+//                 styles.textSign,
+//                 {
+//                   color: "#fff",
+//                   alignSelf: "center",
+//                   fontSize: 13,
+//                   textTransform: "uppercase",
+//                 },
+//               ]}
+//             >
+//               Verify Spotify
+//             </Text>
+//           )}
+//           {spotifyUserDetails.user_email && (
+//             <Text
+//               style={[
+//                 styles.textSign,
+//                 {
+//                   color: "#fff",
+//                   alignSelf: "center",
+//                   fontSize: 13,
+//                   textTransform: "uppercase",
+//                 },
+//               ]}
+//             >
+//               Not You?
+//             </Text>
+//           )}
+//         </LinearGradient>
+//       </TouchableOpacity>
 
-      <View style={{ marginTop: 10 }}>
-        {/* <View> */}
-        <View style={{ margin: 5, borderRadius: 15 }}>
-          <View style={{ flexDirection: "row", margin: 10 }}>
-            <View style={{ flex: 2, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-              >
-                name
-              </Text>
-            </View>
-            <View style={{ flex: 4, padding: 5 }}>
-              <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
-                {spotifyUserDetails.user_name}
-              </Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", margin: 10 }}>
-            <View style={{ flex: 2, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-              >
-                email
-              </Text>
-            </View>
-            <View style={{ flex: 4, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}
-                numberOfLines={1}
-              >
-                {spotifyUserDetails.user_email}
-              </Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", margin: 10 }}>
-            <View style={{ flex: 2, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-              >
-                spotify uri
-              </Text>
-            </View>
-            <View style={{ flex: 4, padding: 5 }}>
-              <Text
-                numberOfLines={1}
-                style={{
-                  fontWeight: "bold",
-                  color: "#999",
-                  opacity: 0.6,
-                  textDecorationLine: "underline",
-                }}
-                onPress={() => Linking.openURL(spotifyUserDetails.profile_link)}
-              >
-                {spotifyUserDetails.profile_link}
-              </Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", margin: 10 }}>
-            <View style={{ flex: 2, padding: 5 }}>
-              <Text
-                style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-              >
-                country
-              </Text>
-            </View>
-            <View style={{ flex: 4, padding: 5 }}>
-              <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
-                {spotifyUserDetails.country}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+//       <View style={{ marginTop: 10 }}>
+//         {/* <View> */}
+//         <View style={{ margin: 5, borderRadius: 15 }}>
+//           <View style={{ flexDirection: "row", margin: 10 }}>
+//             <View style={{ flex: 2, padding: 5 }}>
+//               <Text
+//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
+//               >
+//                 name
+//               </Text>
+//             </View>
+//             <View style={{ flex: 4, padding: 5 }}>
+//               <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
+//                 {spotifyUserDetails.user_name}
+//               </Text>
+//             </View>
+//           </View>
+//           <View style={{ flexDirection: "row", margin: 10 }}>
+//             <View style={{ flex: 2, padding: 5 }}>
+//               <Text
+//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
+//               >
+//                 email
+//               </Text>
+//             </View>
+//             <View style={{ flex: 4, padding: 5 }}>
+//               <Text
+//                 style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}
+//                 numberOfLines={1}
+//               >
+//                 {spotifyUserDetails.user_email}
+//               </Text>
+//             </View>
+//           </View>
+//           <View style={{ flexDirection: "row", margin: 10 }}>
+//             <View style={{ flex: 2, padding: 5 }}>
+//               <Text
+//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
+//               >
+//                 spotify uri
+//               </Text>
+//             </View>
+//             <View style={{ flex: 4, padding: 5 }}>
+//               <Text
+//                 numberOfLines={1}
+//                 style={{
+//                   fontWeight: "bold",
+//                   color: "#999",
+//                   opacity: 0.6,
+//                   textDecorationLine: "underline",
+//                 }}
+//                 onPress={() => Linking.openURL(spotifyUserDetails.profile_link)}
+//               >
+//                 {spotifyUserDetails.profile_link}
+//               </Text>
+//             </View>
+//           </View>
+//           <View style={{ flexDirection: "row", margin: 10 }}>
+//             <View style={{ flex: 2, padding: 5 }}>
+//               <Text
+//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
+//               >
+//                 country
+//               </Text>
+//             </View>
+//             <View style={{ flex: 4, padding: 5 }}>
+//               <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
+//                 {spotifyUserDetails.country}
+//               </Text>
+//             </View>
+//           </View>
+//         </View>
+//       </View>
 
-      <ImageBackground
-        style={{
-          width: "100%",
-          height: 300,
-        }}
-        imageStyle={{ borderRadius: 30 }}
-        source={{ uri: lastPlayed.image }}
-      >
-        <View
-          style={{
-            backgroundColor: "green",
-            top: 5,
-            borderRadius: 10,
-            margin: 15,
-            padding: 10,
-            opacity: 0.8,
-            alignSelf: "flex-start",
-            borderColor: "#fff",
-            borderWidth: 3,
-          }}
-        >
-          <View>
-            <Text
-              style={{ color: "#fff", padding: 0, fontWeight: "bold" }}
-            >{`played ${lastPlayed.trackName} `}</Text>
-            <Text style={{ color: "#fff", marginTop: 5, fontWeight: "bold" }}>
-              {dayjs(lastPlayed.playedAt).fromNow()}
-            </Text>
-          </View>
-        </View>
-      </ImageBackground>
-    </LinearGradient>
-  );
-};
+//       <ImageBackground
+//         style={{
+//           width: "100%",
+//           height: 300,
+//         }}
+//         imageStyle={{ borderRadius: 30 }}
+//         source={{ uri: lastPlayed.image }}
+//       >
+//         <View
+//           style={{
+//             backgroundColor: "green",
+//             top: 5,
+//             borderRadius: 10,
+//             margin: 15,
+//             padding: 10,
+//             opacity: 0.8,
+//             alignSelf: "flex-start",
+//             borderColor: "#fff",
+//             borderWidth: 3,
+//           }}
+//         >
+//           <View>
+//             <Text
+//               style={{ color: "#fff", padding: 0, fontWeight: "bold" }}
+//             >{`played ${lastPlayed.trackName} `}</Text>
+//             <Text style={{ color: "#fff", marginTop: 5, fontWeight: "bold" }}>
+//               {dayjs(lastPlayed.playedAt).fromNow()}
+//             </Text>
+//           </View>
+//         </View>
+//       </ImageBackground>
+//     </LinearGradient>
+//   );
+// };
 
-const SecondRoute = (spotifyUserDetails, navigation) => {
+// const SecondRoute = (spotifyUserDetails, navigation) => {};
+
+const initialLayout = { width: Dimensions.get("window").width };
+
+const SignInScreen = ({ navigation }) => {
+  const [lastPlayed, setLastPlayed] = React.useState({});
+  const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Spotify" },
+    { key: "second", title: "Traklist" },
+  ]);
+
   const [authorizationCode, setAuthorizationCode] = useState("");
 
   const signIn = () => {
@@ -278,141 +291,26 @@ const SecondRoute = (spotifyUserDetails, navigation) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
-  return (
-    <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
-      <View style={{ marginTop: 70 }}>
-        <Text
-          style={{
-            fontWeight: "bold",
-            color: "white",
-            opacity: 0.6,
-            fontSize: 18,
-          }}
-        >
-          email
-        </Text>
-        <View style={styles.action}>
-          <FontAwesome
-            name="user-o"
-            color="#fff"
-            size={20}
-            style={{ opacity: 0.6 }}
-          />
-          <TextInput
-            placeholder="Your Email"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
-          />
-          {data.check_textInputChange ? (
-            <Animatable.View animation="bounceIn">
-              <Feather
-                name="check-circle"
-                color="#fff"
-                size={20}
-                style={{ opacity: 0.6 }}
-              />
-            </Animatable.View>
-          ) : null}
-        </View>
 
-        <Text
-          style={{
-            fontWeight: "bold",
-            color: "white",
-            opacity: 0.6,
-            fontSize: 18,
-            marginTop: 35,
-          }}
-        >
-          password
-        </Text>
-        <View style={styles.action}>
-          <FontAwesome
-            name="lock"
-            color="#fff"
-            size={20}
-            style={{ opacity: 0.6 }}
-          />
-          <TextInput
-            placeholder="Your Password"
-            secureTextEntry={data.secureTextEntry ? true : false}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(val) => handlePasswordChange(val)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather
-                name="eye-off"
-                color="#fff"
-                size={20}
-                style={{ opacity: 0.6 }}
-              />
-            ) : (
-              <Feather
-                name="eye"
-                color="#fff"
-                size={20}
-                style={{ opacity: 0.6 }}
-              />
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+  // const renderScene = SceneMap({
+  //   first: () =>
+  //     FirstRoute(request, spotifyUserDetails, promptAsync, lastPlayed),
+  //   second: () => SecondRoute(spotifyUserDetails, navigation),
+  // });
 
-      <View style={styles.button}>
-        <TouchableOpacity style={styles.signIn} onPress={signIn}>
-          <LinearGradient colors={["#292929", "#292929"]} style={styles.signIn}>
-            <Text style={[styles.textSign, { color: "#000" }]}>
-              enter traklist.
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SignUpScreen")}
-          style={{ flexDirection: "row" }}
-        >
-          <Text style={{ color: "#ADADAD", fontSize: "17", fontWeight: "600" }}>
-            create an account
-          </Text>
-          <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
-  );
-};
-
-const initialLayout = { width: Dimensions.get("window").width };
-
-const SignInScreen = ({ navigation }) => {
-  const [lastPlayed, setLastPlayed] = React.useState({});
-  const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "Spotify" },
-    { key: "second", title: "Traklist" },
-  ]);
-
-  const renderScene = SceneMap({
-    first: () =>
-      FirstRoute(request, spotifyUserDetails, promptAsync, lastPlayed),
-    second: () => SecondRoute(spotifyUserDetails, navigation),
-  });
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: "#1DB954" }}
-      style={{ backgroundColor: "grey" }}
-      renderLabel={({ route, focused, color }) => (
-        <Text style={{ color, margin: 8, fontWeight: "bold" }}>
-          {route.title}
-        </Text>
-      )}
-      activeColor="green"
-    />
-  );
+  // const renderTabBar = (props) => (
+  //   <TabBar
+  //     {...props}
+  //     indicatorStyle={{ backgroundColor: "#1DB954" }}
+  //     style={{ backgroundColor: "grey" }}
+  //     renderLabel={({ route, focused, color }) => (
+  //       <Text style={{ color, margin: 8, fontWeight: "bold" }}>
+  //         {route.title}
+  //       </Text>
+  //     )}
+  //     activeColor="green"
+  //   />
+  // );
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -442,7 +340,7 @@ const SignInScreen = ({ navigation }) => {
         // native: "exp://172.29.71.10:19000",
         // native: "exp://192.168.0.35:19000",
         // native: "exp://expo.io/@tsb/projects/swaipify/",
-        native : "exp://exp.host/@traklist/traklist"
+        native: "exp://exp.host/@traklist/traklist",
       }),
     },
     discovery
@@ -522,23 +420,224 @@ const SignInScreen = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
       <LinearGradient colors={["#EAEAEB", "grey"]} style={styles.header}>
-        {spotifyUserDetails.user_image && (
-          <Animatable.View animation="fadeInUpBig">
-            <ImageBackground
-              source={{ uri: spotifyUserDetails.user_image }}
-              style={{ height: "100%", width: "100%" }}
-            ></ImageBackground>
-          </Animatable.View>
-        )}
+        <SafeAreaView>
+          {spotifyUserDetails.user_image ? (
+            <Animatable.View animation="fadeInUpBig">
+              <ImageBackground
+                source={{ uri: spotifyUserDetails.user_image }}
+                style={{ height: "100%", width: "100%" }}
+              ></ImageBackground>
+            </Animatable.View>
+          ) : (
+            <View>
+              <Animatable.Image
+                animation="bounceIn"
+                // duration="1500"
+                style={[styles.logo, { alignSelf: "center" }]}
+                resizeMode="contain"
+                // source={img}
+              />
+              <Text style = {{textAlign : 'center', marginTop : 5, fontSize : 20, fontWeight : 'bold', color : '#292929'}}>TRAKLIST.</Text>
+            </View>
+          )}
+        </SafeAreaView>
       </LinearGradient>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <TabView
+        {/* <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
-        />
+        /> */}
+        <LinearGradient colors={["grey", "#292929"]} style={styles.footer}>
+          <View style={{ marginTop: 25 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "white",
+                opacity: 0.6,
+                fontSize: 18,
+                marginLeft: 15,
+                marginBottom: 5,
+              }}
+            >
+              email
+            </Text>
+            <View
+              style={{
+                backgroundColor: "#292929",
+                borderRadius: 30,
+                flexDirection: "row",
+                padding: 10,
+                opacity: 0.4,
+              }}
+            >
+              <FontAwesome
+                name="user-o"
+                color="#fff"
+                size={20}
+                style={{ opacity: 0.6 }}
+              />
+              <TextInput
+                placeholder="Your Email"
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => textInputChange(val)}
+              />
+              {data.check_textInputChange ? (
+                <Animatable.View animation="bounceIn">
+                  <Feather
+                    name="check-circle"
+                    color="#fff"
+                    size={20}
+                    style={{ opacity: 0.6 }}
+                  />
+                </Animatable.View>
+              ) : null}
+            </View>
+
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "white",
+                opacity: 0.6,
+                fontSize: 18,
+                marginLeft: 15,
+                marginBottom: 5,
+                marginTop: 35,
+              }}
+            >
+              password
+            </Text>
+            <View
+              style={{
+                backgroundColor: "#292929",
+                borderRadius: 30,
+                flexDirection: "row",
+                padding: 10,
+                opacity: 0.4,
+              }}
+            >
+              <FontAwesome
+                name="lock"
+                color="#fff"
+                size={20}
+                style={{ opacity: 0.6 }}
+              />
+              <TextInput
+                placeholder="Your Password"
+                secureTextEntry={data.secureTextEntry ? true : false}
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => handlePasswordChange(val)}
+              />
+              <TouchableOpacity onPress={updateSecureTextEntry}>
+                {data.secureTextEntry ? (
+                  <Feather
+                    name="eye-off"
+                    color="#fff"
+                    size={20}
+                    style={{ opacity: 0.6 }}
+                  />
+                ) : (
+                  <Feather
+                    name="eye"
+                    color="#fff"
+                    size={20}
+                    style={{ opacity: 0.6 }}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.button}>
+            <TouchableOpacity style={styles.signIn} onPress={signIn}>
+              <LinearGradient
+                colors={["#292929", "#292929"]}
+                style={styles.signIn}
+              >
+                <Text style={[styles.textSign, { color: "#000" }]}>
+                  enter traklist.
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignUpScreen")}
+              style={{ flexDirection: "row" }}
+            >
+              <Text
+                style={{ color: "#ADADAD", fontSize: "17", fontWeight: "600" }}
+              >
+                create an account
+              </Text>
+              <MaterialIcons name="navigate-next" color="#ADADAD" size={20} />
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 30,
+              borderTopWidth: 1,
+              borderColor: "#292929",
+              padding: 20,
+            }}
+          >
+            {/* <Text style = {{color : '#ADADAD', fontWeight : 'bold'}}>alternatively...</Text> */}
+            <TouchableOpacity style={styles.signIn} onPress={signIn}>
+              <LinearGradient
+                colors={["#1DB954", "#1DB954"]}
+                style={[styles.signIn, { flexDirection: "row" }]}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    { color: "#fff", fontWeight: "500" },
+                  ]}
+                >
+                  sign in with {""}
+                </Text>
+                <Fontisto name="spotify" color="#fff" size={20} />
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.signIn} onPress={signIn}>
+              <LinearGradient
+                colors={["#fc3158", "#fc3158"]}
+                style={[styles.signIn, { flexDirection: "row" }]}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    { color: "#fff", fontWeight: "500" },
+                  ]}
+                >
+                  sign in with{" "}
+                </Text>
+                <Fontisto name="applemusic" color="#fff" size={20} />
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.signIn} onPress={signIn}>
+              <LinearGradient
+                colors={["#ff7700", "#ff7700"]}
+                style={[styles.signIn, { flexDirection: "row" }]}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    { color: "#fff", fontWeight: "500" },
+                  ]}
+                >
+                  sign in with{" "}
+                </Text>
+                <Fontisto name="soundcloud" color="#fff" size={20} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
       </Animatable.View>
     </View>
   );
@@ -552,11 +651,11 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DB954",
+    backgroundColor: "#292929",
   },
   header: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   footer: {
     flex: 3,
@@ -601,7 +700,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 110,
+    marginTop: 50,
   },
   signIn: {
     width: "80%",
@@ -619,10 +718,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   logo: {
-    height: "100%",
-    borderRadius: 40,
-    borderWidth: 3,
-    borderColor: "#fff",
+    width: height_logo * 0.55,
+    height: height_logo * 0.55,
+    backgroundColor: "#fff",
+    borderRadius: 120,
   },
   spotifyAuth: {
     color: "green",
