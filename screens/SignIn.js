@@ -241,16 +241,16 @@ const SignInScreen = ({ navigation }) => {
       .then((res) => {
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
+        UserStore.isLoggedIn = true;
+        // if (userData.email == spotifyUserDetails.user_email) {
+        //   console.log("logged in");
 
-        if (userData.email == spotifyUserDetails.user_email) {
-          console.log("logged in");
-
-          UserStore.isLoggedIn = true;
-        } else {
-          alert(
-            `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
-          );
-        }
+        //   UserStore.isLoggedIn = true;
+        // } else {
+        //   alert(
+        //     `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
+        //   );
+        // }
       })
       .catch((err) => {
         console.log(err);

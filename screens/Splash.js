@@ -28,7 +28,7 @@ const SplashScreen = ({ navigation }) => {
         />
         {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
       </LinearGradient>
-      <LinearGradient colors={["grey", "#000", "#000"]} style={styles.footer}>
+      <LinearGradient colors={["grey", "#292929", "#000"]} style={styles.footer}>
         <Animatable.View animation="fadeInUpBig" style={{ flex: 1 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.title}>TRAKLIST.</Text>
@@ -62,7 +62,7 @@ const SplashScreen = ({ navigation }) => {
               >
                 <LinearGradient
                   colors={["black", "black"]}
-                  style={[styles.signIn, { marginTop: 5 }]}
+                  style={[styles.signIn, { marginTop: 5, opacity : 0.4 }]}
                 >
                   <Text
                     style={{
