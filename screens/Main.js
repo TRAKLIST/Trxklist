@@ -130,36 +130,36 @@ function Main() {
             )}
             stickyHeaderHeight={90}
             // renderBackground = {0}
-            renderForeground={() => (
-              <View
-                style={{
-                  padding: 5,
-                  marginLeft: 10,
-                  marginRight: 10,
-                  marginBottom: 10,
-                  backgroundColor: "#272D2D",
-                  borderWidth: 2,
-                  borderColor: "green",
-                  borderRadius: 15,
-                  borderStyle: "dotted",
-                  minHeight : 80
-                }}
-              >
-                <StickyItemFlatList
-                  itemWidth={65}
-                  itemHeight={65}
-                  separatorSize={SEPARATOR_SIZE}
-                  borderRadius={BORDER_RADIUS}
-                  stickyItemWidth={STICKY_ITEM_WIDTH}
-                  stickyItemHeight={STICKY_ITEM_HEIGHT}
-                  stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-                  stickyItemContent={StickyItemView}
-                  onStickyItemPress={handleStickyItemPress}
-                  data={data}
-                  renderItem={renderItemSticky}
-                />
-              </View>
-            )}
+            // renderForeground={() => (
+            //   <View
+            //     style={{
+            //       padding: 5,
+            //       marginLeft: 10,
+            //       marginRight: 10,
+            //       marginBottom: 10,
+            //       backgroundColor: "#272D2D",
+            //       borderWidth: 2,
+            //       borderColor: "green",
+            //       borderRadius: 15,
+            //       borderStyle: "dotted",
+            //       minHeight : 80
+            //     }}
+            //   >
+            //     <StickyItemFlatList
+            //       itemWidth={65}
+            //       itemHeight={65}
+            //       separatorSize={SEPARATOR_SIZE}
+            //       borderRadius={BORDER_RADIUS}
+            //       stickyItemWidth={STICKY_ITEM_WIDTH}
+            //       stickyItemHeight={STICKY_ITEM_HEIGHT}
+            //       stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
+            //       stickyItemContent={StickyItemView}
+            //       onStickyItemPress={handleStickyItemPress}
+            //       data={data}
+            //       renderItem={renderItemSticky}
+            //     />
+            //   </View>
+            // )}
           >
             <View style={{ paddingTop: 10 }}>
               <LinearGradient

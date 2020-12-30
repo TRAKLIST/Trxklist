@@ -543,7 +543,7 @@ function Search() {
                           <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>News</Text>
                       </View> */}
 
-                <View
+                {/* <View
                   style={{
                     margin: 10,
                     padding: 5,
@@ -553,7 +553,7 @@ function Search() {
                     color: "#",
                     borderRadius: 0,
                   }}
-                >
+                > */}
                   {/* <Text
                     style={{
                       color: "#fff",
@@ -572,6 +572,8 @@ function Search() {
                             flexDirection: "row",
                             margin: 5,
                             width: "100%",
+                            borderBottomWidth : 1,
+                            padding : 10
                           }}
                         >
                           <View style={{ flex: 1 }}>
@@ -653,8 +655,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <FontAwesome
-                                  name="plus-circle"
+                                <AntDesign
+                                  name="staro"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -665,9 +667,9 @@ function Search() {
                       </TouchableOpacity>
                     );
                   })}
-                </View>
+                {/* </View> */}
 
-                <View
+                {/* <View
                   style={{
                     margin: 15,
                     padding: 5,
@@ -677,7 +679,7 @@ function Search() {
                     color: "#",
                     borderRadius: 0,
                   }}
-                >
+                > */}
                   {/* <Text
                     style={{
                       color: "#fff",
@@ -697,6 +699,8 @@ function Search() {
                             flexDirection: "row",
                             margin: 5,
                             width: "100%",
+                            borderBottomWidth : 1,
+                            padding : 10
                           }}
                         >
                           <View style={{ flex: 1 }}>
@@ -778,8 +782,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <FontAwesome
-                                  name="plus-circle"
+                                <AntDesign
+                                  name="staro"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -790,9 +794,9 @@ function Search() {
                       </TouchableOpacity>
                     );
                   })}
-                </View>
+                {/* </View> */}
 
-                <View
+                {/* <View
                   style={{
                     margin: 15,
                     padding: 5,
@@ -802,7 +806,7 @@ function Search() {
                     color: "#",
                     borderRadius: 0,
                   }}
-                >
+                > */}
                   {/* <Text
                     style={{
                       color: "#fff",
@@ -822,6 +826,8 @@ function Search() {
                             flexDirection: "row",
                             margin: 5,
                             width: "100%",
+                            borderBottomWidth : 1,
+                            padding : 10
                           }}
                         >
                           <View style={{ flex: 1 }}>
@@ -903,8 +909,8 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                                <FontAwesome
-                                  name="plus-circle"
+                                <AntDesign
+                                  name="staro"
                                   size={25}
                                   color={"#44CF6C"}
                                 />
@@ -915,7 +921,7 @@ function Search() {
                       </TouchableOpacity>
                     );
                   })}
-                </View>
+                {/* </View> */}
               </LinearGradient>
             </ScrollView>
           </Animatable.View>

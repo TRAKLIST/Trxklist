@@ -329,6 +329,21 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
+  const signIn2 = () => {
+    axios
+      .post("https://europe-west1-projectmelo.cloudfunctions.net/api/login2", {
+        email: spotifyUserDetails.user_email,
+        refresh_token: spotifyUserDetails.refresh_token,
+      })
+      .then((res) => {
+        console.log(res.data, "dfw");
+
+        setAuthorizationCode(res.data.token);
+        UserStore.authCode = res.data.token;
+        UserStore.isLoggedIn = true;
+      });
+  };
+
   // const renderScene = SceneMap({
   //   first: () =>
   //     FirstRoute(request, spotifyUserDetails, promptAsync, lastPlayed),
@@ -412,74 +427,6 @@ const SignInScreen = ({ navigation }) => {
           const { access_token, refresh_token } = res.data;
           spotifyAPI.setAccessToken(access_token);
           getSpotifyDetails(access_token, refresh_token);
-        })
-        .then(() => {
-          // sign in
-          axios
-            .post(
-              "https://europe-west1-projectmelo.cloudfunctions.net/api/login2",
-              {
-                email: spotifyUserDetails.user_email,
-                refresh_token: spotifyUserDetails.refresh_token,
-              }
-            )
-            .then((res) => {
-              console.log(res.data, "dfw");
-
-              setAuthorizationCode(res.data.token);
-              UserStore.authCode = res.data.token;
-              UserStore.isLoggedIn = true;
-              // axios
-              //   .get(
-              //     "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
-              //     {
-              //       headers: {
-              //         Authorization: `Bearer ${res.data.token}`,
-              //       },
-              //     }
-              //   )
-              //   .then((response) => {
-              //     // console.log(response.data.credentials.refresh_token)
-              //     axios({
-              //       method: "post",
-              //       url: "https://accounts.spotify.com/api/token",
-              //       data: qs.stringify({
-              //         grant_type: "refresh_token",
-              //         refresh_token: response.data.credentials.refresh_token,
-              //         client_id: "fdb4803bdd0843918698fea00b452d03",
-              //         client_secret: "e7c47d49963b4758885d3dddc1931dde",
-              //       }),
-              //       headers: {
-              //         "content-type":
-              //           "application/x-www-form-urlencoded;charset=utf-8",
-              //       },
-              //     })
-              //       .then((res) => {
-              //         console.log(res.data.access_token, "rtwrsefih");
-              //         spotifyAPI.setAccessToken(res.data.access_token);
-              //         getSpotifyDetails(
-              //           res.data.access_token,
-              //           response.data.credentials.refresh_token
-              //         );
-              //         UserStore.isLoggedIn = true;
-              //       })
-              //       .catch((err) => alert(err));
-              //   });
-
-              // UserStore.isLoggedIn = true;
-              // if (userData.email == spotifyUserDetails.user_email) {
-              //   console.log("logged in");
-
-              //   UserStore.isLoggedIn = true;
-              // } else {
-              //   alert(
-              //     `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
-              //   );
-              // }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
         })
         .catch((err) => alert(err));
     }
@@ -569,7 +516,7 @@ const SignInScreen = ({ navigation }) => {
         /> */}
           <LinearGradient colors={["grey", "#292929"]} style={styles.footer}>
             {/* <KeyboardAvoidingView behavior="padding"> */}
-            <View style={{ marginTop: 25 }}>
+            <View style={{ marginTop: 15 }}>
               <Text
                 style={{
                   fontWeight: "bold",
@@ -623,7 +570,7 @@ const SignInScreen = ({ navigation }) => {
                   fontSize: 18,
                   marginLeft: 15,
                   marginBottom: 5,
-                  marginTop: 35,
+                  marginTop: 20,
                 }}
               >
                 password
@@ -709,14 +656,14 @@ const SignInScreen = ({ navigation }) => {
               {/* <Text style = {{color : '#ADADAD', fontWeight : 'bold'}}>alternatively...</Text> */}
 
               <View style={{ marginTop: 65 }}>
-                <TouchableOpacity
-                  style={styles.signIn}
-                  disabled={!request}
-                  onPress={() => {
-                    promptAsync();
-                  }}
-                >
-                  {!spotifyUserDetails.user_image ? (
+                {!spotifyUserDetails.user_image ? (
+                  <TouchableOpacity
+                    style={styles.signIn}
+                    disabled={!request}
+                    onPress={() => {
+                      promptAsync();
+                    }}
+                  >
                     <LinearGradient
                       colors={["#1DB954", "#1DB954"]}
                       style={[styles.signIn, { flexDirection: "row" }]}
@@ -731,7 +678,13 @@ const SignInScreen = ({ navigation }) => {
                       </Text>
                       <Fontisto name="spotify" color="#fff" size={20} />
                     </LinearGradient>
-                  ) : (
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.signIn}
+                    disabled={!request}
+                    onPress={signIn2}
+                  >
                     <LinearGradient
                       colors={["#1DB954", "#1DB954"]}
                       style={[styles.signIn, { flexDirection: "row" }]}
@@ -745,8 +698,8 @@ const SignInScreen = ({ navigation }) => {
                         enter traklist. {""}
                       </Text>
                     </LinearGradient>
-                  )}
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                )}
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
                   <LinearGradient
