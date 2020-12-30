@@ -290,161 +290,257 @@ function Search() {
             // }
 
             return (
+              //   <TouchableOpacity>
+              //     <View
+              //       style={{
+              //         margin: 8,
+              //         flexDirection: "row",
+              //         borderRadius: 10,
+              //         opacity: 1,
+              //         borderWidth: 2,
+              //         borderColor: "#fff",
+              //       }}
+              //     >
+              //       {/* <View style={{ borderLeftWidth: 0, borderColor: '#1DB954', padding: 5 }} /> */}
+
+              //       <ImageBackground
+              //         style={{
+              //           flex: 1,
+              //           justifyContent: "center",
+              //           height: 60,
+              //           width: "100%",
+              //           marginRight: 0,
+              //           opacity: 1,
+              //         }}
+              //         imageStyle={{
+              //           borderTopLeftRadius: 7,
+              //           borderBottomRightRadius: 7,
+              //           borderBottomLeftRadius: 7,
+              //           borderTopRightRadius: 7,
+              //         }}
+              //         source={{ uri: user.image }}
+              //       >
+              //         <View
+              //           style={{
+              //             justifyContent: "center",
+              //             flex: 2,
+              //             padding: 5,
+              //             paddingLeft: 20,
+              //           }}
+              //         >
+              //           <View
+              //             style={{ borderRadius: 5, justifyContent: "center" }}
+              //           >
+              //             <Text
+              //               style={{
+              //                 color: "#fff",
+              //                 alignSelf: "flex-start",
+              //                 padding: 5,
+              //                 backgroundColor: "#1DB954",
+              //                 fontWeight: "bold",
+              //                 fontSize: 15,
+              //                 fontFamily: "sans-serif",
+              //                 opacity: 0.7,
+              //                 borderRadius: 5,
+              //                 overflow: "hidden",
+              //               }}
+              //             >
+              //               {user.user}
+              //             </Text>
+              //           </View>
+              //           <Text
+              //             style={{
+              //               marginLeft: 5,
+              //               color: "#fff",
+              //               fontWeight: "normal",
+              //               fontStyle: "italic",
+              //               fontSize: 14,
+              //               fontFamily: "sans-serif",
+              //               fontWeight: "450",
+              //               fontWeight: "500",
+              //             }}
+              //           >
+              //             {user.bio}
+              //           </Text>
+              //         </View>
+              //         {/* <Button title = "follow" style = {{margin : 5, right : 0, position : 'absolute'}}/> */}
+
+              //         {
+              //           // UserStore.followingDetails.map((users) => {
+              //           UserStore.followingDetails.some(
+              //             (users) => user.user == users.meloID
+              //           ) == true ? (
+              //             <TouchableOpacity
+              //               style={{
+              //                 marginRight: 0,
+              //                 marginBottom: 0,
+              //                 right: 15,
+              //                 position: "absolute",
+              //                 backgroundColor: "#A72608",
+              //                 borderRadius: 30,
+              //               }}
+              //               onPress={() => unfollow(user.user)}
+              //             >
+              //               <SimpleLineIcons
+              //                 name="user-unfollow"
+              //                 size={25}
+              //                 color="#1DB954"
+              //                 style={{ padding: 10 }}
+              //               />
+              //             </TouchableOpacity>
+              //           ) : (
+              //             <TouchableOpacity
+              //               style={{
+              //                 marginRight: 0,
+              //                 marginBottom: 0,
+              //                 right: 15,
+              //                 position: "absolute",
+              //                 backgroundColor: "green",
+              //                 borderRadius: 30,
+              //               }}
+              //               onPress={() => follow(user.user)}
+              //             >
+              //               <SimpleLineIcons
+              //                 name="user-follow"
+              //                 size={25}
+              //                 color="#1DB954"
+              //                 style={{ padding: 10 }}
+              //               />
+              //             </TouchableOpacity>
+              //           )
+              //           // }
+              //           // )
+              //           //     })
+              //           //         variable = UserStore.followingDetails.some(user.user == users.meloID),
+              //           //     UserStore.followingDetails.some(user.user == users.meloID) ? true
+              //           //             return (
+              //           //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
+              //           //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
+              //           // </TouchableOpacity>
+              //           //             )
+              //           //             : null
+              //           //         }
+              //           //     })
+
+              //           //     UserStore.followingDetails.some((users) => {
+              //           //         if (user.user == users.meloID) {
+              //           //     setFollowing(true)
+              //           //             return (
+              //           //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
+              //           //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
+              //           // </TouchableOpacity>
+              //           //             )
+              //           //         }
+              //           //     })
+
+              //           // UserStore.followingDetails.map((users, key) => {
+              //           //     if (user.user == users.meloID) {
+              //           //         setFollowing(true)
+              //           //         return (
+              //           //             <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
+              //           //                 <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
+              //           //             </TouchableOpacity>
+              //           //         )
+              //           //     }
+              //           // })
+              //         }
+              //       </ImageBackground>
+              //     </View>
+              //   </TouchableOpacity>
+
               <TouchableOpacity>
                 <View
                   style={{
-                    margin: 8,
                     flexDirection: "row",
-                    borderRadius: 10,
-                    opacity: 1,
-                    borderWidth: 2,
-                    borderColor: "#fff",
+                    margin: 5,
+                    width: "100%",
+                    borderBottomWidth: 1,
+                    padding: 10,
                   }}
                 >
-                  {/* <View style={{ borderLeftWidth: 0, borderColor: '#1DB954', padding: 5 }} /> */}
-
-                  <ImageBackground
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      height: 60,
-                      width: "100%",
-                      marginRight: 0,
-                      opacity: 1,
-                    }}
-                    imageStyle={{
-                      borderTopLeftRadius: 7,
-                      borderBottomRightRadius: 7,
-                      borderBottomLeftRadius: 7,
-                      borderTopRightRadius: 7,
-                    }}
-                    source={{ uri: user.image }}
-                  >
-                    <View
+                  <View style={{ flex: 1 }}>
+                    <ImageBackground
+                      source={{ uri: user.image }}
                       style={{
-                        justifyContent: "center",
-                        flex: 2,
-                        padding: 5,
-                        paddingLeft: 20,
+                        height: 65,
+                        width: 65,
+                      }}
+                      imageStyle={{
+                        borderRadius: 30,
                       }}
                     >
                       <View
-                        style={{ borderRadius: 5, justifyContent: "center" }}
-                      >
-                        <Text
-                          style={{
-                            color: "#fff",
-                            alignSelf: "flex-start",
-                            padding: 5,
-                            backgroundColor: "#1DB954",
-                            fontWeight: "bold",
-                            fontSize: 15,
-                            fontFamily: "sans-serif",
-                            opacity: 0.7,
-                            borderRadius: 5,
-                            overflow: "hidden",
-                          }}
-                        >
-                          {user.user}
-                        </Text>
-                      </View>
-                      <Text
                         style={{
-                          marginLeft: 5,
-                          color: "#fff",
-                          fontWeight: "normal",
-                          fontStyle: "italic",
-                          fontSize: 14,
-                          fontFamily: "sans-serif",
-                          fontWeight: "450",
-                          fontWeight: "500",
+                          bottom: 0,
+                          position: "absolute",
+                          backgroundColor: "#44CF6C",
+                          borderRadius: 60,
+                          borderWidth: 0,
+                          borderColor: "#44CF6C",
+                          height: 30,
+                          width: 30,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          opacity: 0.8,
                         }}
                       >
-                        {user.bio}
+                        <Fontisto
+                          name="spotify"
+                          color="#fff"
+                          size={11}
+                          style={{ padding: 2 }}
+                        />
+                      </View>
+                    </ImageBackground>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      padding: 0,
+                      marginBottom: 3,
+                      flex: 2,
+                    }}
+                  >
+                    <Text
+                      numberOfLines={1}
+                      style={{ color: "#fff", fontWeight: "bold" }}
+                    >
+                      {user.user}
+                    </Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text
+                        numberOfLines={1}
+                        style={{ color: "#ff7700", fontWeight: "bold" }}
+                      >
+                        {user.bio}{" "}
                       </Text>
                     </View>
-                    {/* <Button title = "follow" style = {{margin : 5, right : 0, position : 'absolute'}}/> */}
 
-                    {
-                      // UserStore.followingDetails.map((users) => {
-                      UserStore.followingDetails.some(
-                        (users) => user.user == users.meloID
-                      ) == true ? (
-                        <TouchableOpacity
-                          style={{
-                            marginRight: 0,
-                            marginBottom: 0,
-                            right: 15,
-                            position: "absolute",
-                            backgroundColor: "#A72608",
-                            borderRadius: 30,
-                          }}
-                          onPress={() => unfollow(user.user)}
+                    <View style={{ flexDirection: "row" }}></View>
+                  </View>
+                  <View style={{ flex: 0.5, flexDirection: "row" }}>
+                    {/* icons */}
+
+                    {/* <TouchableOpacity
+                          style={{ justifyContent: "center", margin: 5 }}
                         >
-                          <SimpleLineIcons
-                            name="user-unfollow"
-                            size={25}
-                            color="#1DB954"
-                            style={{ padding: 10 }}
-                          />
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity
-                          style={{
-                            marginRight: 0,
-                            marginBottom: 0,
-                            right: 15,
-                            position: "absolute",
-                            backgroundColor: "green",
-                            borderRadius: 30,
-                          }}
-                          onPress={() => follow(user.user)}
-                        >
-                          <SimpleLineIcons
-                            name="user-follow"
-                            size={25}
-                            color="#1DB954"
-                            style={{ padding: 10 }}
-                          />
-                        </TouchableOpacity>
-                      )
-                      // }
-                      // )
-                      //     })
-                      //         variable = UserStore.followingDetails.some(user.user == users.meloID),
-                      //     UserStore.followingDetails.some(user.user == users.meloID) ? true
-                      //             return (
-                      //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-                      //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-                      // </TouchableOpacity>
-                      //             )
-                      //             : null
-                      //         }
-                      //     })
-
-                      //     UserStore.followingDetails.some((users) => {
-                      //         if (user.user == users.meloID) {
-                      //     setFollowing(true)
-                      //             return (
-                      //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-                      //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-                      // </TouchableOpacity>
-                      //             )
-                      //         }
-                      //     })
-
-                      // UserStore.followingDetails.map((users, key) => {
-                      //     if (user.user == users.meloID) {
-                      //         setFollowing(true)
-                      //         return (
-                      //             <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-                      //                 <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-                      //             </TouchableOpacity>
-                      //         )
-                      //     }
-                      // })
-                    }
-                  </ImageBackground>
+                          <View style={styles.iconContainer2}>
+                            <MaterialCommunityIcons
+                              name="content-save-outline"
+                              size={27}
+                              color={"#ff7700"}
+                            />
+                          </View>
+                        </TouchableOpacity> */}
+                    <TouchableOpacity
+                      style={{ justifyContent: "center", margin: 5 }}
+                    >
+                      <View style={[styles.iconContainer2]}>
+                        {/* <AntDesign name="staro" size={25} color={"#ff7700"} /> */}
+                        <SimpleLineIcons name="user-following" size={30} color='#44CF6C'/>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </TouchableOpacity>
             );
@@ -622,7 +718,7 @@ function Search() {
                                 height: 30,
                                 width: 30,
                                 justifyContent: "center",
-                                alignItems : 'center',
+                                alignItems: "center",
                                 opacity: 0.8,
                               }}
                             >
@@ -733,7 +829,7 @@ function Search() {
                                 height: 30,
                                 width: 30,
                                 justifyContent: "center",
-                                alignItems : 'center',
+                                alignItems: "center",
                                 opacity: 0.8,
                               }}
                             >
@@ -863,8 +959,8 @@ function Search() {
                           padding: 10,
                         }}
                       >
-                        <View style={{ flex: 1 }}>
-                        <ImageBackground
+                        <View style={{ flegx: 1 }}>
+                          <ImageBackground
                             source={{ uri: artist.image }}
                             style={{
                               height: 65,
@@ -885,7 +981,7 @@ function Search() {
                                 height: 30,
                                 width: 30,
                                 justifyContent: "center",
-                                alignItems : 'center',
+                                alignItems: "center",
                                 opacity: 0.8,
                               }}
                             >
@@ -1016,7 +1112,7 @@ function Search() {
                         }}
                       >
                         <View style={{ flex: 1 }}>
-                        <ImageBackground
+                          <ImageBackground
                             source={{ uri: album.image }}
                             style={{
                               height: 65,
@@ -1037,7 +1133,7 @@ function Search() {
                                 height: 30,
                                 width: 30,
                                 justifyContent: "center",
-                                alignItems : 'center',
+                                alignItems: "center",
                                 opacity: 0.8,
                               }}
                             >
