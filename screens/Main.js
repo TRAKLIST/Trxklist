@@ -110,6 +110,7 @@ function Main() {
                   borderColor: "green",
                   borderRadius: 15,
                   borderStyle: "dotted",
+                  minHeight : 80
                 }}
               >
                 <StickyItemFlatList
@@ -141,6 +142,7 @@ function Main() {
                   borderColor: "green",
                   borderRadius: 15,
                   borderStyle: "dotted",
+                  minHeight : 80
                 }}
               >
                 <StickyItemFlatList
