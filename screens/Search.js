@@ -31,6 +31,7 @@ import ParallaxScrollView from "react-native-parallax-scroll-view";
 import Icon from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import User from "../components/User";
 
 let list;
 let array = [];
@@ -38,6 +39,7 @@ let array1 = [];
 let array2 = [];
 let array3 = [];
 let soundcloud_tracks = [];
+let isFollowing = false
 function wait(timeout) {
   return new Promise((res) => {
     setTimeout(res, timeout);
@@ -52,17 +54,9 @@ function Search() {
   const [lyricsPage, setLyricsPage] = React.useState(false);
   const [trackIndex, setTrackIndex] = React.useState();
   const [trackItems, setTrackItems] = React.useState([]);
+  // const [isFollowing, setIsFollowing] = React.useState(false);
 
   const search = () => {
-    // musixmatch
-    // axios
-    //   .get(
-    //     `https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_isrc=${trackQuery.isrc}&apikey=7a375fb4e8e03a7c2f911057ebeb14d9`
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
-
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${searchTerm}&client_id=NpVHurnc1OKS80l6zlXrEVN4VEXrbZG4&limit=20`
@@ -81,7 +75,7 @@ function Search() {
           };
           soundcloud_tracks.push(trackQuery);
         });
-        console.log(soundcloud_tracks, "yf");
+        // console.log(soundcloud_tracks, "yf");
       });
 
     spotifyAPI.searchTracks(searchTerm).then((data) => {
@@ -93,11 +87,6 @@ function Search() {
             `https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_isrc=${item.external_ids.isrc}&apikey=7a375fb4e8e03a7c2f911057ebeb14d9`
           )
           .then((res) => {
-            // console.log(
-            //   JSON.parse(res.data.substring(9, res.data.length - 2)).message
-            //     .body.lyrics.lyrics_body,
-            //   "regfw"
-            // );
             return JSON.parse(res.data.substring(9, res.data.length - 2))
               .message.body.lyrics.lyrics_body;
           })
@@ -159,23 +148,6 @@ function Search() {
       });
       // console.log(array);
     });
-
-    // spotifyAPI.searchPlaylists(searchTerm).then((data) => {
-    //   array3 = [];
-    //   // console.log(data);
-    //   data.playlists.items.map((item) => {
-    //     let playlistQuery = {
-    //       id: item.id,
-    //       title: item.name,
-    //       artist: item.owner.display_name,
-    //       image: item.images[0].url,
-    //     };
-    //     console.log(playlistQuery, 'jtjr')
-    //     array3.push(playlistQuery);
-    //     // setTrackItems([...trackItems, trackQuery]);
-    //   });
-    //   // console.log(array);
-    // });
   };
 
   const lyricsToggle = (index) => {
@@ -215,6 +187,33 @@ function Search() {
       });
   };
 
+  list = userDetails
+    .filter((val) => {
+      // console.log(val, 'dfweui')
+      if (searchTerm.length == "") {
+        return UserStore.followingDetails.map((users) => {
+          // if(users.meloID.toLowerCase() !== UserStore.userDetails.credentials.meloID){
+          users.meloID;
+          // }
+        });
+      } else if (searchTerm.length > 0 && searchTerm.length < 3) {
+        return;
+      } else if (val.user.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return val.user;
+      } else return;
+    })
+    .map((user, key) => {
+
+      userDetails.map((user1) => {
+        // console.log(isFollowing)
+        user1.follow === undefined
+          ? null
+          : user1.follow.has(user.user) ? isFollowing = true : isFollowing = false
+      });
+
+      return <User user={user} isFollowing = {isFollowing} />;
+    });
+
   React.useEffect(() => {
     axios
       .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/users`, {
@@ -224,16 +223,22 @@ function Search() {
       })
       .then((res) => {
         // console.log(res.data);
+        let following = new Set();
         let array = [];
         res.data.map((users) => {
+          UserStore.followingDetails.some(
+            (item) => users.meloID == item.meloID
+          ) == true
+            ? // then push
+              following.add(users.meloID)
+            : null;
           array.push({
             user: users.meloID,
             image: users.image,
             bio: users.bio,
-            // follow: UserStore.followingDetails.some(item => {
-            //     item.meloID == users.meloID
-            // })
+            follow: following,
           });
+          
           // setUserDetails([...userDetails, users.meloID])
           // console.log(users.meloID, 'IJOft')
 
@@ -242,309 +247,10 @@ function Search() {
           // }))
         });
         // console.log(UserStore.followingDetails[0], 'erf')
-        // console.log(array, 'cgm')
+        // console.log(array, "cgm");
         setUserDetails(array);
+
         // console.log(UserStore.followingDetails)
-
-        list = userDetails
-          .filter((val) => {
-            // console.log(val, 'dfweui')
-            if (searchTerm.length == "") {
-              return UserStore.followingDetails.map((users) => {
-                // if(users.meloID.toLowerCase() !== UserStore.userDetails.credentials.meloID){
-                users.meloID;
-                // }
-              });
-            } else if (searchTerm.length > 0 && searchTerm.length < 3) {
-              return;
-            } else if (
-              val.user.toLowerCase().includes(searchTerm.toLowerCase())
-            ) {
-              return val.user;
-            } else return;
-          })
-          .map((user, key) => {
-            // console.log(user, 'daye')
-            // console.log(meloID.meloID)
-
-            // here
-
-            // for (i = 0; i < UserStore.followingDetails.length; i++) {
-            //     if (user.user == users.meloID) {
-            //         setUnfollowSetting(true)
-            //         break
-            //     }
-            // }
-            // if (unfollowSetting == false) {
-            //     let icon = (
-            //         <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-            //             <SimpleLineIcons name="user-unfollow" size={30} color='#1DB954' style={{ padding: 10 }} />
-            //         </TouchableOpacity>
-            //     )
-            // } else {
-            //     let icon = (
-            //         <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-            //             <SimpleLineIcons name="user-follow" size={30} color='#1DB954' style={{ padding: 10 }} />
-            //         </TouchableOpacity>
-            //     )
-            // }
-
-            return (
-              //   <TouchableOpacity>
-              //     <View
-              //       style={{
-              //         margin: 8,
-              //         flexDirection: "row",
-              //         borderRadius: 10,
-              //         opacity: 1,
-              //         borderWidth: 2,
-              //         borderColor: "#fff",
-              //       }}
-              //     >
-              //       {/* <View style={{ borderLeftWidth: 0, borderColor: '#1DB954', padding: 5 }} /> */}
-
-              //       <ImageBackground
-              //         style={{
-              //           flex: 1,
-              //           justifyContent: "center",
-              //           height: 60,
-              //           width: "100%",
-              //           marginRight: 0,
-              //           opacity: 1,
-              //         }}
-              //         imageStyle={{
-              //           borderTopLeftRadius: 7,
-              //           borderBottomRightRadius: 7,
-              //           borderBottomLeftRadius: 7,
-              //           borderTopRightRadius: 7,
-              //         }}
-              //         source={{ uri: user.image }}
-              //       >
-              //         <View
-              //           style={{
-              //             justifyContent: "center",
-              //             flex: 2,
-              //             padding: 5,
-              //             paddingLeft: 20,
-              //           }}
-              //         >
-              //           <View
-              //             style={{ borderRadius: 5, justifyContent: "center" }}
-              //           >
-              //             <Text
-              //               style={{
-              //                 color: "#fff",
-              //                 alignSelf: "flex-start",
-              //                 padding: 5,
-              //                 backgroundColor: "#1DB954",
-              //                 fontWeight: "bold",
-              //                 fontSize: 15,
-              //                 fontFamily: "sans-serif",
-              //                 opacity: 0.7,
-              //                 borderRadius: 5,
-              //                 overflow: "hidden",
-              //               }}
-              //             >
-              //               {user.user}
-              //             </Text>
-              //           </View>
-              //           <Text
-              //             style={{
-              //               marginLeft: 5,
-              //               color: "#fff",
-              //               fontWeight: "normal",
-              //               fontStyle: "italic",
-              //               fontSize: 14,
-              //               fontFamily: "sans-serif",
-              //               fontWeight: "450",
-              //               fontWeight: "500",
-              //             }}
-              //           >
-              //             {user.bio}
-              //           </Text>
-              //         </View>
-              //         {/* <Button title = "follow" style = {{margin : 5, right : 0, position : 'absolute'}}/> */}
-
-              //         {
-              //           // UserStore.followingDetails.map((users) => {
-              //           UserStore.followingDetails.some(
-              //             (users) => user.user == users.meloID
-              //           ) == true ? (
-              //             <TouchableOpacity
-              //               style={{
-              //                 marginRight: 0,
-              //                 marginBottom: 0,
-              //                 right: 15,
-              //                 position: "absolute",
-              //                 backgroundColor: "#A72608",
-              //                 borderRadius: 30,
-              //               }}
-              //               onPress={() => unfollow(user.user)}
-              //             >
-              //               <SimpleLineIcons
-              //                 name="user-unfollow"
-              //                 size={25}
-              //                 color="#1DB954"
-              //                 style={{ padding: 10 }}
-              //               />
-              //             </TouchableOpacity>
-              //           ) : (
-              //             <TouchableOpacity
-              //               style={{
-              //                 marginRight: 0,
-              //                 marginBottom: 0,
-              //                 right: 15,
-              //                 position: "absolute",
-              //                 backgroundColor: "green",
-              //                 borderRadius: 30,
-              //               }}
-              //               onPress={() => follow(user.user)}
-              //             >
-              //               <SimpleLineIcons
-              //                 name="user-follow"
-              //                 size={25}
-              //                 color="#1DB954"
-              //                 style={{ padding: 10 }}
-              //               />
-              //             </TouchableOpacity>
-              //           )
-              //           // }
-              //           // )
-              //           //     })
-              //           //         variable = UserStore.followingDetails.some(user.user == users.meloID),
-              //           //     UserStore.followingDetails.some(user.user == users.meloID) ? true
-              //           //             return (
-              //           //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-              //           //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-              //           // </TouchableOpacity>
-              //           //             )
-              //           //             : null
-              //           //         }
-              //           //     })
-
-              //           //     UserStore.followingDetails.some((users) => {
-              //           //         if (user.user == users.meloID) {
-              //           //     setFollowing(true)
-              //           //             return (
-              //           //                 <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-              //           //     <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-              //           // </TouchableOpacity>
-              //           //             )
-              //           //         }
-              //           //     })
-
-              //           // UserStore.followingDetails.map((users, key) => {
-              //           //     if (user.user == users.meloID) {
-              //           //         setFollowing(true)
-              //           //         return (
-              //           //             <TouchableOpacity style={{ marginRight: 0, marginBottom: 0, right: 15, position: 'absolute' }}>
-              //           //                 <SimpleLineIcons name="user-following" size={30} color='#1DB954' style={{ padding: 10 }} />
-              //           //             </TouchableOpacity>
-              //           //         )
-              //           //     }
-              //           // })
-              //         }
-              //       </ImageBackground>
-              //     </View>
-              //   </TouchableOpacity>
-
-              <TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    margin: 5,
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    padding: 10,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <ImageBackground
-                      source={{ uri: user.image }}
-                      style={{
-                        height: 65,
-                        width: 65,
-                      }}
-                      imageStyle={{
-                        borderRadius: 30,
-                      }}
-                    >
-                      <View
-                        style={{
-                          bottom: 0,
-                          position: "absolute",
-                          backgroundColor: "#44CF6C",
-                          borderRadius: 60,
-                          borderWidth: 0,
-                          borderColor: "#44CF6C",
-                          height: 30,
-                          width: 30,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          opacity: 0.8,
-                        }}
-                      >
-                        <Fontisto
-                          name="spotify"
-                          color="#fff"
-                          size={11}
-                          style={{ padding: 2 }}
-                        />
-                      </View>
-                    </ImageBackground>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      padding: 0,
-                      marginBottom: 3,
-                      flex: 2,
-                    }}
-                  >
-                    <Text
-                      numberOfLines={1}
-                      style={{ color: "#fff", fontWeight: "bold" }}
-                    >
-                      {user.user}
-                    </Text>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text
-                        numberOfLines={1}
-                        style={{ color: "#ff7700", fontWeight: "bold" }}
-                      >
-                        {user.bio}{" "}
-                      </Text>
-                    </View>
-
-                    <View style={{ flexDirection: "row" }}></View>
-                  </View>
-                  <View style={{ flex: 0.5, flexDirection: "row" }}>
-                    {/* icons */}
-
-                    {/* <TouchableOpacity
-                          style={{ justifyContent: "center", margin: 5 }}
-                        >
-                          <View style={styles.iconContainer2}>
-                            <MaterialCommunityIcons
-                              name="content-save-outline"
-                              size={27}
-                              color={"#ff7700"}
-                            />
-                          </View>
-                        </TouchableOpacity> */}
-                    <TouchableOpacity
-                      style={{ justifyContent: "center", margin: 5 }}
-                    >
-                      <View style={[styles.iconContainer2]}>
-                        {/* <AntDesign name="staro" size={25} color={"#ff7700"} /> */}
-                        <SimpleLineIcons name="user-following" size={30} color='#44CF6C'/>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          });
       })
       .catch((err) => {
         console.log(err);
@@ -643,46 +349,6 @@ function Search() {
 
                   {list}
                 </View>
-
-                {/* <View style={{ margin: 15, padding: 5, borderBottomWidth: 1.5, borderColor: '#1DB954' }}>
-                          <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>Tracks</Text>
-                      </View>
-
-
-
-                      <View style={{ margin: 15, padding: 5, borderBottomWidth: 1.5, borderColor: '#1DB954' }}>
-                          <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>Artists</Text>
-                      </View>
-
-                      <View style={{ margin: 15, padding: 5, borderBottomWidth: 1.5, borderColor: '#1DB954' }}>
-                          <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>Albums</Text>
-                      </View>
-
-                      <View style={{ margin: 15, padding: 5, borderBottomWidth: 1.5, borderColor: '#1DB954' }}>
-                          <Text style={{ color: '#1DB954', fontWeight: 'bold', fontSize: 17, fontStyle: 'italic' }}>News</Text>
-                      </View> */}
-
-                {/* <View
-                  style={{
-                    margin: 10,
-                    padding: 5,
-                    borderBottomWidth: 3,
-                    borderColor: "#fff",
-                    opacity: 1,
-                    color: "#",
-                    borderRadius: 0,
-                  }}
-                > */}
-                {/* <Text
-                    style={{
-                      color: "#fff",
-                      fontWeight: "900",
-                      fontSize: 16,
-                      textAlign: "center",
-                    }}
-                  >
-                    tracks
-                  </Text> */}
 
                 {soundcloud_tracks.map((track, index) => {
                   return (
@@ -923,29 +589,6 @@ function Search() {
                     </TouchableOpacity>
                   );
                 })}
-                {/* </View> */}
-
-                {/* <View
-                  style={{
-                    margin: 15,
-                    padding: 5,
-                    borderBottomWidth: 3,
-                    borderColor: "#fff",
-                    opacity: 1,
-                    color: "#",
-                    borderRadius: 0,
-                  }}
-                > */}
-                {/* <Text
-                    style={{
-                      color: "#fff",
-                      fontWeight: "900",
-                      fontSize: 16,
-                      textAlign: "center",
-                    }}
-                  >
-                    artists
-                  </Text> */}
 
                 {array1.map((artist) => {
                   return (
@@ -1002,8 +645,6 @@ function Search() {
                             flex: 2,
                           }}
                         >
-                          {/* <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>{album.title}</Text>
-                            <Text numberOfLines={1} style = {{ color: "#44CF6C", fontWeight: "bold" }}>{album.artist}</Text> */}
                           <Text
                             numberOfLines={1}
                             style={{ color: "#fff", fontWeight: "bold" }}
@@ -1022,21 +663,6 @@ function Search() {
                             style={{ justifyContent: "center", margin: 5 }}
                           >
                             <View style={styles.iconContainer2}>
-                              {/* {isSaved ? (
-                            <MaterialCommunityIcons
-                              name="content-save"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          ) : (
-                            <MaterialCommunityIcons
-                              name="content-save-outline"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          )} */}
                               <MaterialCommunityIcons
                                 name="content-save-outline"
                                 size={27}
@@ -1048,21 +674,6 @@ function Search() {
                             style={{ justifyContent: "center", margin: 5 }}
                           >
                             <View style={[styles.iconContainer2]}>
-                              {/* {isLiked ? (
-                            <ADIcon
-                              name="heart"
-                              size={25}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          ) : (
-                            <ADIcon
-                              name="hearto"
-                              size={25}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          )} */}
                               <AntDesign
                                 name="staro"
                                 size={25}
@@ -1075,29 +686,6 @@ function Search() {
                     </TouchableOpacity>
                   );
                 })}
-                {/* </View> */}
-
-                {/* <View
-                  style={{
-                    margin: 15,
-                    padding: 5,
-                    borderBottomWidth: 3,
-                    borderColor: "#fff",
-                    opacity: 1,
-                    color: "#",
-                    borderRadius: 0,
-                  }}
-                > */}
-                {/* <Text
-                    style={{
-                      color: "#fff",
-                      fontWeight: "900",
-                      fontSize: 16,
-                      textAlign: "center",
-                    }}
-                  >
-                    albums
-                  </Text> */}
 
                 {array2.map((album) => {
                   return (
@@ -1174,21 +762,6 @@ function Search() {
                             style={{ justifyContent: "center", margin: 5 }}
                           >
                             <View style={styles.iconContainer2}>
-                              {/* {isSaved ? (
-                            <MaterialCommunityIcons
-                              name="content-save"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          ) : (
-                            <MaterialCommunityIcons
-                              name="content-save-outline"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          )} */}
                               <MaterialCommunityIcons
                                 name="content-save-outline"
                                 size={27}
@@ -1242,25 +815,6 @@ function Search() {
           backgroundColor="#292929"
           contentBackgroundColor="#292929"
           parallaxHeaderHeight={300}
-          // renderBackground={() => (
-          //   <ImageBackground
-          //     // source={{ uri: array[trackIndex].image }}
-          //     source = {{uri : 'https://media.npr.org/assets/img/2020/05/01/dsc_9182_re-1-_wide-de77c30d600c1cfa4ba6e822db63328b5125c113-s800-c85.jpg'}}
-          //     style={{
-          //       height: 300,
-          //       flex: 1,
-          //       alignItems: "center",
-          //       justifyContent: "center",
-          //     }}
-          //     imageStyle={{
-          //       // borderBottomLeftRadius: 15,
-          //       // borderBottomRightRadius: 15,
-          //       borderRadius: 15,
-          //       paddingHorizontal: 10,
-          //     }}
-          //   >
-          //   </ImageBackground>
-          // )}
           renderForeground={() => (
             <ImageBackground
               source={{ uri: array[trackIndex].image }}

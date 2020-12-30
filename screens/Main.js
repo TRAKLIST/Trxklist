@@ -7,17 +7,20 @@ import {
   Button,
   Dimensions,
   TextInput,
+  Text,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
-
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import StickyItemFlatList from "@gorhom/sticky-item";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const {
   first_route,
@@ -25,7 +28,7 @@ const {
   third_route,
   sticky_item_view,
   recent_posts_markup,
-  render_tab_bar
+  render_tab_bar,
 } = require("../handlers/main");
 const initialLayout = { width: Dimensions.get("window").width };
 
@@ -93,7 +96,7 @@ function Main() {
   if (!UserStore.enablePostScreen) {
     return (
       <View style={{ backgroundColor: "#292929", flex: 1 }}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#292929" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#292929", borderBottomColor : '#fff', borderBottomWidth : 2 }}>
           <ParallaxScrollView
             backgroundColor="#292929"
             contentBackgroundColor="#292929"
@@ -106,11 +109,11 @@ function Main() {
                   marginRight: 10,
                   marginBottom: 10,
                   backgroundColor: "#272D2D",
-                  borderWidth: 2,
-                  borderColor: "green",
+                  borderWidth: 0,
+                  borderColor: "#fff",
                   borderRadius: 15,
-                  borderStyle: "dotted",
-                  minHeight : 80
+                  minHeight: 80,
+                  borderBottomWidth : 3,
                 }}
               >
                 <StickyItemFlatList
@@ -130,36 +133,80 @@ function Main() {
             )}
             stickyHeaderHeight={90}
             // renderBackground = {0}
-            // renderForeground={() => (
-            //   <View
-            //     style={{
-            //       padding: 5,
-            //       marginLeft: 10,
-            //       marginRight: 10,
-            //       marginBottom: 10,
-            //       backgroundColor: "#272D2D",
-            //       borderWidth: 2,
-            //       borderColor: "green",
-            //       borderRadius: 15,
-            //       borderStyle: "dotted",
-            //       minHeight : 80
-            //     }}
-            //   >
-            //     <StickyItemFlatList
-            //       itemWidth={65}
-            //       itemHeight={65}
-            //       separatorSize={SEPARATOR_SIZE}
-            //       borderRadius={BORDER_RADIUS}
-            //       stickyItemWidth={STICKY_ITEM_WIDTH}
-            //       stickyItemHeight={STICKY_ITEM_HEIGHT}
-            //       stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
-            //       stickyItemContent={StickyItemView}
-            //       onStickyItemPress={handleStickyItemPress}
-            //       data={data}
-            //       renderItem={renderItemSticky}
-            //     />
-            //   </View>
-            // )}
+            renderForeground={() => (
+              <View
+                style={{
+                  padding: 5,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 10,
+                  backgroundColor: "#272D2D",
+                  borderWidth: 0,
+                  borderColor: "green",
+                  borderRadius: 15,
+                  minHeight: 80,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <TouchableOpacity onPress={() => search(data.track)}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
+                    >
+                      <FontAwesome
+                        name="plus-circle"
+                        size={30}
+                        style={{
+                          color: "#fff",
+                          // padding: 4,
+                          // alignSelf: "center",
+                          borderRadius: 20,
+                          opacity: 0.75,
+                        }}
+                      />
+                      <Text style = {{color : '#fff'}}>Post</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <TouchableOpacity onPress={() => search(data.track)}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
+                    >
+                      <MaterialCommunityIcons
+                        name="circle"
+                        color="#fff"
+                        size={50}
+                      />
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <TouchableOpacity onPress={() => search(data.track)}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
+                    >
+                      <FontAwesome
+                        name="inbox"
+                        size={30}
+                        style={{
+                          color: "#fff",
+                          // padding: 4,
+                          // alignSelf: "center",
+                          borderRadius: 20,
+                          opacity: 0.75,
+                        }}
+                      />
+                      <Text style = {{color : '#fff'}}>Inbox</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           >
             <View style={{ paddingTop: 10 }}>
               <LinearGradient
@@ -180,7 +227,7 @@ function Main() {
       third: ThirdRoute,
     });
 
-    const renderTabBar = (props) => render_tab_bar(props)
+    const renderTabBar = (props) => render_tab_bar(props);
 
     const onIndexChange = (index) => {
       setIndex(index);

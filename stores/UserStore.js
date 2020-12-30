@@ -15,7 +15,8 @@ class UserStore {
       str: '',
       allPosts : [],
       trackDetails : [],
-      enablePostScreen : false
+      enablePostScreen : false,
+      isFollowing : false
     });
   }
 }
