@@ -30,93 +30,97 @@ function shuffle(array) {
 class LoadingPage extends Component {
   componentDidMount() {
     // add a timer
-    axios
-      .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
-      .then((res) => {
-        // console.log(res.data);
-        UserStore.allPosts = res.data;
-      })
-      .catch((err) => console.log(err));
+    this.interval = setInterval(() => {
+      UserStore.followingDetails = []
+      axios
+        .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
+        .then((res) => {
+          // console.log(res.data);
+          UserStore.allPosts = res.data;
+        })
+        .catch((err) => console.log(err));
 
-    axios
-      .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
-        headers: {
-          Authorization: `Bearer ${UserStore.authCode}`,
-        },
-      })
-      .then((res) => {
-        res.data.following.map((item) => {
-          axios
-            .get(
-              `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${item.recipient}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${UserStore.authCode}`,
-                },
-              }
-            )
-            .then((res) => {
-              UserStore.followingDetails = [
-                ...UserStore.followingDetails,
-                res.data.user,
-              ];
-            })
-            .catch((err) => console.log(err));
+      axios
+        .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+          headers: {
+            Authorization: `Bearer ${UserStore.authCode}`,
+          },
+        })
+        .then((res) => {
+          res.data.following.map((item) => {
+            axios
+              .get(
+                `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${item.recipient}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${UserStore.authCode}`,
+                  },
+                }
+              )
+              .then((res) => {
+                UserStore.followingDetails = [
+                  ...UserStore.followingDetails,
+                  res.data.user,
+                ];
+              })
+              .catch((err) => console.log(err));
+          });
+          console.log(UserStore.followingDetails, "gang");
+        })
+        .catch((err) => console.log(err));
+
+      spotifyAPI.getMyTopArtists().then((data) => {
+        let topArtistsArray = [];
+        data.items.map((item) => {
+          let topArtists = {
+            artistName: item.name,
+            image: item.images[0].url,
+            id: item.id,
+          };
+          topArtistsArray.push(topArtists);
         });
-        console.log(UserStore.followingDetails, "gang");
-      })
-      .catch((err) => console.log(err));
-
-    spotifyAPI.getMyTopArtists().then((data) => {
-      let topArtistsArray = [];
-      data.items.map((item) => {
-        let topArtists = {
-          artistName: item.name,
-          image: item.images[0].url,
-          id: item.id,
-        };
-        topArtistsArray.push(topArtists);
-      });
-    });
-
-    spotifyAPI.getMyTopTracks().then((data) => {
-      let items = [];
-      data.items.map((item) => {
-        let topTracks = {
-          name: item.name,
-          albumName: item.album.name,
-          artistName: item.artists[0].name,
-          trackName: item.name,
-          image: item.album.images[0].url,
-          id: item.id,
-        };
-        items.push(topTracks);
       });
 
-      // Randomise array
-      console.log(items, "first");
-      shuffle(items);
-      console.log(items, "finish");
+      spotifyAPI.getMyTopTracks().then((data) => {
+        let items = [];
+        data.items.map((item) => {
+          let topTracks = {
+            name: item.name,
+            albumName: item.album.name,
+            artistName: item.artists[0].name,
+            trackName: item.name,
+            image: item.album.images[0].url,
+            id: item.id,
+          };
+          items.push(topTracks);
+        });
 
-      // Recommendations - pick 3
-      for (i = 0; i < 3; i++) {
-        if (str == "") {
-          str = `${items[i].id}`;
-        } else str = `${str},${items[i].id}`;
-      }
+        // Randomise array
+        console.log(items, "first");
+        shuffle(items);
+        console.log(items, "finish");
 
-      UserStore.str = str;
-      console.log(str);
-    });
+        // Recommendations - pick 3
+        for (i = 0; i < 3; i++) {
+          if (str == "") {
+            str = `${items[i].id}`;
+          } else str = `${str},${items[i].id}`;
+        }
 
-    spotifyAPI
-      .getUser(UserStore.spotifyUserDetails.user_id)
-      .then((response) => {
-        (UserStore.image = response.images[0].url), "dsfuy";
-      })
-      .catch((err) => console.log(err));
+        UserStore.str = str;
+        console.log(str);
+      });
 
-    UserStore.loading = false;
+      spotifyAPI
+        .getUser(UserStore.spotifyUserDetails.user_id)
+        .then((response) => {
+          (UserStore.image = response.images[0].url), "dsfuy";
+        })
+        .catch((err) => console.log(err));
+        
+        UserStore.loading = false;
+    }, 15000);
+
   }
 
   render() {
