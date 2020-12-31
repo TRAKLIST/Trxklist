@@ -5,39 +5,16 @@ import ProfilePicture from "../../ProfilePicture";
 import Icon from "react-native-vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import spotifyAPI from "../../SpotifyAPI";
+import TracklistItem from "./TracklistItem"
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
+
+  
+
   let tracklist = thisTrack.track ? (
     thisTrack.track.map((track) => (
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ flex: 7, justifyContent: "center" }}>
-          <Text
-            style={[
-              styles.track,
-              { padding: 5, borderRadius: 5, overflow: "hidden" },
-            ]}
-            numberOfLines={1}
-          >
-            {track}
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1.5,
-            alignItems: "flex-end",
-            justifyContent: "center",
-            padding: 0,
-          }}
-        >
-          <TouchableOpacity>
-            <MaterialCommunityIcons
-              name="content-save-outline"
-              size={28}
-              color={"#44CF6C"}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <TracklistItem track = {track} />
     ))
   ) : (
     <Text>Loading</Text>
@@ -193,7 +170,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
         <View
           style={{
             flexDirection: "row",
-            margin : 5
+            margin: 5,
           }}
         >
           <View>

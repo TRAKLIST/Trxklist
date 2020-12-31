@@ -150,7 +150,7 @@ function Main() {
                 }}
               >
                 <View style={{ flex: 1, marginRight: 5 }}>
-                  <TouchableOpacity onPress={() => search(data.track)}>
+                  {/* <TouchableOpacity onPress={handleStickyItemPress}>
                     <LinearGradient
                       colors={["#272D2D", "#272D2D"]}
                       style={styles.signIn}
@@ -168,7 +168,7 @@ function Main() {
                       />
                       <Text style = {{color : '#fff'}}>Post</Text>
                     </LinearGradient>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <TouchableOpacity onPress={() => search(data.track)}>
@@ -185,7 +185,7 @@ function Main() {
                   </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, marginRight: 5 }}>
-                  <TouchableOpacity onPress={() => search(data.track)}>
+                  {/* <TouchableOpacity onPress={() => search(data.track)}>
                     <LinearGradient
                       colors={["#272D2D", "#272D2D"]}
                       style={styles.signIn}
@@ -203,7 +203,7 @@ function Main() {
                       />
                       <Text style = {{color : '#fff'}}>Inbox</Text>
                     </LinearGradient>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             )}

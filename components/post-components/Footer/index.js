@@ -22,7 +22,7 @@ const Footer = ({
   postID,
   status,
   trackID,
-  postedAt
+  postedAt,
 }) => {
   useEffect;
   const [isLiked, setIsLike] = useState(false);
@@ -73,6 +73,7 @@ const Footer = ({
   };
 
   const onSavePressed = () => {
+    console.log(status);
     if (!isSaved) {
       setIsSave(true);
       if (status == "Track") {
@@ -106,20 +107,14 @@ const Footer = ({
             console.log(err);
           });
       } else if (status == "Playlist") {
-        axios
-          .put(
-            `https://api.spotify.com/v1/playlists/${trackID}/followers`,
-            {
-              public: true,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${UserStore.authCode}`,
-              },
-            }
-          )
-          .then((res) => {
-            // console.log(res.data);
+        spotifyAPI
+          .followPlaylist([trackID])
+          .then((response) => {
+            //   console.log(response);
+          })
+          .catch((err) => {
+            setIsSave(false);
+            console.log(err);
           });
       }
     } else {
@@ -232,25 +227,30 @@ const Footer = ({
       //     console.log(err);
       //   });
     } else if (status === "Playlist") {
-      // spotifyAPI
-      //   .areFollowingPlaylist([trackID, UserStore.spotifyUserDetails.user_id])
-      //   .then((response) => {
-      //     console.log(response);
-      //     if (response[0] === true) {
-      //       setIsSave(true);
-      //       // console.log(`Saved ${status}`);
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     setIsSave(false);
-      //     console.log(err);
-      //   });
+      spotifyAPI
+        .areFollowingPlaylist(trackID, [UserStore.spotifyUserDetails.user_id])
+        .then((response) => {
+          console.log(response);
+          if (response[0] === true) {
+            setIsSave(true);
+            // console.log(`Saved ${status}`);
+          }
+        })
+        .catch((err) => {
+          setIsSave(false);
+          console.log(err);
+        });
     }
   }, []);
   return (
-    <View style={[styles.container, {marginBottom : 10}]}>
+    <View style={[styles.container, { marginBottom: 10 }]}>
       <View style={styles.iconsContainer}>
-        <View style={[styles.leftIcons, {marginLeft : 10, borderBottomWidth : 2, borderColor : 'green'}]}>
+        <View
+          style={[
+            styles.leftIcons,
+            { marginLeft: 10, borderBottomWidth: 2, borderColor: "green" },
+          ]}
+        >
           <TouchableOpacity onPress={onLikePressed}>
             <View style={styles.iconContainer2}>
               {isLiked ? (
@@ -258,14 +258,14 @@ const Footer = ({
                   name="heart"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom : 4 }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               ) : (
                 <ADIcon
                   name="hearto"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom : 4 }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
               {/* {likesCount == !8 ? (
@@ -275,7 +275,7 @@ const Footer = ({
                 )} */}
             </View>
           </TouchableOpacity>
-          
+
           <TouchableOpacity onPress={onSavePressed}>
             <View style={styles.iconContainer2}>
               {isSaved ? (
@@ -283,14 +283,14 @@ const Footer = ({
                   name="content-save"
                   size={27}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom : 4  }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="content-save-outline"
                   size={27}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom : 4  }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
             </View>
@@ -313,7 +313,7 @@ const Footer = ({
                 name="share-2"
                 size={24}
                 color={"#44CF6C"}
-                style={{ marginTop: 8, paddingBottom : 4  }}
+                style={{ marginTop: 8, paddingBottom: 4 }}
               />
             </View>
           </TouchableOpacity>
@@ -333,8 +333,23 @@ const Footer = ({
           </View> */}
         </View>
 
-        <View style={[styles.iconContainer2, {marginRight : 10, borderBottomWidth : 2, borderColor : 'green'}]}>
-          <Text style = {{color : '#71677C', fontWeight : 'bold', textTransform : 'uppercase', fontSize : 13, fontStyle : 'italic'}}>{dayjs(postedAt).fromNow()}</Text>
+        <View
+          style={[
+            styles.iconContainer2,
+            { marginRight: 10, borderBottomWidth: 2, borderColor: "green" },
+          ]}
+        >
+          <Text
+            style={{
+              color: "#71677C",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              fontSize: 13,
+              fontStyle: "italic",
+            }}
+          >
+            {dayjs(postedAt).fromNow()}
+          </Text>
         </View>
       </View>
     </View>

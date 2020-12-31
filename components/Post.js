@@ -52,7 +52,10 @@ export class Post extends Component {
         .then((response) => {
           // console.log(response);
           response.tracks.items.map((track) => {
-            track_album.push(track.name);
+            track_album.push({
+              id: track.id,
+              title: track.name,
+            });
           });
           let thisTrack = {
             id: response.id,
@@ -74,7 +77,10 @@ export class Post extends Component {
         .then((response) => {
           // console.log(response);
           response.tracks.items.map((track) => {
-            track_playlist.push(track.track.name);
+            track_playlist.push({
+              id: track.track.id,
+              title: track.track.name,
+            });
           });
           let thisTrack = {
             id: response.id,
@@ -97,10 +103,10 @@ export class Post extends Component {
         style={{
           // borderTopWidth: 1.5,
           // borderBottomWidth: 1.5,
-          borderRadius : 10,
+          borderRadius: 10,
           borderColor: "green",
           backgroundColor: "#000",
-          borderWidth : 0
+          borderWidth: 0,
           // paddingVertical : 10,
         }}
       >

@@ -61,7 +61,7 @@ const SignUpScreen = ({ navigation }) => {
         // native: "exp://172.29.71.10:19000",
         // native: "exp://192.168.0.35:19000",
         // native: "exp://expo.io/@tsb/projects/swaipify/",
-        native : "exp://exp.host/@traklist/traklist"
+        native: "exp://exp.host/@traklist/traklist",
       }),
     },
     discovery
@@ -182,7 +182,13 @@ const SignUpScreen = ({ navigation }) => {
         confirmPassword: data.confirm_password,
         meloID: data.meloID,
         spotifyID: spotifyUserDetails.user_id,
-        refresh_token : spotifyUserDetails.refresh_token
+        refresh_token: spotifyUserDetails.refresh_token,
+        image: !(
+          spotifyUserDetails.user_image === undefined ||
+          spotifyUserDetails.user_image.length == 0
+        )
+          ? spotifyUserDetails.user_image
+          : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg",
       };
 
       axios
