@@ -5,6 +5,8 @@ import HomeScreen from "./Home.js";
 import SearchScreen from "./Search.js";
 import Timeline from "./Timeline.js";
 import Main from "./Main";
+import Notifications from "./Notifications"
+import AddPost from "./AddPost"
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -50,7 +52,7 @@ const MainTabScreen = () => {
       />
       <Tab.Screen
         name="Post"
-        component={SearchScreen}
+        component={AddPost}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
@@ -61,7 +63,7 @@ const MainTabScreen = () => {
       />
       <Tab.Screen
         name="Notifications"
-        component={SearchScreen}
+        component={Notifications}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
