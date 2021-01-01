@@ -21,6 +21,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MainSection from "../components/MainSection"
 
 const {
   first_route,
@@ -96,7 +97,14 @@ function Main() {
   if (!UserStore.enablePostScreen) {
     return (
       <View style={{ backgroundColor: "#292929", flex: 1 }}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#292929", borderBottomColor : '#fff', borderBottomWidth : 2 }}>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: "#292929",
+            borderBottomColor: "#fff",
+            borderBottomWidth: 2,
+          }}
+        >
           <ParallaxScrollView
             backgroundColor="#292929"
             contentBackgroundColor="#292929"
@@ -113,7 +121,7 @@ function Main() {
                   borderColor: "#fff",
                   borderRadius: 15,
                   minHeight: 80,
-                  borderBottomWidth : 3,
+                  borderBottomWidth: 3,
                 }}
               >
                 <StickyItemFlatList

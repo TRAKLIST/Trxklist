@@ -25,6 +25,8 @@ import spotifyAPI from "../components/SpotifyAPI";
 import axios from "axios";
 
 WebBrowser.maybeCompleteAuthSession();
+let topArtistsArray = [];
+let items = [];
 
 // Endpoint
 const discovery = {
@@ -69,6 +71,33 @@ const SignUpScreen = ({ navigation }) => {
   const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
 
   const getSpotifyDetails = (access_token, refresh_token) => {
+    spotifyAPI.getMyTopArtists().then((data) => {
+      topArtistsArray = [];
+      data.items.map((item) => {
+        let topArtists = {
+          artistName: item.name,
+          image: item.images[0].url,
+          id: item.id,
+        };
+        topArtistsArray.push(topArtists);
+      });
+    });
+
+    spotifyAPI.getMyTopTracks().then((data) => {
+      items = [];
+      data.items.map((item) => {
+        let topTracks = {
+          name: item.name,
+          albumName: item.album.name,
+          artistName: item.artists[0].name,
+          trackName: item.name,
+          image: item.album.images[0].url,
+          id: item.id,
+        };
+        items.push(topTracks);
+      });
+    });
+
     spotifyAPI.getMe().then((response) => {
       var getMe = {
         user_name: response.display_name,
@@ -76,11 +105,13 @@ const SignUpScreen = ({ navigation }) => {
           response.images === undefined || response.images.length == 0
         )
           ? response.images[0].url
-          : null,
+          : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg",
         user_id: response.id,
         user_email: response.email,
         access_token: access_token,
         refresh_token: refresh_token,
+        initial_topTracks: items,
+        inital_topArtists: topArtistsArray,
       };
       setSpotifyUserDetails(getMe);
       UserStore.spotifyUserDetails = getMe;
@@ -183,12 +214,9 @@ const SignUpScreen = ({ navigation }) => {
         meloID: data.meloID,
         spotifyID: spotifyUserDetails.user_id,
         refresh_token: spotifyUserDetails.refresh_token,
-        image: !(
-          spotifyUserDetails.user_image === undefined ||
-          spotifyUserDetails.user_image.length == 0
-        )
-          ? spotifyUserDetails.user_image
-          : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg",
+        image: spotifyUserDetails.user_image,
+        topTracks: JSON.stringify(spotifyUserDetails.initial_topTracks),
+        topArtists: JSON.stringify(spotifyUserDetails.inital_topArtists),
       };
 
       axios
@@ -348,19 +376,18 @@ const SignUpScreen = ({ navigation }) => {
                 Sign Me Up!
               </Text>
             </LinearGradient>
-
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[
-                styles.signIn,
-                { borderColor: "green", borderWidth: 1, marginTop: 15 },
-              ]}
-            >
-              <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
-                Already have an account? Log in
-              </Text>
-            </TouchableOpacity>
           </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={[
+            styles.signIn,
+            { borderColor: "green", borderWidth: 1, marginTop: 15 },
+          ]}
+        >
+          <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
+            Already have an account? Log in
+          </Text>
         </TouchableOpacity>
       </View>
     );

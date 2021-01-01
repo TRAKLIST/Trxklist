@@ -16,6 +16,7 @@ import { observer } from "mobx-react";
 const Drawer = createDrawerNavigator();
 
 function App() {
+  // console.log = function() {}
   return (
     <NavigationContainer>
       {UserStore.isLoggedIn === true ? (

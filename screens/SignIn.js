@@ -336,7 +336,7 @@ const SignInScreen = ({ navigation }) => {
         refresh_token: spotifyUserDetails.refresh_token,
       })
       .then((res) => {
-        console.log(res.data, "dfw");
+        // console.log(res.data, "dfw");
 
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
@@ -441,7 +441,7 @@ const SignInScreen = ({ navigation }) => {
           response.images === undefined || response.images.length == 0
         )
           ? response.images[0].url
-          : null,
+          : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg",
         user_id: response.id,
         user_email: response.email,
         access_token: access_token,
@@ -472,15 +472,17 @@ const SignInScreen = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
       <LinearGradient colors={["#EAEAEB", "grey"]} style={styles.header}>
-        <SafeAreaView>
-          {spotifyUserDetails.user_image ? (
+        {spotifyUserDetails.user_image ? (
+          <View>
             <Animatable.View animation="fadeInUpBig">
               <ImageBackground
                 source={{ uri: spotifyUserDetails.user_image }}
                 style={{ height: "100%", width: "100%" }}
               ></ImageBackground>
             </Animatable.View>
-          ) : (
+          </View>
+        ) : (
+          <SafeAreaView>
             <View>
               <Animatable.Image
                 animation="bounceIn"
@@ -501,8 +503,8 @@ const SignInScreen = ({ navigation }) => {
                 TRAKLIST.
               </Text>
             </View>
-          )}
-        </SafeAreaView>
+          </SafeAreaView>
+        )}
       </LinearGradient>
 
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
