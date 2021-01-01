@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Home.js";
 import SearchScreen from "./Search.js";
 import Timeline from "./Timeline.js";
-import Main from "./Main"
+import Main from "./Main";
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -33,10 +33,8 @@ const MainTabScreen = () => {
         component={Main}
         options={{
           tabBarLabel: "",
-          tabBarColor: "#004BA8",
-          tabBarIcon: ({ color }) => (
-            <MI name="home" color={color} size={26} />
-          ),
+          tabBarColor: "#292929",
+          tabBarIcon: ({ color }) => <MI name="home" color={color} size={26} />,
         }}
       />
       <Tab.Screen
@@ -44,29 +42,38 @@ const MainTabScreen = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: "",
-          tabBarColor: "#fff",
+          tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
             <Icon1 name="gesture-swipe" color={color} size={26} />
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Me"
-        component={Timeline}
+      <Tab.Screen
+        name="Post"
+        component={SearchScreen}
         options={{
           tabBarLabel: "",
-          tabBarColor: "#004BA8",
+          tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
-            <MI name="track-changes" color={color} size={26} />
+            <MI name="add-circle" color={color} size={26} />
           ),
         }}
-      /> */}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: "",
+          tabBarColor: "#292929",
+          tabBarIcon: ({ color }) => <Icon1 name="bell" color={color} size={26} />,
+        }}
+      />
       <Tab.Screen
         name="Search"
         component={SearchScreen}
         options={{
           tabBarLabel: "",
-          tabBarColor: "red",
+          tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
             <Octicons name="search" color={color} size={26} />
           ),
