@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   ImageBackground,
+  Keyboard,
 } from "react-native";
 
 import Post from "../components/Post";
@@ -23,6 +24,10 @@ import { TabBar } from "react-native-tab-view";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Octicons from "react-native-vector-icons/Octicons";
+import Icon from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 import spotifyAPI from "../components/SpotifyAPI";
 
@@ -67,10 +72,13 @@ exports.first_route = () => {
 
   let track_s = queryList ? (
     queryList.map((item) => (
-      <TouchableOpacity onPress={() => select(item)}>
+      <TouchableOpacity
+        style={{ marginBottom: 10 }}
+        onPress={() => select(item)}
+      >
         <View style={{ flexDirection: "row", opacity: 0.7 }}>
-          <View style={{ padding: 10 }}>
-            <Image
+          <View style={{ flex: 1 }}>
+            {/* <Image
               source={{ uri: item.image }}
               style={{
                 height: 65,
@@ -80,12 +88,48 @@ exports.first_route = () => {
                 borderColor: "green",
                 justifyContent: "center",
               }}
-            />
+            /> */}
+            <ImageBackground
+              source={{ uri: item.image }}
+              style={{
+                height: 65,
+                width: 65,
+              }}
+              imageStyle={{
+                borderRadius: 30,
+              }}
+            >
+              <View
+                style={{
+                  bottom: 0,
+                  position: "absolute",
+                  backgroundColor: "#44CF6C",
+                  borderRadius: 60,
+                  borderWidth: 0,
+                  // borderColor: "#44CF6C",
+                  height: 30,
+                  width: 30,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  opacity: 0.8,
+                }}
+              >
+                <Fontisto
+                  name="spotify"
+                  color="#fff"
+                  size={11}
+                  style={{ padding: 2 }}
+                />
+              </View>
+            </ImageBackground>
           </View>
           <View
-            style={[
-              { backgroundColor: "transparent", justifyContent: "center" },
-            ]}
+            style={{
+              justifyContent: "center",
+              padding: 0,
+              marginBottom: 3,
+              flex: 2,
+            }}
           >
             <View>
               <Text
@@ -117,6 +161,39 @@ exports.first_route = () => {
               </Text>
             </View>
           </View>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            {/* icons */}
+
+            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+              <View style={styles.iconContainer2}>
+                {/* {isSaved ? (
+                            <MaterialCommunityIcons
+                              name="content-save"
+                              size={27}
+                              color={"#44CF6C"}
+                              style={{ marginTop: 8, paddingBottom: 4 }}
+                            />
+                          ) : (
+                            <MaterialCommunityIcons
+                              name="content-save-outline"
+                              size={27}
+                              color={"#44CF6C"}
+                              style={{ marginTop: 8, paddingBottom: 4 }}
+                            />
+                          )} */}
+                <MaterialCommunityIcons
+                  name="content-save-outline"
+                  size={27}
+                  color={"#44CF6C"}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+              <View style={[styles.iconContainer2]}>
+                <AntDesign name="staro" size={25} color={"#44CF6C"} />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     ))
@@ -127,7 +204,7 @@ exports.first_route = () => {
   return (
     <Animatable.View
       animation="bounceInUp"
-      style={{ flex: 1, backgroundColor: "#000" }}
+      style={{ flex: 1, backgroundColor: "#292929" }}
     >
       <View style={styles.action}>
         <View style={{ margin: 20, flex: 3 }}>
@@ -135,21 +212,33 @@ exports.first_route = () => {
             placeholder="Search for music"
             autoCapitalize="none"
             onChangeText={(val) => handleTrackChange(val)}
-            style={{ color: "#fff" }}
+            style={{ color: "#fff", fontSize: 20 }}
           />
         </View>
 
-        <View style={{ flex: 1, marginRight: 5 }}>
-          <TouchableOpacity onPress={() => search(data.track)}>
-            <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
-              <MaterialCommunityIcons name="spotify" color="#fff" size={20} />
+        <View style={{ flex: 1, marginRight: 5, alignItems: "center" }}>
+          <TouchableOpacity
+            style={{ width: 50, height: 50 }}
+            onPress={() => {
+              Keyboard.dismiss()
+              search(data.track);
+            }}
+          >
+            <LinearGradient
+              colors={["#fff", "whitesmoke"]}
+              style={[styles.signIn]}
+            >
+              <Octicons name="search" color="#292929" size={26} />
             </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
       <View>
         <ScrollView>
-          <LinearGradient colors={["#000", "#292928", "#000"]}>
+          <LinearGradient
+            style={{ margin: 10 }}
+            colors={["#292928", "#292929"]}
+          >
             {track_s}
           </LinearGradient>
         </ScrollView>
@@ -160,7 +249,7 @@ exports.first_route = () => {
 
 exports.second_route = (caption) => {
   return (
-    <Animatable.View style={[styles.scene, { backgroundColor: "#000" }]}>
+    <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
       <Body
         thisTrack={UserStore.trackDetails}
         caption={caption}
@@ -174,75 +263,6 @@ exports.second_route = (caption) => {
         status={"Track"}
         trackID={UserStore.trackDetails.id}
       />
-    </Animatable.View>
-  );
-};
-
-exports.third_route = (caption) => {
-  const makePost = (post) => {
-    axios
-      .post(
-        "https://europe-west1-projectmelo.cloudfunctions.net/api/post",
-        post,
-        {
-          headers: {
-            Authorization: `Bearer ${UserStore.authCode}`,
-          },
-        }
-      )
-      .then((res) => {
-        axios
-          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
-          .then((res) => {
-            console.log(res.data);
-            UserStore.allPosts = res.data;
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-  };
-  return (
-    <Animatable.View
-      animation="bounceInUp"
-      style={[styles.scene, { backgroundColor: "#000" }]}
-    >
-      <Body
-        thisTrack={UserStore.trackDetails}
-        caption={caption}
-        status={"Track"}
-        imageUri={UserStore.spotifyUserDetails.user_image}
-      />
-      <Footer
-        likesCount={0}
-        commentCount={0}
-        postID={"uuidv4()"}
-        status={"Track"}
-        trackID={UserStore.trackDetails.id}
-      />
-
-      <TouchableOpacity
-        style={{
-          marginTop: 5,
-          alignSelf: "center",
-          borderWidth: 0,
-          borderRadius: 15,
-          borderColor: "#fff",
-        }}
-        onPress={() => {
-          makePost({
-            trackID: UserStore.trackDetails.id,
-            spotifyID: UserStore.spotifyUserDetails.user_id,
-            body: caption,
-            status: "Track",
-          });
-          // refresh
-          UserStore.enablePostScreen = false;
-        }}
-      >
-        <LinearGradient colors={["#000", "#292929"]} style={styles.signIn}>
-          <MaterialCommunityIcons name="spotify" color="#fff" size={30} />
-        </LinearGradient>
-      </TouchableOpacity>
     </Animatable.View>
   );
 };
@@ -298,7 +318,7 @@ exports.render_tab_bar = (props) => (
   <TabBar
     {...props}
     indicatorStyle={{ backgroundColor: "#1DB954" }}
-    style={{ backgroundColor: "black" }}
+    style={{ backgroundColor: "#292929" }}
     renderLabel={({ route, focused, color }) => (
       <Text style={{ color, margin: 8, fontWeight: "bold" }}>
         {route.title}
@@ -336,7 +356,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
-    paddingBottom: 5,
+    paddingBottom: 0,
   },
   track: {
     marginTop: 2,

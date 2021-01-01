@@ -54,14 +54,14 @@ function LoadingPage() {
     // this.interval = setInterval(() => {
     UserStore.followingDetails = [];
 
-    spotifyAPI
-      .getUser(UserStore.spotifyUserDetails.user_id)
-      .then((response) => {
-        setImage(response.images[0].url); // if not null then take value and update image field below
-      })
-      .catch((err) => console.log(err));
+    // spotifyAPI
+    //   .getUser(UserStore.spotifyUserDetails.user_id)
+    //   .then((response) => {
+    //     setImage(response.images[0].url); // if not null then take value and update image field below
+    //   })
+    //   .catch((err) => console.log(err));
 
-      console.log(image)
+    //   console.log(image)
 
     spotifyAPI.getMyTopArtists().then((data) => {
       topArtistsArray = [];
@@ -117,14 +117,12 @@ function LoadingPage() {
           bookmarked: "",
           playlists: "",
           recentlyPlayed: "",
-          topArtists:
-            JSON.stringify(topArtistsArray) != "[]"
-              ? JSON.stringify(topArtistsArray)
-              : "",
-          topTracks: JSON.stringify(items) != "[]" ? JSON.stringify(items) : "",
-          image: !(image === undefined || image == "")
-            ? image
-            : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
+          topArtists: JSON.stringify(topArtistsArray),
+          topTracks: JSON.stringify(items),
+          // image: !(image === undefined || image == "")
+          //   ? image
+          //   : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
+          image: "",
         },
         {
           headers: {

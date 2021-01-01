@@ -280,7 +280,7 @@ function Search() {
             />
             <TouchableOpacity style={{ flex: 1 }} onPress={search}>
               <LinearGradient
-                colors={["#000", "#21295c"]}
+                colors={["#fff", "#fff"]}
                 style={[styles.signIn]}
               >
                 <ADIcon

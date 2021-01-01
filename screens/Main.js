@@ -10,24 +10,26 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import StickyItemFlatList from "@gorhom/sticky-item";
+import Feather from "react-native-vector-icons/Feather";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MainSection from "../components/MainSection";
+import axios from "axios"
 
 const {
   first_route,
   second_route,
-  third_route,
   sticky_item_view,
   recent_posts_markup,
   render_tab_bar,
@@ -41,12 +43,11 @@ function Main() {
   const [selectedValue, setSelectedValue] = React.useState("track");
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Content" },
-    { key: "second", title: "Caption" },
-    { key: "third", title: "Preview" },
+    { key: "first", title: "MUSIC" },
+    { key: "second", title: "CAPTION" },
   ]);
 
-  const handleStickyItemPress = () => (UserStore.enablePostScreen = true);
+  const handleStickyItemPress = () => alert("pressed");
   const handleCaptionChange = (val) => setCaption(val);
 
   let data = [];
@@ -94,6 +95,35 @@ function Main() {
   const SecondRoute = () => second_route(caption);
 
   const ThirdRoute = () => third_route(caption);
+
+  const makePost = () => {
+    axios
+      .post(
+        "https://europe-west1-projectmelo.cloudfunctions.net/api/post",
+        {
+          trackID: UserStore.trackDetails.id,
+          spotifyID: UserStore.spotifyUserDetails.user_id,
+          body: caption,
+          status: "Track",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${UserStore.authCode}`,
+          },
+        }
+      )
+      .then((res) => {
+        axios
+          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
+          .then((res) => {
+            console.log(res.data);
+            UserStore.allPosts = res.data;
+            UserStore.enablePostScreen = false
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
 
   if (!UserStore.enablePostScreen) {
     return (
@@ -227,7 +257,9 @@ function Main() {
             </View>
           </ParallaxScrollView>
         </SafeAreaView>
-        <TouchableWithoutFeedback onPress = {() => UserStore.enablePostScreen = true}>
+        <TouchableWithoutFeedback
+          onPress={() => (UserStore.enablePostScreen = true)}
+        >
           <View
             style={{
               backgroundColor: "white",
@@ -261,7 +293,6 @@ function Main() {
     const renderScene = SceneMap({
       first: FirstRoute,
       second: SecondRoute,
-      third: ThirdRoute,
     });
 
     const renderTabBar = (props) => render_tab_bar(props);
@@ -280,86 +311,149 @@ function Main() {
       }
     };
     return (
-      <LinearGradient
-        colors={["#000", "#292928", "#000"]}
-        style={{ flex: 1, paddingHorizontal: 10 }}
-      >
-        {captionHeader == false && pickerHeader == true ? (
-          <View style={[styles.header, { backgroundColor: "#000" }]}>
-            <Button
-              title="return"
-              onPress={() => {
-                UserStore.enablePostScreen = false;
-                setCaption("");
-              }}
-            />
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }
-              style={{
-                backgroundColor: "whitesmoke",
-                borderRadius: 20,
-                flex: 1,
-              }}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <LinearGradient
+          colors={["#292929", "#292928", "#292929"]}
+          style={{ flex: 1, paddingHorizontal: 10 }}
+        >
+          {captionHeader == false && pickerHeader == true ? (
+            <View style={[styles.header, { backgroundColor: "#292929" }]}>
+              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+                <View style={{ flex: 1 }}>
+                  <TouchableOpacity
+                    onPress={() => (UserStore.enablePostScreen = false)}
+                  >
+                    <MaterialCommunityIcons
+                      name="cancel"
+                      size={30}
+                      color="#fff"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1 }}></View>
+                <View style={{ flex: 1 }}></View>
+                {/* <Button
+                title="return"
+                onPress={() => {
+                  UserStore.enablePostScreen = false;
+                  setCaption("");
+                }}
+              /> */}
+              </View>
+
+              <Picker
+                selectedValue={selectedValue}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedValue(itemValue)
+                }
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 20,
+                  flex: 1,
+                }}
+              >
+                <Picker.Item label="Lyric" value="lyric" />
+                <Picker.Item label="Playlist" value="playlist" />
+                <Picker.Item label="Track" value="track" />
+                <Picker.Item label="Album" value="album" />
+                <Picker.Item label="Artist" value="artist" />
+              </Picker>
+            </View>
+          ) : captionHeader == true && pickerHeader == false ? (
+            <View
+              style={[
+                styles.header,
+                {
+                  backgroundColor: "#292929",
+                  justifyContent: "flex-start",
+                  paddingHorizontal: 0,
+                },
+              ]}
             >
-              <Picker.Item label="Lyric" value="lyric" />
-              <Picker.Item label="Playlist" value="playlist" />
-              <Picker.Item label="Track" value="track" />
-              <Picker.Item label="Album" value="album" />
-              <Picker.Item label="Artist" value="artist" />
-            </Picker>
-          </View>
-        ) : captionHeader == true && pickerHeader == false ? (
-          <View style={[styles.header, { backgroundColor: "#000" }]}>
-            <Button
-              title="return"
-              onPress={() => {
-                UserStore.enablePostScreen = false;
-                setCaption("");
-              }}
+              {/* <Button
+                title="return"
+                onPress={() => {
+                  UserStore.enablePostScreen = false;
+                  setCaption("");
+                }}
+              /> */}
+
+              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+                <View style={{ flex: 1 }}>
+                  <TouchableOpacity
+                    onPress={() => (UserStore.enablePostScreen = false)}
+                  >
+                    <MaterialCommunityIcons
+                      name="cancel"
+                      size={30}
+                      color="#fff"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1 }}></View>
+                <View style={{ flex: 1, alignItems: "flex-end" }}>
+                  <TouchableOpacity onPress={makePost}>
+                    <Feather name="send" size={30} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+                {/* <Button
+                title="return"
+                onPress={() => {
+                  UserStore.enablePostScreen = false;
+                  setCaption("");
+                }}
+              /> */}
+              </View>
+
+              <View style={{ flexDirection: "row", flex: 1 }}>
+                <View style={{ flex: 1 }}>
+                  <Image
+                    source={{ uri: UserStore.spotifyUserDetails.user_image }}
+                    style={{
+                      height: 50,
+                      width: 100,
+                      borderRadius: 30,
+                      alignSelf: "flex-start",
+                      flex: 1,
+                    }}
+                  />
+                </View>
+
+                <View style={{ flex: 2 }}>
+                  <TextInput
+                    placeholder="caption..."
+                    autoCapitalize="none"
+                    value={caption}
+                    // multiline="true"
+                    onChangeText={(val) => handleCaptionChange(val)}
+                    style={{
+                      padding: 15,
+                      justifyContent: "center",
+                      backgroundColor: "#fff",
+                      borderRadius: 20,
+                      borderColor: "grey",
+                      margin: 5,
+                      borderWidth: 0,
+                      flex: 4,
+                      textAlign: "center",
+                      fontSize: 20,
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+          ) : captionHeader == true && pickerHeader == false ? null : null}
+          <SafeAreaView style={styles.footer}>
+            <TabView
+              navigationState={{ index, routes }}
+              renderScene={renderScene}
+              onIndexChange={(index) => onIndexChange(index)}
+              initialLayout={initialLayout}
+              renderTabBar={renderTabBar}
             />
-            <Image
-              source={{ uri: UserStore.spotifyUserDetails.user_image }}
-              style={{
-                height: 50,
-                width: 50,
-                borderRadius: 30,
-                alignSelf: "center",
-              }}
-            />
-            <View style={{ marginBottom: 3 }} />
-            <TextInput
-              placeholder="Caption your post"
-              autoCapitalize="none"
-              value={caption}
-              // multiline="true"
-              onChangeText={(val) => handleCaptionChange(val)}
-              style={{
-                padding: 20,
-                justifyContent: "center",
-                backgroundColor: "#292929",
-                borderRadius: 20,
-                margin: 5,
-                borderWidth: 3,
-                flex: 1,
-                textAlign: "center",
-                fontSize: 30,
-              }}
-            />
-          </View>
-        ) : captionHeader == true && pickerHeader == false ? null : null}
-        <SafeAreaView style={styles.footer}>
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={(index) => onIndexChange(index)}
-            initialLayout={initialLayout}
-            renderTabBar={renderTabBar}
-          />
-        </SafeAreaView>
-      </LinearGradient>
+          </SafeAreaView>
+        </LinearGradient>
+      </TouchableWithoutFeedback>
     );
   }
 }

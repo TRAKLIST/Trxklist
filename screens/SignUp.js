@@ -99,6 +99,7 @@ const SignUpScreen = ({ navigation }) => {
     });
 
     spotifyAPI.getMe().then((response) => {
+      console.log()
       var getMe = {
         user_name: response.display_name,
         user_image: !(
