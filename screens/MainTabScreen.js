@@ -39,18 +39,7 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => <MI name="home" color={color} size={26} />,
         }}
       />
-      <Tab.Screen
-        name="Swipe"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: "",
-          tabBarColor: "#292929",
-          tabBarIcon: ({ color }) => (
-            <Icon1 name="gesture-swipe" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Post"
         component={AddPost}
         options={{
@@ -58,9 +47,9 @@ const MainTabScreen = () => {
           tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
             <MI name="add-circle" color={color} size={26} />
-          ),
-        }}
-      />
+            ),
+          }}
+        /> */}
       <Tab.Screen
         name="Notifications"
         component={Notifications}
@@ -70,6 +59,17 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => <Icon1 name="bell" color={color} size={26} />,
         }}
       />
+        <Tab.Screen
+          name="Swipe"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: "",
+            tabBarColor: "#292929",
+            tabBarIcon: ({ color }) => (
+              <Icon1 name="gesture-swipe" color={color} size={26} />
+            ),
+          }}
+        />
       <Tab.Screen
         name="Search"
         component={SearchScreen}

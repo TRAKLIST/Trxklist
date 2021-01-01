@@ -10,6 +10,7 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
+  TouchableWithoutFeedback
 } from "react-native";
 
 import UserStore from "../stores/UserStore";
@@ -21,7 +22,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MainSection from "../components/MainSection"
+import MainSection from "../components/MainSection";
 
 const {
   first_route,
@@ -226,6 +227,34 @@ function Main() {
             </View>
           </ParallaxScrollView>
         </SafeAreaView>
+        <TouchableWithoutFeedback onPress = {() => UserStore.enablePostScreen = true}>
+          <View
+            style={{
+              backgroundColor: "white",
+              height: 50,
+              width: 50,
+              position: "absolute",
+              bottom: 20,
+              right: 20,
+              borderRadius: 15,
+              justifyContent: "center",
+              alignItems: "center",
+              opacity: 0.8,
+            }}
+          >
+            <FontAwesome
+              name="plus-circle"
+              size={40}
+              style={{
+                color: "#000",
+                // padding: 4,
+                // alignSelf: "center",
+                borderRadius: 20,
+                opacity: 0.75,
+              }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   } else {
