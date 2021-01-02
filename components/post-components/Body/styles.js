@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontFamily: "Arial",
     textAlign : 'center',
-    flex : 1
+    flex : 1,
   },
 });
 

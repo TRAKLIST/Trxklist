@@ -6,16 +6,12 @@ import Icon from "react-native-vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../../SpotifyAPI";
-import TracklistItem from "./TracklistItem"
+import TracklistItem from "./TracklistItem";
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
-
-  
-
+  console.log(thisTrack.track, 'efke')
   let tracklist = thisTrack.track ? (
-    thisTrack.track.map((track) => (
-      <TracklistItem track = {track} />
-    ))
+    thisTrack.track.map((track) => <TracklistItem track={track} />)
   ) : (
     <Text>Loading</Text>
   );
@@ -110,7 +106,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
     );
   } else {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View
           style={[
             styles.titleContainer,
@@ -178,9 +174,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
           </View>
 
           <View style={styles.block}>
-            <ScrollView
-              style={{ height: 150, backgroundColor: "#000", padding: 5 }}
-            >
+            <ScrollView style={{ height: 150, padding: 5 }}>
               {tracklist}
             </ScrollView>
           </View>
@@ -188,16 +182,19 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
 
         <View
           style={{
-            backgroundColor: "#000",
+            // backgroundColor: "#000",
             opacity: 0.8,
             padding: 10,
             // borderRadius: 15,
             marginLeft: 10,
             marginRight: 10,
+            bottom : 0,
+            position : 'absolute',
+            alignSelf : 'center'
           }}
         >
           <View>
-            <Text style={styles.caption}>{caption}</Text>
+            <Text style={[styles.caption]}>{caption}</Text>
           </View>
         </View>
       </View>

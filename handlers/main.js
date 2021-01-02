@@ -30,8 +30,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
 import spotifyAPI from "../components/SpotifyAPI";
+import { cos } from "react-native-reanimated";
 
-exports.first_route = () => {
+exports.first_route = (status) => {
   const [queryList, setQueryList] = React.useState([]);
   const [data, setData] = React.useState({
     track: "",
@@ -43,30 +44,87 @@ exports.first_route = () => {
 
   const search = (query) => {
     setQueryList([]);
-    spotifyAPI.searchTracks(query).then(
-      (data) => {
-        data.tracks.items.map((item) => {
-          let trackQuery = {
-            id: item.id,
-            name: item.name,
-            artist: item.artists[0].name,
-            artistID: item.artists[0].id,
-            albumName: item.album.name,
-            image: item.album.images[0].url,
-            releaseDate: item.album.release_date,
-            popularity: item.popularity,
-            duration: item.duration_ms,
-          };
-          setQueryList((oldArray) => [...oldArray, trackQuery]);
-        });
-      },
-      function (err) {
-        console.error(err);
-      }
-    );
+    console.log(status, "uvyu");
+
+    if (status == "track") {
+      spotifyAPI.searchTracks(query).then(
+        (data) => {
+          data.tracks.items.map((item) => {
+            let trackQuery = {
+              id: item.id,
+              name: item.name,
+              artist: item.artists[0].name,
+              artistID: item.artists[0].id,
+              albumName: item.album.name,
+              image: item.album.images[0].url,
+              releaseDate: item.album.release_date,
+              popularity: item.popularity,
+              duration: item.duration_ms,
+            };
+            setQueryList((oldArray) => [...oldArray, trackQuery]);
+          });
+        },
+        function (err) {
+          console.error(err);
+        }
+      );
+    } else if (status == "album") {
+      spotifyAPI.searchAlbums(query).then(
+        (data) => {
+          // console.log(data, 'refbiy')
+          data.albums.items.map((item) => {
+            let trackQuery = {
+              id: item.id,
+              name: item.name,
+              artist: item.artists[0].name,
+              image: item.images[0].url,
+            };
+            // console.log(trackQuery.title, "rvsu");
+            setQueryList((oldArray) => [...oldArray, trackQuery]);
+          });
+        },
+        function (err) {
+          console.error(err);
+        }
+      );
+    } else if (status == "playlist") {
+      spotifyAPI.searchPlaylists(query).then(
+        (data) => {
+          // console.log(data, 'refbiy')
+          data.playlists.items.map((item) => {
+            let trackQuery = {
+              id: item.id,
+              name: item.name,
+              artist: item.owner.display_name,
+              image: item.images[0].url,
+            };
+            console.log(trackQuery.title, "rvsu");
+            setQueryList((oldArray) => [...oldArray, trackQuery]);
+          });
+        },
+        function (err) {
+          console.error(err);
+        }
+      );
+    }
   };
 
   const select = (item) => {
+    let track_playlist = [];
+    console.log(item, "bers");
+    // if album or playlist get tracks
+    spotifyAPI.getPlaylist(item.id).then((response) => {
+      // console.log(response);
+      response.tracks.items.map((track) => {
+        track_playlist.push({
+          id: track.track.id,
+          title: track.track.name,
+        });
+      });
+      item.track = track_playlist
+      // console.log(item, 'fewfever')
+      // add to state here
+    });
     UserStore.trackDetails = item;
   };
 
@@ -161,7 +219,13 @@ exports.first_route = () => {
               </Text>
             </View>
           </View>
-          <View style={{ flex: 1, flexDirection: "row" }}>
+          <View
+            style={{
+              flex: 0.5,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             {/* icons */}
 
             <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
@@ -188,11 +252,11 @@ exports.first_route = () => {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+            {/* <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
               <View style={[styles.iconContainer2]}>
                 <AntDesign name="staro" size={25} color={"#44CF6C"} />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </TouchableOpacity>
@@ -220,7 +284,7 @@ exports.first_route = () => {
           <TouchableOpacity
             style={{ width: 50, height: 50 }}
             onPress={() => {
-              Keyboard.dismiss()
+              Keyboard.dismiss();
               search(data.track);
             }}
           >
@@ -247,24 +311,62 @@ exports.first_route = () => {
   );
 };
 
-exports.second_route = (caption) => {
-  return (
-    <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
-      <Body
-        thisTrack={UserStore.trackDetails}
-        caption={caption}
-        status={"Track"}
-        imageUri={UserStore.spotifyUserDetails.user_image}
-      />
-      <Footer
-        likesCount={0}
-        commentCount={0}
-        postID={"uuidv4()"}
-        status={"Track"}
-        trackID={UserStore.trackDetails.id}
-      />
-    </Animatable.View>
-  );
+exports.second_route = (caption, status) => {
+  if (status == "track") {
+    return (
+      <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
+        <Body
+          thisTrack={UserStore.trackDetails}
+          caption={caption}
+          status={"Track"}
+          imageUri={UserStore.spotifyUserDetails.user_image}
+        />
+        <Footer
+          likesCount={0}
+          commentCount={0}
+          postID={"uuidv4()"}
+          status={"Track"}
+          trackID={UserStore.trackDetails.id}
+        />
+      </Animatable.View>
+    );
+  } else if (status == "album") {
+    return (
+      <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
+        <Body
+          thisTrack={UserStore.trackDetails}
+          caption={caption}
+          status={"Album"}
+          imageUri={UserStore.spotifyUserDetails.user_image}
+        />
+        <Footer
+          likesCount={0}
+          commentCount={0}
+          postID={"uuidv4()"}
+          status={"Album"}
+          trackID={UserStore.trackDetails.id}
+        />
+      </Animatable.View>
+    );
+  } else if (status == "playlist") {
+    return (
+      <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
+        <Body
+          thisTrack={UserStore.trackDetails}
+          caption={caption}
+          status={"Playlist"}
+          imageUri={UserStore.spotifyUserDetails.user_image}
+        />
+        <Footer
+          likesCount={0}
+          commentCount={0}
+          postID={"uuidv4()"}
+          status={"Playlist"}
+          trackID={UserStore.trackDetails.id}
+        />
+      </Animatable.View>
+    );
+  }
 };
 
 exports.sticky_item_view = () => {
@@ -284,19 +386,7 @@ exports.sticky_item_view = () => {
           justifyContent: "center",
         }}
         imageStyle={{ borderRadius: 30 }}
-      >
-        <FontAwesome
-          name="plus-circle"
-          size={65}
-          style={{
-            // color: "#1DB954",
-            // padding: 4,
-            // alignSelf: "center",
-            borderRadius: 20,
-            opacity: 0.75,
-          }}
-        />
-      </ImageBackground>
+      ></ImageBackground>
     </Animatable.View>
   );
 };

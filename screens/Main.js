@@ -25,7 +25,7 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MainSection from "../components/MainSection";
-import axios from "axios"
+import axios from "axios";
 
 const {
   first_route,
@@ -90,9 +90,9 @@ function Main() {
 
   let recentPostsMarkup = recent_posts_markup();
 
-  const FirstRoute = first_route;
+  const FirstRoute = () => first_route(selectedValue);
 
-  const SecondRoute = () => second_route(caption);
+  const SecondRoute = () => second_route(caption, selectedValue);
 
   const ThirdRoute = () => third_route(caption);
 
@@ -118,7 +118,11 @@ function Main() {
           .then((res) => {
             console.log(res.data);
             UserStore.allPosts = res.data;
-            UserStore.enablePostScreen = false
+            UserStore.enablePostScreen = false;
+            setIndex(0)
+            setCaption('')
+            setPickerHeader(true)
+            setCaptionHeader(false)
           })
           .catch((err) => console.log(err));
       })
@@ -258,7 +262,13 @@ function Main() {
           </ParallaxScrollView>
         </SafeAreaView>
         <TouchableWithoutFeedback
-          onPress={() => (UserStore.enablePostScreen = true)}
+          onPress={() => {
+            setPickerHeader(true);
+            setCaptionHeader(false);
+            setIndex(0);
+
+            UserStore.enablePostScreen = true;
+          }}
         >
           <View
             style={{
@@ -352,11 +362,11 @@ function Main() {
                   flex: 1,
                 }}
               >
-                <Picker.Item label="Lyric" value="lyric" />
-                <Picker.Item label="Playlist" value="playlist" />
+                {/* <Picker.Item label="Lyric" value="lyric" /> */}
+                {/* <Picker.Item label="Playlist" value="playlist" /> */}
                 <Picker.Item label="Track" value="track" />
-                <Picker.Item label="Album" value="album" />
-                <Picker.Item label="Artist" value="artist" />
+                {/* <Picker.Item label="Album" value="album" /> */}
+                {/* <Picker.Item label="Artist" value="artist" /> */}
               </Picker>
             </View>
           ) : captionHeader == true && pickerHeader == false ? (
@@ -381,7 +391,12 @@ function Main() {
               <View style={{ flexDirection: "row", marginBottom: 15 }}>
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity
-                    onPress={() => (UserStore.enablePostScreen = false)}
+                    onPress={() => {
+                      UserStore.enablePostScreen = false;
+                      UserStore.trackDetails = [];
+                      setCaption("");
+                      // setIndex(0)
+                    }}
                   >
                     <MaterialCommunityIcons
                       name="cancel"

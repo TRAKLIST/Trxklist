@@ -159,7 +159,7 @@ exports.first_route = (card) => {
         <LinearGradient colors={["#000", "#8D8D92", "#EAEAEB"]}>
           <View style={{ flexDirection: "row" }}>
             <Animatable.View
-              animation={"bounceIn"}
+              // animation={"bounceIn"}
               style={{
                 width: Dimensions.get("window").width / 2 - 10,
                 justifyContent: "center",
