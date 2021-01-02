@@ -31,12 +31,8 @@ import {
   AuthSession,
 } from "expo-auth-session";
 import spotifyAPI from "../components/SpotifyAPI";
-import base64 from "react-native-base64";
-import { Buffer } from "buffer";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
-import { acc } from "react-native-reanimated";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 WebBrowser.maybeCompleteAuthSession();
