@@ -3,13 +3,14 @@ import { Image, Text, View, ScrollView, ImageBackground } from "react-native";
 import styles from "./styles";
 import ProfilePicture from "../../ProfilePicture";
 import Icon from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../../SpotifyAPI";
 import TracklistItem from "./TracklistItem";
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
-  console.log(thisTrack.track, 'efke')
+  console.log(thisTrack.track, "efke");
   let tracklist = thisTrack.track ? (
     thisTrack.track.map((track) => <TracklistItem track={track} />)
   ) : (
@@ -77,6 +78,21 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
               </View>
             </View>
           </View>
+
+          {/* <TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: "green",
+                top: 120,
+                height: 150,
+                width: 150,
+                borderRadius: 100,
+                opacity: 0.7,
+              }}
+            >
+              <AntDesign name="play" size={150} color="#fff" />
+            </View>
+          </TouchableOpacity> */}
 
           <View
             style={{
@@ -188,9 +204,9 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
             // borderRadius: 15,
             marginLeft: 10,
             marginRight: 10,
-            bottom : 0,
-            position : 'absolute',
-            alignSelf : 'center'
+            bottom: 0,
+            position: "absolute",
+            alignSelf: "center",
           }}
         >
           <View>

@@ -12,6 +12,9 @@ import LoadingPage from "./screens/LoadingPage";
 import { AuthSession } from "expo";
 import UserStore from "./stores/UserStore";
 import { observer } from "mobx-react";
+import Main from "./screens/Main";
+import Home from "./screens/Home";
+import Notifications from "./screens/Notifications";
 
 const Drawer = createDrawerNavigator();
 
@@ -25,6 +28,11 @@ function App() {
             drawerContent={(props) => <DrawerContent {...props} />}
           >
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+            <Drawer.Screen name="Home" component={Main} />
+            <Drawer.Screen name="Notifications" component={Notifications} />
+            <Drawer.Screen name="Recommendations" component={Home} />
+            {/* <Drawer.Screen name="Settings" component={} />
+            <Drawer.Screen name="Support" component={MainTabScreen} /> */}
           </Drawer.Navigator>
         ) : (
           <Drawer.Navigator

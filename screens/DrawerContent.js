@@ -12,6 +12,8 @@ import {
   Switch,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon1 from "react-native-vector-icons/MaterialIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 
@@ -47,13 +49,13 @@ export function DrawerContent(props) {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  80
+                  
                 </Paragraph>
                 <Caption style={styles.caption}>Following</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  100
+                  
                 </Paragraph>
                 <Caption style={styles.caption}>Followers</Caption>
               </View>
@@ -63,47 +65,47 @@ export function DrawerContent(props) {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="home-outline" color={color} size={size} />
+                <AntDesign name="home" color={color} size={size} />
               )}
               label="Home"
               onPress={() => {
-                props.navigation.navigate("Home");
+                props.navigation.navigate("HomeDrawer");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <AntDesign name="bells" color={color} size={size} />
               )}
-              label="Profile"
+              label="Notifications"
               onPress={() => {
-                props.navigation.navigate("Profile");
+                props.navigation.navigate("Notifications");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="bookmark-outline" color={color} size={size} />
+                <AntDesign name="like2" color={color} size={size} />
               )}
-              label="Bookmarks"
+              label="Recommendations"
               onPress={() => {
-                props.navigation.navigate("BookmarkScreen");
+                props.navigation.navigate("Recommendations");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="settings-outline" color={color} size={size} />
+                <AntDesign name="setting" color={color} size={size} />
               )}
               label="Settings"
               onPress={() => {
-                props.navigation.navigate("SettingsScreen");
+                props.navigation.navigate("Settings");
               }}
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-check-outline" color={color} size={size} />
+                <AntDesign name="meh" color={color} size={size} />
               )}
               label="Support"
               onPress={() => {
-                props.navigation.navigate("SupportScreen");
+                props.navigation.navigate("Support");
               }}
             />
           </Drawer.Section>
