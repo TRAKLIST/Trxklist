@@ -7,12 +7,15 @@ import {
   ActivityIndicator,
   Dimensions,
   ImageBackground,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import Swiper from "react-native-deck-swiper";
 import { TabView, SceneMap } from "react-native-tab-view";
+import { ProgressBar } from "react-native-paper";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -20,6 +23,9 @@ import spotifyAPI from "../components/SpotifyAPI";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import axios from "axios";
+
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const {
   first_route,
@@ -226,7 +232,7 @@ export class HomeScreen extends Component {
   }
 
   reRender = () => {
-    this.setState({loading : true})
+    this.setState({ loading: true });
     let startTimeM = new Date().getTime();
     axios
       .get(
@@ -238,7 +244,7 @@ export class HomeScreen extends Component {
         }
       )
       .then((res) => {
-        // console.log(res.data)
+        console.log(res.data)
         res.data.tracks.map((track) => {
           spotifyAPI
             .getArtist(track.artists[0].id)
@@ -382,7 +388,7 @@ export class HomeScreen extends Component {
         console.log(durationM, "time");
       });
     return;
-  }
+  };
 
   render() {
     let swiper = this.state.recommendations ? (
@@ -403,7 +409,356 @@ export class HomeScreen extends Component {
                     source={{ uri: card.image }}
                     style={{ height: "100%", width: "100%" }}
                     imageStyle={{ borderRadius: 15 }}
-                  ></ImageBackground>
+                  >
+                    <View
+                      style={{
+                        width: Dimensions.get("window").width,
+                        top: 0,
+                        position: "absolute",
+                        backgroundColor : '#292929',
+                        opacity : 0.7,
+                        padding : 5
+                      }}
+                    >
+                      {card != undefined ? (
+                        <View style={{ width: Dimensions.get("window").width }}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignSelf: "center",
+                              paddingLeft: 5,
+                              paddingRight: 5,
+                            }}
+                          >
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {" "}
+                              {card.name}
+                            </Text>
+                            {card.explicit ? (
+                              <MaterialIcons
+                                name="explicit"
+                                size={16}
+                                color="#383D3B"
+                                style={{
+                                  alignSelf: "center",
+                                  bottom: 0,
+                                  position: "relative",
+                                }}
+                              />
+                            ) : null}
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignSelf: "center",
+                              paddingLeft: 5,
+                              paddingRight: 5,
+                            }}
+                          >
+                            {card.albumName != card.name ? (
+                              <View
+                                style={{
+                                  alignSelf: "center",
+                                  borderRadius: 3,
+                                  bottom: 0,
+                                  position: "relative",
+                                  flexDirection: "row",
+                                }}
+                              >
+                                <Text
+                                  numberOfLines={1}
+                                  style={{
+                                    color: "#44CF6C",
+                                    fontWeight: "bold",
+                                  }}
+                                >{`${card.artistName} • ${card.albumName}  `}</Text>
+                                <MaterialIcons
+                                  name="album"
+                                  size={16}
+                                  style={{ padding: 0, color: "#44CF6C" }}
+                                />
+                              </View>
+                            ) : (
+                              <View
+                                style={{
+                                  alignSelf: "center",
+                                  borderRadius: 3,
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <Text
+                                  numberOfLines={1}
+                                  style={{
+                                    color: "#44CF6C",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {card.artistName}
+                                </Text>
+                              </View>
+                            )}
+                          </View>
+                        </View>
+                      ) : null}
+                    </View>
+                    <View
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        height: 200,
+                        alignSelf: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <View style={[styles.scene]}>
+                        <LinearGradient
+                          colors={["#292929", "#292929", "#292929"]}
+                          style={{
+                            borderTopRightRadius: 15,
+                            borderTopLefttRadius: 15,
+                          }}
+                        >
+                          <View style={{ flexDirection: "row",
+                                borderTopWidth : 3,
+                                borderTopColor : '#292929' }}>
+                            <Animatable.View
+                              // animation={"bounceIn"}
+                              style={{
+                                width: Dimensions.get("window").width / 2 - 10,
+                                justifyContent: "center",
+                              }}
+                            >
+                              <ImageBackground
+                                source={{ uri: card.artistImage }}
+                                style={{ height: "100%", width: "100%" }}
+                                imageStyle={{ borderTopRightRadius: 15 }}
+                              >
+                                <View
+                                  style={{
+                                    bottom: 25,
+                                    flexDirection: "row",
+                                    position: "absolute",
+                                    backgroundColor: "whitesmoke",
+                                    borderTopRightRadius: 5,
+                                    borderTopLefttRadius: 5,
+                                    width: "100%",
+                                    opacity: "0.8",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  {card.topArtists_following != undefined
+                                    ? card.topArtists_following.map((item) => (
+                                        <View
+                                          style={{
+                                            alignSelf: "center",
+                                            justifyContent: "center",
+                                          }}
+                                        >
+                                          <Image
+                                            source={{ uri: item.image }}
+                                            style={{
+                                              height: 30,
+                                              width: 30,
+                                              borderRadius: 10,
+                                              borderColor: "#fff",
+                                              marginTop: 5,
+                                              alignSelf: "center",
+                                              opacity: 1,
+                                              borderWidth: 2,
+                                              borderColor: "#1DB954",
+                                              margin: 5,
+                                            }}
+                                          />
+                                        </View>
+                                      ))
+                                    : null}
+                                </View>
+                              </ImageBackground>
+                            </Animatable.View>
+
+                            <View
+                              style={{
+                                width: Dimensions.get("window").width / 2,
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <View
+                                style={{
+                                  top: 20,
+                                  position: "absolute",
+                                  color: "#fff",
+                                }}
+                              >
+                                <Text
+                                  numberOfLines={1}
+                                  style={{
+                                    color: "#fff",
+                                    textAlign: "center",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {card.artistName}
+                                </Text>
+                                <Text
+                                  numberOfLines={1}
+                                  style={{ color: "grey", fontWeight: "400" }}
+                                >{`${card.followers} followers`}</Text>
+                              </View>
+
+                              {/* Support an independent artist */}
+                              <View
+                                style={{
+                                  bottom: 12,
+                                  position: "relative",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <Text
+                                  numberOfLines={1}
+                                  style={{
+                                    fontSize: 14,
+                                    padding: 3,
+                                    textTransform: "uppercase",
+                                    color: "#3A5A40",
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {card.artistPopularity < 5
+                                    ? "Independent"
+                                    : card.artistPopularity < 7
+                                    ? "Independent"
+                                    : card.artistPopularity < 10
+                                    ? "Independent"
+                                    : card.artistPopularity < 20
+                                    ? "Independent"
+                                    : card.artistPopularity < 35
+                                    ? "Hustler"
+                                    : card.artistPopularity < 50
+                                    ? "Next Up?"
+                                    : card.artistPopularity < 70
+                                    ? "Blown?"
+                                    : card.artistPopularity < 90
+                                    ? "Fame"
+                                    : card.artistPopularity < 95
+                                    ? "Icon"
+                                    : "VIP"}
+                                </Text>
+                                <ProgressBar
+                                  progress={card.artistPopularity / 100}
+                                  color="#1DB954"
+                                  style={{ width: 100, height: 15 }}
+                                />
+                              </View>
+
+                              <View
+                                style={{
+                                  bottom: 35,
+                                  position: "absolute",
+                                  flexDirection: "row",
+                                  alignSelf: "center",
+                                  // backgroundColor: "whitesmoke",
+                                  opacity: 0.8,
+                                  borderRadius: 15,
+                                }}
+                              >
+                                <View
+                                  style={{ alignSelf: "center", margin: 5 }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ marginRight: 0, marginBottom: 0 }}
+                                  >
+                                    <LinearGradient
+                                      colors={["#000", "#21295c"]}
+                                      style={styles.signIn}
+                                    >
+                                      <Entypo
+                                        name="spotify"
+                                        size={20}
+                                        style={{
+                                          color: "#1DB954",
+                                          padding: 4,
+                                          alignSelf: "center",
+                                        }}
+                                      />
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                </View>
+
+                                <View
+                                  style={{ alignSelf: "center", margin: 5 }}
+                                >
+                                  <TouchableOpacity style={{ marginRight: 0 }}>
+                                    <LinearGradient
+                                      colors={["#000", "#21295c"]}
+                                      style={styles.signIn}
+                                    >
+                                      <Entypo
+                                        name="soundcloud"
+                                        size={20}
+                                        style={{
+                                          color: "#1DB954",
+                                          padding: 4,
+                                          alignSelf: "center",
+                                        }}
+                                      />
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                </View>
+
+                                <View
+                                  style={{ alignSelf: "center", margin: 5 }}
+                                >
+                                  <TouchableOpacity style={{ marginRight: 0 }}>
+                                    <LinearGradient
+                                      colors={["#000", "#21295c"]}
+                                      style={styles.signIn}
+                                    >
+                                      <MaterialCommunityIcons
+                                        name="instagram"
+                                        size={20}
+                                        style={{
+                                          color: "#1DB954",
+                                          padding: 4,
+                                          alignSelf: "center",
+                                        }}
+                                      />
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                </View>
+
+                                <View
+                                  style={{ alignSelf: "center", margin: 5 }}
+                                >
+                                  <TouchableOpacity style={{ marginRight: 0 }}>
+                                    <LinearGradient
+                                      colors={["#000", "#21295c"]}
+                                      style={styles.signIn}
+                                    >
+                                      <MaterialCommunityIcons
+                                        name="twitter"
+                                        size={20}
+                                        style={{
+                                          color: "#1DB954",
+                                          padding: 4,
+                                          alignSelf: "center",
+                                        }}
+                                      />
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </LinearGradient>
+                      </View>
+                    </View>
+                  </ImageBackground>
                 </Animatable.View>
               </View>
             );
@@ -441,7 +796,7 @@ export class HomeScreen extends Component {
       return (
         <View style={styles.container}>
           <LinearGradient
-            colors={["#000", "#292929", "#000"]}
+            colors={["#292929", "#292929", "#292929"]}
             style={styles.header}
           >
             <SafeAreaView
@@ -449,93 +804,71 @@ export class HomeScreen extends Component {
                 width: Dimensions.get("window").width,
                 top: 0,
                 position: "absolute",
+                alignItems : 'center',
               }}
             >
-              {this.state.cuurentCard != undefined ? (
-                <View style={{ width: Dimensions.get("window").width }}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      paddingLeft: 5,
-                      paddingRight: 5,
-                    }}
-                  >
-                    <Text
-                      numberOfLines={1}
-                      style={{ color: "#fff", fontWeight: "bold" }}
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  {/* <TouchableOpacity onPress={handleStickyItemPress}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
                     >
-                      {" "}
-                      {this.state.cuurentCard.name}
-                    </Text>
-                    {this.state.cuurentCard.explicit ? (
-                      <MaterialIcons
-                        name="explicit"
-                        size={16}
-                        color="#383D3B"
+                      <FontAwesome
+                        name="plus-circle"
+                        size={30}
                         style={{
-                          alignSelf: "center",
-                          bottom: 0,
-                          position: "relative",
+                          color: "#fff",
+                          // padding: 4,
+                          // alignSelf: "center",
+                          borderRadius: 20,
+                          opacity: 0.75,
                         }}
                       />
-                    ) : null}
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      paddingLeft: 5,
-                      paddingRight: 5,
-                    }}
-                  >
-                    {this.state.cuurentCard.albumName !=
-                    this.state.cuurentCard.name ? (
-                      <View
-                        style={{
-                          alignSelf: "center",
-                          borderRadius: 3,
-                          bottom: 0,
-                          position: "relative",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <Text
-                          numberOfLines={1}
-                          style={{ color: "#44CF6C", fontWeight: "bold" }}
-                        >{`${this.state.cuurentCard.artistName} • ${this.state.cuurentCard.albumName}  `}</Text>
-                        <MaterialIcons
-                          name="album"
-                          size={16}
-                          style={{ padding: 0, color: "#44CF6C" }}
-                        />
-                      </View>
-                    ) : (
-                      <View
-                        style={{
-                          alignSelf: "center",
-                          borderRadius: 3,
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Text
-                          numberOfLines={1}
-                          style={{ color: "#44CF6C", fontWeight: "bold" }}
-                        >
-                          {this.state.cuurentCard.artistName}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
+                      <Text style = {{color : '#fff'}}>Post</Text>
+                    </LinearGradient>
+                  </TouchableOpacity> */}
                 </View>
-              ) : null}
+                <View style={{ flex: 1 }}>
+                  <TouchableOpacity onPress={() => search(data.track)}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
+                    >
+                      <MaterialCommunityIcons
+                        name="circle"
+                        color="#fff"
+                        size={25}
+                      />
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  {/* <TouchableOpacity onPress={() => search(data.track)}>
+                    <LinearGradient
+                      colors={["#272D2D", "#272D2D"]}
+                      style={styles.signIn}
+                    >
+                      <FontAwesome
+                        name="inbox"
+                        size={30}
+                        style={{
+                          color: "#fff",
+                          // padding: 4,
+                          // alignSelf: "center",
+                          borderRadius: 20,
+                          opacity: 0.75,
+                        }}
+                      />
+                      <Text style = {{color : '#fff'}}>Inbox</Text>
+                    </LinearGradient>
+                  </TouchableOpacity> */}
+                </View>
             </SafeAreaView>
 
             {swiper}
           </LinearGradient>
 
-          <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
+          {/* <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
             <TabView
               navigationState={{ index, routes }}
               renderScene={this.renderScene(this.state.cuurentCard)}
@@ -547,7 +880,7 @@ export class HomeScreen extends Component {
                 borderBottomRightRadius: 10,
               }}
             />
-          </LinearGradient>
+          </LinearGradient> */}
         </View>
       );
     } else {
@@ -584,7 +917,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#A7A2A9",
   },
   card: {
-    flex: 0.55,
+    flex: 1,
     borderRadius: 20,
     borderRightWidth: 0,
     borderLeftWidth: 0,
@@ -594,8 +927,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
     marginTop: 20,
-    marginLeft: -10,
-    marginRight: -10,
+    marginLeft: -20,
+    marginRight: -20,
   },
   song: {
     fontSize: 18,
@@ -622,8 +955,6 @@ const styles = StyleSheet.create({
   header: {
     flex: 3,
     justifyContent: "center",
-    paddingBottom: 20,
-    paddingTop: 50,
   },
   footer: {
     flex: 1.5,

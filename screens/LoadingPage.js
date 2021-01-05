@@ -63,6 +63,8 @@ function LoadingPage() {
 
     //   console.log(image)
 
+    // neeeds to be moved home
+
     spotifyAPI.getMyTopArtists().then((data) => {
       topArtistsArray = [];
       data.items.map((item) => {
@@ -104,6 +106,8 @@ function LoadingPage() {
       UserStore.str = str;
       // console.log(str);
     });
+
+    // needs to be moved home
 
     // console.log(topArtistsArray, items, "betrvcb");
 
