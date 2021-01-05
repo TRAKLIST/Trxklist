@@ -50,7 +50,7 @@ const MainTabScreen = () => {
             ),
           }}
         /> */}
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Notifications"
         component={Notifications}
         options={{
@@ -58,7 +58,7 @@ const MainTabScreen = () => {
           tabBarColor: "#292929",
           tabBarIcon: ({ color }) => <Icon1 name="bell" color={color} size={26} />,
         }}
-      />
+      /> */}
         <Tab.Screen
           name="Swipe"
           component={HomeScreen}

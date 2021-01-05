@@ -77,9 +77,9 @@ export function DrawerContent(props) {
                 <AntDesign name="bells" color={color} size={size} />
               )}
               label="Notifications"
-              onPress={() => {
-                props.navigation.navigate("Notifications");
-              }}
+              // onPress={() => {
+              //   props.navigation.navigate("Notifications");
+              // }}
             />
             <DrawerItem
               icon={({ color, size }) => (

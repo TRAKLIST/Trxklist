@@ -19,7 +19,7 @@ import Notifications from "./screens/Notifications";
 const Drawer = createDrawerNavigator();
 
 function App() {
-  console.log = function() {}
+  // console.log = function() {}
   return (
     <NavigationContainer>
       {UserStore.isLoggedIn === true ? (
