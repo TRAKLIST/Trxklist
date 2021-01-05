@@ -837,7 +837,7 @@ export class HomeScreen extends Component {
                       <MaterialCommunityIcons
                         name="circle"
                         color="#fff"
-                        size={25}
+                        size={30}
                       />
                     </LinearGradient>
                   </TouchableOpacity>
