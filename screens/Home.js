@@ -416,7 +416,7 @@ export class HomeScreen extends Component {
                         top: 0,
                         position: "absolute",
                         backgroundColor : '#292929',
-                        opacity : 0.7,
+                        opacity : 0.8,
                         padding : 5
                       }}
                     >
@@ -509,7 +509,7 @@ export class HomeScreen extends Component {
                       style={{
                         position: "absolute",
                         bottom: 0,
-                        height: 200,
+                        height: 160,
                         alignSelf: "center",
                         width: "100%",
                       }}
@@ -523,12 +523,12 @@ export class HomeScreen extends Component {
                           }}
                         >
                           <View style={{ flexDirection: "row",
-                                borderTopWidth : 3,
-                                borderTopColor : '#292929' }}>
+                                borderTopWidth : 3.5,
+                                borderTopColor : 'green', }}>
                             <Animatable.View
                               // animation={"bounceIn"}
                               style={{
-                                width: Dimensions.get("window").width / 2 - 10,
+                                width: Dimensions.get("window").width / 2 ,
                                 justifyContent: "center",
                               }}
                             >
@@ -539,7 +539,7 @@ export class HomeScreen extends Component {
                               >
                                 <View
                                   style={{
-                                    bottom: 25,
+                                    bottom: 24,
                                     flexDirection: "row",
                                     position: "absolute",
                                     backgroundColor: "whitesmoke",
@@ -565,12 +565,12 @@ export class HomeScreen extends Component {
                                               width: 30,
                                               borderRadius: 10,
                                               borderColor: "#fff",
-                                              marginTop: 5,
+                                              marginTop: 1,
                                               alignSelf: "center",
                                               opacity: 1,
                                               borderWidth: 2,
                                               borderColor: "#1DB954",
-                                              margin: 5,
+                                              margin: 3,
                                             }}
                                           />
                                         </View>
@@ -589,7 +589,7 @@ export class HomeScreen extends Component {
                             >
                               <View
                                 style={{
-                                  top: 20,
+                                  top: 0,
                                   position: "absolute",
                                   color: "#fff",
                                 }}
@@ -600,6 +600,7 @@ export class HomeScreen extends Component {
                                     color: "#fff",
                                     textAlign: "center",
                                     fontWeight: "bold",
+                                    marginTop : 10
                                   }}
                                 >
                                   {card.artistName}
@@ -613,8 +614,8 @@ export class HomeScreen extends Component {
                               {/* Support an independent artist */}
                               <View
                                 style={{
-                                  bottom: 12,
-                                  position: "relative",
+                                  bottom: 40,
+                                  position: "absolute",
                                   flexDirection: "column",
                                 }}
                               >
@@ -656,9 +657,9 @@ export class HomeScreen extends Component {
                                 />
                               </View>
 
-                              <View
+                              {/* <View
                                 style={{
-                                  bottom: 35,
+                                  bottom: 25,
                                   position: "absolute",
                                   flexDirection: "row",
                                   alignSelf: "center",
@@ -752,7 +753,7 @@ export class HomeScreen extends Component {
                                     </LinearGradient>
                                   </TouchableOpacity>
                                 </View>
-                              </View>
+                              </View> */}
                             </View>
                           </View>
                         </LinearGradient>
