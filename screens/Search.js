@@ -39,7 +39,7 @@ let array1 = [];
 let array2 = [];
 let array3 = [];
 let soundcloud_tracks = [];
-let isFollowing = false
+let isFollowing = false;
 function wait(timeout) {
   return new Promise((res) => {
     setTimeout(res, timeout);
@@ -53,7 +53,10 @@ function Search() {
   const [userDetails, setUserDetails] = React.useState([]);
   const [lyricsPage, setLyricsPage] = React.useState(false);
   const [trackIndex, setTrackIndex] = React.useState();
+  const [index, setIndex] = React.useState(0);
+  const [status, setStatus] = React.useState(0);
   const [trackItems, setTrackItems] = React.useState([]);
+
   // const [isFollowing, setIsFollowing] = React.useState(false);
 
   const search = () => {
@@ -203,15 +206,16 @@ function Search() {
       } else return;
     })
     .map((user, key) => {
-
       userDetails.map((user1) => {
         // console.log(isFollowing)
         user1.follow === undefined
           ? null
-          : user1.follow.has(user.user) ? isFollowing = true : isFollowing = false
+          : user1.follow.has(user.user)
+          ? (isFollowing = true)
+          : (isFollowing = false);
       });
 
-      return <User user={user} isFollowing = {isFollowing} />;
+      return index == 0 ? <User user={user} isFollowing={isFollowing} /> : null;
     });
 
   React.useEffect(() => {
@@ -238,7 +242,7 @@ function Search() {
             bio: users.bio,
             follow: following,
           });
-          
+
           // setUserDetails([...userDetails, users.meloID])
           // console.log(users.meloID, 'IJOft')
 
@@ -279,10 +283,7 @@ function Search() {
               onChangeText={(val) => setSearchTerm(val)}
             />
             <TouchableOpacity style={{ flex: 1 }} onPress={search}>
-              <LinearGradient
-                colors={["#fff", "#fff"]}
-                style={[styles.signIn]}
-              >
+              <LinearGradient colors={["#fff", "#fff"]} style={[styles.signIn]}>
                 <ADIcon
                   name="find"
                   size={30}
@@ -306,6 +307,68 @@ function Search() {
               borderTopRightRadius: 15,
             }}
           >
+            <View
+              style={{
+                height: 50,
+                backgroundColor: "#292929",
+                marginHorizontal: 5,
+                borderRadius: 10,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: index == 0 ? "#fff" : "#292929", //
+
+                  borderRadius: 10,
+                }}
+                onPress={() => setIndex(0)}
+              >
+                <View>
+                  <Text style={{ color: index == 0 ? "#292929" : "#fff" }}>
+                    profiles
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: index == 1 ? "#fff" : "#292929", //
+                  borderRadius: 10,
+                }}
+                onPress={() => setIndex(1)}
+              >
+                <View>
+                  <Text style={{ color: index == 1 ? "#292929" : "#fff" }}>
+                    spotify
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "transparent",
+                  borderRadius: 10,
+                  backgroundColor: index == 2 ? "#fff" : "#292929", //
+                }}
+                onPress={() => setIndex(2)}
+              >
+                <View>
+                  <Text style={{ color: index == 2 ? "#292929" : "#fff" }}>
+                    soundcloud
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
             <ScrollView
               refreshControl={
                 <RefreshControl
@@ -336,104 +399,94 @@ function Search() {
                     borderRadius: 0,
                   }}
                 >
-                  {/* <Text
-                    style={{
-                      color: "#fff",
-                      fontWeight: "900",
-                      fontSize: 16,
-                      textAlign: "center",
-                    }}
-                  >
-                    profiles
-                  </Text> */}
-
                   {list}
                 </View>
 
-                {soundcloud_tracks.map((track, index) => {
-                  return (
-                    <TouchableOpacity>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          margin: 5,
-                          width: "100%",
-                          borderBottomWidth: 1,
-                          padding: 10,
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <ImageBackground
-                            source={{ uri: track.image }}
-                            style={{
-                              height: 65,
-                              width: 65,
-                            }}
-                            imageStyle={{
-                              borderRadius: 30,
-                            }}
-                          >
-                            <View
-                              style={{
-                                bottom: 0,
-                                position: "absolute",
-                                backgroundColor: "#ff7700",
-                                borderRadius: 60,
-                                borderWidth: 0,
-                                borderColor: "#ff7700",
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                opacity: 0.8,
-                              }}
-                            >
-                              <Fontisto
-                                name="soundcloud"
-                                color="#fff"
-                                size={11}
-                                style={{ padding: 2 }}
-                              />
-                            </View>
-                          </ImageBackground>
-                        </View>
+                {index == 2 &&
+                  soundcloud_tracks.map((track, index) => {
+                    return (
+                      <TouchableOpacity>
                         <View
                           style={{
-                            justifyContent: "center",
-                            padding: 0,
-                            marginBottom: 3,
-                            flex: 2,
+                            flexDirection: "row",
+                            margin: 5,
+                            width: "100%",
+                            borderBottomWidth: 1,
+                            padding: 10,
                           }}
                         >
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#fff", fontWeight: "bold" }}
+                          <View style={{ flex: 1 }}>
+                            <ImageBackground
+                              source={{ uri: track.image }}
+                              style={{
+                                height: 65,
+                                width: 65,
+                              }}
+                              imageStyle={{
+                                borderRadius: 30,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  bottom: 0,
+                                  position: "absolute",
+                                  backgroundColor: "#ff7700",
+                                  borderRadius: 60,
+                                  borderWidth: 0,
+                                  borderColor: "#ff7700",
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  opacity: 0.8,
+                                }}
+                              >
+                                <Fontisto
+                                  name="soundcloud"
+                                  color="#fff"
+                                  size={11}
+                                  style={{ padding: 2 }}
+                                />
+                              </View>
+                            </ImageBackground>
+                          </View>
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              padding: 0,
+                              marginBottom: 3,
+                              flex: 2,
+                            }}
                           >
-                            {track.title}
-                          </Text>
-                          <View style={{ flexDirection: "row" }}>
                             <Text
                               numberOfLines={1}
-                              style={{ color: "#ff7700", fontWeight: "bold" }}
+                              style={{ color: "#fff", fontWeight: "bold" }}
                             >
-                              {track.user_or_artist}{" "}
+                              {track.title}
                             </Text>
-                            {track.verified ? (
-                              <Octicons
-                                name="verified"
-                                size={15}
-                                color={"#ff7700"}
-                                //   style={{ marginTop: 8, paddingBottom: 4 }}
-                              />
-                            ) : null}
+                            <View style={{ flexDirection: "row" }}>
+                              <Text
+                                numberOfLines={1}
+                                style={{ color: "#ff7700", fontWeight: "bold" }}
+                              >
+                                {track.user_or_artist}{" "}
+                              </Text>
+                              {track.verified ? (
+                                <Octicons
+                                  name="verified"
+                                  size={15}
+                                  color={"#ff7700"}
+                                  //   style={{ marginTop: 8, paddingBottom: 4 }}
+                                />
+                              ) : null}
+                            </View>
+
+                            <View style={{ flexDirection: "row" }}></View>
                           </View>
+                          <View style={{ flex: 0.5, flexDirection: "row" }}>
+                            {/* icons */}
 
-                          <View style={{ flexDirection: "row" }}></View>
-                        </View>
-                        <View style={{ flex: 0.5, flexDirection: "row" }}>
-                          {/* icons */}
-
-                          {/* <TouchableOpacity
+                            {/* <TouchableOpacity
                             style={{ justifyContent: "center", margin: 5 }}
                           >
                             <View style={styles.iconContainer2}>
@@ -444,99 +497,169 @@ function Search() {
                               />
                             </View>
                           </TouchableOpacity> */}
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={[styles.iconContainer2]}>
-                              <AntDesign
-                                name="staro"
-                                size={25}
-                                color={"#ff7700"}
-                              />
-                            </View>
-                          </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={[styles.iconContainer2]}>
+                                <AntDesign
+                                  name="staro"
+                                  size={25}
+                                  color={"#ff7700"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </View>
                         </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+
+                {index == 1 && (
+                  <View
+                    style={{
+                      height: 40,
+                      marginLeft: 10,
+                      marginRight: 10,
+                      borderRadius: 10,
+                      flexDirection: "row",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: status == 0 ? "#fff" : "#292929", //
+
+                        borderRadius: 10,
+                      }}
+                      onPress={() => setStatus(0)}
+                    >
+                      <View>
+                        <Text
+                          style={{ color: status == 0 ? "#292929" : "#fff" }}
+                        >
+                          tracks
+                        </Text>
                       </View>
                     </TouchableOpacity>
-                  );
-                })}
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: status == 1 ? "#fff" : "#292929", //
+                        borderRadius: 10,
+                      }}
+                      onPress={() => setStatus(1)}
+                    >
+                      <View>
+                        <Text
+                          style={{ color: status == 1 ? "#292929" : "#fff" }}
+                        >
+                          artists
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "transparent",
+                        borderRadius: 10,
+                        backgroundColor: status == 2 ? "#fff" : "#292929", //
+                      }}
+                      onPress={() => setStatus(2)}
+                    >
+                      <View>
+                        <Text
+                          style={{ color: status == 2 ? "#292929" : "#fff" }}
+                        >
+                          albums
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
 
-                {array.map((track, index) => {
-                  return (
-                    <TouchableOpacity onPress={() => lyricsToggle(index)}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          margin: 5,
-                          width: "100%",
-                          borderBottomWidth: 1,
-                          padding: 10,
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <ImageBackground
-                            source={{ uri: track.image }}
-                            style={{
-                              height: 65,
-                              width: 65,
-                            }}
-                            imageStyle={{
-                              borderRadius: 30,
-                            }}
-                          >
-                            <View
-                              style={{
-                                bottom: 0,
-                                position: "absolute",
-                                backgroundColor: "#44CF6C",
-                                borderRadius: 60,
-                                borderWidth: 0,
-                                // borderColor: "#44CF6C",
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                opacity: 0.8,
-                              }}
-                            >
-                              <Fontisto
-                                name="spotify"
-                                color="#fff"
-                                size={11}
-                                style={{ padding: 2 }}
-                              />
-                            </View>
-                          </ImageBackground>
-                        </View>
+                {index == 1 && status == 0 &&
+                  array.map((track, index) => {
+                    return (
+                      <TouchableOpacity onPress={() => lyricsToggle(index)}>
                         <View
                           style={{
-                            justifyContent: "center",
-                            padding: 0,
-                            marginBottom: 3,
-                            flex: 2,
+                            flexDirection: "row",
+                            margin: 5,
+                            width: "100%",
+                            borderBottomWidth: 1,
+                            padding: 10,
                           }}
                         >
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#fff", fontWeight: "bold" }}
+                          <View style={{ flex: 1 }}>
+                            <ImageBackground
+                              source={{ uri: track.image }}
+                              style={{
+                                height: 65,
+                                width: 65,
+                              }}
+                              imageStyle={{
+                                borderRadius: 30,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  bottom: 0,
+                                  position: "absolute",
+                                  backgroundColor: "#44CF6C",
+                                  borderRadius: 60,
+                                  borderWidth: 0,
+                                  // borderColor: "#44CF6C",
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  opacity: 0.8,
+                                }}
+                              >
+                                <Fontisto
+                                  name="spotify"
+                                  color="#fff"
+                                  size={11}
+                                  style={{ padding: 2 }}
+                                />
+                              </View>
+                            </ImageBackground>
+                          </View>
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              padding: 0,
+                              marginBottom: 3,
+                              flex: 2,
+                            }}
                           >
-                            {track.title}
-                          </Text>
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#44CF6C", fontWeight: "bold" }}
-                          >
-                            {track.artist}
-                          </Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-                          {/* icons */}
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {track.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
+                            >
+                              {track.artist}
+                            </Text>
+                          </View>
+                          <View style={{ flex: 1, flexDirection: "row" }}>
+                            {/* icons */}
 
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={styles.iconContainer2}>
-                              {/* {isSaved ? (
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={styles.iconContainer2}>
+                                {/* {isSaved ? (
                             <MaterialCommunityIcons
                               name="content-save"
                               size={27}
@@ -551,18 +674,18 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                              <MaterialCommunityIcons
-                                name="content-save-outline"
-                                size={27}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={[styles.iconContainer2]}>
-                              {/* {isLiked ? (
+                                <MaterialCommunityIcons
+                                  name="content-save-outline"
+                                  size={27}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={[styles.iconContainer2]}>
+                                {/* {isLiked ? (
                             <ADIcon
                               name="heart"
                               size={25}
@@ -577,203 +700,205 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                              <AntDesign
-                                name="staro"
-                                size={25}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
+                                <AntDesign
+                                  name="staro"
+                                  size={25}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
+                      </TouchableOpacity>
+                    );
+                  })}
 
-                {array1.map((artist) => {
-                  return (
-                    <TouchableOpacity>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          margin: 5,
-                          width: "100%",
-                          borderBottomWidth: 1,
-                          padding: 10,
-                        }}
-                      >
-                        <View style={{ flegx: 1 }}>
-                          <ImageBackground
-                            source={{ uri: artist.image }}
-                            style={{
-                              height: 65,
-                              width: 65,
-                            }}
-                            imageStyle={{
-                              borderRadius: 30,
-                            }}
-                          >
-                            <View
-                              style={{
-                                bottom: 0,
-                                position: "absolute",
-                                backgroundColor: "#44CF6C",
-                                borderRadius: 60,
-                                borderWidth: 0,
-                                // borderColor: "#44CF6C",
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                opacity: 0.8,
-                              }}
-                            >
-                              <Fontisto
-                                name="spotify"
-                                color="#fff"
-                                size={11}
-                                style={{ padding: 2 }}
-                              />
-                            </View>
-                          </ImageBackground>
-                        </View>
+                {index == 1 && status ==1 &&
+                  array1.map((artist) => {
+                    return (
+                      <TouchableOpacity>
                         <View
                           style={{
-                            justifyContent: "center",
+                            flexDirection: "row",
+                            margin: 5,
+                            width: "100%",
+                            borderBottomWidth: 1,
                             padding: 10,
-                            marginBottom: 3,
-                            flex: 2,
                           }}
                         >
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#fff", fontWeight: "bold" }}
-                          >
-                            {artist.title}
-                          </Text>
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#44CF6C", fontWeight: "bold" }}
-                          >{`${artist.followers} followers`}</Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-                          {/* icons */}
-
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={styles.iconContainer2}>
-                              <MaterialCommunityIcons
-                                name="content-save-outline"
-                                size={27}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={[styles.iconContainer2]}>
-                              <AntDesign
-                                name="staro"
-                                size={25}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-
-                {array2.map((album) => {
-                  return (
-                    <TouchableOpacity>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          margin: 5,
-                          width: "100%",
-                          borderBottomWidth: 1,
-                          padding: 10,
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <ImageBackground
-                            source={{ uri: album.image }}
-                            style={{
-                              height: 65,
-                              width: 65,
-                            }}
-                            imageStyle={{
-                              borderRadius: 30,
-                            }}
-                          >
-                            <View
+                          <View style={{ flegx: 1 }}>
+                            <ImageBackground
+                              source={{ uri: artist.image }}
                               style={{
-                                bottom: 0,
-                                position: "absolute",
-                                backgroundColor: "#44CF6C",
-                                borderRadius: 60,
-                                borderWidth: 0,
-                                // borderColor: "#44CF6C",
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                opacity: 0.8,
+                                height: 65,
+                                width: 65,
+                              }}
+                              imageStyle={{
+                                borderRadius: 30,
                               }}
                             >
-                              <Fontisto
-                                name="spotify"
-                                color="#fff"
-                                size={11}
-                                style={{ padding: 2 }}
-                              />
-                            </View>
-                          </ImageBackground>
+                              <View
+                                style={{
+                                  bottom: 0,
+                                  position: "absolute",
+                                  backgroundColor: "#44CF6C",
+                                  borderRadius: 60,
+                                  borderWidth: 0,
+                                  // borderColor: "#44CF6C",
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  opacity: 0.8,
+                                }}
+                              >
+                                <Fontisto
+                                  name="spotify"
+                                  color="#fff"
+                                  size={11}
+                                  style={{ padding: 2 }}
+                                />
+                              </View>
+                            </ImageBackground>
+                          </View>
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              padding: 10,
+                              marginBottom: 3,
+                              flex: 2,
+                            }}
+                          >
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {artist.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
+                            >{`${artist.followers} followers`}</Text>
+                          </View>
+                          <View style={{ flex: 1, flexDirection: "row" }}>
+                            {/* icons */}
+
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={styles.iconContainer2}>
+                                <MaterialCommunityIcons
+                                  name="content-save-outline"
+                                  size={27}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={[styles.iconContainer2]}>
+                                <AntDesign
+                                  name="staro"
+                                  size={25}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </View>
                         </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+
+                {index == 1 && status == 2 &&
+                  array2.map((album) => {
+                    return (
+                      <TouchableOpacity>
                         <View
                           style={{
-                            justifyContent: "center",
+                            flexDirection: "row",
+                            margin: 5,
+                            width: "100%",
+                            borderBottomWidth: 1,
                             padding: 10,
-                            marginBottom: 3,
-                            flex: 2,
                           }}
                         >
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#fff", fontWeight: "bold" }}
+                          <View style={{ flex: 1 }}>
+                            <ImageBackground
+                              source={{ uri: album.image }}
+                              style={{
+                                height: 65,
+                                width: 65,
+                              }}
+                              imageStyle={{
+                                borderRadius: 30,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  bottom: 0,
+                                  position: "absolute",
+                                  backgroundColor: "#44CF6C",
+                                  borderRadius: 60,
+                                  borderWidth: 0,
+                                  // borderColor: "#44CF6C",
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  opacity: 0.8,
+                                }}
+                              >
+                                <Fontisto
+                                  name="spotify"
+                                  color="#fff"
+                                  size={11}
+                                  style={{ padding: 2 }}
+                                />
+                              </View>
+                            </ImageBackground>
+                          </View>
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              padding: 10,
+                              marginBottom: 3,
+                              flex: 2,
+                            }}
                           >
-                            {album.title}
-                          </Text>
-                          <Text
-                            numberOfLines={1}
-                            style={{ color: "#44CF6C", fontWeight: "bold" }}
-                          >
-                            {album.artist}
-                          </Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-                          {/* icons */}
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#fff", fontWeight: "bold" }}
+                            >
+                              {album.title}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={{ color: "#44CF6C", fontWeight: "bold" }}
+                            >
+                              {album.artist}
+                            </Text>
+                          </View>
+                          <View style={{ flex: 1, flexDirection: "row" }}>
+                            {/* icons */}
 
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={styles.iconContainer2}>
-                              <MaterialCommunityIcons
-                                name="content-save-outline"
-                                size={27}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{ justifyContent: "center", margin: 5 }}
-                          >
-                            <View style={[styles.iconContainer2]}>
-                              {/* {isLiked ? (
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={styles.iconContainer2}>
+                                <MaterialCommunityIcons
+                                  name="content-save-outline"
+                                  size={27}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{ justifyContent: "center", margin: 5 }}
+                            >
+                              <View style={[styles.iconContainer2]}>
+                                {/* {isLiked ? (
                             <ADIcon
                               name="heart"
                               size={25}
@@ -788,18 +913,18 @@ function Search() {
                               style={{ marginTop: 8, paddingBottom: 4 }}
                             />
                           )} */}
-                              <AntDesign
-                                name="staro"
-                                size={25}
-                                color={"#44CF6C"}
-                              />
-                            </View>
-                          </TouchableOpacity>
+                                <AntDesign
+                                  name="staro"
+                                  size={25}
+                                  color={"#44CF6C"}
+                                />
+                              </View>
+                            </TouchableOpacity>
+                          </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
+                      </TouchableOpacity>
+                    );
+                  })}
                 {/* </View> */}
               </LinearGradient>
             </ScrollView>
