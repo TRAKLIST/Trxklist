@@ -416,7 +416,7 @@ export class HomeScreen extends Component {
                         top: 0,
                         position: "absolute",
                         backgroundColor : '#292929',
-                        opacity : 0.8,
+                        opacity : 0.85,
                         padding : 5
                       }}
                     >
@@ -518,13 +518,15 @@ export class HomeScreen extends Component {
                         <LinearGradient
                           colors={["#292929", "#292929", "#292929"]}
                           style={{
-                            borderTopRightRadius: 15,
-                            borderTopLefttRadius: 15,
+                            opacity : 0.9,
+                            borderRadius: 25,
+                            borderWidth : 3,
+                            borderStyle : 'dotted',
+                            borderColor : '#292929'
                           }}
                         >
                           <View style={{ flexDirection: "row",
-                                borderTopWidth : 3.5,
-                                borderTopColor : 'green', }}>
+                                }}>
                             <Animatable.View
                               // animation={"bounceIn"}
                               style={{
@@ -535,7 +537,7 @@ export class HomeScreen extends Component {
                               <ImageBackground
                                 source={{ uri: card.artistImage }}
                                 style={{ height: "100%", width: "100%" }}
-                                imageStyle={{ borderTopRightRadius: 15 }}
+                                imageStyle={{ borderTopRightRadius: 15, opacity : 0.8 }}
                               >
                                 <View
                                   style={{
@@ -585,6 +587,7 @@ export class HomeScreen extends Component {
                                 width: Dimensions.get("window").width / 2,
                                 justifyContent: "center",
                                 alignItems: "center",
+                                opacity : 1
                               }}
                             >
                               <View
@@ -838,7 +841,7 @@ export class HomeScreen extends Component {
                       <MaterialCommunityIcons
                         name="circle"
                         color="#fff"
-                        size={30}
+                        size={25}
                       />
                     </LinearGradient>
                   </TouchableOpacity>
