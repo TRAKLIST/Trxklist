@@ -285,7 +285,7 @@ function Search() {
             <TouchableOpacity style={{ flex: 1 }} onPress={search}>
               <LinearGradient colors={["#fff", "#fff"]} style={[styles.signIn]}>
                 <ADIcon
-                  name="find"
+                  name="search1"
                   size={30}
                   style={{
                     color: "#1DB954",

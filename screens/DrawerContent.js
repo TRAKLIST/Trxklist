@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  ImageBackgroundBase,
+} from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
   useTheme,
@@ -46,7 +52,7 @@ export function DrawerContent(props) {
               </View>
             </View>
 
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   
@@ -59,7 +65,7 @@ export function DrawerContent(props) {
                 </Paragraph>
                 <Caption style={styles.caption}>Followers</Caption>
               </View>
-            </View>
+            </View> */}
           </View>
 
           <Drawer.Section style={styles.drawerSection}>
@@ -123,6 +129,14 @@ export function DrawerContent(props) {
               </View>
             </TouchableRipple>
           </Drawer.Section>
+          {/* <Drawer.Section
+            title="Player"
+            style={{ backgroundColor: "red", height: "100%" }}
+          >
+            <ImageBackground style={{ flex: 1 }}>
+
+            </ImageBackground>
+          </Drawer.Section> */}
         </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
