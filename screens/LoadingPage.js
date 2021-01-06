@@ -91,6 +91,9 @@ function LoadingPage() {
         items.push(topTracks);
       });
 
+      UserStore.topTracks = items
+      // UserStore.topArtists =
+
       // Randomise array
       // console.log(items, "first");
       shuffle(items);

@@ -50,6 +50,38 @@ function wait(timeout) {
   });
 }
 
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  let str = ''
+
+  // Recommendations - pick 3
+  for (i = 0; i < 3; i++) {
+    if (str == "") {
+      str = `${array[i].id}`;
+    } else str = `${str},${array[i].id}`;
+  }
+  
+  UserStore.str = str;
+  // console.log(str);
+
+  return str;
+}
+
 export class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +107,9 @@ export class HomeScreen extends Component {
 
   componentDidMount() {
     let startTimeM = new Date().getTime();
+
+    // console.log(shuffle(UserStore.topTracks), 'erge')
+
     axios
       .get(
         `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`,
@@ -231,164 +266,165 @@ export class HomeScreen extends Component {
     return;
   }
 
-  reRender = () => {
-    this.setState({ loading: true });
-    let startTimeM = new Date().getTime();
-    axios
-      .get(
-        `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`,
-        {
-          headers: {
-            Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data)
-        res.data.tracks.map((track) => {
-          spotifyAPI
-            .getArtist(track.artists[0].id)
-            .then((response) => {
-              getArtist = {
-                followers: response.followers.total,
-                image: response.images[0].url,
-                popularity: response.popularity,
-                id: response.id,
-                name: response.name,
-              };
-              return getArtist;
-            })
-            .then((response) => {
-              spotifyAPI
-                .getAudioFeaturesForTrack(track.id)
-                .then((data) => {
-                  audioFeatures = {
-                    acousticness: data.acousticness,
-                    danceability: data.danceability,
-                    energy: data.energy,
-                    instrumentalness: data.instrumentalness,
-                    liveness: data.liveness,
-                    loudness: data.loudness,
-                    speechiness: data.speechiness,
-                    valence: data.valence,
-                  };
+  // reRender = () => {
+  //   console.log("done");
+  //   this.setState({ loading: true });
+  //   let startTimeM = new Date().getTime();
+  //   axios
+  //     .get(
+  //       `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       res.data.tracks.map((track) => {
+  //         spotifyAPI
+  //           .getArtist(track.artists[0].id)
+  //           .then((response) => {
+  //             getArtist = {
+  //               followers: response.followers.total,
+  //               image: response.images[0].url,
+  //               popularity: response.popularity,
+  //               id: response.id,
+  //               name: response.name,
+  //             };
+  //             return getArtist;
+  //           })
+  //           .then((response) => {
+  //             spotifyAPI
+  //               .getAudioFeaturesForTrack(track.id)
+  //               .then((data) => {
+  //                 audioFeatures = {
+  //                   acousticness: data.acousticness,
+  //                   danceability: data.danceability,
+  //                   energy: data.energy,
+  //                   instrumentalness: data.instrumentalness,
+  //                   liveness: data.liveness,
+  //                   loudness: data.loudness,
+  //                   speechiness: data.speechiness,
+  //                   valence: data.valence,
+  //                 };
 
-                  let array = [];
+  //                 let array = [];
 
-                  UserStore.followingDetails.map((user) => {
-                    JSON.parse(user.topArtists).map((chunk) => {
-                      if (chunk.id == response.id) {
-                        array.push(user.spotifyID);
-                      }
-                    });
-                    // console.log(array, 'dami')
-                  });
+  //                 UserStore.followingDetails.map((user) => {
+  //                   JSON.parse(user.topArtists).map((chunk) => {
+  //                     if (chunk.id == response.id) {
+  //                       array.push(user.spotifyID);
+  //                     }
+  //                   });
+  //                   // console.log(array, 'dami')
+  //                 });
 
-                  return {
-                    getArtist: response,
-                    array: array,
-                  };
-                })
-                .then((response) => {
-                  let array = [];
-                  // console.log(response.array, 'jsi')
-                  if (
-                    !(
-                      response.array === undefined || response.array.length == 0
-                    )
-                  ) {
-                    response.array.map((user, i) => {
-                      spotifyAPI
-                        .getUser(user)
-                        .then((res) => {
-                          return {
-                            image: res.images[0].url,
-                            getArtist: response.getArtist,
-                          };
-                        })
-                        .then((res) => {
-                          let data = {
-                            image: res.image,
-                            user: user,
-                            artist: response.getArtist.name,
-                          };
-                          this.setState({
-                            topArtist_flw: [...this.state.topArtist_flw, data],
-                          });
-                          if (i == response.array.length - 1) {
-                            this.setState(
-                              { audioFeatures: audioFeatures },
-                              () => {
-                                recommended = {
-                                  name: track.name,
-                                  releaseDate: track.album.release_date,
-                                  popularity: track.popularity,
-                                  id: track.id,
-                                  artistID: res.getArtist.id,
-                                  explicit: track.explicit,
-                                  artistName: track.artists[0].name,
-                                  followers: res.getArtist.followers,
-                                  artistPopularity: res.getArtist.popularity,
-                                  artistImage: res.getArtist.image,
-                                  albumName: track.album.name,
-                                  image: track.album.images[0].url,
-                                  albumID: track.album.id,
-                                  audioFeatures: this.state.audioFeatures,
-                                  topArtists_following: this.state
-                                    .topArtist_flw,
-                                };
-                                this.setState({ topArtist_flw: [] });
-                                // console.log(recommended, 'tobio', recommended.artistName)
-                                this.setState({
-                                  recommendations: [
-                                    ...this.state.recommendations,
-                                    recommended,
-                                  ],
-                                });
-                              }
-                            );
-                          }
-                        });
-                    });
-                  } else {
-                    this.setState({ audioFeatures: audioFeatures }, () => {
-                      recommended = {
-                        name: track.name,
-                        releaseDate: track.album.release_date,
-                        popularity: track.popularity,
-                        id: track.id,
-                        artistID: response.getArtist.id,
-                        explicit: track.explicit,
-                        artistName: track.artists[0].name,
-                        followers: response.getArtist.followers,
-                        artistPopularity: response.getArtist.popularity,
-                        artistImage: response.getArtist.image,
-                        albumName: track.album.name,
-                        image: track.album.images[0].url,
-                        albumID: track.album.id,
-                        audioFeatures: this.state.audioFeatures,
-                      };
-                      // console.log(recommended, 'tobio', recommended.artistName)
-                      this.setState({
-                        recommendations: [
-                          ...this.state.recommendations,
-                          recommended,
-                        ],
-                      });
-                    });
-                  }
-                });
-            })
-            .catch((err) => console.log("saduh"));
-          return;
-        });
-        // console.log(this.state.recommendations)
-        let durationM = new Date().getTime() - startTimeM;
-        this.setState({ loading: false });
-        console.log(durationM, "time");
-      });
-    return;
-  };
+  //                 return {
+  //                   getArtist: response,
+  //                   array: array,
+  //                 };
+  //               })
+  //               .then((response) => {
+  //                 let array = [];
+  //                 // console.log(response.array, 'jsi')
+  //                 if (
+  //                   !(
+  //                     response.array === undefined || response.array.length == 0
+  //                   )
+  //                 ) {
+  //                   response.array.map((user, i) => {
+  //                     spotifyAPI
+  //                       .getUser(user)
+  //                       .then((res) => {
+  //                         return {
+  //                           image: res.images[0].url,
+  //                           getArtist: response.getArtist,
+  //                         };
+  //                       })
+  //                       .then((res) => {
+  //                         let data = {
+  //                           image: res.image,
+  //                           user: user,
+  //                           artist: response.getArtist.name,
+  //                         };
+  //                         this.setState({
+  //                           topArtist_flw: [...this.state.topArtist_flw, data],
+  //                         });
+  //                         if (i == response.array.length - 1) {
+  //                           this.setState(
+  //                             { audioFeatures: audioFeatures },
+  //                             () => {
+  //                               recommended = {
+  //                                 name: track.name,
+  //                                 releaseDate: track.album.release_date,
+  //                                 popularity: track.popularity,
+  //                                 id: track.id,
+  //                                 artistID: res.getArtist.id,
+  //                                 explicit: track.explicit,
+  //                                 artistName: track.artists[0].name,
+  //                                 followers: res.getArtist.followers,
+  //                                 artistPopularity: res.getArtist.popularity,
+  //                                 artistImage: res.getArtist.image,
+  //                                 albumName: track.album.name,
+  //                                 image: track.album.images[0].url,
+  //                                 albumID: track.album.id,
+  //                                 audioFeatures: this.state.audioFeatures,
+  //                                 topArtists_following: this.state
+  //                                   .topArtist_flw,
+  //                               };
+  //                               this.setState({ topArtist_flw: [] });
+  //                               // console.log(recommended, 'tobio', recommended.artistName)
+  //                               this.setState({
+  //                                 recommendations: [
+  //                                   ...this.state.recommendations,
+  //                                   recommended,
+  //                                 ],
+  //                               });
+  //                             }
+  //                           );
+  //                         }
+  //                       });
+  //                   });
+  //                 } else {
+  //                   this.setState({ audioFeatures: audioFeatures }, () => {
+  //                     recommended = {
+  //                       name: track.name,
+  //                       releaseDate: track.album.release_date,
+  //                       popularity: track.popularity,
+  //                       id: track.id,
+  //                       artistID: response.getArtist.id,
+  //                       explicit: track.explicit,
+  //                       artistName: track.artists[0].name,
+  //                       followers: response.getArtist.followers,
+  //                       artistPopularity: response.getArtist.popularity,
+  //                       artistImage: response.getArtist.image,
+  //                       albumName: track.album.name,
+  //                       image: track.album.images[0].url,
+  //                       albumID: track.album.id,
+  //                       audioFeatures: this.state.audioFeatures,
+  //                     };
+  //                     // console.log(recommended, 'tobio', recommended.artistName)
+  //                     this.setState({
+  //                       recommendations: [
+  //                         ...this.state.recommendations,
+  //                         recommended,
+  //                       ],
+  //                     });
+  //                   });
+  //                 }
+  //               });
+  //           })
+  //           .catch((err) => console.log("saduh"));
+  //         return;
+  //       });
+  //       // console.log(this.state.recommendations)
+  //       let durationM = new Date().getTime() - startTimeM;
+  //       this.setState({ loading: false });
+  //       console.log(durationM, "time");
+  //     });
+  //   return;
+  // };
 
   render() {
     let swiper = this.state.recommendations ? (
@@ -398,7 +434,7 @@ export class HomeScreen extends Component {
           if (card != null) {
             // if recommendations.length[index - 3] then rerender
             // if( cardIndex - 2 == this.state.recommendations.length - 3) console.log('fetching')
-            console.log(cardIndex - 2, "yo");
+            // console.log(cardIndex - 2, "yo");
             this.setState({
               cuurentCard: this.state.recommendations[cardIndex - 2],
             });
@@ -415,9 +451,9 @@ export class HomeScreen extends Component {
                         width: Dimensions.get("window").width,
                         top: 0,
                         position: "absolute",
-                        backgroundColor : '#292929',
-                        opacity : 0.85,
-                        padding : 5
+                        backgroundColor: "#292929",
+                        opacity: 0.85,
+                        padding: 5,
                       }}
                     >
                       {card != undefined ? (
@@ -505,6 +541,48 @@ export class HomeScreen extends Component {
                         </View>
                       ) : null}
                     </View>
+
+                    <View
+                      style={{
+                        bottom: 160,
+                        flexDirection: "row",
+                        position: "absolute",
+                        // backgroundColor: "whitesmoke",
+                        borderTopRightRadius: 5,
+                        borderTopLefttRadius: 5,
+                        width: "100%",
+                        opacity: "0.8",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {card.topArtists_following != undefined
+                        ? card.topArtists_following.map((item) => (
+                            <View
+                              style={{
+                                alignSelf: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Image
+                                source={{ uri: item.image }}
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 30,
+                                  borderColor: "#fff",
+                                  marginTop: 1,
+                                  alignSelf: "center",
+                                  opacity: 1,
+                                  borderWidth: 2,
+                                  borderColor: "#1DB954",
+                                  margin: 3,
+                                }}
+                              />
+                            </View>
+                          ))
+                        : null}
+                    </View>
+
                     <View
                       style={{
                         position: "absolute",
@@ -518,68 +596,29 @@ export class HomeScreen extends Component {
                         <LinearGradient
                           colors={["#292929", "#292929", "#292929"]}
                           style={{
-                            opacity : 0.9,
+                            opacity: 0.9,
                             borderRadius: 25,
-                            borderWidth : 3,
-                            borderStyle : 'dotted',
-                            borderColor : '#292929'
+                            borderWidth: 3,
+                            borderStyle: "dotted",
+                            borderColor: "#292929",
                           }}
                         >
-                          <View style={{ flexDirection: "row",
-                                }}>
+                          <View style={{ flexDirection: "row" }}>
                             <Animatable.View
                               // animation={"bounceIn"}
                               style={{
-                                width: Dimensions.get("window").width / 2 ,
+                                width: Dimensions.get("window").width / 2,
                                 justifyContent: "center",
                               }}
                             >
                               <ImageBackground
                                 source={{ uri: card.artistImage }}
                                 style={{ height: "100%", width: "100%" }}
-                                imageStyle={{ borderTopRightRadius: 15, opacity : 0.8 }}
-                              >
-                                <View
-                                  style={{
-                                    bottom: 24,
-                                    flexDirection: "row",
-                                    position: "absolute",
-                                    backgroundColor: "whitesmoke",
-                                    borderTopRightRadius: 5,
-                                    borderTopLefttRadius: 5,
-                                    width: "100%",
-                                    opacity: "0.8",
-                                    justifyContent: "center",
-                                  }}
-                                >
-                                  {card.topArtists_following != undefined
-                                    ? card.topArtists_following.map((item) => (
-                                        <View
-                                          style={{
-                                            alignSelf: "center",
-                                            justifyContent: "center",
-                                          }}
-                                        >
-                                          <Image
-                                            source={{ uri: item.image }}
-                                            style={{
-                                              height: 30,
-                                              width: 30,
-                                              borderRadius: 10,
-                                              borderColor: "#fff",
-                                              marginTop: 1,
-                                              alignSelf: "center",
-                                              opacity: 1,
-                                              borderWidth: 2,
-                                              borderColor: "#1DB954",
-                                              margin: 3,
-                                            }}
-                                          />
-                                        </View>
-                                      ))
-                                    : null}
-                                </View>
-                              </ImageBackground>
+                                imageStyle={{
+                                  borderTopRightRadius: 15,
+                                  opacity: 0.8,
+                                }}
+                              ></ImageBackground>
                             </Animatable.View>
 
                             <View
@@ -587,7 +626,7 @@ export class HomeScreen extends Component {
                                 width: Dimensions.get("window").width / 2,
                                 justifyContent: "center",
                                 alignItems: "center",
-                                opacity : 1
+                                opacity: 1,
                               }}
                             >
                               <View
@@ -603,7 +642,7 @@ export class HomeScreen extends Component {
                                     color: "#fff",
                                     textAlign: "center",
                                     fontWeight: "bold",
-                                    marginTop : 10
+                                    marginTop: 10,
                                   }}
                                 >
                                   {card.artistName}
@@ -659,104 +698,6 @@ export class HomeScreen extends Component {
                                   style={{ width: 100, height: 15 }}
                                 />
                               </View>
-
-                              {/* <View
-                                style={{
-                                  bottom: 25,
-                                  position: "absolute",
-                                  flexDirection: "row",
-                                  alignSelf: "center",
-                                  // backgroundColor: "whitesmoke",
-                                  opacity: 0.8,
-                                  borderRadius: 15,
-                                }}
-                              >
-                                <View
-                                  style={{ alignSelf: "center", margin: 5 }}
-                                >
-                                  <TouchableOpacity
-                                    style={{ marginRight: 0, marginBottom: 0 }}
-                                  >
-                                    <LinearGradient
-                                      colors={["#000", "#21295c"]}
-                                      style={styles.signIn}
-                                    >
-                                      <Entypo
-                                        name="spotify"
-                                        size={20}
-                                        style={{
-                                          color: "#1DB954",
-                                          padding: 4,
-                                          alignSelf: "center",
-                                        }}
-                                      />
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
-
-                                <View
-                                  style={{ alignSelf: "center", margin: 5 }}
-                                >
-                                  <TouchableOpacity style={{ marginRight: 0 }}>
-                                    <LinearGradient
-                                      colors={["#000", "#21295c"]}
-                                      style={styles.signIn}
-                                    >
-                                      <Entypo
-                                        name="soundcloud"
-                                        size={20}
-                                        style={{
-                                          color: "#1DB954",
-                                          padding: 4,
-                                          alignSelf: "center",
-                                        }}
-                                      />
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
-
-                                <View
-                                  style={{ alignSelf: "center", margin: 5 }}
-                                >
-                                  <TouchableOpacity style={{ marginRight: 0 }}>
-                                    <LinearGradient
-                                      colors={["#000", "#21295c"]}
-                                      style={styles.signIn}
-                                    >
-                                      <MaterialCommunityIcons
-                                        name="instagram"
-                                        size={20}
-                                        style={{
-                                          color: "#1DB954",
-                                          padding: 4,
-                                          alignSelf: "center",
-                                        }}
-                                      />
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
-
-                                <View
-                                  style={{ alignSelf: "center", margin: 5 }}
-                                >
-                                  <TouchableOpacity style={{ marginRight: 0 }}>
-                                    <LinearGradient
-                                      colors={["#000", "#21295c"]}
-                                      style={styles.signIn}
-                                    >
-                                      <MaterialCommunityIcons
-                                        name="twitter"
-                                        size={20}
-                                        style={{
-                                          color: "#1DB954",
-                                          padding: 4,
-                                          alignSelf: "center",
-                                        }}
-                                      />
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
-                              </View> */}
                             </View>
                           </View>
                         </LinearGradient>
@@ -769,10 +710,183 @@ export class HomeScreen extends Component {
           }
         }}
         onSwiped={(cardIndex) => {
-          // topArtists_following = [];
-          // if( cardIndex - 2 == this.state.recommendations.length - 3) console.log('fetching')
+          console.log(cardIndex, this.state.recommendations.length - 1);
+          // when cardIndex = this.state.recommendations - 3 then fetch
+
+          cardIndex == this.state.recommendations.length - 4
+            ?   
+
+          // shuffle(UserStore.topTracks)
+
+          
+            
+            axios
+                .get(
+                  `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${shuffle(UserStore.topTracks)}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`,
+                    },
+                  }
+                )
+                .then((res) => {
+                  console.log(res.data);
+                  res.data.tracks.map((track) => {
+                    spotifyAPI
+                      .getArtist(track.artists[0].id)
+                      .then((response) => {
+                        getArtist = {
+                          followers: response.followers.total,
+                          image: response.images[0].url,
+                          popularity: response.popularity,
+                          id: response.id,
+                          name: response.name,
+                        };
+                        return getArtist;
+                      })
+                      .then((response) => {
+                        spotifyAPI
+                          .getAudioFeaturesForTrack(track.id)
+                          .then((data) => {
+                            audioFeatures = {
+                              acousticness: data.acousticness,
+                              danceability: data.danceability,
+                              energy: data.energy,
+                              instrumentalness: data.instrumentalness,
+                              liveness: data.liveness,
+                              loudness: data.loudness,
+                              speechiness: data.speechiness,
+                              valence: data.valence,
+                            };
+
+                            let array = [];
+
+                            UserStore.followingDetails.map((user) => {
+                              JSON.parse(user.topArtists).map((chunk) => {
+                                if (chunk.id == response.id) {
+                                  array.push(user.spotifyID);
+                                }
+                              });
+                              // console.log(array, 'dami')
+                            });
+
+                            return {
+                              getArtist: response,
+                              array: array,
+                            };
+                          })
+                          .then((response) => {
+                            let array = [];
+                            // console.log(response.array, 'jsi')
+                            if (
+                              !(
+                                response.array === undefined ||
+                                response.array.length == 0
+                              )
+                            ) {
+                              response.array.map((user, i) => {
+                                spotifyAPI
+                                  .getUser(user)
+                                  .then((res) => {
+                                    return {
+                                      image: res.images[0].url,
+                                      getArtist: response.getArtist,
+                                    };
+                                  })
+                                  .then((res) => {
+                                    let data = {
+                                      image: res.image,
+                                      user: user,
+                                      artist: response.getArtist.name,
+                                    };
+                                    this.setState({
+                                      topArtist_flw: [
+                                        ...this.state.topArtist_flw,
+                                        data,
+                                      ],
+                                    });
+                                    if (i == response.array.length - 1) {
+                                      this.setState(
+                                        { audioFeatures: audioFeatures },
+                                        () => {
+                                          recommended = {
+                                            name: track.name,
+                                            releaseDate:
+                                              track.album.release_date,
+                                            popularity: track.popularity,
+                                            id: track.id,
+                                            artistID: res.getArtist.id,
+                                            explicit: track.explicit,
+                                            artistName: track.artists[0].name,
+                                            followers: res.getArtist.followers,
+                                            artistPopularity:
+                                              res.getArtist.popularity,
+                                            artistImage: res.getArtist.image,
+                                            albumName: track.album.name,
+                                            image: track.album.images[0].url,
+                                            albumID: track.album.id,
+                                            audioFeatures: this.state
+                                              .audioFeatures,
+                                            topArtists_following: this.state
+                                              .topArtist_flw,
+                                          };
+                                          this.setState({ topArtist_flw: [] });
+                                          // console.log(recommended, 'tobio', recommended.artistName)
+                                          this.setState({
+                                            recommendations: [
+                                              ...this.state.recommendations,
+                                              recommended,
+                                            ],
+                                          });
+                                        }
+                                      );
+                                    }
+                                  });
+                              });
+                            } else {
+                              this.setState(
+                                { audioFeatures: audioFeatures },
+                                () => {
+                                  recommended = {
+                                    name: track.name,
+                                    releaseDate: track.album.release_date,
+                                    popularity: track.popularity,
+                                    id: track.id,
+                                    artistID: response.getArtist.id,
+                                    explicit: track.explicit,
+                                    artistName: track.artists[0].name,
+                                    followers: response.getArtist.followers,
+                                    artistPopularity:
+                                      response.getArtist.popularity,
+                                    artistImage: response.getArtist.image,
+                                    albumName: track.album.name,
+                                    image: track.album.images[0].url,
+                                    albumID: track.album.id,
+                                    audioFeatures: this.state.audioFeatures,
+                                  };
+                                  // console.log(recommended, 'tobio', recommended.artistName)
+                                  this.setState({
+                                    recommendations: [
+                                      ...this.state.recommendations,
+                                      recommended,
+                                    ],
+                                  });
+                                }
+                              );
+                            }
+                          });
+                      })
+                      .catch((err) => console.log("saduh"));
+                    return;
+                  });
+                  // console.log(this.state.recommendations)
+                  let durationM = new Date().getTime() - startTimeM;
+                  this.setState({ loading: false });
+                  console.log(durationM, "time");
+                })
+            : null;
         }}
-        onSwipedAll={this.reRender}
+        onSwipedAll={() => console.log("done")}
         verticalSwipe={false}
         onSwipedRight={() => {
           saveTrack(this.state.cuurentCard.id);
@@ -808,11 +922,11 @@ export class HomeScreen extends Component {
                 width: Dimensions.get("window").width,
                 top: 0,
                 position: "absolute",
-                alignItems : 'center',
+                alignItems: "center",
               }}
             >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  {/* <TouchableOpacity onPress={handleStickyItemPress}>
+              <View style={{ flex: 1, marginRight: 5 }}>
+                {/* <TouchableOpacity onPress={handleStickyItemPress}>
                     <LinearGradient
                       colors={["#272D2D", "#272D2D"]}
                       style={styles.signIn}
@@ -831,23 +945,23 @@ export class HomeScreen extends Component {
                       <Text style = {{color : '#fff'}}>Post</Text>
                     </LinearGradient>
                   </TouchableOpacity> */}
-                </View>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity onPress={() => search(data.track)}>
-                    <LinearGradient
-                      colors={["#272D2D", "#272D2D"]}
-                      style={styles.signIn}
-                    >
-                      <MaterialCommunityIcons
-                        name="circle"
-                        color="#fff"
-                        size={25}
-                      />
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  {/* <TouchableOpacity onPress={() => search(data.track)}>
+              </View>
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => search(data.track)}>
+                  <LinearGradient
+                    colors={["#272D2D", "#272D2D"]}
+                    style={styles.signIn}
+                  >
+                    <MaterialCommunityIcons
+                      name="circle"
+                      color="#fff"
+                      size={25}
+                    />
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1, marginRight: 5 }}>
+                {/* <TouchableOpacity onPress={() => search(data.track)}>
                     <LinearGradient
                       colors={["#272D2D", "#272D2D"]}
                       style={styles.signIn}
@@ -866,7 +980,7 @@ export class HomeScreen extends Component {
                       <Text style = {{color : '#fff'}}>Inbox</Text>
                     </LinearGradient>
                   </TouchableOpacity> */}
-                </View>
+              </View>
             </SafeAreaView>
 
             {swiper}

@@ -16,7 +16,8 @@ class UserStore {
       allPosts : [],
       trackDetails : [],
       enablePostScreen : false,
-      isFollowing : false
+      isFollowing : false,
+      topTracks : []
     });
   }
 }

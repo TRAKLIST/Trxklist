@@ -663,18 +663,25 @@ const SignInScreen = ({ navigation }) => {
                     }}
                   >
                     <LinearGradient
-                      colors={["#1DB954", "#1DB954"]}
-                      style={[styles.signIn, { flexDirection: "row" }]}
+                      colors={["transparent"]}
+                      style={[
+                        styles.signIn,
+                        {
+                          flexDirection: "row",
+                          borderWidth: 2,
+                          borderColor: "#1DB954",
+                        },
+                      ]}
                     >
                       <Text
                         style={[
                           styles.textSign,
-                          { color: "#fff", fontWeight: "500" },
+                          { color: "#1DB954", fontWeight: "500" },
                         ]}
                       >
                         sign in with {""}
                       </Text>
-                      <Fontisto name="spotify" color="#fff" size={20} />
+                      <Fontisto name="spotify" color="#1DB954" size={20} />
                     </LinearGradient>
                   </TouchableOpacity>
                 ) : (
@@ -701,35 +708,49 @@ const SignInScreen = ({ navigation }) => {
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
                   <LinearGradient
-                    colors={["#fc3158", "#fc3158"]}
-                    style={[styles.signIn, { flexDirection: "row" }]}
+                    colors={["transparent"]}
+                    style={[
+                      styles.signIn,
+                      {
+                        flexDirection: "row",
+                        borderWidth: 2,
+                        borderColor: "#fc3158",
+                      },
+                    ]}
                   >
                     <Text
                       style={[
                         styles.textSign,
-                        { color: "#fff", fontWeight: "500" },
+                        { color: "#fc3158", fontWeight: "500" },
                       ]}
                     >
                       sign in with{" "}
                     </Text>
-                    <Fontisto name="applemusic" color="#fff" size={20} />
+                    <Fontisto name="applemusic" color="#fc3158" size={20} />
                   </LinearGradient>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
                   <LinearGradient
-                    colors={["#ff7700", "#ff7700"]}
-                    style={[styles.signIn, { flexDirection: "row" }]}
+                    colors={["transparent"]}
+                    style={[
+                      styles.signIn,
+                      {
+                        flexDirection: "row",
+                        borderWidth: 2,
+                        borderColor: "#ff7700",
+                      },
+                    ]}
                   >
                     <Text
                       style={[
                         styles.textSign,
-                        { color: "#fff", fontWeight: "500" },
+                        { color: "#ff7700", fontWeight: "500" },
                       ]}
                     >
                       sign in with{" "}
                     </Text>
-                    <Fontisto name="soundcloud" color="#fff" size={20} />
+                    <Fontisto name="soundcloud" color="#ff7700" size={20} />
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
