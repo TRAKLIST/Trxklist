@@ -266,166 +266,6 @@ export class HomeScreen extends Component {
     return;
   }
 
-  // reRender = () => {
-  //   console.log("done");
-  //   this.setState({ loading: true });
-  //   let startTimeM = new Date().getTime();
-  //   axios
-  //     .get(
-  //       `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${UserStore.str}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       res.data.tracks.map((track) => {
-  //         spotifyAPI
-  //           .getArtist(track.artists[0].id)
-  //           .then((response) => {
-  //             getArtist = {
-  //               followers: response.followers.total,
-  //               image: response.images[0].url,
-  //               popularity: response.popularity,
-  //               id: response.id,
-  //               name: response.name,
-  //             };
-  //             return getArtist;
-  //           })
-  //           .then((response) => {
-  //             spotifyAPI
-  //               .getAudioFeaturesForTrack(track.id)
-  //               .then((data) => {
-  //                 audioFeatures = {
-  //                   acousticness: data.acousticness,
-  //                   danceability: data.danceability,
-  //                   energy: data.energy,
-  //                   instrumentalness: data.instrumentalness,
-  //                   liveness: data.liveness,
-  //                   loudness: data.loudness,
-  //                   speechiness: data.speechiness,
-  //                   valence: data.valence,
-  //                 };
-
-  //                 let array = [];
-
-  //                 UserStore.followingDetails.map((user) => {
-  //                   JSON.parse(user.topArtists).map((chunk) => {
-  //                     if (chunk.id == response.id) {
-  //                       array.push(user.spotifyID);
-  //                     }
-  //                   });
-  //                   // console.log(array, 'dami')
-  //                 });
-
-  //                 return {
-  //                   getArtist: response,
-  //                   array: array,
-  //                 };
-  //               })
-  //               .then((response) => {
-  //                 let array = [];
-  //                 // console.log(response.array, 'jsi')
-  //                 if (
-  //                   !(
-  //                     response.array === undefined || response.array.length == 0
-  //                   )
-  //                 ) {
-  //                   response.array.map((user, i) => {
-  //                     spotifyAPI
-  //                       .getUser(user)
-  //                       .then((res) => {
-  //                         return {
-  //                           image: res.images[0].url,
-  //                           getArtist: response.getArtist,
-  //                         };
-  //                       })
-  //                       .then((res) => {
-  //                         let data = {
-  //                           image: res.image,
-  //                           user: user,
-  //                           artist: response.getArtist.name,
-  //                         };
-  //                         this.setState({
-  //                           topArtist_flw: [...this.state.topArtist_flw, data],
-  //                         });
-  //                         if (i == response.array.length - 1) {
-  //                           this.setState(
-  //                             { audioFeatures: audioFeatures },
-  //                             () => {
-  //                               recommended = {
-  //                                 name: track.name,
-  //                                 releaseDate: track.album.release_date,
-  //                                 popularity: track.popularity,
-  //                                 id: track.id,
-  //                                 artistID: res.getArtist.id,
-  //                                 explicit: track.explicit,
-  //                                 artistName: track.artists[0].name,
-  //                                 followers: res.getArtist.followers,
-  //                                 artistPopularity: res.getArtist.popularity,
-  //                                 artistImage: res.getArtist.image,
-  //                                 albumName: track.album.name,
-  //                                 image: track.album.images[0].url,
-  //                                 albumID: track.album.id,
-  //                                 audioFeatures: this.state.audioFeatures,
-  //                                 topArtists_following: this.state
-  //                                   .topArtist_flw,
-  //                               };
-  //                               this.setState({ topArtist_flw: [] });
-  //                               // console.log(recommended, 'tobio', recommended.artistName)
-  //                               this.setState({
-  //                                 recommendations: [
-  //                                   ...this.state.recommendations,
-  //                                   recommended,
-  //                                 ],
-  //                               });
-  //                             }
-  //                           );
-  //                         }
-  //                       });
-  //                   });
-  //                 } else {
-  //                   this.setState({ audioFeatures: audioFeatures }, () => {
-  //                     recommended = {
-  //                       name: track.name,
-  //                       releaseDate: track.album.release_date,
-  //                       popularity: track.popularity,
-  //                       id: track.id,
-  //                       artistID: response.getArtist.id,
-  //                       explicit: track.explicit,
-  //                       artistName: track.artists[0].name,
-  //                       followers: response.getArtist.followers,
-  //                       artistPopularity: response.getArtist.popularity,
-  //                       artistImage: response.getArtist.image,
-  //                       albumName: track.album.name,
-  //                       image: track.album.images[0].url,
-  //                       albumID: track.album.id,
-  //                       audioFeatures: this.state.audioFeatures,
-  //                     };
-  //                     // console.log(recommended, 'tobio', recommended.artistName)
-  //                     this.setState({
-  //                       recommendations: [
-  //                         ...this.state.recommendations,
-  //                         recommended,
-  //                       ],
-  //                     });
-  //                   });
-  //                 }
-  //               });
-  //           })
-  //           .catch((err) => console.log("saduh"));
-  //         return;
-  //       });
-  //       // console.log(this.state.recommendations)
-  //       let durationM = new Date().getTime() - startTimeM;
-  //       this.setState({ loading: false });
-  //       console.log(durationM, "time");
-  //     });
-  //   return;
-  // };
-
   render() {
     let swiper = this.state.recommendations ? (
       <Swiper
@@ -711,14 +551,11 @@ export class HomeScreen extends Component {
         }}
         onSwiped={(cardIndex) => {
           console.log(cardIndex, this.state.recommendations.length - 1);
-          // when cardIndex = this.state.recommendations - 3 then fetch
 
           cardIndex == this.state.recommendations.length - 4
             ?   
 
-          // shuffle(UserStore.topTracks)
-
-          
+          // disable swiping for 1 second
             
             axios
                 .get(
