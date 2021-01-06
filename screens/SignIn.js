@@ -285,6 +285,7 @@ const SignInScreen = ({ navigation }) => {
       })
       .catch((err) => {
         console.log(err);
+        alert("Details incorrect : please try again")
       });
   };
 
@@ -633,7 +634,7 @@ const SignInScreen = ({ navigation }) => {
                 <Text
                   style={{
                     color: "#ADADAD",
-                    fontSize: "17",
+                    fontSize: 17,
                     fontWeight: "600",
                   }}
                 >
@@ -819,7 +820,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 15,
+    marginTop: 12,
   },
   signIn: {
     width: "80%",

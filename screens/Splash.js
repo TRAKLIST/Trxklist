@@ -38,7 +38,7 @@ const SplashScreen = ({ navigation }) => {
           <View
             style={{
               flexDirection: "column",
-              bottom: 80,
+              bottom: 100,
               position: "absolute",
               alignSelf: "center",
             }}
@@ -62,12 +62,12 @@ const SplashScreen = ({ navigation }) => {
               >
                 <LinearGradient
                   colors={["black", "black"]}
-                  style={[styles.signIn, { marginTop: 5, opacity : 0.4 }]}
+                  style={[styles.signIn, { marginTop: 10, opacity : 0.4 }]}
                 >
                   <Text
                     style={{
                       color: "#ADADAD",
-                      fontSize: "17",
+                      fontSize: 17,
                       fontWeight: "600",
                     }}
                   >
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footer: {
-    flex: 8,
+    flex: 9,
     backgroundColor: "#000",
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
