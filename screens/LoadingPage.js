@@ -182,10 +182,9 @@ function LoadingPage() {
     console.log(UserStore.update);
 
     UserStore.loading = false;
-    // }, 30000);
-  }, [UserStore.update]);
+    // }, 10000);
+  }, []);
   return (
-    console.log(UserStore.update),
     (
       <View style={styles.container}>
         <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>

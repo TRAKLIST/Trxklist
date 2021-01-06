@@ -725,10 +725,10 @@ export class HomeScreen extends Component {
         }}
         onSwipedAll={() => console.log("done")}
         verticalSwipe={false}
-        onSwipedRight={() => {
-          saveTrack(this.state.cuurentCard.id);
+        onSwipedRight={(cardIndex) => {
+          saveTrack(this.state.recommendations[cardIndex].id);
           alert(
-            `'${this.state.cuurentCard.name}' by ${this.state.cuurentCard.artistName} has been saved to your Spotify library`
+            `'${this.state.recommendations[cardIndex].name}' by ${this.state.recommendations[cardIndex].artistName} has been saved to your Spotify library`
           );
         }}
         cardIndex={0}
