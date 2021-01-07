@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { View, Text } from "react-native";
 import ADIcon from "react-native-vector-icons/AntDesign";
-import FontistoIcon from "react-native-vector-icons/Fontisto";
-import IoniconsIcon from "react-native-vector-icons/Ionicons";
-import FAIcon from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
@@ -17,8 +14,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 const Footer = ({
   likesCount: likesCountProp,
-  caption,
-  commentCount,
   postID,
   status,
   trackID,
@@ -39,7 +34,7 @@ const Footer = ({
           `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/like`,
           {
             headers: {
-              Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+              Authorization: `Bearer ${UserStore.authCode}`,
             },
           }
         )
@@ -57,7 +52,7 @@ const Footer = ({
           `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/unlike`,
           {
             headers: {
-              Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+              Authorization: `Bearer ${UserStore.authCode}`,
             },
           }
         )
@@ -171,7 +166,7 @@ const Footer = ({
         `https://europe-west1-projectmelo.cloudfunctions.net/api/user/liked`,
         {
           headers: {
-            Authorization: `Bearer ${UserStore.authCode}`, //the token is a variable which holds the token
+            Authorization: `Bearer ${UserStore.authCode}`,
           },
         }
       )
@@ -268,11 +263,6 @@ const Footer = ({
                   style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
-              {/* {likesCount == !8 ? (
-                <Text style={styles.number}>{likesCount}</Text>
-              ) : (
-                  <View style={styles.number}></View>
-                )} */}
             </View>
           </TouchableOpacity>
 

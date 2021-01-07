@@ -4,10 +4,13 @@ import {
   StyleSheet,
   View,
   Image,
+  ScrollView,
   Button,
   Dimensions,
+  RefreshControl,
   TextInput,
   Text,
+  Animated,
   ImageBackground,
   TouchableOpacity,
   Keyboard,
@@ -27,6 +30,13 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MainSection from "../components/MainSection";
 import axios from "axios";
 
+const AnimatedCustomScrollView = Animated.createAnimatedComponent(ScrollView);
+function wait(timeout) {
+  return new Promise((res) => {
+    setTimeout(res, timeout);
+  });
+}
+
 const {
   first_route,
   second_route,
@@ -41,11 +51,29 @@ function Main() {
   const [pickerHeader, setPickerHeader] = React.useState(true);
   const [captionHeader, setCaptionHeader] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState("track");
+  const [refreshing, setRefreshing] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "MUSIC" },
     { key: "second", title: "CAPTION" },
   ]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => {
+      setRefreshing(false);
+
+      // new post
+      axios
+        .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
+        .then((res) => {
+          // console.log("yes");
+          UserStore.allPosts = res.data;
+        })
+        .catch((err) => console.log(err));
+    }, [refreshing]);
+  });
 
   const handleStickyItemPress = () => alert("pressed");
   const handleCaptionChange = (val) => setCaption(val);
@@ -119,10 +147,10 @@ function Main() {
             console.log(res.data);
             UserStore.allPosts = res.data;
             UserStore.enablePostScreen = false;
-            setIndex(0)
-            setCaption('')
-            setPickerHeader(true)
-            setCaptionHeader(false)
+            setIndex(0);
+            setCaption("");
+            setPickerHeader(true);
+            setCaptionHeader(false);
           })
           .catch((err) => console.log(err));
       })
@@ -144,6 +172,17 @@ function Main() {
             backgroundColor="#292929"
             contentBackgroundColor="#292929"
             parallaxHeaderHeight={95}
+            renderScrollComponent={() => (
+              <AnimatedCustomScrollView
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    tintColor="#1DB954"
+                  />
+                }
+              />
+            )}
             renderStickyHeader={() => (
               <View
                 style={{
