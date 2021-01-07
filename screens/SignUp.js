@@ -99,7 +99,7 @@ const SignUpScreen = ({ navigation }) => {
     });
 
     spotifyAPI.getMe().then((response) => {
-      console.log()
+      console.log();
       var getMe = {
         user_name: response.display_name,
         user_image: !(
@@ -137,7 +137,7 @@ const SignUpScreen = ({ navigation }) => {
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: "#1DB954" }}
-      style={{ backgroundColor: "black" }}
+      style={{ backgroundColor: "#292929" }}
       renderLabel={({ route, focused, color }) => (
         <Text style={{ color, margin: 8, fontWeight: "bold" }}>
           {route.title}
@@ -188,12 +188,34 @@ const SignUpScreen = ({ navigation }) => {
             promptAsync();
           }}
         >
-          <LinearGradient colors={["#1DB954", "green"]} style={styles.signIn}>
-            <MaterialCommunityIcons name="spotify" color="#fff" size={20} />
+          <LinearGradient
+            colors={["transparent"]}
+            style={[
+              styles.signIn,
+              {
+                flexDirection: "row",
+                borderWidth: 2,
+                borderColor: "#1DB954",
+                borderRadius: 15,
+              },
+            ]}
+          >
             {!spotifyUserDetails.user_email && (
-              <Text style={[styles.textSign, { color: "#fff" }]}>
-                Verify your Spotify Account
-              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={[
+                    styles.textSign,
+                    { color: "#1DB954", fontWeight: "500" },
+                  ]}
+                >
+                  sign up with{" "}
+                </Text>
+                <MaterialCommunityIcons
+                  name="spotify"
+                  color="#1DB954"
+                  size={20}
+                />
+              </View>
             )}
             {spotifyUserDetails.user_email && (
               <Text style={[styles.textSign, { color: "#fff" }]}>Not You?</Text>
@@ -298,9 +320,39 @@ const SignUpScreen = ({ navigation }) => {
       });
     };
     return (
-      <View style={([styles.scene], { paddingHorizontal: 10, marginTop: 20 })}>
-        <Text style={[styles.text_footer, { color: "#fff" }]}>meloID</Text>
-        <View style={styles.action}>
+      <View
+        style={
+          ([styles.scene],
+          {
+            paddingHorizontal: 10,
+            marginTop: 0,
+            backgroundColor: "#292929",
+            height: "100%",
+          })
+        }
+      >
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            opacity: 0.6,
+            fontSize: 18,
+            marginLeft: 15,
+            marginBottom: 5,
+            marginTop: 10,
+          }}
+        >
+          meloID
+        </Text>
+        <View
+          style={{
+            backgroundColor: "grey",
+            borderRadius: 30,
+            flexDirection: "row",
+            padding: 10,
+            opacity: 0.4,
+          }}
+        >
           <FontAwesome name="user-o" color="#fff" size={20} />
           <TextInput
             placeholder="Your meloID"
@@ -310,10 +362,28 @@ const SignUpScreen = ({ navigation }) => {
           />
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            marginTop: 10,
+            opacity: 0.6,
+            fontSize: 18,
+            marginLeft: 15,
+            marginBottom: 5,
+          }}
+        >
           email
         </Text>
-        <View style={styles.action}>
+        <View
+          style={{
+            backgroundColor: "grey",
+            borderRadius: 30,
+            flexDirection: "row",
+            padding: 10,
+            opacity: 0.4,
+          }}
+        >
           <FontAwesome name="envelope-o" color="#fff" size={20} />
           <TextInput
             placeholder="Your Email"
@@ -328,10 +398,28 @@ const SignUpScreen = ({ navigation }) => {
           ) : null}
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            opacity: 0.6,
+            fontSize: 18,
+            marginLeft: 15,
+            marginBottom: 5,
+            marginTop: 10,
+          }}
+        >
           password
         </Text>
-        <View style={styles.action}>
+        <View
+          style={{
+            backgroundColor: "grey",
+            borderRadius: 30,
+            flexDirection: "row",
+            padding: 10,
+            opacity: 0.4,
+          }}
+        >
           <FontAwesome name="lock" color="#fff" size={20} />
           <TextInput
             placeholder="Your Password"
@@ -349,10 +437,28 @@ const SignUpScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={[styles.text_footer, { marginTop: 20, color: "#fff" }]}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            color: "white",
+            opacity: 0.6,
+            fontSize: 18,
+            marginLeft: 15,
+            marginBottom: 5,
+            marginTop: 10,
+          }}
+        >
           confirm password
         </Text>
-        <View style={styles.action}>
+        <View
+          style={{
+            backgroundColor: "grey",
+            borderRadius: 30,
+            flexDirection: "row",
+            padding: 10,
+            opacity: 0.4,
+          }}
+        >
           <FontAwesome name="lock" color="#fff" size={20} />
           <TextInput
             placeholder="Your Password"
@@ -372,9 +478,12 @@ const SignUpScreen = ({ navigation }) => {
 
         <TouchableOpacity onPress={signUp}>
           <View style={styles.button}>
-            <LinearGradient colors={["green", "green"]} style={styles.signIn}>
+            <LinearGradient
+              colors={["grey", "grey"]}
+              style={[styles.signIn, { flexDirection: "row" }]}
+            >
               <Text style={[styles.textSign, { color: "#fff" }]}>
-                Sign Me Up!
+                enter traklist.
               </Text>
             </LinearGradient>
           </View>
@@ -383,11 +492,17 @@ const SignUpScreen = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           style={[
             styles.signIn,
-            { borderColor: "green", borderWidth: 1, marginTop: 15 },
+            { marginTop: 5, flexDirection : 'row' },
           ]}
         >
-          <Text style={[styles.textSign, { color: "green", fontSize: 15 }]}>
-            Already have an account? Log in
+          <Text
+            style={{
+              color: "#ADADAD",
+              fontSize: 17,
+              fontWeight: "600",
+            }}
+          >
+            sign in instead
           </Text>
         </TouchableOpacity>
       </View>
@@ -418,7 +533,6 @@ export default observer(SignUpScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#007bff",
   },
   header: {
     flex: 1,
@@ -428,8 +542,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 12,
-    backgroundColor: "#000",
-    paddingHorizontal: 5,
+    backgroundColor: "#292929",
+    paddingHorizontal: 10,
   },
   text_header: {
     color: "#fff",
@@ -460,6 +574,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
     color: "#fff",
+    fontWeight : 'bold'
   },
   errorMsg: {
     color: "#FF0000",
@@ -470,10 +585,14 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   signIn: {
-    width: "100%",
-    height: 50,
+    width: "60%",
     justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 15,
+    marginTop: 0,
+    marginRight: 10,
+    marginLeft: 10,
+    padding: 10,
   },
   textSign: {
     fontSize: 18,

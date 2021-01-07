@@ -60,6 +60,7 @@ function Search() {
   // const [isFollowing, setIsFollowing] = React.useState(false);
 
   const search = () => {
+
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${searchTerm}&client_id=NpVHurnc1OKS80l6zlXrEVN4VEXrbZG4&limit=20`
@@ -67,6 +68,7 @@ function Search() {
       .then((res) => {
         // let trackQuery = {};
         // console.log(res.data, 'fg')
+        soundcloud_tracks = []
         res.data.collection.map((track) => {
           let trackQuery = {
             urn: track.urn,
