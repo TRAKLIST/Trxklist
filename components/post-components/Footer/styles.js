@@ -16,9 +16,10 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   number: {
-    marginLeft: 5,
-    color: "#1150A9",
+    color: "#292929",
     textAlign: "center",
+    fontWeight : 'bold',
+    marginBottom : 5
   },
   leftIcons: {
     flexDirection: "row",

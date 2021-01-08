@@ -342,7 +342,7 @@ const SignUpScreen = ({ navigation }) => {
             marginTop: 10,
           }}
         >
-          meloID
+          TRAK.ID
         </Text>
         <View
           style={{
@@ -430,9 +430,9 @@ const SignUpScreen = ({ navigation }) => {
           />
           <TouchableOpacity onPress={updateSecureTextEntry}>
             {data.secureTextEntry ? (
-              <Feather name="eye-off" color="grey" size={20} />
+              <Feather name="eye-off" color="#fff" size={20} />
             ) : (
-              <Feather name="eye" color="grey" size={20} />
+              <Feather name="eye" color="#fff" size={20} />
             )}
           </TouchableOpacity>
         </View>
@@ -469,9 +469,9 @@ const SignUpScreen = ({ navigation }) => {
           />
           <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
             {data.confirm_secureTextEntry ? (
-              <Feather name="eye-off" color="grey" size={20} />
+              <Feather name="eye-off" color="#fff" size={20} />
             ) : (
-              <Feather name="eye" color="grey" size={20} />
+              <Feather name="eye" color="#fff" size={20} />
             )}
           </TouchableOpacity>
         </View>

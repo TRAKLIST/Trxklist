@@ -33,6 +33,7 @@ import spotifyAPI from "../components/SpotifyAPI";
 import { cos } from "react-native-reanimated";
 
 exports.first_route = (status) => {
+  const [toggleHiglight, setToggleHiglight] = React.useState("");
   const [queryList, setQueryList] = React.useState([]);
   const [data, setData] = React.useState({
     track: "",
@@ -110,6 +111,7 @@ exports.first_route = (status) => {
   };
 
   const select = (item) => {
+    setToggleHiglight(item.id);
     let track_playlist = [];
     console.log(item, "bers");
     // if album or playlist get tracks
@@ -121,7 +123,7 @@ exports.first_route = (status) => {
           title: track.track.name,
         });
       });
-      item.track = track_playlist
+      item.track = track_playlist;
       // console.log(item, 'fewfever')
       // add to state here
     });
@@ -134,7 +136,16 @@ exports.first_route = (status) => {
         style={{ marginBottom: 10 }}
         onPress={() => select(item)}
       >
-        <View style={{ flexDirection: "row", opacity: 0.7 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            opacity: 0.7,
+            backgroundColor:
+              toggleHiglight == item.id ? "whitesmoke" : "transparent",
+            borderRadius: 15,
+            padding: 5,
+          }}
+        >
           <View style={{ flex: 1 }}>
             {/* <Image
               source={{ uri: item.image }}
@@ -199,6 +210,8 @@ exports.first_route = (status) => {
                     paddingTop: 0,
                     paddingBottom: 0,
                     backgroundColor: "transparent",
+                    color: toggleHiglight == item.id ? "#000" : "#fff",
+                    fontWeight: "bold",
                   },
                 ]}
               >
@@ -208,11 +221,11 @@ exports.first_route = (status) => {
             <View>
               <Text
                 style={{
-                  color: "grey",
+                  color: "#44CF6C",
+                  fontWeight: "bold",
                   // backgroundColor: "#fff",
-                  padding: 5,
+                  paddingTop: 5,
                   alignSelf: "flex-start",
-                  fontWeight: "500",
                 }}
               >
                 {item.artist}

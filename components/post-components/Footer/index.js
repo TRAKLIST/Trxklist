@@ -247,7 +247,7 @@ const Footer = ({
           ]}
         >
           <TouchableOpacity onPress={onLikePressed}>
-            <View style={styles.iconContainer2}>
+            <View style={(styles.iconContainer2, { flexDirection: "column" })}>
               {isLiked ? (
                 <ADIcon
                   name="heart"
@@ -263,27 +263,39 @@ const Footer = ({
                   style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
+
+              {likesCount !== 0 ? (
+                <Text style={styles.number}>{likesCount}</Text>
+              ) : (
+                <View style={styles.number}></View>
+              )}
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={onSavePressed}>
-            <View style={styles.iconContainer2}>
+            <View style={(styles.iconContainer2, { flexDirection: "column" })}>
               {isSaved ? (
                 <MaterialCommunityIcons
                   name="content-save"
-                  size={27}
+                  size={25}
                   color={"#44CF6C"}
                   style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="content-save-outline"
-                  size={27}
+                  size={25}
                   color={"#44CF6C"}
                   style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
             </View>
+
+            {likesCount !== 0 ? (
+              <Text style={styles.number}></Text>
+            ) : (
+              <View style={styles.number}></View>
+            )}
           </TouchableOpacity>
 
           {/* <TouchableOpacity>
@@ -297,8 +309,8 @@ const Footer = ({
             </View>
           </TouchableOpacity> */}
 
-          <TouchableOpacity onPress={onSavePressed}>
-            <View style={styles.iconContainer2}>
+          <TouchableOpacity>
+            <View style={styles.iconContainer2, {flexDirection : 'column'}}>
               <Feather
                 name="share-2"
                 size={24}
@@ -331,7 +343,7 @@ const Footer = ({
         >
           <Text
             style={{
-              color: "#71677C",
+              color: "#292929",
               fontWeight: "bold",
               textTransform: "uppercase",
               fontSize: 13,

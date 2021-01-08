@@ -106,6 +106,7 @@ export class HomeScreen extends Component {
     });
 
   componentDidMount() {
+    console.log('hiyahibcehi')
     let startTimeM = new Date().getTime();
 
     // console.log(shuffle(UserStore.topTracks), 'erge')
