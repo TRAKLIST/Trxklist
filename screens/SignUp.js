@@ -232,6 +232,7 @@ const SignUpScreen = ({ navigation }) => {
     const signUp = () => {
       const newUserData = {
         email: data.email,
+        spotifyEmail : spotifyUserDetails.user_email,
         password: data.password,
         confirmPassword: data.confirm_password,
         meloID: data.meloID,
@@ -342,7 +343,7 @@ const SignUpScreen = ({ navigation }) => {
             marginTop: 10,
           }}
         >
-          TRAK.ID
+          trak.id
         </Text>
         <View
           style={{

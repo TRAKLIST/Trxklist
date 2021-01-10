@@ -267,6 +267,10 @@ const SignInScreen = ({ navigation }) => {
                   res.data.access_token,
                   response.data.credentials.refresh_token
                 );
+                // save notifications
+                UserStore.notifications = response.data.notifications;
+                console.log(response.data.notifications, "fgvs");
+
                 UserStore.isLoggedIn = true;
               })
               .catch((err) => alert(err));
@@ -285,7 +289,7 @@ const SignInScreen = ({ navigation }) => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Details incorrect : please try again")
+        alert("Details incorrect : please try again");
       });
   };
 
@@ -333,12 +337,24 @@ const SignInScreen = ({ navigation }) => {
         refresh_token: spotifyUserDetails.refresh_token,
       })
       .then((res) => {
-        // console.log(res.data, "dfw");
+        // alert(res.data);
 
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
+        axios
+          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+            headers: {
+              Authorization: `Bearer ${res.data.token}`,
+            },
+          })
+          .then((response) => {
+            UserStore.notifications = response.data.notifications;
+          })
+          .catch((err) => alert(`Error 1 : ${err}`))
+
         UserStore.isLoggedIn = true;
-      });
+      })
+      .catch((err) => alert(`Error 500 : Please report this and sign in using email and password for the meanwhile. Thank you!`))
   };
 
   // const renderScene = SceneMap({

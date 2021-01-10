@@ -10,8 +10,18 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import spotifyAPI from "../SpotifyAPI";
+import UserStore from "../../stores/UserStore";
+import { observer } from "mobx-react";
 
-export default function Tracks(props) {
+ function Tracks(props) {
+
+  const lyricsToggle = (index) => {
+    // setTrackIndex(index);
+    UserStore.trackIndex = index
+    // setLyricsPage(true);
+    UserStore.lyricsPage = true
+  };
+
   const [isSaved, setIsSave] = React.useState(false);
 
   // React.useEffect(() => {
@@ -45,7 +55,7 @@ export default function Tracks(props) {
 
   return (
     <View>
-      <TouchableOpacity onPress={() => lyricsToggle(index)}>
+      <TouchableOpacity onPress={() => lyricsToggle(props.index)}>
         <View
           style={{
             flexDirection: "row",
@@ -140,6 +150,8 @@ export default function Tracks(props) {
     </View>
   );
 }
+
+export default observer(Tracks)
 
 const styles = StyleSheet.create({
   container: {

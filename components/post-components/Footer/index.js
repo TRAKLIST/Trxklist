@@ -14,6 +14,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 const Footer = ({
   likesCount: likesCountProp,
+  savesCount: savesCountProp,
   postID,
   status,
   trackID,
@@ -23,6 +24,7 @@ const Footer = ({
   const [isLiked, setIsLike] = useState(false);
   const [isSaved, setIsSave] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [savesCount, setSavesCount] = useState(0);
 
   const onLikePressed = () => {
     const amount = isLiked ? -1 : 1;
@@ -69,16 +71,54 @@ const Footer = ({
 
   const onSavePressed = () => {
     console.log(status);
+
+    const amount = isSaved ? -1 : 1;
+    setSavesCount(savesCount + amount);
+    setIsSave(!isSaved);
+
     if (!isSaved) {
-      setIsSave(true);
+      // setIsSave(true);
       if (status == "Track") {
-        spotifyAPI
-          .addToMySavedTracks([trackID])
-          .then((response) => {
-            // console.log(response);
+        // add route here
+
+        axios
+          .get(
+            `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/save`,
+            {
+              headers: {
+                Authorization: `Bearer ${UserStore.authCode}`,
+              },
+            }
+          )
+          .then((res) => {
+            // console.log("success");
+            spotifyAPI
+              .addToMySavedTracks([trackID])
+              .then((response) => {
+                // console.log(response);
+              })
+              .catch((err) => {
+                //  unsave route here
+                axios
+                  .get(
+                    `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/unsave`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${UserStore.authCode}`,
+                      },
+                    }
+                  )
+                  .catch((err) => {
+                    // remind to perform later
+                  });
+
+                setIsSave(false);
+                console.log(err);
+              });
           })
           .catch((err) => {
             setIsSave(false);
+            setSavesCount(savesCount);
             console.log(err);
           });
       } else if (status == "Album") {
@@ -113,15 +153,48 @@ const Footer = ({
           });
       }
     } else {
-      setIsSave(false);
+      // setIsSave(false);
       if (status == "Track") {
-        spotifyAPI
-          .removeFromMySavedTracks([trackID])
-          .then((response) => {
-            // console.log(response);
+
+        // if savesCount == 0 then dont perfrom route, just unsave
+
+        axios
+          .get(
+            `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/unsave`,
+            {
+              headers: {
+                Authorization: `Bearer ${UserStore.authCode}`,
+              },
+            }
+          )
+          .then((res) => {
+            // console.log("success");
+            spotifyAPI
+              .removeFromMySavedTracks([trackID])
+              .then((response) => {
+                // console.log(response);
+              })
+              .catch((err) => {
+                // save route
+                axios
+                  .get(
+                    `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${postID}/save`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${UserStore.authCode}`,
+                      },
+                    }
+                  )
+                  .catch((err) => {
+                    // remind to perform later
+                  });
+                setIsSave(true);
+                console.log(err);
+              });
           })
           .catch((err) => {
             setIsSave(true);
+            setSavesCount(savesCount);
             console.log(err);
           });
       } else if (status == "Album") {
@@ -181,6 +254,7 @@ const Footer = ({
       .catch((err) => console.log(err));
 
     setLikesCount(likesCountProp);
+    setSavesCount(savesCountProp);
 
     if (status === "Track") {
       spotifyAPI
@@ -291,8 +365,8 @@ const Footer = ({
               )}
             </View>
 
-            {likesCount !== 0 ? (
-              <Text style={styles.number}></Text>
+            {savesCount !== 0 ? (
+              <Text style={styles.number}>{savesCount}</Text>
             ) : (
               <View style={styles.number}></View>
             )}
@@ -309,8 +383,12 @@ const Footer = ({
             </View>
           </TouchableOpacity> */}
 
-          <TouchableOpacity>
-            <View style={styles.iconContainer2, {flexDirection : 'column'}}>
+          <TouchableOpacity
+            onPress={() =>
+              alert("This feature will be available in the next release.")
+            }
+          >
+            <View style={(styles.iconContainer2, { flexDirection: "column" })}>
               <Feather
                 name="share-2"
                 size={24}
@@ -338,7 +416,13 @@ const Footer = ({
         <View
           style={[
             styles.iconContainer2,
-            { marginRight: 10, borderBottomWidth: 2, borderColor: "green" },
+            {
+              marginRight: 10,
+              borderBottomWidth: 2,
+              borderColor: "green",
+              flexDirection: "column",
+              justifyContent: "center",
+            },
           ]}
         >
           <Text
@@ -352,6 +436,14 @@ const Footer = ({
           >
             {dayjs(postedAt).fromNow()}
           </Text>
+
+          {likesCount !== 0 ? (
+            <Text style={(styles.number, { color: "transparent" })}>
+              {likesCount}
+            </Text>
+          ) : (
+            <View style={styles.number}></View>
+          )}
         </View>
       </View>
     </View>

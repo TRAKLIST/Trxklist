@@ -17,7 +17,10 @@ class UserStore {
       trackDetails : [],
       enablePostScreen : false,
       isFollowing : false,
-      topTracks : []
+      topTracks : [],
+      notifications : [],
+      lyricsPage : false,
+      trackIndex : 0
     });
   }
 }

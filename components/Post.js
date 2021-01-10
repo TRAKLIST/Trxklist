@@ -26,7 +26,12 @@ export class Post extends Component {
     spotifyAPI
       .getUser(this.props.post.spotifyID)
       .then((response) => {
-        this.setState({ profilePic: response.images[0].url });
+        this.setState({ profilePic: !(
+          response.images === undefined || response.images.length == 0
+        )
+          ? response.images[0].url
+          : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
+         });
       })
       .catch((err) => console.log(err));
 
@@ -103,7 +108,7 @@ export class Post extends Component {
         style={{
           // borderTopWidth: 1.5,
           // borderBottomWidth: 1.5,
-          borderRadius: 10,
+          borderRadius: 15,
           borderColor: "green",
           backgroundColor: "#000",
           borderWidth: 0,
@@ -124,6 +129,7 @@ export class Post extends Component {
         />
         <Footer
           likesCount={this.props.post.likeCount}
+          savesCount={this.props.post.saveCount}
           commentCount={this.props.post.commentCount}
           postID={this.props.post.postID}
           status={this.props.post.status}

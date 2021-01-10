@@ -26,7 +26,8 @@ import Tracks from "../components/spotify_search/Tracks";
 import Albums from "../components/spotify_search/Albums";
 import Artists from "../components/spotify_search/Artists";
 import SoundCloudTracks from "../components/soundcloud_search/Tracks";
-
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 let list;
 let array = [];
 let array1 = [];
@@ -193,9 +194,9 @@ function Search() {
       });
   });
 
-  if (lyricsPage == false) {
+  if (UserStore.lyricsPage == false) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <LinearGradient colors={["#000", "#000"]} style={styles.header}>
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
           <View style={[styles.action, { backgroundColor: "#292929" }]}>
@@ -211,7 +212,7 @@ function Search() {
                   name="search1"
                   size={30}
                   style={{
-                    color: "#1DB954",
+                    color: "#292929",
                     padding: 4,
                     alignSelf: "center",
                   }}
@@ -233,7 +234,7 @@ function Search() {
               style={{
                 height: 50,
                 backgroundColor: "#292929",
-                marginHorizontal: 5,
+                margin: 5,
                 borderRadius: 10,
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -252,7 +253,11 @@ function Search() {
               >
                 <View>
                   <Text style={{ color: index == 0 ? "#292929" : "#fff" }}>
-                    profiles
+                    <FontAwesome5
+                      name="user-alt"
+                      size={20}
+                      color={index == 0 ? "#292929" : "#fff"}
+                    />
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -268,7 +273,11 @@ function Search() {
               >
                 <View>
                   <Text style={{ color: index == 1 ? "#292929" : "#fff" }}>
-                    spotify
+                    <FontAwesome5
+                      name="spotify"
+                      size={20}
+                      color={index == 1 ? "#292929" : "#fff"}
+                    />
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -285,7 +294,11 @@ function Search() {
               >
                 <View>
                   <Text style={{ color: index == 2 ? "#292929" : "#fff" }}>
-                    soundcloud
+                    <FontAwesome5
+                      name="soundcloud"
+                      size={20}
+                      color={index == 2 ? "#292929" : "#fff"}
+                    />
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -304,13 +317,7 @@ function Search() {
               >
                 <View
                   style={{
-                    margin: 15,
                     padding: 5,
-                    borderBottomWidth: 3,
-                    borderColor: "#fff",
-                    opacity: 1,
-                    color: "#",
-                    borderRadius: 0,
                   }}
                 >
                   {list}
@@ -344,9 +351,13 @@ function Search() {
                     >
                       <View>
                         <Text
-                          style={{ color: status == 0 ? "#292929" : "#fff" }}
+                          style={{
+                            color: status == 0 ? "#292929" : "#fff",
+                            fontWeight: "bold",
+                            fontSize: 13,
+                          }}
                         >
-                          tracks
+                          TRACKS
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -362,9 +373,13 @@ function Search() {
                     >
                       <View>
                         <Text
-                          style={{ color: status == 1 ? "#292929" : "#fff" }}
+                          style={{
+                            color: status == 1 ? "#292929" : "#fff",
+                            fontWeight: "bold",
+                            fontSize: 13,
+                          }}
                         >
-                          artists
+                          ARTISTS
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -381,9 +396,13 @@ function Search() {
                     >
                       <View>
                         <Text
-                          style={{ color: status == 2 ? "#292929" : "#fff" }}
+                          style={{
+                            color: status == 2 ? "#292929" : "#fff",
+                            fontWeight: "bold",
+                            fontSize : 13
+                          }}
                         >
-                          albums
+                          ALBUMS
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -393,7 +412,7 @@ function Search() {
                 {index == 1 &&
                   status == 0 &&
                   array.map((track, index) => {
-                    return <Tracks track={track} />;
+                    return <Tracks track={track}  index = {index}/>;
                   })}
 
                 {index == 1 &&
@@ -411,7 +430,7 @@ function Search() {
             </ScrollView>
           </Animatable.View>
         </LinearGradient>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return (
@@ -422,7 +441,7 @@ function Search() {
           parallaxHeaderHeight={300}
           renderForeground={() => (
             <ImageBackground
-              source={{ uri: array[trackIndex].image }}
+              source={{ uri: array[UserStore.trackIndex].image }}
               style={{
                 height: 300,
                 flex: 1,
@@ -450,7 +469,7 @@ function Search() {
                 ]}
               >
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity onPress={() => setLyricsPage(false)}>
+                  <TouchableOpacity onPress={() => UserStore.lyricsPage = (false)}>
                     <View
                       style={{
                         flex: 1,
@@ -473,7 +492,7 @@ function Search() {
                         }}
                         numberOfLines={1}
                       >
-                        {array[trackIndex].title}
+                        {array[UserStore.trackIndex].title}
                       </Text>
                     </View>
                     <View
@@ -490,7 +509,7 @@ function Search() {
                         }}
                         numberOfLines={1}
                       >
-                        {`${array[trackIndex].artist}`}
+                        {`${array[UserStore.trackIndex].artist}`}
                       </Text>
                     </View>
                   </View>
@@ -524,7 +543,7 @@ function Search() {
             >
               <ScrollView style={{ padding: 5, marginTop: 5 }}>
                 <Text style={{ color: "#CCCCCC", fontSize: 20 }}>
-                  {array[trackIndex].lyrics}
+                  {array[UserStore.trackIndex].lyrics}
                 </Text>
               </ScrollView>
             </Animatable.View>
@@ -540,13 +559,13 @@ export default observer(Search);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EAEAEB",
+    backgroundColor: "#000",
   },
   header: {
     justifyContent: "flex-end",
     paddingHorizontal: 10,
-    paddingBottom: 25,
-    paddingTop: 50,
+    paddingBottom: 10,
+    paddingTop : 5
   },
   footer: {
     flex: 3,
@@ -565,7 +584,7 @@ const styles = StyleSheet.create({
   action: {
     backgroundColor: "#fff",
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 0,
     borderBottomWidth: 2,
     borderBottomColor: "#fff",
     padding: 5,

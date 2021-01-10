@@ -285,7 +285,7 @@ export class HomeScreen extends Component {
                   <ImageBackground
                     source={{ uri: card.image }}
                     style={{ height: "100%", width: "100%" }}
-                    imageStyle={{ borderRadius: 15 }}
+                    imageStyle={{ borderRadius:25 }}
                   >
                     <View
                       style={{
@@ -438,7 +438,8 @@ export class HomeScreen extends Component {
                           colors={["#292929", "#292929", "#292929"]}
                           style={{
                             opacity: 0.9,
-                            borderRadius: 25,
+                            borderTopLeftRadius: 25,
+                            borderTopRightRadius: 25,
                             borderWidth: 3,
                             borderStyle: "dotted",
                             borderColor: "#292929",
@@ -457,6 +458,7 @@ export class HomeScreen extends Component {
                                 style={{ height: "100%", width: "100%" }}
                                 imageStyle={{
                                   borderTopRightRadius: 15,
+                                  borderBottomLeftRadius : 15,
                                   opacity: 0.8,
                                 }}
                               ></ImageBackground>
