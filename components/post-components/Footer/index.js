@@ -41,7 +41,7 @@ const Footer = ({
           }
         )
         .then((res) => {
-          console.log("success");
+          // console.log("success");
         })
         .catch((err) => {
           setIsLike(isLiked);
@@ -59,7 +59,7 @@ const Footer = ({
           }
         )
         .then((res) => {
-          console.log("success");
+          // console.log("success");
         })
         .catch((err) => {
           setIsLike(isLiked);
@@ -70,7 +70,7 @@ const Footer = ({
   };
 
   const onSavePressed = () => {
-    console.log(status);
+    // console.log(status);
 
     const amount = isSaved ? -1 : 1;
     setSavesCount(savesCount + amount);
@@ -299,7 +299,7 @@ const Footer = ({
       spotifyAPI
         .areFollowingPlaylist(trackID, [UserStore.spotifyUserDetails.user_id])
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response[0] === true) {
             setIsSave(true);
             // console.log(`Saved ${status}`);

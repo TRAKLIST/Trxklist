@@ -10,7 +10,7 @@ import spotifyAPI from "../../SpotifyAPI";
 import TracklistItem from "./TracklistItem";
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
-  console.log(thisTrack.track, "efke");
+  // console.log(thisTrack.track, "efke");
   let tracklist = thisTrack.track ? (
     thisTrack.track.map((track) => <TracklistItem track={track} />)
   ) : (

@@ -80,7 +80,7 @@ export default function Item(props) {
               }
             )
             .then((res) => {
-              console.log("success");
+            //   console.log("success");
             })
             .catch((err) => {
               setIsLike(isLiked);
@@ -98,7 +98,7 @@ export default function Item(props) {
               }
             )
             .then((res) => {
-              console.log("success");
+            //   console.log("success");
             })
             .catch((err) => {
               setIsLike(isLiked);

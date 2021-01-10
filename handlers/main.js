@@ -45,7 +45,7 @@ exports.first_route = (status) => {
 
   const search = (query) => {
     setQueryList([]);
-    console.log(status, "uvyu");
+    // console.log(status, "uvyu");
 
     if (status == "track") {
       spotifyAPI.searchTracks(query).then(
@@ -99,7 +99,7 @@ exports.first_route = (status) => {
               artist: item.owner.display_name,
               image: item.images[0].url,
             };
-            console.log(trackQuery.title, "rvsu");
+            // console.log(trackQuery.title, "rvsu");
             setQueryList((oldArray) => [...oldArray, trackQuery]);
           });
         },
@@ -113,7 +113,7 @@ exports.first_route = (status) => {
   const select = (item) => {
     setToggleHiglight(item.id);
     let track_playlist = [];
-    console.log(item, "bers");
+    // console.log(item, "bers");
     // if album or playlist get tracks
     spotifyAPI.getPlaylist(item.id).then((response) => {
       // console.log(response);

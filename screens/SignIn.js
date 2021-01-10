@@ -268,8 +268,8 @@ const SignInScreen = ({ navigation }) => {
                   response.data.credentials.refresh_token
                 );
                 // save notifications
-                UserStore.notifications = response.data.notifications;
-                console.log(response.data.notifications, "fgvs");
+                // UserStore.notifications = response.data.notifications;
+                // console.log(response.data.notifications, "fgvs");
 
                 UserStore.isLoggedIn = true;
               })
@@ -341,16 +341,16 @@ const SignInScreen = ({ navigation }) => {
 
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
-        axios
-          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
-            headers: {
-              Authorization: `Bearer ${res.data.token}`,
-            },
-          })
-          .then((response) => {
-            UserStore.notifications = response.data.notifications;
-          })
-          .catch((err) => alert(`Error 1 : ${err}`))
+        // axios
+        //   .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+        //     headers: {
+        //       Authorization: `Bearer ${res.data.token}`,
+        //     },
+        //   })
+        //   .then((response) => {
+        //     UserStore.notifications = response.data.notifications;
+        //   })
+        //   .catch((err) => alert(`Error 1 : ${err}`))
 
         UserStore.isLoggedIn = true;
       })

@@ -52,7 +52,7 @@ function Timeline() {
       return new Date(b.playedAt) - new Date(a.playedAt);
     });
 
-    console.log(array1);
+    // console.log(array1);
   }, []);
 
   const onRefresh = React.useCallback(() => {
@@ -92,7 +92,7 @@ function Timeline() {
               })
               .catch((err) => console.log(err));
           });
-          console.log(UserStore.followingDetails, "gang");
+          // console.log(UserStore.followingDetails, "gang");
 
           UserStore.followingDetails.map((user) => {
             let data = {
@@ -118,7 +118,7 @@ function Timeline() {
             return new Date(b.track.playedAt) - new Date(a.track.playedAt);
           });
 
-          console.log(array1_);
+          // console.log(array1_);
         })
         .catch((err) => console.log(err));
     }, [refreshing]);

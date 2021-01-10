@@ -144,7 +144,7 @@ function Main() {
         axios
           .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             UserStore.allPosts = res.data;
             UserStore.enablePostScreen = false;
             setIndex(0);

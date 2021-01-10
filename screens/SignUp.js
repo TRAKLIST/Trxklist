@@ -99,7 +99,6 @@ const SignUpScreen = ({ navigation }) => {
     });
 
     spotifyAPI.getMe().then((response) => {
-      console.log();
       var getMe = {
         user_name: response.display_name,
         user_image: !(
@@ -254,7 +253,7 @@ const SignUpScreen = ({ navigation }) => {
           UserStore.isLoggedIn = true;
         })
         .catch((err) => console.log(err));
-      console.log(UserStore.isLoggedIn);
+      // console.log(UserStore.isLoggedIn);
     };
 
     const [data, setData] = React.useState({
@@ -288,7 +287,7 @@ const SignUpScreen = ({ navigation }) => {
         ...data,
         meloID: val,
       });
-      console.log(data);
+      // console.log(data);
     };
 
     const handlePasswordChange = (val) => {
@@ -296,7 +295,7 @@ const SignUpScreen = ({ navigation }) => {
         ...data,
         password: val,
       });
-      console.log(data);
+      // console.log(data);
     };
 
     const handleConfirmPasswordChange = (val) => {
@@ -304,7 +303,7 @@ const SignUpScreen = ({ navigation }) => {
         ...data,
         confirm_password: val,
       });
-      console.log(data);
+      // console.log(data);
     };
 
     const updateConfirmSecureTextEntry = () => {

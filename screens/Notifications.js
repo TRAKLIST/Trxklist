@@ -47,7 +47,7 @@ function Notifications() {
         >
           <View></View>
           <View>
-            <Text style={{ fontWeight: "bold", color: "#fff" }}>{`${
+            <Text style={{ fontWeight: "bold", color: "#292929" }}>{`${
               notification.sender
             } saved a track you listed ${dayjs(
               notification.createdAt

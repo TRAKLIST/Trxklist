@@ -179,7 +179,7 @@ function LoadingPage() {
       })
       .catch((err) => console.log(err));
 
-    console.log(UserStore.update);
+    // console.log(UserStore.update);
 
     UserStore.loading = false;
     // }, 10000);

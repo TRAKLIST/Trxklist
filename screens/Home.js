@@ -106,7 +106,7 @@ export class HomeScreen extends Component {
     });
 
   componentDidMount() {
-    console.log('hiyahibcehi')
+    // console.log('hiyahibcehi')
     let startTimeM = new Date().getTime();
 
     // console.log(shuffle(UserStore.topTracks), 'erge')
@@ -262,7 +262,7 @@ export class HomeScreen extends Component {
         // console.log(this.state.recommendations)
         let durationM = new Date().getTime() - startTimeM;
         this.setState({ loading: false });
-        console.log(durationM, "time");
+        // console.log(durationM, "time");
       });
     return;
   }
@@ -553,7 +553,7 @@ export class HomeScreen extends Component {
           }
         }}
         onSwiped={(cardIndex) => {
-          console.log(cardIndex, this.state.recommendations.length - 1);
+          // console.log(cardIndex, this.state.recommendations.length - 1);
 
           cardIndex == this.state.recommendations.length - 4
             ?   
@@ -726,7 +726,7 @@ export class HomeScreen extends Component {
                 })
             : null;
         }}
-        onSwipedAll={() => console.log("done")}
+        // onSwipedAll={() => console.log("done")}
         verticalSwipe={false}
         onSwipedRight={(cardIndex) => {
           saveTrack(this.state.recommendations[cardIndex].id);

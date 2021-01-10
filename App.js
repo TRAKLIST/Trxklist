@@ -16,10 +16,64 @@ import Main from "./screens/Main";
 import Home from "./screens/Home";
 import Notifications from "./screens/Notifications";
 
+import * as firebase from "firebase";
+import { Use } from "react-native-svg";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyC-Wt2ZiKhqAbBv1coYVW4lJiFpo6FggVA",
+  authDomain: "projectmelo.firebaseapp.com",
+  databaseURL: "https://projectmelo.firebaseio.com",
+  projectId: "projectmelo",
+  storageBucket: "projectmelo.appspot.com",
+  messagingSenderId: "1044108628538",
+  appId: "1:1044108628538:web:863f52f5ce8f544a2adb03",
+  measurementId: "G-BCHC4MPG0Y",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
+
+const ref = firebase.firestore().collection("notifications");
+
 const Drawer = createDrawerNavigator();
 
 function App() {
   // console.log = function() {}
+
+  React.useEffect(() => {
+    ref.onSnapshot((querySnapShot) => {
+      // console.log(querySnapShot, "etrji");
+      let items = []
+      querySnapShot.forEach(doc => {
+        items.push(doc.data())
+      })
+
+      items.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      UserStore.notifications = items
+
+
+    })
+
+    // ref.onCreate((snapshot) => {
+    //   console.log(snapshot)
+      // return db
+      //   .doc(`/posts/${snapshot.data().postID}`)
+      //   .get()
+      //   .then((doc) => {
+      //     if (doc.exists && doc.data().meloID !== snapshot.data().meloID) {
+      //       console.log('new notifications')
+      //     }
+      //     return;
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+        // });
+    // });
+  }, []);
+
   return (
     <NavigationContainer>
       {UserStore.isLoggedIn === true ? (

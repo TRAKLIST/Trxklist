@@ -32,10 +32,10 @@ function User({ user, isFollowing }) {
         .then((res) => {
           // console.log(res.data, 'ferfveu'); 
           // traverse through array until melo is equal.then delete that element
-          console.log(UserStore.followingDetails)
+          // console.log(UserStore.followingDetails)
           UserStore.followingDetails.map((user, index) => {
             if(user.meloID == recipient){
-              console.log(index)
+              // console.log(index)
               UserStore.followingDetails.splice(index, 1)
             }
           })
@@ -57,7 +57,7 @@ function User({ user, isFollowing }) {
           }
         )
         .then((res) => {
-          console.log(res.data, "ferfveu");
+          // console.log(res.data, "ferfveu");
           UserStore.followingDetails.push(res.data)
         })
         .catch((err) => {

@@ -26,7 +26,7 @@ export default function TracklistItem({ track }) {
   }, []);
 
   const onSavePressed = (trackID) => {
-    console.log(trackID, "SFWE");
+    // console.log(trackID, "SFWE");
     if (!isSaved) {
       setIsSave(true);
       spotifyAPI
