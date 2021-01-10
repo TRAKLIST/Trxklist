@@ -29,11 +29,10 @@ var firebaseConfig = {
   appId: "1:1044108628538:web:863f52f5ce8f544a2adb03",
   measurementId: "G-BCHC4MPG0Y",
 };
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
 
-const ref = firebase.firestore().collection("notifications");
+const notificationsRef = firebase.firestore().collection("notifications");
+// const postsRef = firebase.firestore().collection("posts");
 
 const Drawer = createDrawerNavigator();
 
@@ -41,36 +40,48 @@ function App() {
   // console.log = function() {}
 
   React.useEffect(() => {
-    ref.onSnapshot((querySnapShot) => {
+    notificationsRef.onSnapshot((querySnapShot) => {
       // console.log(querySnapShot, "etrji");
-      let items = []
-      querySnapShot.forEach(doc => {
-        items.push(doc.data())
-      })
+      let items = [];
+      querySnapShot.forEach((doc) => {
+        items.push(doc.data());
+      });
 
       items.sort(function (a, b) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      UserStore.notifications = items
+      UserStore.notifications = items;
+    });
 
+    // postsRef.onSnapshot((querySnapShot) => {
+    //   let items = [];
+    //   querySnapShot.forEach((doc) => {
+    //     items.push(doc.data());
+    //   });
 
-    })
+    //   items.sort(function (a, b) {
+    //     return new Date(b.createdAt) - new Date(a.createdAt);
+    //   });
+
+    //   UserStore.allPosts = items;
+
+    // });
 
     // ref.onCreate((snapshot) => {
     //   console.log(snapshot)
-      // return db
-      //   .doc(`/posts/${snapshot.data().postID}`)
-      //   .get()
-      //   .then((doc) => {
-      //     if (doc.exists && doc.data().meloID !== snapshot.data().meloID) {
-      //       console.log('new notifications')
-      //     }
-      //     return;
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-        // });
+    // return db
+    //   .doc(`/posts/${snapshot.data().postID}`)
+    //   .get()
+    //   .then((doc) => {
+    //     if (doc.exists && doc.data().meloID !== snapshot.data().meloID) {
+    //       console.log('new notifications')
+    //     }
+    //     return;
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    // });
     // });
   }, []);
 

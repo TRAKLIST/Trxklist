@@ -20,7 +20,7 @@ class UserStore {
       topTracks : [],
       notifications : [],
       lyricsPage : false,
-      trackIndex : 0
+      trackIndex : 0,
     });
   }
 }

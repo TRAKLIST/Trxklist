@@ -157,6 +157,12 @@ function Main() {
       .catch((err) => console.log(err));
   };
 
+  // newPosts = () => {
+  //   UserStore.isnewPostsAvailable = false
+  //   UserStore.allPosts = UserStore.newPosts
+  //   console.log(UserStore.newPosts.length, UserStore.newPosts.length)
+  // }
+
   if (!UserStore.enablePostScreen) {
     return (
       <View style={{ backgroundColor: "#292929", flex: 1 }}>
@@ -294,6 +300,36 @@ function Main() {
               <LinearGradient
                 colors={["#292929", "#292929", "#292929", "#292929", "#292929"]}
               >
+                {/* { UserStore.isnewPostsAvailable == true &&
+                  <TouchableOpacity onPress = {newPosts}>
+                    <View
+                      style={{
+                        backgroundColor: "#000",
+                        opacity: 0.4,
+                        height: 50,
+                        flex: 1,
+                        marginLeft: 10,
+                        marginRight: 10,
+                        marginBottom: 5,
+                        borderRadius: 15,
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        padding: 15,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          color: "#fff",
+                        }}
+                      >
+                        new post(s) available...
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                } */}
+
                 <View>{recentPostsMarkup}</View>
                 {/* explore */}
               </LinearGradient>

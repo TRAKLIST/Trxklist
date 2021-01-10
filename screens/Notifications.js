@@ -4,8 +4,35 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
+import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
 
 function Notifications() {
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("hi");
+      // mark notification read
+      let notificationIDs = [];
+
+      let unreadNotificationsIds = UserStore.notifications
+        .filter((not) => !not.read)
+        .map((not) => not.postID);
+      // this.props.markNotificationsRead(unreadNotificationsIds);
+
+      console.log(unreadNotificationsIds, 'fevcih')
+
+      axios
+        .post(
+          "https://europe-west1-projectmelo.cloudfunctions.net/api/notifications",
+          unreadNotificationsIds
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log("didnt work"));
+    }, [])
+  );
+
   dayjs.extend(relativeTime);
   let item = UserStore.notifications.map((notification) => {
     if (notification.type == "like") {
@@ -13,7 +40,7 @@ function Notifications() {
         <View
           style={{
             height: 70,
-            backgroundColor: "#FFF8E7",
+            backgroundColor: notification.read ? "#FFF8E7" : "green",
             width: "100%",
             marginTop: 5,
             justifyContent: "center",
@@ -37,7 +64,7 @@ function Notifications() {
         <View
           style={{
             height: 70,
-            backgroundColor: "#FFF8E7",
+            backgroundColor: notification.read ? "#FFF8E7" : "green",
             width: "100%",
             marginTop: 5,
             justifyContent: "center",
@@ -61,7 +88,7 @@ function Notifications() {
         <View
           style={{
             height: 70,
-            backgroundColor: "#FFF8E7",
+            backgroundColor: notification.read ? "#FFF8E7" : "green",
             width: "100%",
             marginTop: 5,
             justifyContent: "center",

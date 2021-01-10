@@ -44,6 +44,7 @@ const Footer = ({
           // console.log("success");
         })
         .catch((err) => {
+          alert(err)
           setIsLike(isLiked);
           setLikesCount(likesCount);
           console.log(err);
