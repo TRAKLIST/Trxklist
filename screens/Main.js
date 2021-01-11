@@ -424,7 +424,10 @@ function Main() {
                   style={{ padding: 10, flex: 1, justifyContent: "center" }}
                 >
                   <TouchableOpacity
-                    onPress={() => (UserStore.enablePostScreen = false)}
+                    onPress={() => {
+                      UserStore.enablePostScreen = false;
+                      setCaption("")
+                    }}
                   >
                     <View
                       style={{
@@ -464,7 +467,7 @@ function Main() {
                 <View
                   style={{ padding: 10, flex: 1, justifyContent: "center" }}
                 >
-                  { index == 1 &&
+                  {index == 1 && (
                     <TouchableOpacity onPress={makePost}>
                       <View
                         style={{
@@ -479,7 +482,7 @@ function Main() {
                         />
                       </View>
                     </TouchableOpacity>
-                  }
+                  )}
                 </View>
               </View>
               {captionHeader == false && pickerHeader == true ? (
@@ -488,6 +491,7 @@ function Main() {
                     style={{
                       backgroundColor: "yellow",
                       flex: 1,
+                      paddingHorizontal : 2,
                       justifyContent: "center",
                     }}
                   >
@@ -511,60 +515,63 @@ function Main() {
                   <View></View>
                 </View>
               ) : captionHeader == true && pickerHeader == false ? (
-                <KeyboardAvoidingView style = {{flex : 1}} >
-                <View
-                  style={[
-                    {
-                      flex: 1,
-                      padding : 5
-                    },
-                  ]}
-                >
-                  <View style={{ flexDirection: "row", flex: 1 }}>
-                    <View style={{ flex: 1, justifyContent : 'center' }}>
-                      <Image
-                        source={{
-                          uri: UserStore.spotifyUserDetails.user_image,
-                        }}
-                        style={{
-                          height: 50,
-                          width: 100,
-                          borderRadius: 30,
-                          alignSelf: "center",
-                          flex: 1,
-                        }}
-                      />
-                    </View>
+                <KeyboardAvoidingView style={{ flex: 1 }}>
+                  <View
+                    style={[
+                      {
+                        flex: 1,
+                        padding: 10,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row", flex: 1, justifyContent : 'center'}}>
+                      <View style={{ flex: 1, justifyContent: "center"}}>
+                        <Image
+                          source={{
+                            uri: UserStore.spotifyUserDetails.user_image,
+                          }}
+                          style={{
+                            height: 50,
+                            width: 100,
+                            borderRadius: 30,
+                            alignSelf: "center",
+                            flex: 1,
+                          }}
+                        />
+                      </View>
 
-                    <View style={{ flex: 2, justifyContent : 'center' }}>
-                      <TextInput
-                        placeholder="say something..."
-                        autoCapitalize="none"
-                        value={caption}
-                        autoCorrect={false}
-                        multiline="true"
-                        onChangeText={(val) => handleCaptionChange(val)}
-                        style={{
-                          justifyContent: "center",
-                          backgroundColor: "#000",
-                          borderRadius: 30,
-                          borderColor: "grey",
-                          flex: 1,
-                          textAlign: "center",
-                          fontSize: 20,
-                          opacity :0.4,
-                          color : 'grey',
-                          fontWeight : 'bold'
-                        }}
-                      />
+                      <View style={{ flex: 2, justifyContent: "center", paddingLeft : 10}}>
+                        <TextInput
+                          placeholder="say sumn..."
+                          autoCapitalize="none"
+                          value={caption}
+                          // autoCorrect={false}
+                          multiline="true"
+                          numberOfLines = {4}
+                          onChangeText={(val) => handleCaptionChange(val)}
+                          style={{
+                            justifyContent: "center",
+                            backgroundColor: "#000",
+                            borderRadius: 30,
+                            borderColor: "grey",
+                            flex: 1,
+                            textAlign: "center",
+                            // fontSize: 20,
+                            opacity: 0.4,
+                            color: "grey",
+                            fontWeight: "bold",
+                            paddingTop : 25,
+                            paddingBottom : 25
+                          }}
+                        />
+                      </View>
                     </View>
                   </View>
-                </View>
                 </KeyboardAvoidingView>
               ) : captionHeader == true && pickerHeader == false ? null : null}
             </View>
 
-            <View style={{ backgroundColor: "green", flex: 2 }}>
+            <View style={{  flex: 2 , paddingHorizontal : 10}}>
               <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}

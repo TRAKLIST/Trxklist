@@ -5,9 +5,12 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Text,
+  Keyboard,
   TextInput,
   ImageBackground,
+  KeyboardAvoidingView,
   Platform,
   StatusBar,
   Dimensions,
@@ -180,6 +183,7 @@ function Search() {
             image: users.image,
             bio: users.bio,
             follow: following,
+            createdAt: users.createdAt,
           });
           // console.log(users.meloID, 'IJOft')
         });
@@ -197,239 +201,265 @@ function Search() {
   if (UserStore.lyricsPage == false) {
     return (
       <SafeAreaView style={styles.container}>
-        <LinearGradient colors={["#000", "#000"]} style={styles.header}>
-          <StatusBar backgroundColor="#009387" barStyle="light-content" />
-          <View style={[styles.action, { backgroundColor: "#292929" }]}>
-            <TextInput
-              placeholder="Search for users and music"
-              style={[styles.textInput]}
-              autoCapitalize="none"
-              onChangeText={(val) => setSearchTerm(val)}
-            />
-            <TouchableOpacity style={{ flex: 1 }} onPress={search}>
-              <LinearGradient colors={["#fff", "#fff"]} style={[styles.signIn]}>
-                <ADIcon
-                  name="search1"
-                  size={30}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={{ backgroundColor: "#292929", flex: 1, padding: 10 }}>
+            <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+              {/* search bar */}
+              <View style={{ flex: 5, justifyContent: "center", padding: 5 }}>
+                <TextInput
+                  placeholder="Search for stuff"
+                  autoCapitalize="none"
                   style={{
-                    color: "#292929",
-                    padding: 4,
-                    alignSelf: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#000",
+                    borderRadius: 30,
+                    borderColor: "grey",
+                    textAlign: "center",
+                    // fontSize: 20,
+                    opacity: 0.4,
+                    color: "grey",
+                    fontWeight: "bold",
+                    height: 50,
                   }}
+                  onChangeText={(val) => setSearchTerm(val)}
                 />
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
-        <LinearGradient colors={["#000", "#292929"]} style={styles.footer}>
-          <Animatable.View
-            animation="bounceInUp"
-            style={{
-              height: "100%",
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-            }}
-          >
-            <View
-              style={{
-                height: 50,
-                backgroundColor: "#292929",
-                margin: 5,
-                borderRadius: 10,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: index == 0 ? "#fff" : "#292929", //
-
-                  borderRadius: 10,
-                }}
-                onPress={() => setIndex(0)}
-              >
-                <View>
-                  <Text style={{ color: index == 0 ? "#292929" : "#fff" }}>
-                    <FontAwesome5
-                      name="user-alt"
-                      size={20}
-                      color={index == 0 ? "#292929" : "#fff"}
-                    />
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: index == 1 ? "#fff" : "#292929", //
-                  borderRadius: 10,
-                }}
-                onPress={() => setIndex(1)}
-              >
-                <View>
-                  <Text style={{ color: index == 1 ? "#292929" : "#fff" }}>
-                    <FontAwesome5
-                      name="spotify"
-                      size={20}
-                      color={index == 1 ? "#292929" : "#fff"}
-                    />
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "transparent",
-                  borderRadius: 10,
-                  backgroundColor: index == 2 ? "#fff" : "#292929", //
-                }}
-                onPress={() => setIndex(2)}
-              >
-                <View>
-                  <Text style={{ color: index == 2 ? "#292929" : "#fff" }}>
-                    <FontAwesome5
-                      name="soundcloud"
-                      size={20}
-                      color={index == 2 ? "#292929" : "#fff"}
-                    />
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <ScrollView>
-              <LinearGradient
-                colors={["#292929", "#292929"]}
-                style={{
-                  minHeight: Dimensions.get("window").height,
-                  backgroundColor: "grey",
-                  margin: 5,
-                  borderRadius: 20,
-                  opacity: 0.9,
-                }}
-              >
-                <View
-                  style={{
-                    padding: 5,
-                  }}
-                >
-                  {list}
-                </View>
-
-                {index == 2 &&
-                  soundcloud_tracks.map((track, index) => {
-                    return <SoundCloudTracks track={track} />;
-                  })}
-
-                {index == 1 && (
+              </View>
+              <View style={{ flex: 1, justifyContent: "center", padding: 5 }}>
+                <TouchableOpacity onPress={search}>
                   <View
                     style={{
-                      height: 40,
-                      marginLeft: 10,
-                      marginRight: 10,
-                      borderRadius: 10,
-                      flexDirection: "row",
+                      backgroundColor: "#000",
+                      opacity: 0.4,
+                      borderRadius: 30,
+                      height: 50,
+                      justifyContent: "center",
                     }}
                   >
-                    <TouchableOpacity
+                    <ADIcon
+                      name="search1"
+                      size={25}
                       style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: status == 0 ? "#fff" : "#292929",
-
-                        borderRadius: 10,
+                        color: "#292929",
+                        alignSelf: "center",
                       }}
-                      onPress={() => setStatus(0)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 0 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                          }}
-                        >
-                          TRACKS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: status == 1 ? "#fff" : "#292929",
-                        borderRadius: 10,
-                      }}
-                      onPress={() => setStatus(1)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 1 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                          }}
-                        >
-                          ARTISTS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "transparent",
-                        borderRadius: 10,
-                        backgroundColor: status == 2 ? "#fff" : "#292929",
-                      }}
-                      onPress={() => setStatus(2)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 2 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize : 13
-                          }}
-                        >
-                          ALBUMS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
+                    />
                   </View>
-                )}
+                </TouchableOpacity>
+              </View>
+            </View>
 
-                {index == 1 &&
-                  status == 0 &&
-                  array.map((track, index) => {
-                    return <Tracks track={track}  index = {index}/>;
-                  })}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  height: 50,
+                  borderRadius: 10,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: index == 0 ? "#fff" : "#292929",
+                    borderColor: index == 1 ? "#292929" : "#fff",
+                    margin: 5,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => setIndex(0)}
+                >
+                  <View>
+                    <Text style={{ color: index == 0 ? "#292929" : "#fff" }}>
+                      <FontAwesome5
+                        name="user-alt"
+                        size={20}
+                        color={index == 0 ? "#292929" : "#fff"}
+                      />
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: index == 1 ? "#fff" : "#292929",
+                    borderWidth: 3,
+                    borderColor: index == 1 ? "#292929" : "#fff",
+                    borderRadius: 10,
+                    margin: 5,
+                  }}
+                  onPress={() => setIndex(1)}
+                >
+                  <View>
+                    <Text style={{ color: index == 1 ? "#292929" : "#fff" }}>
+                      <FontAwesome5
+                        name="spotify"
+                        size={20}
+                        color={index == 1 ? "#292929" : "#fff"}
+                      />
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "transparent",
+                    borderRadius: 10,
+                    margin: 5,
+                    borderWidth: 3,
+                    borderColor: index == 1 ? "#292929" : "#fff",
+                    backgroundColor: index == 2 ? "#fff" : "#292929", //
+                  }}
+                  onPress={() => setIndex(2)}
+                >
+                  <View>
+                    <Text style={{ color: index == 2 ? "#292929" : "#fff" }}>
+                      <FontAwesome5
+                        name="soundcloud"
+                        size={20}
+                        color={index == 2 ? "#292929" : "#fff"}
+                      />
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
 
-                {index == 1 &&
-                  status == 1 &&
-                  array1.map((artist) => {
-                    return <Artists artist={artist} />;
-                  })}
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={{
+                flex: 7,
+                backgroundColor: "transparent",
+                justifyContent: "center",
+              }}
+            >
+              <ScrollView
+                style={{ padding: 10, backgroundColor: "transparent" }}
+              >
+                <LinearGradient
+                  colors={["#292929", "#292929"]}
+                  style={{
+                    borderRadius: 20,
+                    opacity: 0.9,
+                  }}
+                >
+                  <View>{list}</View>
 
-                {index == 1 &&
-                  status == 2 &&
-                  array2.map((album) => {
-                    return <Albums album={album} />;
-                  })}
-              </LinearGradient>
-            </ScrollView>
-          </Animatable.View>
-        </LinearGradient>
+                  {index == 2 &&
+                    soundcloud_tracks.map((track, index) => {
+                      return <SoundCloudTracks track={track} />;
+                    })}
+
+                  {index == 1 && (
+                    <View
+                      style={{
+                        height: 40,
+                        borderRadius: 10,
+                        flexDirection: "row",
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: status == 0 ? "#fff" : "#292929",
+
+                          borderRadius: 10,
+                        }}
+                        onPress={() => setStatus(0)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status == 0 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            TRACKS
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: status == 1 ? "#fff" : "#292929",
+                          borderRadius: 10,
+                        }}
+                        onPress={() => setStatus(1)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status == 1 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            ARTISTS
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: "transparent",
+                          borderRadius: 10,
+                          backgroundColor: status == 2 ? "#fff" : "#292929",
+                        }}
+                        onPress={() => setStatus(2)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status == 2 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            ALBUMS
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  {index == 1 &&
+                    status == 0 &&
+                    array.map((track, index) => {
+                      return <Tracks track={track} index={index} />;
+                    })}
+
+                  {index == 1 &&
+                    status == 1 &&
+                    array1.map((artist) => {
+                      return <Artists artist={artist} />;
+                    })}
+
+                  {index == 1 &&
+                    status == 2 &&
+                    array2.map((album) => {
+                      return <Albums album={album} />;
+                    })}
+                </LinearGradient>
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
       </SafeAreaView>
     );
   } else {
@@ -469,7 +499,9 @@ function Search() {
                 ]}
               >
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity onPress={() => UserStore.lyricsPage = (false)}>
+                  <TouchableOpacity
+                    onPress={() => (UserStore.lyricsPage = false)}
+                  >
                     <View
                       style={{
                         flex: 1,
@@ -559,13 +591,13 @@ export default observer(Search);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#292929",
   },
   header: {
     justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
-    paddingTop : 5
+    paddingTop: 5,
   },
   footer: {
     flex: 3,

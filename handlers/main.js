@@ -304,15 +304,15 @@ exports.first_route = (status) => {
             margin: 15,
             padding: 10,
             opacity: 0.42,
-            fontWeight : 'bold'
+            fontWeight: "bold",
           }}
         >
           <TextInput
             placeholder="Search for music"
             autoCapitalize="none"
             onChangeText={(val) => handleTrackChange(val)}
-            style={{ color: "grey", fontSize: 20, fontWeight : 'bold' }}
-            placeholderStyle = {{color : 'grey'}}
+            style={{ color: "grey", fontSize: 20, fontWeight: "bold" }}
+            placeholderStyle={{ color: "grey" }}
           />
         </View>
 
@@ -355,16 +355,17 @@ exports.first_route = (status) => {
 exports.second_route = (caption, status) => {
   if (status == "track") {
     return (
-      <Animatable.View /*animation = "fadeInUp"*/ style={{flex : 1}}>
+      <Animatable.View /*animation = "fadeInUp"*/ style={{ flex: 1, }}>
         <View style = {{backgroundColor : '#292929', flex : 1}}>
-          <Body
-          thisTrack={UserStore.trackDetails}
-          caption={caption}
-          status={"Track"}
-          imageUri={UserStore.spotifyUserDetails.user_image}
-        />
+          <View style={{ backgroundColor: "#292929", flex: 1, marginTop : 15 }}>
+            <Body
+              thisTrack={UserStore.trackDetails}
+              caption={caption}
+              status={"Track"}
+              imageUri={UserStore.spotifyUserDetails.user_image}
+            />
+          </View>
         </View>
-        
       </Animatable.View>
     );
   } else if (status == "album") {
@@ -445,7 +446,7 @@ exports.render_tab_bar = (props) => (
   <TabBar
     {...props}
     indicatorStyle={{ backgroundColor: "#1DB954" }}
-    style={{ backgroundColor: "#292929" }}
+    style={{ backgroundColor : '#292929' }}
     renderLabel={({ route, focused, color }) => (
       <Text style={{ color, margin: 8, fontWeight: "bold" }}>
         {route.title}

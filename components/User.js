@@ -2,6 +2,7 @@ import React from "react";
 import {
   View,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Text,
   ImageBackground,
   StyleSheet,
@@ -12,6 +13,8 @@ import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
 
 function User({ user, isFollowing }) {
   const [following, setFollowing] = React.useState(isFollowing);
@@ -30,16 +33,15 @@ function User({ user, isFollowing }) {
           }
         )
         .then((res) => {
-          // console.log(res.data, 'ferfveu'); 
+          // console.log(res.data, 'ferfveu');
           // traverse through array until melo is equal.then delete that element
           // console.log(UserStore.followingDetails)
           UserStore.followingDetails.map((user, index) => {
-            if(user.meloID == recipient){
+            if (user.meloID == recipient) {
               // console.log(index)
-              UserStore.followingDetails.splice(index, 1)
+              UserStore.followingDetails.splice(index, 1);
             }
-          })
-          
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -58,7 +60,7 @@ function User({ user, isFollowing }) {
         )
         .then((res) => {
           // console.log(res.data, "ferfveu");
-          UserStore.followingDetails.push(res.data)
+          UserStore.followingDetails.push(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -68,26 +70,38 @@ function User({ user, isFollowing }) {
   };
 
   return (
-    <TouchableOpacity>
+    <TouchableWithoutFeedback >
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: "column",
+          // borderWidth: 2,
+          // borderColor: "green",
           margin: 5,
-          width: "100%",
-          borderBottomWidth: 1,
-          padding: 10,
+          borderRadius: 10,
+          backgroundColor : "#000",
+          opacity : 0.7
         }}
       >
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            backgroundColor: "transparent",
+          }}
+        >
+          {/* <View
+            
+          > */}
           <ImageBackground
             source={{ uri: user.image }}
             style={{
-              height: 65,
-              width: 65,
+              flex: 0.8,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "transparent",
             }}
-            imageStyle={{
-              borderRadius: 30,
-            }}
+            
+            imageStyle = {{opacity : 1, borderRadius : 10}}
           >
             <View
               style={{
@@ -112,33 +126,52 @@ function User({ user, isFollowing }) {
               />
             </View>
           </ImageBackground>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            padding: 0,
-            marginBottom: 3,
-            flex: 2,
-          }}
-        >
-          <Text numberOfLines={1} style={{ color: "#fff", fontWeight: "bold" }}>
-            {user.user}
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              numberOfLines={1}
-              style={{ color: "#ff7700", fontWeight: "bold" }}
-            >
-              {user.bio}{" "}
-            </Text>
-          </View>
+          {/* </View> */}
+          <View
+            style={{
+              justifyContent: "center",
+              flex: 2,
+              backgroundColor: "transparent",
+              flexDirection: "column",
+            }}
+          >
+            <View style={{ padding: 0, backgroundColor: "transparent" }}>
+              <View style={{ flexDirection: "row", flex: 1 }}>
+                <View
+                  style={{
+                    backgroundColor: "transparent",
+                    flex: 1,
+                    justifyContent: "center",
+                  }}
+                >
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {user.user}
+                    </Text>
+                  </View>
+                </View>
 
-          <View style={{ flexDirection: "row" }}></View>
-        </View>
-        <View style={{ flex: 0.5, flexDirection: "row" }}>
-          {/* icons */}
+                {/* here */}
 
-          {/* <TouchableOpacity
+                <View
+                  style={{
+                    flex: 0.3,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  {/* icons */}
+
+                  {/* <TouchableOpacity
                               style={{ justifyContent: "center", margin: 5 }}
                             >
                               <View style={styles.iconContainer2}>
@@ -149,32 +182,75 @@ function User({ user, isFollowing }) {
                                 />
                               </View>
                             </TouchableOpacity> */}
-          <TouchableOpacity
-            style={{ justifyContent: "center", margin: 5 }}
-            onPress={() => onFollow(user.user)}
-          >
-            <View style={[styles.iconContainer2]}>
-              {/* <AntDesign name="staro" size={25} color={"#ff7700"} /> */}
-              {/* <SimpleLineIcons
+                  <TouchableOpacity
+                    style={{ justifyContent: "center", margin: 5 }}
+                    onPress={() => onFollow(user.user)}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#000",
+                        padding: 10,
+                        borderRadius: 15,
+                        opacity: 0.4,
+                      }}
+                    >
+                      {/* <AntDesign name="staro" size={25} color={"#ff7700"} /> */}
+                      {/* <SimpleLineIcons
                 name="user-following"
                 size={30}
                 color="#44CF6C"
               /> */}
 
-              {following == true ? (
-                <SimpleLineIcons
-                  name="user-following"
-                  size={30}
-                  color="#44CF6C"
-                />
-              ) : (
-                <SimpleLineIcons name="user-follow" size={30} color="#44CF6C" />
-              )}
+                      {following == true ? (
+                        <SimpleLineIcons
+                          name="user-following"
+                          size={23}
+                          color="#44CF6C"
+                        />
+                      ) : (
+                        <SimpleLineIcons
+                          name="user-follow"
+                          size={23}
+                          color="#44CF6C"
+                        />
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          </TouchableOpacity>
+            <View>
+              <View style={{ backgroundColor: "transparent", padding: 5 }}>
+                <View style={{ backgroundColor: "transparent", flex: 1 }}>
+                  {/* <Text
+                    style={{
+                      color: "grey",
+                      fontWeight: "bold",
+                      textAlign: "right",
+                      fontSize: 11,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    following x users
+                  </Text> */}
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      color: "grey",
+                      fontWeight: "bold",
+                      textAlign: "right",
+                      fontSize: 10,
+                    }}
+                  >
+                    {dayjs(user.createdAt).toString()}{" "}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 }
 
