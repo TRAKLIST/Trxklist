@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   TextInput,
   ImageBackground,
   Keyboard,
@@ -132,7 +133,7 @@ exports.first_route = (status) => {
 
   let track_s = queryList ? (
     queryList.map((item) => (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         style={{ marginBottom: 10 }}
         onPress={() => select(item)}
       >
@@ -272,7 +273,7 @@ exports.first_route = (status) => {
             </TouchableOpacity> */}
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     ))
   ) : (
     <Text>Loading</Text>
@@ -290,7 +291,6 @@ exports.first_route = (status) => {
             margin: 0,
             padding: 0,
             flexDirection: "row",
-            backgroundColor: "purple",
           })
         }
       >
@@ -299,17 +299,20 @@ exports.first_route = (status) => {
             flex: 3,
             borderWidth: 2,
             paddign: 2,
-            backgroundColor: "red",
-            borderRadius : '15px',
+            backgroundColor: "#000",
+            borderRadius: "15px",
             margin: 15,
             padding: 10,
+            opacity: 0.42,
+            fontWeight : 'bold'
           }}
         >
           <TextInput
             placeholder="Search for music"
             autoCapitalize="none"
             onChangeText={(val) => handleTrackChange(val)}
-            style={{ color: "#fff", fontSize: 20 }}
+            style={{ color: "grey", fontSize: 20, fontWeight : 'bold' }}
+            placeholderStyle = {{color : 'grey'}}
           />
         </View>
 
@@ -322,15 +325,16 @@ exports.first_route = (status) => {
           <View
             style={{
               flex: 1,
-              backgroundColor: "yellow",
+              backgroundColor: "#000",
               justifyContent: "center",
               margin: 15,
               padding: 10,
               borderWidth: 2,
-              borderRadius : '15px'
+              opacity: 0.42,
+              borderRadius: "15px",
             }}
           >
-            <Octicons name="search" color="#292929" size={26} />
+            <Octicons name="search" color="grey" size={26} />
           </View>
         </TouchableOpacity>
       </View>
@@ -351,20 +355,16 @@ exports.first_route = (status) => {
 exports.second_route = (caption, status) => {
   if (status == "track") {
     return (
-      <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
-        <Body
+      <Animatable.View /*animation = "fadeInUp"*/ style={{flex : 1}}>
+        <View style = {{backgroundColor : '#292929', flex : 1}}>
+          <Body
           thisTrack={UserStore.trackDetails}
           caption={caption}
           status={"Track"}
           imageUri={UserStore.spotifyUserDetails.user_image}
         />
-        <Footer
-          likesCount={0}
-          commentCount={0}
-          postID={"uuidv4()"}
-          status={"Track"}
-          trackID={UserStore.trackDetails.id}
-        />
+        </View>
+        
       </Animatable.View>
     );
   } else if (status == "album") {

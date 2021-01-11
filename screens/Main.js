@@ -15,20 +15,28 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import StickyItemFlatList from "@gorhom/sticky-item";
 import Feather from "react-native-vector-icons/Feather";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { Picker } from "@react-native-picker/picker";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MainSection from "../components/MainSection";
 import axios from "axios";
+import * as Animatable from "react-native-animatable";
+import { TabBar } from "react-native-tab-view";
+
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Octicons from "react-native-vector-icons/Octicons";
+import Icon from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 const AnimatedCustomScrollView = Animated.createAnimatedComponent(ScrollView);
 function wait(timeout) {
@@ -397,22 +405,19 @@ function Main() {
     };
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ backgroundColor: "blue" }}>
-          {captionHeader == false && pickerHeader == true ? (
-            <SafeAreaView
-              style={[
-                {
-                  backgroundColor: "#292929",
-                  backgroundColor: "grey",
-                },
-              ]}
-            >
+        <KeyboardAvoidingView
+          style={{ flex: 1, backgroundColor: "#292929" }}
+          behavior="padding"
+        >
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <View
                 style={{
                   flexDirection: "row",
-                  backgroundColor: "purple",
+                  // backgroundColor: "#000",
+                  opacity: 0.7,
                   margin: 10,
-                  borderRadius : 25
+                  borderRadius: 25,
                 }}
               >
                 <View
@@ -422,7 +427,10 @@ function Main() {
                     onPress={() => (UserStore.enablePostScreen = false)}
                   >
                     <View
-                      style={{ justifyContent: "center", alignItems: "center" }}
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
                       <MaterialCommunityIcons
                         name="step-backward"
@@ -433,9 +441,18 @@ function Main() {
                   </TouchableOpacity>
                 </View>
 
-                <View style={{ flex: 1, padding: 10, backgroundColor: "red" }}>
+                <View
+                  style={{
+                    flex: 1,
+                    padding: 10,
+                    backgroundColor: "#292929",
+                  }}
+                >
                   <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
                     <MaterialCommunityIcons
                       name="circle"
@@ -447,133 +464,119 @@ function Main() {
                 <View
                   style={{ padding: 10, flex: 1, justifyContent: "center" }}
                 >
+                  { index == 1 &&
+                    <TouchableOpacity onPress={makePost}>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <MaterialCommunityIcons
+                          name="step-forward"
+                          size={30}
+                          color="#fff"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  }
+                </View>
+              </View>
+              {captionHeader == false && pickerHeader == true ? (
+                <View>
                   <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
+                    style={{
+                      backgroundColor: "yellow",
+                      flex: 1,
+                      justifyContent: "center",
+                    }}
                   >
-                    <MaterialCommunityIcons
-                      name="step-forward"
-                      size={30}
-                      color="#fff"
-                    />
+                    <Picker
+                      selectedValue={selectedValue}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedValue(itemValue)
+                      }
+                      itemStyle={{
+                        color: "#fff",
+                      }}
+                    >
+                      {/* <Picker.Item label="Lyric" value="lyric" />
+                      <Picker.Item label="Playlist" value="playlist" /> */}
+                      <Picker.Item label="Track" value="track" />
+                      {/* <Picker.Item label="Album" value="album" />
+                      <Picker.Item label="Artist" value="artist" /> */}
+                    </Picker>
+                  </View>
+
+                  <View></View>
+                </View>
+              ) : captionHeader == true && pickerHeader == false ? (
+                <KeyboardAvoidingView style = {{flex : 1}} >
+                <View
+                  style={[
+                    {
+                      flex: 1,
+                      padding : 5
+                    },
+                  ]}
+                >
+                  <View style={{ flexDirection: "row", flex: 1 }}>
+                    <View style={{ flex: 1, justifyContent : 'center' }}>
+                      <Image
+                        source={{
+                          uri: UserStore.spotifyUserDetails.user_image,
+                        }}
+                        style={{
+                          height: 50,
+                          width: 100,
+                          borderRadius: 30,
+                          alignSelf: "center",
+                          flex: 1,
+                        }}
+                      />
+                    </View>
+
+                    <View style={{ flex: 2, justifyContent : 'center' }}>
+                      <TextInput
+                        placeholder="say something..."
+                        autoCapitalize="none"
+                        value={caption}
+                        autoCorrect={false}
+                        multiline="true"
+                        onChangeText={(val) => handleCaptionChange(val)}
+                        style={{
+                          justifyContent: "center",
+                          backgroundColor: "#000",
+                          borderRadius: 30,
+                          borderColor: "grey",
+                          flex: 1,
+                          textAlign: "center",
+                          fontSize: 20,
+                          opacity :0.4,
+                          color : 'grey',
+                          fontWeight : 'bold'
+                        }}
+                      />
+                    </View>
                   </View>
                 </View>
-              </View>
-
-              <Picker
-                selectedValue={selectedValue}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedValue(itemValue)
-                }
-                style={{
-                  backgroundColor: "whitesmoke",
-                  borderRadius: 20,
-                  flex: 1,
-                }}
-              >
-                {/* <Picker.Item label="Lyric" value="lyric" /> */}
-                {/* <Picker.Item label="Playlist" value="playlist" /> */}
-                <Picker.Item label="Track" value="track" />
-                {/* <Picker.Item label="Album" value="album" /> */}
-                {/* <Picker.Item label="Artist" value="artist" /> */}
-              </Picker>
-            </SafeAreaView>
-          ) : captionHeader == true && pickerHeader == false ? (
-            <View
-              style={[
-                {
-                  backgroundColor: "#292929",
-                  justifyContent: "flex-start",
-                  paddingHorizontal: 0,
-                },
-              ]}
-            >
-              {/* <Button
-                title="return"
-                onPress={() => {
-                  UserStore.enablePostScreen = false;
-                  setCaption("");
-                }}
-              /> */}
-
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      UserStore.enablePostScreen = false;
-                      UserStore.trackDetails = [];
-                      setCaption("");
-                      // setIndex(0)
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      name="cancel"
-                      size={30}
-                      color="#fff"
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1 }}></View>
-                <View style={{ flex: 1, alignItems: "flex-end" }}>
-                  <TouchableOpacity onPress={makePost}>
-                    <Feather name="send" size={30} color="#fff" />
-                  </TouchableOpacity>
-                </View>
-                {/* <Button
-                title="return"
-                onPress={() => {
-                  UserStore.enablePostScreen = false;
-                  setCaption("");
-                }}
-              /> */}
-              </View>
-
-              <View style={{ flexDirection: "row", flex: 1 }}>
-                <View style={{ flex: 1 }}>
-                  <Image
-                    source={{ uri: UserStore.spotifyUserDetails.user_image }}
-                    style={{
-                      height: 50,
-                      width: 100,
-                      borderRadius: 30,
-                      alignSelf: "flex-start",
-                      flex: 1,
-                    }}
-                  />
-                </View>
-
-                <View style={{ flex: 2 }}>
-                  <TextInput
-                    placeholder="caption..."
-                    autoCapitalize="none"
-                    value={caption}
-                    // multiline="true"
-                    onChangeText={(val) => handleCaptionChange(val)}
-                    style={{
-                      padding: 15,
-                      justifyContent: "center",
-                      backgroundColor: "#fff",
-                      borderRadius: 20,
-                      borderColor: "grey",
-                      margin: 5,
-                      borderWidth: 0,
-                      flex: 4,
-                      textAlign: "center",
-                      fontSize: 20,
-                    }}
-                  />
-                </View>
-              </View>
+                </KeyboardAvoidingView>
+              ) : captionHeader == true && pickerHeader == false ? null : null}
             </View>
-          ) : captionHeader == true && pickerHeader == false ? null : null}
 
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={(index) => onIndexChange(index)}
-            initialLayout={initialLayout}
-            renderTabBar={renderTabBar}
-          />
-        </View>
+            <View style={{ backgroundColor: "green", flex: 2 }}>
+              <TabView
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={(index) => onIndexChange(index)}
+                initialLayout={initialLayout}
+                renderTabBar={renderTabBar}
+              />
+            </View>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+
+        {/*  */}
       </TouchableWithoutFeedback>
     );
   }
