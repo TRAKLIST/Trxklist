@@ -283,8 +283,28 @@ exports.first_route = (status) => {
       animation="bounceInUp"
       style={{ flex: 1, backgroundColor: "#292929" }}
     >
-      <View style={styles.action}>
-        <View style={{ margin: 20, flex: 3 }}>
+      <View
+        style={
+          (styles.action,
+          {
+            margin: 0,
+            padding: 0,
+            flexDirection: "row",
+            backgroundColor: "purple",
+          })
+        }
+      >
+        <View
+          style={{
+            flex: 3,
+            borderWidth: 2,
+            paddign: 2,
+            backgroundColor: "red",
+            borderRadius : '15px',
+            margin: 15,
+            padding: 10,
+          }}
+        >
           <TextInput
             placeholder="Search for music"
             autoCapitalize="none"
@@ -293,22 +313,26 @@ exports.first_route = (status) => {
           />
         </View>
 
-        <View style={{ flex: 1, marginRight: 5, alignItems: "center" }}>
-          <TouchableOpacity
-            style={{ width: 50, height: 50 }}
-            onPress={() => {
-              Keyboard.dismiss();
-              search(data.track);
+        <TouchableOpacity
+          onPress={() => {
+            Keyboard.dismiss();
+            search(data.track);
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "yellow",
+              justifyContent: "center",
+              margin: 15,
+              padding: 10,
+              borderWidth: 2,
+              borderRadius : '15px'
             }}
           >
-            <LinearGradient
-              colors={["#fff", "whitesmoke"]}
-              style={[styles.signIn]}
-            >
-              <Octicons name="search" color="#292929" size={26} />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+            <Octicons name="search" color="#292929" size={26} />
+          </View>
+        </TouchableOpacity>
       </View>
       <View>
         <ScrollView>

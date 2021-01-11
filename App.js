@@ -39,51 +39,51 @@ const Drawer = createDrawerNavigator();
 function App() {
   // console.log = function() {}
 
-  React.useEffect(() => {
-    notificationsRef.onSnapshot((querySnapShot) => {
-      // console.log(querySnapShot, "etrji");
-      let items = [];
-      querySnapShot.forEach((doc) => {
-        items.push(doc.data());
-      });
+  // React.useEffect(() => {
+  //   notificationsRef.onSnapshot((querySnapShot) => {
+  //     // console.log(querySnapShot, "etrji");
+  //     let items = [];
+  //     querySnapShot.forEach((doc) => {
+  //       items.push(doc.data());
+  //     });
 
-      items.sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
+  //     items.sort(function (a, b) {
+  //       return new Date(b.createdAt) - new Date(a.createdAt);
+  //     });
 
-      UserStore.notifications = items;
-    });
+  //     UserStore.notifications = items;
+  //   });
 
-    // postsRef.onSnapshot((querySnapShot) => {
-    //   let items = [];
-    //   querySnapShot.forEach((doc) => {
-    //     items.push(doc.data());
-    //   });
+  //   // postsRef.onSnapshot((querySnapShot) => {
+  //   //   let items = [];
+  //   //   querySnapShot.forEach((doc) => {
+  //   //     items.push(doc.data());
+  //   //   });
 
-    //   items.sort(function (a, b) {
-    //     return new Date(b.createdAt) - new Date(a.createdAt);
-    //   });
+  //   //   items.sort(function (a, b) {
+  //   //     return new Date(b.createdAt) - new Date(a.createdAt);
+  //   //   });
 
-    //   UserStore.allPosts = items;
+  //   //   UserStore.allPosts = items;
 
-    // });
+  //   // });
 
-    // ref.onCreate((snapshot) => {
-    //   console.log(snapshot)
-    // return db
-    //   .doc(`/posts/${snapshot.data().postID}`)
-    //   .get()
-    //   .then((doc) => {
-    //     if (doc.exists && doc.data().meloID !== snapshot.data().meloID) {
-    //       console.log('new notifications')
-    //     }
-    //     return;
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    // });
-    // });
-  }, []);
+  //   // ref.onCreate((snapshot) => {
+  //   //   console.log(snapshot)
+  //   // return db
+  //   //   .doc(`/posts/${snapshot.data().postID}`)
+  //   //   .get()
+  //   //   .then((doc) => {
+  //   //     if (doc.exists && doc.data().meloID !== snapshot.data().meloID) {
+  //   //       console.log('new notifications')
+  //   //     }
+  //   //     return;
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.error(err);
+  //   // });
+  //   // });
+  // }, []);
 
   return (
     <NavigationContainer>

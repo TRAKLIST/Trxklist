@@ -397,33 +397,66 @@ function Main() {
     };
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <LinearGradient
-          colors={["#292929", "#292928", "#292929"]}
-          style={{ flex: 1, paddingHorizontal: 10 }}
-        >
+        <View style={{ backgroundColor: "blue" }}>
           {captionHeader == false && pickerHeader == true ? (
-            <View style={[styles.header, { backgroundColor: "#292929" }]}>
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
-                <View style={{ flex: 1 }}>
+            <SafeAreaView
+              style={[
+                {
+                  backgroundColor: "#292929",
+                  backgroundColor: "grey",
+                },
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "purple",
+                  margin: 10,
+                  borderRadius : 25
+                }}
+              >
+                <View
+                  style={{ padding: 10, flex: 1, justifyContent: "center" }}
+                >
                   <TouchableOpacity
                     onPress={() => (UserStore.enablePostScreen = false)}
                   >
+                    <View
+                      style={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <MaterialCommunityIcons
+                        name="step-backward"
+                        size={30}
+                        color="#fff"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ flex: 1, padding: 10, backgroundColor: "red" }}>
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
                     <MaterialCommunityIcons
-                      name="cancel"
+                      name="circle"
+                      color="#fff"
+                      size={50}
+                    />
+                  </View>
+                </View>
+                <View
+                  style={{ padding: 10, flex: 1, justifyContent: "center" }}
+                >
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <MaterialCommunityIcons
+                      name="step-forward"
                       size={30}
                       color="#fff"
                     />
-                  </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={{ flex: 1 }}></View>
-                <View style={{ flex: 1 }}></View>
-                {/* <Button
-                title="return"
-                onPress={() => {
-                  UserStore.enablePostScreen = false;
-                  setCaption("");
-                }}
-              /> */}
               </View>
 
               <Picker
@@ -443,11 +476,10 @@ function Main() {
                 {/* <Picker.Item label="Album" value="album" /> */}
                 {/* <Picker.Item label="Artist" value="artist" /> */}
               </Picker>
-            </View>
+            </SafeAreaView>
           ) : captionHeader == true && pickerHeader == false ? (
             <View
               style={[
-                styles.header,
                 {
                   backgroundColor: "#292929",
                   justifyContent: "flex-start",
@@ -533,16 +565,15 @@ function Main() {
               </View>
             </View>
           ) : captionHeader == true && pickerHeader == false ? null : null}
-          <SafeAreaView style={styles.footer}>
-            <TabView
-              navigationState={{ index, routes }}
-              renderScene={renderScene}
-              onIndexChange={(index) => onIndexChange(index)}
-              initialLayout={initialLayout}
-              renderTabBar={renderTabBar}
-            />
-          </SafeAreaView>
-        </LinearGradient>
+
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={(index) => onIndexChange(index)}
+            initialLayout={initialLayout}
+            renderTabBar={renderTabBar}
+          />
+        </View>
       </TouchableWithoutFeedback>
     );
   }
