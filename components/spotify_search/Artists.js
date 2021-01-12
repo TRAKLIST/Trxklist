@@ -54,12 +54,12 @@ export default function Artists(props) {
             padding: 10,
           }}
         >
-          <View style={{ flegx: 1 }}>
+          <View style={{ flex: 0.4 }}>
             <ImageBackground
               source={{ uri: props.artist.image }}
               style={{
-                height: 65,
-                width: 65,
+                height: 55,
+                width: 55,
               }}
               imageStyle={{
                 borderRadius: 30,
@@ -109,9 +109,9 @@ export default function Artists(props) {
               style={{ color: "#44CF6C", fontWeight: "bold", marginLeft: 20 }}
             >{`${props.artist.followers} followers`}</Text>
           </View>
-          {/* <View style={{ flex: 0.5, flexDirection: "row" }}>
+          <View style={{ flex: 0.5, flexDirection: "row" }}>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{ justifyContent: "center", margin: 5 }}
               onPress={onSavePressed}
             >
@@ -132,8 +132,8 @@ export default function Artists(props) {
                   />
                 )}
               </View>
-            </TouchableOpacity>
-          </View> */}
+            </TouchableOpacity> */}
+          </View>
         </View>
       </TouchableOpacity>
     </View>

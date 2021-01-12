@@ -33,7 +33,7 @@ import { TabBar } from "react-native-tab-view";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Octicons from "react-native-vector-icons/Octicons";
+import Entypo from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -58,7 +58,7 @@ function Main() {
   const [caption, setCaption] = React.useState("");
   const [pickerHeader, setPickerHeader] = React.useState(true);
   const [captionHeader, setCaptionHeader] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("track");
+  const [selectedValue, setSelectedValue] = React.useState("Album");
   const [refreshing, setRefreshing] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -140,7 +140,7 @@ function Main() {
           trackID: UserStore.trackDetails.id,
           spotifyID: UserStore.spotifyUserDetails.user_id,
           body: caption,
-          status: "Track",
+          status: selectedValue,
         },
         {
           headers: {
@@ -367,15 +367,15 @@ function Main() {
               opacity: 0.8,
             }}
           >
-            <FontAwesome
-              name="plus-circle"
+            <Entypo
+              name="new-message"
               size={40}
               style={{
                 color: "#000",
                 // padding: 4,
                 // alignSelf: "center",
                 borderRadius: 20,
-                opacity: 0.75,
+                // opacity: 1,
               }}
             />
           </View>
@@ -504,11 +504,11 @@ function Main() {
                         color: "#fff",
                       }}
                     >
-                      {/* <Picker.Item label="Lyric" value="lyric" />
-                      <Picker.Item label="Playlist" value="playlist" /> */}
-                      <Picker.Item label="Track" value="track" />
-                      {/* <Picker.Item label="Album" value="album" />
-                      <Picker.Item label="Artist" value="artist" /> */}
+                      {/* <Picker.Item label="Lyric" value="lyric" /> */}
+                      <Picker.Item label="Playlist" value="Playlist" />
+                      <Picker.Item label="Track" value="Track" />
+                      <Picker.Item label="Album" value="Album" />
+                      {/* <Picker.Item label="Artist" value="artist" /> */}
                     </Picker>
                   </View>
 

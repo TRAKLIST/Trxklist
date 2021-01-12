@@ -48,7 +48,7 @@ exports.first_route = (status) => {
     setQueryList([]);
     // console.log(status, "uvyu");
 
-    if (status == "track") {
+    if (status == "Track") {
       spotifyAPI.searchTracks(query).then(
         (data) => {
           data.tracks.items.map((item) => {
@@ -70,7 +70,7 @@ exports.first_route = (status) => {
           console.error(err);
         }
       );
-    } else if (status == "album") {
+    } else if (status == "Album") {
       spotifyAPI.searchAlbums(query).then(
         (data) => {
           // console.log(data, 'refbiy')
@@ -89,7 +89,7 @@ exports.first_route = (status) => {
           console.error(err);
         }
       );
-    } else if (status == "playlist") {
+    } else if (status == "Playlist") {
       spotifyAPI.searchPlaylists(query).then(
         (data) => {
           // console.log(data, 'refbiy')
@@ -353,7 +353,7 @@ exports.first_route = (status) => {
 };
 
 exports.second_route = (caption, status) => {
-  if (status == "track") {
+  if (status == "Track") {
     return (
       <Animatable.View /*animation = "fadeInUp"*/ style={{ flex: 1, }}>
         <View style = {{backgroundColor : '#292929', flex : 1}}>
@@ -368,7 +368,7 @@ exports.second_route = (caption, status) => {
         </View>
       </Animatable.View>
     );
-  } else if (status == "album") {
+  } else if (status == "Album") {
     return (
       <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
         <Body
@@ -386,7 +386,7 @@ exports.second_route = (caption, status) => {
         />
       </Animatable.View>
     );
-  } else if (status == "playlist") {
+  } else if (status == "Playlist") {
     return (
       <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
         <Body
@@ -394,14 +394,9 @@ exports.second_route = (caption, status) => {
           caption={caption}
           status={"Playlist"}
           imageUri={UserStore.spotifyUserDetails.user_image}
+          postScreen = {true}
         />
-        <Footer
-          likesCount={0}
-          commentCount={0}
-          postID={"uuidv4()"}
-          status={"Playlist"}
-          trackID={UserStore.trackDetails.id}
-        />
+      
       </Animatable.View>
     );
   }

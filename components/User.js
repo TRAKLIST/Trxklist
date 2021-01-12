@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Text,
+  Image,
   ImageBackground,
   StyleSheet,
 } from "react-native";
@@ -70,16 +71,16 @@ function User({ user, isFollowing }) {
   };
 
   return (
-    <TouchableWithoutFeedback >
+    <TouchableWithoutFeedback>
       <View
         style={{
           flexDirection: "column",
-          // borderWidth: 2,
-          // borderColor: "green",
-          margin: 5,
+          borderBottomWidth: 2,
+          borderColor: "grey",
+          marginBottom: 5,
           borderRadius: 10,
-          backgroundColor : "#000",
-          opacity : 0.7
+          padding: 10,
+          // opacity: 0.7,
         }}
       >
         <View
@@ -87,46 +88,25 @@ function User({ user, isFollowing }) {
             flexDirection: "row",
             width: "100%",
             backgroundColor: "transparent",
+            borderRadius: 10,
           }}
         >
-          {/* <View
-            
-          > */}
-          <ImageBackground
-            source={{ uri: user.image }}
+          <View
             style={{
-              flex: 0.8,
+              flex: 0.5,
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "transparent",
             }}
-            
-            imageStyle = {{opacity : 1, borderRadius : 10}}
           >
-            <View
-              style={{
-                bottom: 0,
-                position: "absolute",
-                backgroundColor: "#44CF6C",
-                borderRadius: 60,
-                borderWidth: 0,
-                borderColor: "#44CF6C",
-                height: 30,
-                width: 30,
-                justifyContent: "center",
-                alignItems: "center",
-                opacity: 0.8,
-              }}
-            >
-              <Fontisto
-                name="spotify"
-                color="#fff"
-                size={11}
-                style={{ padding: 2 }}
-              />
-            </View>
-          </ImageBackground>
-          {/* </View> */}
+            <Image
+              source={{ uri: user.image }}
+              style={{ height: 55, width: 55, borderRadius: 30 }}
+            />
+          </View>
+          <View></View>
+          <View></View>
+
           <View
             style={{
               justifyContent: "center",
@@ -135,83 +115,122 @@ function User({ user, isFollowing }) {
               flexDirection: "column",
             }}
           >
-            <View style={{ padding: 0, backgroundColor: "transparent" }}>
-              <View style={{ flexDirection: "row", flex: 1 }}>
+            <View style={{ padding: 0, backgroundColor: "" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  flex: 1,
+                  backgroundColor: "transparent",
+                }}
+              >
                 <View
                   style={{
                     backgroundColor: "transparent",
                     flex: 1,
                     justifyContent: "center",
+                    flexDirection: "column",
                   }}
                 >
-                  <View>
-                    <Text
-                      numberOfLines={1}
+                  <View
+                    style={{
+                      backgroundColor: "transparent",
+                      flex: 1,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <View
                       style={{
-                        color: "#fff",
-                        fontWeight: "bold",
-                        textAlign: "center",
+                        // borderBottomWidth: 2,
+                        // borderRadius: 15,
+                        borderColor: "#292929",
+                        backgroundColor: "transparent",
+                        paddingLeft: 10,
+                        // margin: 10,
+                        justifyContent: "center",
                       }}
                     >
-                      {user.user}
-                    </Text>
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          color: "#fff",
+                          fontWeight: "bold",
+                          textAlign: "left",
+                          fontSize: 18,
+                        }}
+                      >
+                        {user.user}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      // backgroundColor: "red",
+                      flex: 1,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <View style={{ backgroundColor: "transparent" }}>
+                      <View
+                        style={{
+                          backgroundColor: "transparent",
+                          flex: 1,
+                          paddingLeft: 10,
+                        }}
+                      >
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            color: "grey",
+                            fontWeight: "bold",
+                            textAlign: "left",
+                            fontSize: 10,
+                          }}
+                        >
+                          {dayjs(user.createdAt).toString()}{" "}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
                 </View>
 
-                {/* here */}
-
                 <View
                   style={{
-                    flex: 0.3,
+                    flex: 0.25,
                     flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor: "transparent",
                   }}
                 >
-                  {/* icons */}
-
-                  {/* <TouchableOpacity
-                              style={{ justifyContent: "center", margin: 5 }}
-                            >
-                              <View style={styles.iconContainer2}>
-                                <MaterialCommunityIcons
-                                  name="content-save-outline"
-                                  size={27}
-                                  color={"#ff7700"}
-                                />
-                              </View>
-                            </TouchableOpacity> */}
                   <TouchableOpacity
-                    style={{ justifyContent: "center", margin: 5 }}
+                    style={{ justifyContent: "center", flex: 1 }}
                     onPress={() => onFollow(user.user)}
                   >
                     <View
                       style={{
-                        backgroundColor: "#000",
+                        // backgroundColor: following == true ? "green" : "#fff",
                         padding: 10,
-                        borderRadius: 15,
-                        opacity: 0.4,
+                        height: 50,
+                        width: 50,
+                        // borderRadius: 30,
+                        // opacity: 0.3,
+                        // flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignSelf: "center",
                       }}
                     >
-                      {/* <AntDesign name="staro" size={25} color={"#ff7700"} /> */}
-                      {/* <SimpleLineIcons
-                name="user-following"
-                size={30}
-                color="#44CF6C"
-              /> */}
-
                       {following == true ? (
                         <SimpleLineIcons
                           name="user-following"
-                          size={23}
-                          color="#44CF6C"
+                          size={25}
+                          color= {following == true ? "green" : "grey"}
                         />
                       ) : (
                         <SimpleLineIcons
                           name="user-follow"
-                          size={23}
-                          color="#44CF6C"
+                          size={25}
+                          color= {following == true ? "green" : "grey"}
                         />
                       )}
                     </View>
@@ -220,19 +239,8 @@ function User({ user, isFollowing }) {
               </View>
             </View>
             <View>
-              <View style={{ backgroundColor: "transparent", padding: 5 }}>
+              {/* <View style={{ backgroundColor: "transparent", padding: 5 }}>
                 <View style={{ backgroundColor: "transparent", flex: 1 }}>
-                  {/* <Text
-                    style={{
-                      color: "grey",
-                      fontWeight: "bold",
-                      textAlign: "right",
-                      fontSize: 11,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    following x users
-                  </Text> */}
                   <Text
                     numberOfLines={1}
                     style={{
@@ -245,7 +253,7 @@ function User({ user, isFollowing }) {
                     {dayjs(user.createdAt).toString()}{" "}
                   </Text>
                 </View>
-              </View>
+              </View> */}
             </View>
           </View>
         </View>

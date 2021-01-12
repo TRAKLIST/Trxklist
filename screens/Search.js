@@ -203,7 +203,14 @@ function Search() {
       <SafeAreaView style={styles.container}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={{ backgroundColor: "#292929", flex: 1, padding: 10 }}>
-            <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                padding: 0,
+                backgroundColor: "transparent",
+              }}
+            >
               {/* search bar */}
               <View style={{ flex: 5, justifyContent: "center", padding: 5 }}>
                 <TextInput
@@ -213,7 +220,8 @@ function Search() {
                     justifyContent: "center",
                     backgroundColor: "#000",
                     borderRadius: 30,
-                    borderColor: "grey",
+                    borderColor: "#fff",
+                    borderWidth: 0,
                     textAlign: "center",
                     // fontSize: 20,
                     opacity: 0.4,
@@ -233,6 +241,8 @@ function Search() {
                       borderRadius: 30,
                       height: 50,
                       justifyContent: "center",
+                      borderColor: "#fff",
+                      borderWidth: 0,
                     }}
                   >
                     <ADIcon
@@ -252,6 +262,7 @@ function Search() {
               style={{
                 flex: 1,
                 justifyContent: "center",
+                backgroundColor: "transparent",
               }}
             >
               <View
@@ -275,7 +286,7 @@ function Search() {
                   onPress={() => setIndex(0)}
                 >
                   <View>
-                    <Text style={{ color: index == 0 ? "#292929" : "#fff" }}>
+                    <Text style={{ color: index == 0 ? "#292929" : "#fff", opacity : 0.4 }}>
                       <FontAwesome5
                         name="user-alt"
                         size={20}
@@ -290,7 +301,7 @@ function Search() {
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor: index == 1 ? "#fff" : "#292929",
-                    borderWidth: 3,
+                    borderWidth: 0,
                     borderColor: index == 1 ? "#292929" : "#fff",
                     borderRadius: 10,
                     margin: 5,
@@ -298,7 +309,7 @@ function Search() {
                   onPress={() => setIndex(1)}
                 >
                   <View>
-                    <Text style={{ color: index == 1 ? "#292929" : "#fff" }}>
+                    <Text style={{ color: index == 1 ? "#292929" : "#fff", opacity : 0.4  }}>
                       <FontAwesome5
                         name="spotify"
                         size={20}
@@ -315,14 +326,14 @@ function Search() {
                     backgroundColor: "transparent",
                     borderRadius: 10,
                     margin: 5,
-                    borderWidth: 3,
+                    borderWidth: 0,
                     borderColor: index == 1 ? "#292929" : "#fff",
                     backgroundColor: index == 2 ? "#fff" : "#292929", //
                   }}
                   onPress={() => setIndex(2)}
                 >
                   <View>
-                    <Text style={{ color: index == 2 ? "#292929" : "#fff" }}>
+                    <Text style={{ color: index == 2 ? "#292929" : "#fff", opacity : 0.4  }}>
                       <FontAwesome5
                         name="soundcloud"
                         size={20}
@@ -339,11 +350,11 @@ function Search() {
               style={{
                 flex: 7,
                 backgroundColor: "transparent",
-                justifyContent: "center",
+                justifyContent: "flex-start",
               }}
             >
               <ScrollView
-                style={{ padding: 10, backgroundColor: "transparent" }}
+                style={{ padding: 0, backgroundColor: "transparent" }}
               >
                 <LinearGradient
                   colors={["#292929", "#292929"]}

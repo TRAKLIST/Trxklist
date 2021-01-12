@@ -36,12 +36,12 @@ export default function Albums(props) {
             padding: 10,
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 0.7 }}>
             <ImageBackground
               source={{ uri: props.album.image }}
               style={{
-                height: 65,
-                width: 65,
+                height: 55,
+                width: 55,
               }}
               imageStyle={{
                 borderRadius: 30,
@@ -92,9 +92,9 @@ export default function Albums(props) {
               {props.album.artist}
             </Text>
           </View>
-          {/* <View style={{ flex: 0.5, flexDirection: "row" }}>
+          <View style={{ flex: 0.5, flexDirection: "row" }}>
 
-            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+            {/* <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
               <View style={styles.iconContainer2}>
                 <MaterialCommunityIcons
                   name="content-save-outline"
@@ -102,8 +102,8 @@ export default function Albums(props) {
                   color={"#44CF6C"}
                 />
               </View>
-            </TouchableOpacity>
-          </View> */}
+            </TouchableOpacity> */}
+          </View>
         </View>
       </TouchableOpacity>
     </View>

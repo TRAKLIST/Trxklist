@@ -65,12 +65,12 @@ import { observer } from "mobx-react";
             padding: 10,
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 0.7}}>
             <ImageBackground
               source={{ uri: props.track.image }}
               style={{
-                height: 65,
-                width: 65,
+                height: 55,
+                width: 55,
               }}
               imageStyle={{
                 borderRadius: 30,
@@ -121,9 +121,9 @@ import { observer } from "mobx-react";
               {props.track.artist}
             </Text>
           </View>
-          {/* <View style={{ flex: 0.5, flexDirection: "row" }}>
+          <View style={{ flex: 0.5, flexDirection: "row" }}>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{ justifyContent: "center", margin: 5 }}
             >
               <View style={styles.iconContainer2}>
@@ -143,8 +143,8 @@ import { observer } from "mobx-react";
                   />
                 )}
               </View>
-            </TouchableOpacity>
-          </View> */}
+            </TouchableOpacity> */}
+          </View>
         </View>
       </TouchableOpacity>
     </View>

@@ -72,7 +72,11 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
                   alignItems: "center",
                 }}
               >
-                <TouchableOpacity onPress = {() => alert('This feature will be availble in the next release.')}>
+                <TouchableOpacity
+                  onPress={() =>
+                    alert("This feature will be availble in the next release.")
+                  }
+                >
                   <Icon name="dots-three-vertical" size={16} color="#fff" />
                 </TouchableOpacity>
               </View>
@@ -200,17 +204,24 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
           style={{
             // backgroundColor: "#000",
             opacity: 0.8,
-            padding: 10,
             // borderRadius: 15,
-            marginLeft: 10,
-            marginRight: 10,
-            bottom: 0,
-            position: "absolute",
             alignSelf: "center",
           }}
         >
           <View>
-            <Text style={[styles.caption]}>{caption}</Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                color: "green",
+                padding: 0,
+                fontFamily: "Arial",
+                textAlign: "center",
+                flex: 1,
+              }}
+            >
+              {caption}
+            </Text>
           </View>
         </View>
       </View>

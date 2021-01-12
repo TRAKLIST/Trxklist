@@ -39,12 +39,12 @@ export default function Tracks(props) {
             padding: 10,
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 0.7 }}>
             <ImageBackground
               source={{ uri: props.track.image }}
               style={{
-                height: 65,
-                width: 65,
+                height: 55,
+                width: 55,
               }}
               imageStyle={{
                 borderRadius: 30,
