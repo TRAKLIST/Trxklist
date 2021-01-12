@@ -116,19 +116,26 @@ exports.first_route = (status) => {
     let track_playlist = [];
     // console.log(item, "bers");
     // if album or playlist get tracks
-    spotifyAPI.getPlaylist(item.id).then((response) => {
-      // console.log(response);
-      response.tracks.items.map((track) => {
-        track_playlist.push({
-          id: track.track.id,
-          title: track.track.name,
+
+    if (status == "Playlist") {
+      spotifyAPI.getPlaylist(item.id).then((response) => {
+        // console.log(response);
+        response.tracks.items.map((track) => {
+          track_playlist.push({
+            id: track.track.id,
+            title: track.track.name,
+          });
         });
+        item.track = track_playlist;
+        // console.log(item, 'fewfever')
+        // add to state here
+        UserStore.trackDetails = item;
       });
-      item.track = track_playlist;
-      // console.log(item, 'fewfever')
-      // add to state here
-    });
-    UserStore.trackDetails = item;
+    } else if (status == "Album") {
+      spotifyAPI.getAlbumTracks(item.id).then((response) => {
+        console.log(response, 'jhy')
+      });
+    }
   };
 
   let track_s = queryList ? (
@@ -355,9 +362,9 @@ exports.first_route = (status) => {
 exports.second_route = (caption, status) => {
   if (status == "Track") {
     return (
-      <Animatable.View /*animation = "fadeInUp"*/ style={{ flex: 1, }}>
-        <View style = {{backgroundColor : '#292929', flex : 1}}>
-          <View style={{ backgroundColor: "#292929", flex: 1, marginTop : 15 }}>
+      <Animatable.View /*animation = "fadeInUp"*/ style={{ flex: 1 }}>
+        <View style={{ backgroundColor: "#292929", flex: 1 }}>
+          <View style={{ backgroundColor: "#292929", flex: 1, marginTop: 15 }}>
             <Body
               thisTrack={UserStore.trackDetails}
               caption={caption}
@@ -394,9 +401,7 @@ exports.second_route = (caption, status) => {
           caption={caption}
           status={"Playlist"}
           imageUri={UserStore.spotifyUserDetails.user_image}
-          postScreen = {true}
         />
-      
       </Animatable.View>
     );
   }
@@ -441,7 +446,7 @@ exports.render_tab_bar = (props) => (
   <TabBar
     {...props}
     indicatorStyle={{ backgroundColor: "#1DB954" }}
-    style={{ backgroundColor : '#292929' }}
+    style={{ backgroundColor: "#292929" }}
     renderLabel={({ route, focused, color }) => (
       <Text style={{ color, margin: 8, fontWeight: "bold" }}>
         {route.title}
