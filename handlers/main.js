@@ -127,14 +127,16 @@ exports.first_route = (status) => {
           });
         });
         item.track = track_playlist;
-        // console.log(item, 'fewfever')
+        console.log(item, 'fewfever')
         // add to state here
         UserStore.trackDetails = item;
       });
     } else if (status == "Album") {
       spotifyAPI.getAlbumTracks(item.id).then((response) => {
-        console.log(response, 'jhy')
+        console.log(response, "jhy");
       });
+    } else if (status == "Track"){
+      UserStore.trackDetails = item;
     }
   };
 
@@ -395,13 +397,44 @@ exports.second_route = (caption, status) => {
     );
   } else if (status == "Playlist") {
     return (
-      <Animatable.View style={[styles.scene, { backgroundColor: "#292929" }]}>
-        <Body
+      <Animatable.View
+        style={[
+          styles.scene,
+          { backgroundColor: "#292929", justifyContent: "center" },
+        ]}
+      >
+        <View
+          style={{
+            backgroundColor: "#292929",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+          }}
+        >
+          <View
+            style={{
+              // backgroundColor: "red",
+              justifyContent: "center",
+              width: "100%",
+              height: "100%",
+              flex : 1
+            }}
+          >
+            <Body
+              thisTrack={UserStore.trackDetails}
+              caption={caption}
+              status={"Playlist"}
+              imageUri={UserStore.spotifyUserDetails.user_image}
+            />
+          </View>
+        </View>
+        {/* <Body
           thisTrack={UserStore.trackDetails}
           caption={caption}
           status={"Playlist"}
           imageUri={UserStore.spotifyUserDetails.user_image}
-        />
+        /> */}
       </Animatable.View>
     );
   }
@@ -423,7 +456,7 @@ exports.sticky_item_view = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-        imageStyle={{ borderRadius: 30 }}
+        imageStyle={{ borderRadius: 10 }}
       ></ImageBackground>
     </Animatable.View>
   );

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 150,
-    borderRadius : 20
+    borderTopRightRadius : 15
   },
   image2: {
     height: Dimensions.get("window").width,
@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
     opacity : 0.8
   },
   track: {
-    backgroundColor: "#168D40",
+    // backgroundColor: "#168D40",
     // backgroundColor:
     //   "linear-gradient(72deg, rgba(33,41,92,0.7497373949579832) 35%, rgba(0,123,255,1) 100%)",
     fontSize: 13,
     fontWeight: "bold",
-    color: "#fff",
+    color: "grey",
     fontFamily: "Arial",
     flexDirection: "row",
     justifyContent : 'center'
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "green",
+    color: "#fff",
     padding: 5,
     fontFamily: "Arial",
     textAlign : 'center',

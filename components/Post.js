@@ -110,8 +110,9 @@ export class Post extends Component {
           // borderBottomWidth: 1.5,
           borderRadius: 15,
           borderColor: "green",
-          backgroundColor: "#000",
+          backgroundColor: "#292929",
           borderWidth: 0,
+          marginBottom : 5
           // paddingVertical : 10,
         }}
       >

@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../../SpotifyAPI";
 import TracklistItem from "./TracklistItem";
+import Footer from "../Footer"
 
 const Body = ({ thisTrack, caption, status, imageUri }) => {
   // console.log(thisTrack.track, "efke");
@@ -20,17 +21,12 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
     return (
       // <Text source={{ uri: imageUri }} style={styles.image}>
       <View>
-        <ImageBackground
-          style={[styles.image2, { alignItems: "center" }]}
-          source={{ uri: thisTrack.image }}
-          imageStyle={{ borderRadius: 15 }}
-        >
-          <View
+        <View
             style={[
               styles.titleContainer,
               {
-                top: 0,
-                position: "absolute",
+                // top: 0,
+                // position: "absolute",
                 width: "100%",
                 padding: 0,
                 borderTopLeftRadius: 15,
@@ -82,6 +78,12 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
               </View>
             </View>
           </View>
+        <ImageBackground
+          style={[styles.image2, { alignItems: "center" }]}
+          source={{ uri: thisTrack.image }}
+          imageStyle={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,  }}
+        >
+          
 
           {/* <TouchableOpacity>
             <View
@@ -106,7 +108,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
               width: "100%",
               opacity: 0.8,
               padding: 10,
-              borderRadius: 15,
+              borderBottomLeftRadius: 15, borderBottomRightRadius: 15,
               marginLeft: 10,
               marginRight: 10,
             }}
@@ -114,19 +116,30 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
             <View>
               <Text style={styles.caption}>{caption}</Text>
             </View>
+          {/* <Footer
+          likesCount={2}
+          savesCount={2}
+          commentCount={2}
+          postID={'this.props.post.postID'}
+          status={'Tracl'}
+          trackID={'this.props.post.trackID'}
+          postedAt={'this.props.post.createdAt'}
+        /> */}
           </View>
+
+          
         </ImageBackground>
         {/* <Image source={{ uri: thisTrack.image }} style={styles.image2} /> */}
-        {/* <View>
-          <View>
+        <View>
+          {/* <View>
             <Text style={styles.caption}>{caption}</Text>
-          </View>
-        </View> */}
+          </View> */}
+        </View>
       </View>
     );
   } else {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, justifyContent : 'center' }}>
         <View
           style={[
             styles.titleContainer,
@@ -186,7 +199,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
         <View
           style={{
             flexDirection: "row",
-            margin: 5,
+            margin: 0,
           }}
         >
           <View>
@@ -202,27 +215,28 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
 
         <View
           style={{
-            // backgroundColor: "#000",
+            backgroundColor: "#000",
+            position : 'relative',
             opacity: 0.8,
-            // borderRadius: 15,
-            alignSelf: "center",
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
+            justifyContent : 'center'
           }}
         >
-          <View>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "bold",
-                color: "green",
-                padding: 0,
-                fontFamily: "Arial",
-                textAlign: "center",
-                flex: 1,
-              }}
-            >
-              {caption}
-            </Text>
-          </View>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              color: "#F0EFF4",
+              padding: 10,
+              fontFamily: "Arial",
+              textAlign: "center",
+              minHeight: 30,
+              justifyContent : 'center'
+            }}
+          >
+            {caption}
+          </Text>
         </View>
       </View>
     );

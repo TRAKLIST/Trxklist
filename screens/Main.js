@@ -58,7 +58,7 @@ function Main() {
   const [caption, setCaption] = React.useState("");
   const [pickerHeader, setPickerHeader] = React.useState(true);
   const [captionHeader, setCaptionHeader] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("Album");
+  const [selectedValue, setSelectedValue] = React.useState("Track");
   const [refreshing, setRefreshing] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -120,7 +120,7 @@ function Main() {
         width: 65,
         height: 65,
       }}
-      imageStyle={{ borderRadius: 30 }}
+      imageStyle={{ borderRadius: 15 }}
     ></ImageBackground>
   );
 
@@ -184,7 +184,7 @@ function Main() {
         >
           <ParallaxScrollView
             backgroundColor="#292929"
-            contentBackgroundColor="#292929"
+            contentBackgroundColor="#292929" // transparent
             parallaxHeaderHeight={95}
             renderScrollComponent={() => (
               <AnimatedCustomScrollView
@@ -200,16 +200,16 @@ function Main() {
             renderStickyHeader={() => (
               <View
                 style={{
-                  padding: 5,
+                  padding: 10,
                   marginLeft: 10,
                   marginRight: 10,
-                  marginBottom: 10,
-                  backgroundColor: "#272D2D",
+                  // marginBottom: 10,
+                  backgroundColor: "#292929",
                   borderWidth: 0,
                   borderColor: "#fff",
-                  borderRadius: 15,
+                  borderRadius: 5,
                   minHeight: 80,
-                  borderBottomWidth: 3,
+                  borderBottomWidth: 1.5,
                 }}
               >
                 <StickyItemFlatList
@@ -233,10 +233,8 @@ function Main() {
               <View
                 style={{
                   padding: 5,
-                  marginLeft: 10,
-                  marginRight: 10,
                   marginBottom: 10,
-                  backgroundColor: "#272D2D",
+                  // backgroundColor: "#272D2D",
                   borderWidth: 0,
                   borderColor: "green",
                   borderRadius: 15,
@@ -245,69 +243,27 @@ function Main() {
                   alignItems: "center",
                 }}
               >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  {/* <TouchableOpacity onPress={handleStickyItemPress}>
-                    <LinearGradient
-                      colors={["#272D2D", "#272D2D"]}
-                      style={styles.signIn}
-                    >
-                      <FontAwesome
-                        name="plus-circle"
-                        size={30}
-                        style={{
-                          color: "#fff",
-                          // padding: 4,
-                          // alignSelf: "center",
-                          borderRadius: 20,
-                          opacity: 0.75,
-                        }}
-                      />
-                      <Text style = {{color : '#fff'}}>Post</Text>
-                    </LinearGradient>
-                  </TouchableOpacity> */}
-                </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
+                <View style={{ flex: 1, }}></View>
+                <View style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => search(data.track)}>
-                    <LinearGradient
-                      colors={["#272D2D", "#272D2D"]}
+                    <View
+                      // colors={["#272D2D", "#272D2D"]}
                       style={styles.signIn}
                     >
                       <MaterialCommunityIcons
                         name="circle"
-                        color="#fff"
-                        size={50}
+                        color="grey"
+                        size={55}
                       />
-                    </LinearGradient>
+                    </View>
                   </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  {/* <TouchableOpacity onPress={() => search(data.track)}>
-                    <LinearGradient
-                      colors={["#272D2D", "#272D2D"]}
-                      style={styles.signIn}
-                    >
-                      <FontAwesome
-                        name="inbox"
-                        size={30}
-                        style={{
-                          color: "#fff",
-                          // padding: 4,
-                          // alignSelf: "center",
-                          borderRadius: 20,
-                          opacity: 0.75,
-                        }}
-                      />
-                      <Text style = {{color : '#fff'}}>Inbox</Text>
-                    </LinearGradient>
-                  </TouchableOpacity> */}
-                </View>
+                <View style={{ flex: 1,}}></View>
               </View>
             )}
           >
             <View style={{ paddingTop: 10 }}>
-              <LinearGradient
-                colors={["#292929", "#292929", "#292929", "#292929", "#292929"]}
-              >
+              <View>
                 {/* { UserStore.isnewPostsAvailable == true &&
                   <TouchableOpacity onPress = {newPosts}>
                     <View
@@ -338,9 +294,9 @@ function Main() {
                   </TouchableOpacity>
                 } */}
 
-                <View>{recentPostsMarkup}</View>
+                <View style = {{backgroundColor : '#292929'}}>{recentPostsMarkup}</View>
                 {/* explore */}
-              </LinearGradient>
+              </View>
             </View>
           </ParallaxScrollView>
         </SafeAreaView>
@@ -356,12 +312,12 @@ function Main() {
           <View
             style={{
               backgroundColor: "white",
-              height: 50,
-              width: 50,
+              height: 40,
+              width: 40,
               position: "absolute",
-              bottom: 20,
-              right: 20,
-              borderRadius: 15,
+              bottom: 10,
+              right: 10,
+              borderRadius: 5,
               justifyContent: "center",
               alignItems: "center",
               opacity: 0.8,
@@ -369,7 +325,7 @@ function Main() {
           >
             <Entypo
               name="new-message"
-              size={40}
+              size={30}
               style={{
                 color: "#000",
                 // padding: 4,
@@ -409,7 +365,7 @@ function Main() {
           style={{ flex: 1, backgroundColor: "#292929" }}
           behavior="padding"
         >
-          <SafeAreaView style={{ flex: 1 }}>
+          <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
             <View style={{ flex: 1 }}>
               <View
                 style={{
@@ -426,7 +382,7 @@ function Main() {
                   <TouchableOpacity
                     onPress={() => {
                       UserStore.enablePostScreen = false;
-                      setCaption("")
+                      setCaption("");
                     }}
                   >
                     <View
@@ -448,7 +404,7 @@ function Main() {
                   style={{
                     flex: 1,
                     padding: 10,
-                    backgroundColor: "#292929",
+                    backgroundColor: "transparent",
                   }}
                 >
                   <View
@@ -486,33 +442,28 @@ function Main() {
                 </View>
               </View>
               {captionHeader == false && pickerHeader == true ? (
-                <View>
-                  <View
-                    style={{
-                      backgroundColor: "yellow",
-                      flex: 1,
-                      paddingHorizontal : 2,
-                      justifyContent: "center",
+                <View
+                  style={{
+                    flex: 1,
+                    paddingHorizontal: 2,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Picker
+                    selectedValue={selectedValue}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setSelectedValue(itemValue)
+                    }
+                    itemStyle={{
+                      color: "#fff",
                     }}
                   >
-                    <Picker
-                      selectedValue={selectedValue}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setSelectedValue(itemValue)
-                      }
-                      itemStyle={{
-                        color: "#fff",
-                      }}
-                    >
-                      {/* <Picker.Item label="Lyric" value="lyric" /> */}
-                      <Picker.Item label="Playlist" value="Playlist" />
-                      <Picker.Item label="Track" value="Track" />
-                      <Picker.Item label="Album" value="Album" />
-                      {/* <Picker.Item label="Artist" value="artist" /> */}
-                    </Picker>
-                  </View>
-
-                  <View></View>
+                    {/* <Picker.Item label="Lyric" value="lyric" /> */}
+                    {/* <Picker.Item label="Playlist" value="Playlist" />  */}
+                    <Picker.Item label="Track" value="Track" />
+                    {/* <Picker.Item label="Album" value="Album" /> */}
+                    {/* <Picker.Item label="Artist" value="artist" /> */}
+                  </Picker>
                 </View>
               ) : captionHeader == true && pickerHeader == false ? (
                 <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -524,8 +475,14 @@ function Main() {
                       },
                     ]}
                   >
-                    <View style={{ flexDirection: "row", flex: 1, justifyContent : 'center'}}>
-                      <View style={{ flex: 1, justifyContent: "center"}}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <View style={{ flex: 1, justifyContent: "center" }}>
                         <Image
                           source={{
                             uri: UserStore.spotifyUserDetails.user_image,
@@ -540,14 +497,20 @@ function Main() {
                         />
                       </View>
 
-                      <View style={{ flex: 2, justifyContent: "center", paddingLeft : 10}}>
+                      <View
+                        style={{
+                          flex: 2,
+                          justifyContent: "center",
+                          paddingLeft: 10,
+                        }}
+                      >
                         <TextInput
                           placeholder="say sumn..."
                           autoCapitalize="none"
                           value={caption}
                           // autoCorrect={false}
                           multiline="true"
-                          numberOfLines = {4}
+                          numberOfLines={4}
                           onChangeText={(val) => handleCaptionChange(val)}
                           style={{
                             justifyContent: "center",
@@ -560,8 +523,8 @@ function Main() {
                             opacity: 0.4,
                             color: "grey",
                             fontWeight: "bold",
-                            paddingTop : 25,
-                            paddingBottom : 25
+                            paddingTop: 25,
+                            paddingBottom: 25,
                           }}
                         />
                       </View>
@@ -571,7 +534,7 @@ function Main() {
               ) : captionHeader == true && pickerHeader == false ? null : null}
             </View>
 
-            <View style={{  flex: 2 , paddingHorizontal : 10}}>
+            <View style={{ flex: 2, paddingHorizontal: 10 }}>
               <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
@@ -595,21 +558,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#007bff",
-  },
-  header: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingBottom: 25,
-    paddingTop: 50,
-  },
-  footer: {
-    flex: 1.9,
-    backgroundColor: "#292929",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    // paddingHorizontal: 20,
-    // paddingVertical: 30,
   },
   scene: {
     flex: 1,

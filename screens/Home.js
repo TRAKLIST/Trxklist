@@ -431,6 +431,8 @@ export class HomeScreen extends Component {
                         height: 160,
                         alignSelf: "center",
                         width: "100%",
+                        borderTopLefttRadius : 15,
+                        borderTopRightRadius : 15
                       }}
                     >
                       <View style={[styles.scene]}>
@@ -781,7 +783,7 @@ export class HomeScreen extends Component {
                           borderRadius: 20,
                           opacity: 0.75,
                         }}
-                      />
+                      />x
                       <Text style = {{color : '#fff'}}>Post</Text>
                     </LinearGradient>
                   </TouchableOpacity> */}

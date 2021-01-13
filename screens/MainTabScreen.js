@@ -15,10 +15,12 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import Octicons from "react-native-vector-icons/Octicons";
 import UserStore from "../stores/UserStore.js";
 import { observer } from "mobx-react";
+import Home from "./Home.js";
+import Search from "./Search.js";
 
 const HomeStack = createStackNavigator();
-const UpdatesStack = createStackNavigator();
-const PostStack = createStackNavigator();
+const MainStack = createStackNavigator();
+const SearchStack = createStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,11 +30,12 @@ const MainTabScreen = () => {
       initialRouteName="Feed"
       barStyle={{ backgroundColor: "#292929" }}
       activeColor="green"
+      inactiveColor = "#ADADAE"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
         name="Main"
-        component={Main}
+        component={MainStackScreen}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
@@ -61,7 +64,7 @@ const MainTabScreen = () => {
       /> */}
         <Tab.Screen
           name="Swipe"
-          component={HomeScreen}
+          component={Home}
           options={{
             tabBarLabel: "",
             tabBarColor: "#292929",
@@ -72,7 +75,7 @@ const MainTabScreen = () => {
         />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchStackScreen}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
@@ -86,3 +89,92 @@ const MainTabScreen = () => {
 };
 
 export default observer(MainTabScreen);
+
+
+const MainStackScreen = ({ navigation }) => {
+  return (
+    // console.log(JSON.parse(UserStore.userDetails.credentials.topArtists)),
+    <MainStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#292929",
+        },
+        headerTintColor: "grey",
+      }}
+    >
+      <MainStack.Screen
+        name="Home"
+        component={Main}
+        options={{
+          title: "TRAKLIST.",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={30}
+              backgroundColor="#292929"
+              color="#fff"
+              // onPress={() => navigation.openDrawer()}
+              style={{ marginLeft: 5 }}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-settings"
+              size={25}
+              backgroundColor="#292929"
+              color="#fff"
+              // onPress={() => setPostScreen(!postScreen)}
+            ></Icon.Button>
+          ),
+        }}
+      />
+      {/* <HomeStack.Screen name="Updates" component={UpdatesScreen} />
+      <HomeStack.Screen name="Me" component={ProfileScreen} />
+      <HomeStack.Screen name="Settings" component={SettingsScreen} /> */}
+    </MainStack.Navigator>
+  );
+};
+
+const SearchStackScreen = ({ navigation }) => {
+  return (
+    // console.log(JSON.parse(UserStore.userDetails.credentials.topArtists)),
+    <SearchStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#292929",
+        },
+        headerTintColor: "grey",
+      }}
+    >
+      <SearchStack.Screen
+        name="Home"
+        component={Search}
+        options={{
+          title: "SEARCH.",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={30}
+              backgroundColor="#292929"
+              color="#fff"
+              // onPress={() => navigation.openDrawer()}
+              style={{ marginLeft: 5 }}
+            ></Icon.Button>
+          ),
+          headerRight: () => (
+            <Icon.Button
+              name="ios-settings"
+              size={25}
+              backgroundColor="#292929"
+              color="#fff"
+              // onPress={() => setPostScreen(!postScreen)}
+            ></Icon.Button>
+          ),
+        }}
+      />
+      {/* <SearchStack.Screen name="Updates" component={UpdatesScreen} />
+      <SearchStack.Screen name="Me" component={ProfileScreen} />
+      <SearchStack.Screen name="Settings" component={SettingsScreen} /> */}
+    </SearchStack.Navigator>
+  );
+};

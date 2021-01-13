@@ -54,7 +54,7 @@ export default function TracklistItem({ track }) {
 
   return (
     <View style={{ flexDirection: "row" }}>
-      <View style={{ flex: 7, justifyContent: "center" }}>
+      <View style={{ flex: 7, justifyContent: "center", borderBottomWidth : 1.1, borderBottomColor : 'grey',  }}>
         <Text
           style={[
             styles.track,

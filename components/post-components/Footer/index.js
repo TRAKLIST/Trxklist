@@ -313,12 +313,12 @@ const Footer = ({
     }
   }, []);
   return (
-    <View style={[styles.container, { marginBottom: 10 }]}>
+    <View style={[styles.container, { borderBottomWidth : 2, borderBottomColor : '#F0EFF4', borderRadius : 15 }]}>
       <View style={styles.iconsContainer}>
         <View
           style={[
             styles.leftIcons,
-            { marginLeft: 10, borderBottomWidth: 2, borderColor: "green" },
+            { marginLeft: 10, borderBottomWidth: 0, borderColor: "green" },
           ]}
         >
           <TouchableOpacity onPress={onLikePressed}>
@@ -328,14 +328,14 @@ const Footer = ({
                   name="heart"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom: 4 }}
+                  style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               ) : (
                 <ADIcon
                   name="hearto"
                   size={25}
-                  color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom: 4 }}
+                  color={"#ADADAE"}
+                  style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               )}
 
@@ -354,14 +354,14 @@ const Footer = ({
                   name="content-save"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom: 4 }}
+                  style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="content-save-outline"
                   size={25}
-                  color={"#44CF6C"}
-                  style={{ marginTop: 8, paddingBottom: 4 }}
+                  color={"#ADADAE"}
+                  style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               )}
             </View>
@@ -393,8 +393,8 @@ const Footer = ({
               <Feather
                 name="share-2"
                 size={24}
-                color={"#44CF6C"}
-                style={{ marginTop: 8, paddingBottom: 4 }}
+                color={"#ADADAE"}
+                style={{ marginTop: 5, paddingBottom: 4 }}
               />
             </View>
           </TouchableOpacity>
@@ -419,7 +419,7 @@ const Footer = ({
             styles.iconContainer2,
             {
               marginRight: 10,
-              borderBottomWidth: 2,
+              borderBottomWidth: 0,
               borderColor: "green",
               flexDirection: "column",
               justifyContent: "center",
@@ -428,7 +428,7 @@ const Footer = ({
         >
           <Text
             style={{
-              color: "#292929",
+              color: "#ADADAE",
               fontWeight: "bold",
               textTransform: "uppercase",
               fontSize: 13,
