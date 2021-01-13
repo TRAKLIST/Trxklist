@@ -438,21 +438,28 @@ exports.recent_posts_markup = () =>
     UserStore.allPosts.map((post, index) => (
       <View
         style={{
-          marginBottom: 0,
-          paddingVertical: 10,
-          borderRadius: 0,
-          paddingHorizontal: 20,
-          backgroundColor: index % 2 == 0 ? "#292929" : "grey",
-          // borderTopLeftRadius: index % 2 == 0 ? 20 : 0,
-          // borderTopRightRadius: index % 2 == 0 ? 0 : 20,
-          // borderBottomLeftRadius: index % 2 == 0 ? 0 : 20,
-          // borderBottomRightRadius: index % 2 == 0 ? 20 : 0,
-          // backgroundColor : 'red'
+          backgroundColor: index % 2 == 0 ? "grey" : "#292929",
+          padding: 0,
         }}
       >
-        {/* <View style = {{padding : 5, backgroundColor : index % 2 == 0 ? "blue" : "red"}}> */}
-          <Post key={post.postID} post={post} index = {index} />
-        {/* </View> */}
+        <View
+          style={{
+            marginBottom: 0,
+            padding: 50,
+            borderRadius: 0,
+            paddingHorizontal: 20,
+            backgroundColor: index % 2 == 0 ? "#292929" : "grey",
+            borderTopLeftRadius: index % 2 == 0 ? 0 : 50,
+            borderTopRightRadius: index != 0 ? (index % 2 == 0 ? 50 : 0) : 0,
+            borderBottomLeftRadius: index % 2 == 0 ? 0 : 50,
+            borderBottomRightRadius: index % 2 == 0 ? 50 : 0,
+            // backgroundColor : 'red'
+          }}
+        >
+          {/* <View style = {{padding : 5, backgroundColor : index % 2 == 0 ? "blue" : "red"}}> */}
+          <Post key={post.postID} post={post} index={index} />
+          {/* </View> */}
+        </View>
       </View>
     ))
   ) : (

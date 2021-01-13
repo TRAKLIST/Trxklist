@@ -110,7 +110,7 @@ export class Post extends Component {
           borderBottomWidth: 0,
           borderRadius: 15,
           borderColor: "grey",
-          backgroundColor: '#000',
+          backgroundColor: 'transparent',
           borderWidth: 0,
           // paddingVertical : 10,
         }}

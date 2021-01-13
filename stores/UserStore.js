@@ -21,6 +21,7 @@ class UserStore {
       notifications : [],
       lyricsPage : false,
       trackIndex : 0,
+      newPost : {}
     });
   }
 }

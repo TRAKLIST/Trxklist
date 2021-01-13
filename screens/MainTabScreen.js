@@ -5,8 +5,8 @@ import HomeScreen from "./Home.js";
 import SearchScreen from "./Search.js";
 import Timeline from "./Timeline.js";
 import Main from "./Main";
-import Notifications from "./Notifications"
-import AddPost from "./AddPost"
+import Notifications from "./Notifications";
+import AddPost from "./AddPost";
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -24,13 +24,14 @@ const SearchStack = createStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
+
 const MainTabScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
       barStyle={{ backgroundColor: "#292929" }}
       activeColor="green"
-      inactiveColor = "#ADADAE"
+      inactiveColor="#ADADAE"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
@@ -62,17 +63,17 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => <Icon1 name="bell" color={color} size={26} />,
         }}
       /> */}
-        <Tab.Screen
-          name="Swipe"
-          component={Home}
-          options={{
-            tabBarLabel: "",
-            tabBarColor: "#292929",
-            tabBarIcon: ({ color }) => (
-              <Icon1 name="gesture-swipe" color={color} size={26} />
-            ),
-          }}
-        />
+      <Tab.Screen
+        name="Swipe"
+        component={Home}
+        options={{
+          tabBarLabel: "",
+          tabBarColor: "#292929",
+          tabBarIcon: ({ color }) => (
+            <Icon1 name="gesture-swipe" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Search"
         component={SearchStackScreen}
@@ -89,7 +90,6 @@ const MainTabScreen = () => {
 };
 
 export default observer(MainTabScreen);
-
 
 const MainStackScreen = ({ navigation }) => {
   return (
@@ -119,17 +119,21 @@ const MainStackScreen = ({ navigation }) => {
           ),
           headerRight: () => (
             <Icon.Button
-              name="ios-settings"
+              name="ios-send"
               size={25}
               backgroundColor="#292929"
               color="#fff"
-              // onPress={() => setPostScreen(!postScreen)}
+              onPress={() => navigation.navigate("POST.")}
             ></Icon.Button>
           ),
         }}
       />
-      {/* <HomeStack.Screen name="Updates" component={UpdatesScreen} />
-      <HomeStack.Screen name="Me" component={ProfileScreen} />
+      <MainStack.Screen
+        name="POST."
+        component={AddPost}
+        
+      />
+      {/* <HomeStack.Screen name="Me" component={ProfileScreen} />
       <HomeStack.Screen name="Settings" component={SettingsScreen} /> */}
     </MainStack.Navigator>
   );

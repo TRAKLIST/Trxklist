@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     // alignItems: "center",
-    backgroundColor: "#000",
+    backgroundColor: "transparent",
     // marginRight: 10,
     opacity : 0.8
   },

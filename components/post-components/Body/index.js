@@ -31,6 +31,7 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
               padding: 0,
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
+              borderRadius : 15
             },
           ]}
         >
@@ -82,8 +83,9 @@ const Body = ({ thisTrack, caption, status, imageUri }) => {
           style={[styles.image2, { alignItems: "center" }]}
           source={{ uri: thisTrack.image }}
           imageStyle={{
-            borderBottomLeftRadius: 15,
-            borderBottomRightRadius: 15,
+            // borderBottomLeftRadius: 15,
+            // borderBottomRightRadius: 15,
+            borderRadius : 15
           }}
         >
           {/* <TouchableOpacity>

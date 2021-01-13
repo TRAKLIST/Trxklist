@@ -328,21 +328,21 @@ const Footer = ({
                   name="heart"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 5, paddingBottom: 4 }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               ) : (
                 <ADIcon
                   name="hearto"
                   size={25}
-                  color={index % 2 == 0 ? "#292929" : "grey"}
-                  style={{ marginTop: 5, paddingBottom: 4 }}
+                  color={index % 2 != 0 ? "#292929" : "grey"}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
 
               {likesCount !== 0 ? (
                 <Text
                   style={{
-                    color: index % 2 == 0 ? "#292929" : "grey",
+                    color: index % 2 != 0 ? "#292929" : "grey",
                     textAlign: "center",
                     fontWeight: "bold",
                     marginBottom: 5,
@@ -363,14 +363,14 @@ const Footer = ({
                   name="content-save"
                   size={25}
                   color={"#44CF6C"}
-                  style={{ marginTop: 5, paddingBottom: 4 }}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="content-save-outline"
                   size={25}
-                  color={index % 2 == 0 ? "#292929" : "grey"}
-                  style={{ marginTop: 5, paddingBottom: 4 }}
+                  color={index % 2 != 0 ? "#292929" : "grey"}
+                  style={{ marginTop: 8, paddingBottom: 4 }}
                 />
               )}
             </View>
@@ -378,7 +378,7 @@ const Footer = ({
             {savesCount !== 0 ? (
               <Text
               style={{
-                color: index % 2 == 0 ? "#292929" : "grey",
+                color: index % 2 != 0 ? "#292929" : "grey",
                 textAlign: "center",
                 fontWeight: "bold",
                 marginBottom: 5,
@@ -409,8 +409,8 @@ const Footer = ({
               <Feather
                 name="share-2"
                 size={24}
-                color={index % 2 == 0 ? "#292929" : "grey"}
-                style={{ marginTop: 5, paddingBottom: 4 }}
+                color={index % 2 != 0 ? "#292929" : "grey"}
+                style={{ marginTop: 8, paddingBottom: 4 }}
               />
             </View>
           </TouchableOpacity>
@@ -444,7 +444,7 @@ const Footer = ({
         >
           <Text
             style={{
-              color: index % 2 == 0 ? "#292929" : "grey",
+              color: index % 2 != 0 ? "#292929" : "grey",
               fontWeight: "bold",
               textTransform: "uppercase",
               fontSize: 13,
