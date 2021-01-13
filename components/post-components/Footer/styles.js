@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#292929",
+    backgroundColor: "transparent",
   },
   iconsContainer: {
     flexDirection: "row",

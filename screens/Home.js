@@ -37,6 +37,7 @@ const {
 let getArtist = {};
 let recommended = {};
 let audioFeatures = {};
+let toggleGreen = false;
 
 const initialLayout = { width: Dimensions.get("window").width };
 const FirstRoute = (card) => first_route(card);
@@ -67,7 +68,7 @@ function shuffle(array) {
     array[randomIndex] = temporaryValue;
   }
 
-  let str = ''
+  let str = "";
 
   // Recommendations - pick 3
   for (i = 0; i < 3; i++) {
@@ -75,7 +76,7 @@ function shuffle(array) {
       str = `${array[i].id}`;
     } else str = `${str},${array[i].id}`;
   }
-  
+
   UserStore.str = str;
   // console.log(str);
 
@@ -96,6 +97,8 @@ export class HomeScreen extends Component {
       audioFeatures: {},
       topArtist_flw: [],
       loading: true,
+      toggleRed: false,
+      toggleGreen: false,
     };
   }
 
@@ -285,7 +288,7 @@ export class HomeScreen extends Component {
                   <ImageBackground
                     source={{ uri: card.image }}
                     style={{ height: "100%", width: "100%" }}
-                    imageStyle={{ borderRadius:25 }}
+                    imageStyle={{ borderRadius: 25 }}
                   >
                     <View
                       style={{
@@ -431,8 +434,6 @@ export class HomeScreen extends Component {
                         height: 160,
                         alignSelf: "center",
                         width: "100%",
-                        borderTopLefttRadius : 15,
-                        borderTopRightRadius : 15
                       }}
                     >
                       <View style={[styles.scene]}>
@@ -460,7 +461,7 @@ export class HomeScreen extends Component {
                                 style={{ height: "100%", width: "100%" }}
                                 imageStyle={{
                                   borderTopRightRadius: 15,
-                                  borderBottomLeftRadius : 15,
+                                  borderBottomLeftRadius: 15,
                                   opacity: 0.8,
                                 }}
                               ></ImageBackground>
@@ -558,13 +559,13 @@ export class HomeScreen extends Component {
           // console.log(cardIndex, this.state.recommendations.length - 1);
 
           cardIndex == this.state.recommendations.length - 4
-            ?   
+            ? // disable swiping for 1 second
 
-          // disable swiping for 1 second
-            
-            axios
+              axios
                 .get(
-                  `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${shuffle(UserStore.topTracks)}`,
+                  `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${shuffle(
+                    UserStore.topTracks
+                  )}`,
                   {
                     headers: {
                       Authorization: `Bearer ${UserStore.spotifyUserDetails.access_token}`,
@@ -730,11 +731,21 @@ export class HomeScreen extends Component {
         }}
         // onSwipedAll={() => console.log("done")}
         verticalSwipe={false}
+        onSwipedLeft={() => {
+          this.setState({ toggleRed: true });
+          setTimeout(() => {
+            this.setState({ toggleRed: false });
+          }, 500);
+        }}
         onSwipedRight={(cardIndex) => {
+          this.setState({ toggleGreen: true });
+          setTimeout(() => {
+            this.setState({ toggleGreen: false });
+          }, 500);
           saveTrack(this.state.recommendations[cardIndex].id);
-          alert(
-            `'${this.state.recommendations[cardIndex].name}' by ${this.state.recommendations[cardIndex].artistName} has been saved to your Spotify library`
-          );
+          // alert(
+          //   `'${this.state.recommendations[cardIndex].name}' by ${this.state.recommendations[cardIndex].artistName} has been saved to your Spotify library`
+          // );
         }}
         cardIndex={0}
         backgroundColor={"transparent"}
@@ -796,7 +807,7 @@ export class HomeScreen extends Component {
                   >
                     <MaterialCommunityIcons
                       name="circle"
-                      color="#fff"
+                      color={this.state.toggleRed ? "red" : this.state.toggleGreen ? "green" : "#fff"}
                       size={25}
                     />
                   </LinearGradient>

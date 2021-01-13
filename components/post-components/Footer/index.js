@@ -19,6 +19,7 @@ const Footer = ({
   status,
   trackID,
   postedAt,
+  index,
 }) => {
   useEffect;
   const [isLiked, setIsLike] = useState(false);
@@ -44,7 +45,7 @@ const Footer = ({
           // console.log("success");
         })
         .catch((err) => {
-          alert(err)
+          alert(err);
           setIsLike(isLiked);
           setLikesCount(likesCount);
           console.log(err);
@@ -156,7 +157,6 @@ const Footer = ({
     } else {
       // setIsSave(false);
       if (status == "Track") {
-
         // if savesCount == 0 then dont perfrom route, just unsave
 
         axios
@@ -313,12 +313,12 @@ const Footer = ({
     }
   }, []);
   return (
-    <View style={[styles.container, { borderBottomWidth : 2, borderBottomColor : '#F0EFF4', borderRadius : 15 }]}>
+    <View style={[styles.container]}>
       <View style={styles.iconsContainer}>
         <View
           style={[
             styles.leftIcons,
-            { marginLeft: 10, borderBottomWidth: 0, borderColor: "green" },
+            { marginLeft: 10, borderBottomWidth: 2, borderColor: "green" },
           ]}
         >
           <TouchableOpacity onPress={onLikePressed}>
@@ -334,13 +334,22 @@ const Footer = ({
                 <ADIcon
                   name="hearto"
                   size={25}
-                  color={"#ADADAE"}
+                  color={index % 2 == 0 ? "#292929" : "grey"}
                   style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               )}
 
               {likesCount !== 0 ? (
-                <Text style={styles.number}>{likesCount}</Text>
+                <Text
+                  style={{
+                    color: index % 2 == 0 ? "#292929" : "grey",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    marginBottom: 5,
+                  }}
+                >
+                  {likesCount}
+                </Text>
               ) : (
                 <View style={styles.number}></View>
               )}
@@ -360,14 +369,21 @@ const Footer = ({
                 <MaterialCommunityIcons
                   name="content-save-outline"
                   size={25}
-                  color={"#ADADAE"}
+                  color={index % 2 == 0 ? "#292929" : "grey"}
                   style={{ marginTop: 5, paddingBottom: 4 }}
                 />
               )}
             </View>
 
             {savesCount !== 0 ? (
-              <Text style={styles.number}>{savesCount}</Text>
+              <Text
+              style={{
+                color: index % 2 == 0 ? "#292929" : "grey",
+                textAlign: "center",
+                fontWeight: "bold",
+                marginBottom: 5,
+              }}
+            >{savesCount}</Text>
             ) : (
               <View style={styles.number}></View>
             )}
@@ -393,7 +409,7 @@ const Footer = ({
               <Feather
                 name="share-2"
                 size={24}
-                color={"#ADADAE"}
+                color={index % 2 == 0 ? "#292929" : "grey"}
                 style={{ marginTop: 5, paddingBottom: 4 }}
               />
             </View>
@@ -419,7 +435,7 @@ const Footer = ({
             styles.iconContainer2,
             {
               marginRight: 10,
-              borderBottomWidth: 0,
+              borderBottomWidth: 2,
               borderColor: "green",
               flexDirection: "column",
               justifyContent: "center",
@@ -428,7 +444,7 @@ const Footer = ({
         >
           <Text
             style={{
-              color: "#ADADAE",
+              color: index % 2 == 0 ? "#292929" : "grey",
               fontWeight: "bold",
               textTransform: "uppercase",
               fontSize: 13,

@@ -16,74 +16,94 @@ import * as Animatable from "react-native-animatable";
 const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#007bff" barStyle="light-content" />
-      {/* <View style={styles.header}> */}
-      <LinearGradient colors={["#EAEAEB", "grey"]} style={styles.header}>
-        <Animatable.Image
-          animation="bounceIn"
-          // duration="1500"
-          style={styles.logo}
-          resizeMode="contain"
-          // source={img}
-        />
-        {/* <MaterialIcons name="multitrack-audio" color="#fff" size={60} /> */}
-      </LinearGradient>
-      <LinearGradient colors={["grey", "#292929", "#000"]} style={styles.footer}>
-        <Animatable.View animation="fadeInUpBig" style={{ flex: 1 }}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.title}>TRAKLIST.</Text>
-            <Text style={styles.text}>stay in the loop • find new music</Text>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "column",
-              bottom: 100,
-              position: "absolute",
-              alignSelf: "center",
-            }}
-          >
-            <View style={[styles.button]}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("SignUpScreen")}
-              >
-                <LinearGradient
-                  colors={["#292929", "#292929"]}
-                  style={styles.signIn}
-                >
-                  <Text style={styles.textSign}>get started</Text>
-                  {/* <MaterialIcons name="navigate-next" color="#000" size={20} /> */}
-                </LinearGradient>
-              </TouchableOpacity>
+      <View style={styles.header}>
+        <View
+          style={{
+            margin: 0,
+            backgroundColor: "#292929",
+            flex: 1,
+            borderBottomRightRadius: 80,
+            justifyContent : 'center',
+            alignItems : 'center'
+          }}
+        >
+          <Animatable.Image
+            animation="bounceIn"
+            // duration="1500"
+            style={styles.logo}
+            resizeMode="contain"
+            // source={img}
+          />
+        </View>
+      </View>
+      <View style={styles.footer}>
+        <View
+          style={{
+            margin: 0,
+            backgroundColor: "grey",
+            flex: 1,
+            borderTopLeftRadius: 80,
+          }}
+        >
+          <Animatable.View animation="fadeInUpBig" style={{ flex: 1 }}>
+            <View style={{ alignItems: "center", marginTop: 50 }}>
+              <Text style={styles.title}>TRAKLIST.</Text>
+              <Text style={styles.text}>stay in the loop • find new music</Text>
             </View>
-            <View style={{ alignSelf: "center" }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("SignInScreen")}
-              >
-                <LinearGradient
-                  colors={["black", "black"]}
-                  style={[styles.signIn, { marginTop: 10, opacity : 0.4 }]}
+
+            <View
+              style={{
+                marginTop: 60,
+                flexDirection: "column",
+                alignSelf: "center",
+              }}
+            >
+              <View style={[styles.button]}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("SignUpScreen")}
                 >
-                  <Text
-                    style={{
-                      color: "#ADADAD",
-                      fontSize: 17,
-                      fontWeight: "600",
-                    }}
+                  <LinearGradient
+                    colors={["#292929", "#292929"]}
+                    style={styles.signIn}
                   >
-                    sign back in
-                  </Text>
-                  <MaterialIcons name="navigate-next" color="#fff" size={20} />
-                </LinearGradient>
-              </TouchableOpacity>
+                    <Text style={styles.textSign}>get started</Text>
+                    {/* <MaterialIcons name="navigate-next" color="#000" size={20} /> */}
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+              <View style={{ alignSelf: "center" }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("SignInScreen")}
+                >
+                  <LinearGradient
+                    colors={["black", "black"]}
+                    style={[styles.signIn, { marginTop: 10, opacity: 0.4 }]}
+                  >
+                    <Text
+                      style={{
+                        color: "#ADADAD",
+                        fontSize: 17,
+                        fontWeight: "600",
+                      }}
+                    >
+                      sign back in
+                    </Text>
+                    <MaterialIcons
+                      name="navigate-next"
+                      color="#fff"
+                      size={20}
+                    />
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
 
-          <SafeAreaView style={styles.bottom}>
-            {/* <Text>Carousel</Text> */}
-          </SafeAreaView>
-        </Animatable.View>
-      </LinearGradient>
+            <SafeAreaView style={styles.bottom}>
+              {/* <Text>Carousel</Text> */}
+            </SafeAreaView>
+          </Animatable.View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -96,20 +116,18 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#007bff",
   },
   header: {
     flex: 8,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "grey",
   },
   footer: {
     flex: 9,
-    backgroundColor: "#000",
+    backgroundColor: "#292929",
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
-    paddingVertical: 50,
-    paddingHorizontal: 30,
+    // paddingVertical: 50,
+    // paddingHorizontal: 30,
   },
   logo: {
     width: height_logo,
@@ -141,7 +159,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   textSign: {
-    color: "black",
+    color: "whitesmoke",
     fontWeight: "bold",
     fontSize: 18,
     alignItems: "center",

@@ -37,6 +37,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import { set } from "mobx";
 
 const AnimatedCustomScrollView = Animated.createAnimatedComponent(ScrollView);
 function wait(timeout) {
@@ -61,10 +62,18 @@ function Main() {
   const [selectedValue, setSelectedValue] = React.useState("Track");
   const [refreshing, setRefreshing] = React.useState(false);
   const [index, setIndex] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
   const [routes] = React.useState([
     { key: "first", title: "MUSIC" },
     { key: "second", title: "CAPTION" },
   ]);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000)
+    
+  }, [])
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -88,7 +97,14 @@ function Main() {
 
   let data = [];
   UserStore.followingDetails
-    .map((user) => data.push(user.image))
+    .map((user) => {
+      console.log(user, "efe");
+      let data1 = {
+        image: user.image,
+        user: user.meloID,
+      };
+      data.push(data1);
+    })
     .fill(0)
     .map((_, index) => ({ id: `item-${index}` }));
 
@@ -98,7 +114,7 @@ function Main() {
   const STICKY_ITEM_WIDTH = 24;
   const STICKY_ITEM_HEIGHT = 24;
   const STICKY_ITEM_BACKGROUNDS = ["#222", "#000"];
-  const SEPARATOR_SIZE = 8;
+  const SEPARATOR_SIZE = 15;
   const BORDER_RADIUS = 30;
 
   const StickyItemView = ({
@@ -113,15 +129,34 @@ function Main() {
   }) => sticky_item_view();
 
   const renderItemSticky = ({ item, index }) => (
-    <ImageBackground
-      key={`item-${index}`}
-      source={{ uri: data[index] }}
+    <View
       style={{
-        width: 65,
-        height: 65,
+        width: 45,
       }}
-      imageStyle={{ borderRadius: 15 }}
-    ></ImageBackground>
+    >
+      <ImageBackground
+        key={`item-${index}`}
+        source={{ uri: data[index].image }}
+        style={{
+          width: 45,
+          height: 45,
+        }}
+        imageStyle={{ borderRadius: 15 }}
+      ></ImageBackground>
+      <View style={{ paddingTop: 5 }}>
+        <Text
+          numberOfLines={1}
+          style={{
+            color: "grey",
+            fontWeight: "bold",
+            textAlign: "center",
+            fontSize: 11,
+          }}
+        >
+          {data[index].user}
+        </Text>
+      </View>
+    </View>
   );
 
   let recentPostsMarkup = recent_posts_markup();
@@ -171,20 +206,20 @@ function Main() {
   //   console.log(UserStore.newPosts.length, UserStore.newPosts.length)
   // }
 
-  if (!UserStore.enablePostScreen) {
+  if (!UserStore.enablePostScreen && loading == false) {
     return (
-      <View style={{ backgroundColor: "#292929", flex: 1 }}>
+      <View style={{ backgroundColor: "transparent", flex: 1 }}>
         <SafeAreaView
           style={{
             flex: 1,
-            backgroundColor: "#292929",
-            borderBottomColor: "#fff",
+            backgroundColor: "grey",
+            borderBottomColor: "grey",
             borderBottomWidth: 2,
           }}
         >
           <ParallaxScrollView
-            backgroundColor="#292929"
-            contentBackgroundColor="#292929" // transparent
+            backgroundColor="transparent"
+            contentBackgroundColor="transparent" // transparent
             parallaxHeaderHeight={95}
             renderScrollComponent={() => (
               <AnimatedCustomScrollView
@@ -201,15 +236,13 @@ function Main() {
               <View
                 style={{
                   padding: 10,
-                  marginLeft: 10,
-                  marginRight: 10,
                   // marginBottom: 10,
                   backgroundColor: "#292929",
                   borderWidth: 0,
                   borderColor: "#fff",
-                  borderRadius: 5,
+                  borderRadius: 0,
                   minHeight: 80,
-                  borderBottomWidth: 1.5,
+                  borderBottomWidth: 1,
                 }}
               >
                 <StickyItemFlatList
@@ -230,41 +263,36 @@ function Main() {
             stickyHeaderHeight={90}
             // renderBackground = {0}
             renderForeground={() => (
-              <View
-                style={{
-                  padding: 5,
-                  marginBottom: 10,
-                  // backgroundColor: "#272D2D",
-                  borderWidth: 0,
-                  borderColor: "green",
-                  borderRadius: 15,
-                  minHeight: 80,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flex: 1, }}></View>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity onPress={() => search(data.track)}>
-                    <View
-                      // colors={["#272D2D", "#272D2D"]}
-                      style={styles.signIn}
-                    >
-                      <MaterialCommunityIcons
-                        name="circle"
-                        color="grey"
-                        size={55}
-                      />
-                    </View>
-                  </TouchableOpacity>
+              <View style={{ flex: 1, backgroundColor: "#292929", padding: 0 }}>
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: "grey",
+                    borderBottomRightRadius: 50,
+                  }}
+                >
+                  <View style={{ flex: 1 }}></View>
+                  <View style={{ flex: 1, justifyContent : 'center' }}>
+                    <TouchableOpacity onPress={() => search(data.track)}>
+                      <View
+                        // colors={["#272D2D", "#272D2D"]}
+                        style={styles.signIn}
+                      >
+                        <MaterialCommunityIcons
+                          name="circle"
+                          color="#FFF"
+                          size={55}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ flex: 1 }}></View>
                 </View>
-                <View style={{ flex: 1,}}></View>
               </View>
             )}
           >
-            <View style={{ paddingTop: 10 }}>
-              <View>
-                {/* { UserStore.isnewPostsAvailable == true &&
+            <View style={{ padding: 0, backgroundColor: "grey" }}>
+              {/* { UserStore.isnewPostsAvailable == true &&
                   <TouchableOpacity onPress = {newPosts}>
                     <View
                       style={{
@@ -294,9 +322,16 @@ function Main() {
                   </TouchableOpacity>
                 } */}
 
-                <View style = {{backgroundColor : '#292929'}}>{recentPostsMarkup}</View>
-                {/* explore */}
+              <View
+                style={{
+                  backgroundColor: "#292929",
+                  borderTopLeftRadius: 50,
+                  paddingTop : 45
+                }}
+              >
+                {recentPostsMarkup}
               </View>
+              {/* explore */}
             </View>
           </ParallaxScrollView>
         </SafeAreaView>
@@ -315,8 +350,8 @@ function Main() {
               height: 40,
               width: 40,
               position: "absolute",
-              bottom: 10,
-              right: 10,
+              bottom: 20,
+              right: 20,
               borderRadius: 5,
               justifyContent: "center",
               alignItems: "center",
@@ -338,7 +373,7 @@ function Main() {
         </TouchableWithoutFeedback>
       </View>
     );
-  } else {
+  } else  if(UserStore.enablePostScreen){
     const renderScene = SceneMap({
       first: FirstRoute,
       second: SecondRoute,
@@ -362,7 +397,7 @@ function Main() {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView
-          style={{ flex: 1, backgroundColor: "#292929" }}
+          style={{ flex: 1, backgroundColor: "transparent" }}
           behavior="padding"
         >
           <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
@@ -549,6 +584,12 @@ function Main() {
         {/*  */}
       </TouchableWithoutFeedback>
     );
+  } else if (loading == true){
+    return(
+      <View style = {{backgroundColor :'#292929', flex : 1, justifyContent : 'center', alignItems : 'center'}} >
+        <Text style = {{color : 'grey', fontSize : 30}}>some fancy loading page with a nice animation...</Text>
+      </View>
+    )
   }
 }
 

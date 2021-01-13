@@ -107,12 +107,11 @@ export class Post extends Component {
       <View
         style={{
           // borderTopWidth: 1.5,
-          // borderBottomWidth: 1.5,
+          borderBottomWidth: 0,
           borderRadius: 15,
-          borderColor: "green",
-          backgroundColor: "#292929",
+          borderColor: "grey",
+          backgroundColor: '#000',
           borderWidth: 0,
-          marginBottom : 5
           // paddingVertical : 10,
         }}
       >
@@ -136,6 +135,7 @@ export class Post extends Component {
           status={this.props.post.status}
           trackID={this.props.post.trackID}
           postedAt={this.props.post.createdAt}
+          index = {this.props.index}
         />
       </View>
     );

@@ -43,7 +43,11 @@ function Search() {
   const [userDetails, setUserDetails] = React.useState([]);
   const [lyricsPage, setLyricsPage] = React.useState(false);
   const [index, setIndex] = React.useState(0);
+  // Spotify
   const [status, setStatus] = React.useState(0);
+
+  // Users
+  const [status1, setStatus1] = React.useState(0);
 
   const search = () => {
     axios
@@ -286,7 +290,12 @@ function Search() {
                   onPress={() => setIndex(0)}
                 >
                   <View>
-                    <Text style={{ color: index == 0 ? "#292929" : "#fff", opacity : 0.4 }}>
+                    <Text
+                      style={{
+                        color: index == 0 ? "#292929" : "#fff",
+                        opacity: 0.4,
+                      }}
+                    >
                       <FontAwesome5
                         name="user-alt"
                         size={20}
@@ -309,7 +318,12 @@ function Search() {
                   onPress={() => setIndex(1)}
                 >
                   <View>
-                    <Text style={{ color: index == 1 ? "#292929" : "#fff", opacity : 0.4  }}>
+                    <Text
+                      style={{
+                        color: index == 1 ? "#292929" : "#fff",
+                        opacity: 0.4,
+                      }}
+                    >
                       <FontAwesome5
                         name="spotify"
                         size={20}
@@ -333,7 +347,12 @@ function Search() {
                   onPress={() => setIndex(2)}
                 >
                   <View>
-                    <Text style={{ color: index == 2 ? "#292929" : "#fff", opacity : 0.4  }}>
+                    <Text
+                      style={{
+                        color: index == 2 ? "#292929" : "#fff",
+                        opacity: 0.4,
+                      }}
+                    >
                       <FontAwesome5
                         name="soundcloud"
                         size={20}
@@ -363,6 +382,84 @@ function Search() {
                     opacity: 0.9,
                   }}
                 >
+                  {/* {index == 0 && (
+                    <View
+                      style={{
+                        height: 40,
+                        borderRadius: 10,
+                        flexDirection: "row",
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: status1 == 0 ? "#fff" : "#292929",
+
+                          borderRadius: 10,
+                        }}
+                        onPress={() => setStatus1(0)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status1 == 0 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            DISCOVER
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: status1 == 1 ? "#fff" : "#292929",
+                          borderRadius: 10,
+                        }}
+                        onPress={() => setStatus1(1)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status1 == 1 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            FOLLOWING
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          backgroundColor: "transparent",
+                          borderRadius: 10,
+                          backgroundColor: status1 == 2 ? "#fff" : "#292929",
+                        }}
+                        onPress={() => setStatus1(2)}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: status1 == 2 ? "#292929" : "#fff",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                            }}
+                          >
+                            FOLLOWERS
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  )} */}
                   <View>{list}</View>
 
                   {index == 2 &&
