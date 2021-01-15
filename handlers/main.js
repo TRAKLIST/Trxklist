@@ -450,8 +450,8 @@ exports.recent_posts_markup = () =>
             paddingHorizontal: 20,
             backgroundColor: index % 2 == 0 ? "#292929" : "grey",
             borderTopLeftRadius: index % 2 == 0 ? 0 : 50,
-            borderTopRightRadius: index != 0 ? (index % 2 == 0 ? 50 : 0) : 0,
-            borderBottomLeftRadius: index % 2 == 0 ? 0 : 50,
+            borderTopRightRadius: index != UserStore.allPosts.length -1 ? index != 0 ? (index % 2 == 0 ? 50 : 0) : 0 : 0,
+            borderBottomLeftRadius: index != UserStore.allPosts.length -1 ? index % 2 == 0 ? 0 : 50 : 0,
             borderBottomRightRadius: index % 2 == 0 ? 50 : 0,
             // backgroundColor : 'red'
           }}

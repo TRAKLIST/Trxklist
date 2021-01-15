@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import spotifyAPI from "../../SpotifyAPI";
 
-export default function TracklistItem({ track }) {
+export default function TracklistItem({ track, index }) {
   const [isSaved, setIsSave] = React.useState(false);
 
   React.useEffect(() => {
@@ -54,11 +54,26 @@ export default function TracklistItem({ track }) {
 
   return (
     <View style={{ flexDirection: "row" }}>
-      <View style={{ flex: 7, justifyContent: "center", borderBottomWidth : 1.1, borderBottomColor : 'grey',  }}>
+      <View
+        style={{
+          flex: 7,
+          justifyContent: "center",
+          borderBottomWidth: 1.1,
+          borderBottomColor: "grey",
+          marginLeft : 5
+        }}
+      >
         <Text
           style={[
-            styles.track,
-            { padding: 5, borderRadius: 5, overflow: "hidden" },
+            /**here */
+            {
+              padding: 5,
+              borderRadius: 5,
+              fontSize: 13,
+              fontWeight: "bold",
+              color: index % 2 == 0 ? "grey" : "#292929",
+              fontFamily: "Arial",
+            },
           ]}
           numberOfLines={1}
         >

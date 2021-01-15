@@ -17,6 +17,8 @@ import UserStore from "../stores/UserStore.js";
 import { observer } from "mobx-react";
 import Home from "./Home.js";
 import Search from "./Search.js";
+import Categories from "./Categories.js";
+import AltSwitchboard from "./AltSwitchboard";
 
 const HomeStack = createStackNavigator();
 const MainStack = createStackNavigator();
@@ -24,14 +26,13 @@ const SearchStack = createStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-
 const MainTabScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
       barStyle={{ backgroundColor: "#292929" }}
       activeColor="green"
-      inactiveColor="#ADADAE"
+      inactiveColor="grey"
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
@@ -76,7 +77,7 @@ const MainTabScreen = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchStackScreen}
+        component={AltSwitchboard}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
@@ -112,8 +113,8 @@ const MainStackScreen = ({ navigation }) => {
               name="ios-menu"
               size={30}
               backgroundColor="#292929"
-              color="#fff"
-              // onPress={() => navigation.openDrawer()}
+              color="grey"
+              onPress={() => navigation.openDrawer()}
               style={{ marginLeft: 5 }}
             ></Icon.Button>
           ),
@@ -122,17 +123,13 @@ const MainStackScreen = ({ navigation }) => {
               name="ios-send"
               size={25}
               backgroundColor="#292929"
-              color="#fff"
+              color="grey"
               onPress={() => navigation.navigate("POST.")}
             ></Icon.Button>
           ),
         }}
       />
-      <MainStack.Screen
-        name="POST."
-        component={AddPost}
-        
-      />
+      <MainStack.Screen name="POST." component={AddPost} />
       {/* <HomeStack.Screen name="Me" component={ProfileScreen} />
       <HomeStack.Screen name="Settings" component={SettingsScreen} /> */}
     </MainStack.Navigator>
@@ -152,7 +149,7 @@ const SearchStackScreen = ({ navigation }) => {
     >
       <SearchStack.Screen
         name="Home"
-        component={Search}
+        component={CategoriesStack}
         options={{
           title: "SEARCH.",
           headerLeft: () => (
