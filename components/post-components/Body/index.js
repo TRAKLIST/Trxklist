@@ -205,7 +205,7 @@ const Body = ({ thisTrack, caption, status, imageUri, index }) => {
               borderTopRightRadius: 15,
               // borderRadius: 15,
               // borderWidth : 2,
-              backgroundColor : index % 2 != 0 ? "grey" : "#292929",
+              backgroundColor : index % 2 == 0 ? "grey" : "#292929",
               opacity : 0.6
             },
           ]}
@@ -218,7 +218,7 @@ const Body = ({ thisTrack, caption, status, imageUri, index }) => {
               numberOfLines={1}
               style={{
                 fontSize: 15,
-                color: index % 2 == 0 ? "grey" : "#292929",
+                color: index % 2 != 0 ? "grey" : "#292929",
                 margin: 2,
                 fontFamily: "Arial",
                 fontWeight: "bold",
@@ -238,10 +238,10 @@ const Body = ({ thisTrack, caption, status, imageUri, index }) => {
                 numberOfLines={1}
                 style={{
                   fontWeight: "bold",
-                  color: index % 2 != 0 ? "grey" : "#292929",
+                  color: index % 2 == 0 ? "grey" : "#292929",
                   padding: 3,
                   textAlign: "center",
-                  backgroundColor: index % 2 == 0 ? "grey" : "#292929",
+                  backgroundColor: index % 2 != 0 ? "grey" : "#292929",
                   borderRadius : 5,
                   overflow : 'hidden'
                 }}
@@ -268,8 +268,9 @@ const Body = ({ thisTrack, caption, status, imageUri, index }) => {
           style={{
             flexDirection: "row",
             margin: 0,
-            borderRightWidth : 1,
-            borderColor : index % 2 != 0 ? "grey" : "#292929",
+            borderRightWidth : 2,
+            opacity : 0.9,
+            borderColor : index % 2 == 0 ? "grey" : "#292929",
           }}
         >
           <View>
