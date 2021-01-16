@@ -54,6 +54,7 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
+            onPress = {() => navigation.navigate("Tracks")}
           >
             <View style={{ flex: 1, justifyContent: "center" }}>
               <Text
@@ -146,7 +147,7 @@ export default function Categories({ navigation }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Artist
+                  Artists
                 </Text>
               </View>
 
@@ -250,7 +251,7 @@ export default function Categories({ navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Search")}
+            onPress={() => navigation.navigate("People")}
             style={{
               flex: 1,
               backgroundColor: "grey",
@@ -268,7 +269,7 @@ export default function Categories({ navigation }) {
                   textTransform: "uppercase",
                 }}
               >
-                People
+                LISTERS
               </Text>
             </View>
 

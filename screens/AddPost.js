@@ -118,7 +118,7 @@ export default function AddPost({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: "transparent" }}
+        style={{ flex: 1, backgroundColor: "#292929" }}
         behavior="padding"
       >
         <View
