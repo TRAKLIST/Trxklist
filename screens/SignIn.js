@@ -43,173 +43,6 @@ const discovery = {
   tokenEndpoint: "https://accounts.spotify.com/api/token",
 };
 
-// const FirstRoute = (request, spotifyUserDetails, promptAsync, lastPlayed) => {
-//   dayjs.extend(relativeTime);
-//   return (
-//     <LinearGradient colors={["grey", "#000"]} style={styles.footer}>
-//       <TouchableOpacity
-//         disabled={!request}
-//         onPress={() => {
-//           promptAsync();
-//         }}
-//       >
-//         <LinearGradient
-//           colors={["#1DB954", "green"]}
-//           style={[styles.signIn, { flexDirection: "row" }]}
-//         >
-//           <View style={{ left: 20, position: "absolute" }}>
-//             <MaterialCommunityIcons
-//               name="spotify"
-//               color="#fff"
-//               size={20}
-//               style={{ alignSelf: "center", margin: 7 }}
-//             />
-//           </View>
-
-//           {!spotifyUserDetails.user_email && (
-//             <Text
-//               style={[
-//                 styles.textSign,
-//                 {
-//                   color: "#fff",
-//                   alignSelf: "center",
-//                   fontSize: 13,
-//                   textTransform: "uppercase",
-//                 },
-//               ]}
-//             >
-//               Verify Spotify
-//             </Text>
-//           )}
-//           {spotifyUserDetails.user_email && (
-//             <Text
-//               style={[
-//                 styles.textSign,
-//                 {
-//                   color: "#fff",
-//                   alignSelf: "center",
-//                   fontSize: 13,
-//                   textTransform: "uppercase",
-//                 },
-//               ]}
-//             >
-//               Not You?
-//             </Text>
-//           )}
-//         </LinearGradient>
-//       </TouchableOpacity>
-
-//       <View style={{ marginTop: 10 }}>
-//         {/* <View> */}
-//         <View style={{ margin: 5, borderRadius: 15 }}>
-//           <View style={{ flexDirection: "row", margin: 10 }}>
-//             <View style={{ flex: 2, padding: 5 }}>
-//               <Text
-//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-//               >
-//                 name
-//               </Text>
-//             </View>
-//             <View style={{ flex: 4, padding: 5 }}>
-//               <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
-//                 {spotifyUserDetails.user_name}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flexDirection: "row", margin: 10 }}>
-//             <View style={{ flex: 2, padding: 5 }}>
-//               <Text
-//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-//               >
-//                 email
-//               </Text>
-//             </View>
-//             <View style={{ flex: 4, padding: 5 }}>
-//               <Text
-//                 style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}
-//                 numberOfLines={1}
-//               >
-//                 {spotifyUserDetails.user_email}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flexDirection: "row", margin: 10 }}>
-//             <View style={{ flex: 2, padding: 5 }}>
-//               <Text
-//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-//               >
-//                 spotify uri
-//               </Text>
-//             </View>
-//             <View style={{ flex: 4, padding: 5 }}>
-//               <Text
-//                 numberOfLines={1}
-//                 style={{
-//                   fontWeight: "bold",
-//                   color: "#999",
-//                   opacity: 0.6,
-//                   textDecorationLine: "underline",
-//                 }}
-//                 onPress={() => Linking.openURL(spotifyUserDetails.profile_link)}
-//               >
-//                 {spotifyUserDetails.profile_link}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flexDirection: "row", margin: 10 }}>
-//             <View style={{ flex: 2, padding: 5 }}>
-//               <Text
-//                 style={{ fontWeight: "bold", color: "white", opacity: 0.6 }}
-//               >
-//                 country
-//               </Text>
-//             </View>
-//             <View style={{ flex: 4, padding: 5 }}>
-//               <Text style={{ fontWeight: "bold", color: "#999", opacity: 0.6 }}>
-//                 {spotifyUserDetails.country}
-//               </Text>
-//             </View>
-//           </View>
-//         </View>
-//       </View>
-
-//       <ImageBackground
-//         style={{
-//           width: "100%",
-//           height: 300,
-//         }}
-//         imageStyle={{ borderRadius: 30 }}
-//         source={{ uri: lastPlayed.image }}
-//       >
-//         <View
-//           style={{
-//             backgroundColor: "green",
-//             top: 5,
-//             borderRadius: 10,
-//             margin: 15,
-//             padding: 10,
-//             opacity: 0.8,
-//             alignSelf: "flex-start",
-//             borderColor: "#fff",
-//             borderWidth: 3,
-//           }}
-//         >
-//           <View>
-//             <Text
-//               style={{ color: "#fff", padding: 0, fontWeight: "bold" }}
-//             >{`played ${lastPlayed.trackName} `}</Text>
-//             <Text style={{ color: "#fff", marginTop: 5, fontWeight: "bold" }}>
-//               {dayjs(lastPlayed.playedAt).fromNow()}
-//             </Text>
-//           </View>
-//         </View>
-//       </ImageBackground>
-//     </LinearGradient>
-//   );
-// };
-
-// const SecondRoute = (spotifyUserDetails, navigation) => {};
-
 const initialLayout = { width: Dimensions.get("window").width };
 
 const SignInScreen = ({ navigation }) => {
@@ -679,7 +512,7 @@ const SignInScreen = ({ navigation }) => {
                       promptAsync();
                     }}
                   >
-                    <LinearGradient
+                    <View
                       colors={["transparent"]}
                       style={[
                         styles.signIn,
@@ -699,7 +532,7 @@ const SignInScreen = ({ navigation }) => {
                         sign in with {""}
                       </Text>
                       <Fontisto name="spotify" color="#1DB954" size={20} />
-                    </LinearGradient>
+                    </View>
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
@@ -724,8 +557,7 @@ const SignInScreen = ({ navigation }) => {
                 )}
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
-                  <LinearGradient
-                    colors={["transparent"]}
+                  <View
                     style={[
                       styles.signIn,
                       {
@@ -744,12 +576,11 @@ const SignInScreen = ({ navigation }) => {
                       sign in with{" "}
                     </Text>
                     <Fontisto name="applemusic" color="#fc3158" size={20} />
-                  </LinearGradient>
+                  </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signIn} onPress={signIn}>
-                  <LinearGradient
-                    colors={["transparent"]}
+                  <View
                     style={[
                       styles.signIn,
                       {
@@ -768,7 +599,7 @@ const SignInScreen = ({ navigation }) => {
                       sign in with{" "}
                     </Text>
                     <Fontisto name="soundcloud" color="#ff7700" size={20} />
-                  </LinearGradient>
+                  </View>
                 </TouchableOpacity>
               </View>
             </View>

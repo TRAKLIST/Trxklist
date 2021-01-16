@@ -187,8 +187,7 @@ const SignUpScreen = ({ navigation }) => {
             promptAsync();
           }}
         >
-          <LinearGradient
-            colors={["transparent"]}
+          <View
             style={[
               styles.signIn,
               {
@@ -219,7 +218,7 @@ const SignUpScreen = ({ navigation }) => {
             {spotifyUserDetails.user_email && (
               <Text style={[styles.textSign, { color: "#fff" }]}>Not You?</Text>
             )}
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
       </View>
     );
