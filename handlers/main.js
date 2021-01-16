@@ -291,62 +291,125 @@ exports.first_route = (status) => {
   return (
     <Animatable.View
       animation="bounceInUp"
-      style={{ flex: 1, backgroundColor: "#292929" }}
+      style={{
+        flex: 1,
+        backgroundColor: "#292929",
+        paddingTop: 20,
+        flexDirection: "column",
+      }}
     >
-      <View
-        style={
-          (styles.action,
-          {
-            margin: 0,
-            padding: 0,
-            flexDirection: "row",
-          })
-        }
-      >
+      <View style={{ flexDirection: "row" }}>
         <View
           style={{
             flex: 3,
-            borderWidth: 2,
-            paddign: 2,
-            backgroundColor: "#000",
-            borderRadius: "15px",
-            margin: 15,
-            padding: 10,
-            opacity: 0.42,
-            fontWeight: "bold",
+            backgroundColor: "grey",
+            justifyContent: "center",
+            borderRadius: 8,
+            shadowColor: "#292929",
+            shadowOffset: { width: 1, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+            margin: 10,
+            borderColor: "#5C5C5C",
           }}
         >
           <TextInput
             placeholder="Search for music"
             autoCapitalize="none"
             onChangeText={(val) => handleTrackChange(val)}
-            style={{ color: "grey", fontSize: 20, fontWeight: "bold" }}
-            placeholderStyle={{ color: "grey" }}
+            style={{
+              color: "#292929",
+              fontWeight: "600",
+              // justifyContent: "center",
+              textAlign: "center",
+              // padding: 10,
+              borderRadius: 8,
+              borderWidth: 2,
+              borderColor: "#5c5c5c5c",
+              // backgroundColor: "grey",
+              height: 35,
+            }}
+            placeholderStyle={{ color: "grey", fontSize: 5 }}
           />
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            Keyboard.dismiss();
-            search(data.track);
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "grey",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 10,
+            margin: 10,
+            borderWidth: 2,
+            borderColor: "#5c5c5c5c",
           }}
         >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "#000",
-              justifyContent: "center",
-              margin: 15,
-              padding: 10,
-              borderWidth: 2,
-              opacity: 0.42,
-              borderRadius: "15px",
+          <TouchableOpacity
+            onPress={() => {
+              Keyboard.dismiss();
+              search(data.track);
             }}
           >
-            <Octicons name="search" color="grey" size={26} />
-          </View>
-        </TouchableOpacity>
+            <Octicons name="search" color="#292929" size={20} />
+          </TouchableOpacity>
+        </View>
       </View>
+
+      {/* <View style={[{ flexDirection: "row" }]}>
+        <View
+          style={{
+            backgroundColor: "transparent",
+            flex: 4,
+            shadowColor: "#292929",
+            shadowOffset: { width: 1, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+            height: 90,
+            borderRadius: 5,
+          }}
+        >
+          <LinearGradient
+            style={{ margin: 10, borderRadius: 8 }}
+            colors={["#7A7A7A", "#666666"]}
+          >
+            <TextInput
+              placeholder="Search for music"
+              autoCapitalize="none"
+              onChangeText={(val) => handleTrackChange(val)}
+              style={{
+                color: "grey",
+                fontWeight: "bold",
+                justifyContent: "center",
+                padding: 10,
+                borderRadius: 5,
+                // backgroundColor: "grey",
+              }}
+              placeholderStyle={{ color: "grey", fontSize: 5 }}
+            />
+          </LinearGradient>
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "blue",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 5,
+          }}
+        >
+          <LinearGradient colors={["yellow", "yellow"]}>
+            <TouchableOpacity
+              onPress={() => {
+                Keyboard.dismiss();
+                search(data.track);
+              }}
+            >
+              <Octicons name="search" color="grey" size={26} />
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+      </View> */}
       <View>
         <ScrollView>
           <LinearGradient
@@ -450,8 +513,20 @@ exports.recent_posts_markup = () =>
             paddingHorizontal: 20,
             backgroundColor: index % 2 == 0 ? "#292929" : "grey",
             borderTopLeftRadius: index % 2 == 0 ? 0 : 50,
-            borderTopRightRadius: index != UserStore.allPosts.length -1 ? index != 0 ? (index % 2 == 0 ? 50 : 0) : 0 : 0,
-            borderBottomLeftRadius: index != UserStore.allPosts.length -1 ? index % 2 == 0 ? 0 : 50 : 0,
+            borderTopRightRadius:
+              index != UserStore.allPosts.length - 1
+                ? index != 0
+                  ? index % 2 == 0
+                    ? 50
+                    : 0
+                  : 0
+                : 0,
+            borderBottomLeftRadius:
+              index != UserStore.allPosts.length - 1
+                ? index % 2 == 0
+                  ? 0
+                  : 50
+                : 0,
             borderBottomRightRadius: index % 2 == 0 ? 50 : 0,
             // backgroundColor : 'red'
           }}
