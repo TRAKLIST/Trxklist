@@ -208,12 +208,14 @@ export default function AddPost({ navigation }) {
                           borderColor: "grey",
                           flex: 1,
                           textAlign: "center",
-                          // fontSize: 20,
+                          fontSize: 20,
                           opacity: 0.4,
                           color: "grey",
                           fontWeight: "bold",
-                          paddingTop: 25,
-                          paddingBottom: 25,
+                          paddingTop: 40,
+                          paddingBottom: 40,
+                          paddingLeft : 20,
+                          paddingRight : 20
                         }}
                       />
                     </View>

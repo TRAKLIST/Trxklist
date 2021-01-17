@@ -20,28 +20,6 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 export default function Categories({ navigation }) {
   return (
     <View style={{ flex: 1, backgroundColor: "#292929" }}>
-      <View style={{ flex: 1 }}>
-        <View style={{ flex: 5, justifyContent: "center", padding: 5 }}>
-          <TextInput
-            placeholder="Search for stuff"
-            autoCapitalize="none"
-            style={{
-              justifyContent: "center",
-              backgroundColor: "#000",
-              borderRadius: 30,
-              borderColor: "#fff",
-              borderWidth: 0,
-              textAlign: "center",
-              // fontSize: 20,
-              opacity: 0.4,
-              color: "grey",
-              fontWeight: "bold",
-              height: 50,
-            }}
-            // onChangeText={(val) => setSearchTerm(val)}
-          />
-        </View>
-      </View>
 
       <View style={{ flex: 6 }}>
         <View style={{ flex: 1, margin: 10, flexDirection: "row" }}>
@@ -128,6 +106,7 @@ export default function Categories({ navigation }) {
               margin: 10,
               borderRadius: 15,
             }}
+            onPress = {() => navigation.navigate("Artists")}
           >
             <View
               style={{
@@ -170,6 +149,7 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
+            onPress = {() => navigation.navigate("Albums")}
           >
             <View
               style={{

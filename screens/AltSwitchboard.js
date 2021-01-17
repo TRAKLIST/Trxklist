@@ -4,6 +4,8 @@ import Categories from "./Categories";
 import Search from "./Search";
 import People from "./People";
 import Tracks from "./Tracks"
+import Artists from "./Artists"
+import Albums from "./Albums"
 const Stack = createStackNavigator();
 
 export default function AltSwitchboard() {
@@ -13,6 +15,8 @@ export default function AltSwitchboard() {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="People" component={People} />
       <Stack.Screen name="Tracks" component={Tracks} />
+      <Stack.Screen name="Artists" component={Artists} />
+      <Stack.Screen name="Albums" component={Albums} />
     </Stack.Navigator>
   );
 }
