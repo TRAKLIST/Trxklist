@@ -6,6 +6,7 @@ import People from "./People";
 import Tracks from "./Tracks"
 import Artists from "./Artists"
 import Albums from "./Albums"
+import LyricsNav from "./LyricsNav"
 const Stack = createStackNavigator();
 
 export default function AltSwitchboard() {

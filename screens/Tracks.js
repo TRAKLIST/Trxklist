@@ -44,7 +44,7 @@ function Tracks() {
   // Spotify
 
   const search = () => {
-    setIndex(0)
+    setIndex(0);
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${searchTerm}&client_id=NpVHurnc1OKS80l6zlXrEVN4VEXrbZG4&limit=20`
@@ -138,7 +138,7 @@ function Tracks() {
                   borderColor: "#fff",
                   borderWidth: 0,
                   textAlign: "center",
-                  // fontSize: 20,
+                  fontSize: 20,
                   opacity: 0.4,
                   color: "#fff",
                   fontWeight: "bold",
@@ -267,19 +267,35 @@ function Tracks() {
                   opacity: 0.9,
                 }}
               >
-                {index == 1
-                  ? array.map((track, index) => (
-                      <Track track={track} index={index} />
-                    ))
-                  : index == 2 ? (
-                    soundcloud_tracks.map((track, index) => (
-                      <SoundCloudTracks track={track} />
-                    )
-                  ) ) : (
-                    <View style = {{justifyContent : 'center', alignItems: "center", flex: 1, backgroundColor : 'red'}}>
-                      <Text style = {{fontSize : 30}}>Spotify or Soundcloud?</Text>
-                    </View>
-                  )}
+                {index == 1 ? (
+                  array.map((track, index) => (
+                    <Track track={track} index={index} />
+                  ))
+                ) : index == 2 ? (
+                  soundcloud_tracks.map((track, index) => (
+                    <SoundCloudTracks track={track} />
+                  ))
+                ) : (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        textAlign: "center",
+                        color: "white",
+                      }}
+                    >
+                      {" "}
+                      Some nice Splash Page telling users to choose spotify or
+                      soundcloud?
+                    </Text>
+                  </View>
+                )}
               </LinearGradient>
             </ScrollView>
           </View>
