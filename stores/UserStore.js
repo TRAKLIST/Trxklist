@@ -22,6 +22,7 @@ class UserStore {
       lyricsPage : false,
       trackIndex : 0,
       allUsers : [],
+      lyricsToggle : false
     });
   }
 }

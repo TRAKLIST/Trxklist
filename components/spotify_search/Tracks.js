@@ -19,7 +19,8 @@ import { observer } from "mobx-react";
     // setTrackIndex(index);
     UserStore.trackIndex = index
     // setLyricsPage(true);
-    UserStore.lyricsPage = true
+    // UserStore.lyricsPage = true
+    UserStore.lyricsToggle = true
   };
 
   const [isSaved, setIsSave] = React.useState(false);

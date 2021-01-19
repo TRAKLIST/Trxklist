@@ -100,209 +100,333 @@ function Tracks() {
       // console.log(array);
     });
   };
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ flexDirection: "column" }}>
-          <View
-            style={{
-              margin: 20,
-              borderBottomWidth: 2,
-              padding: 10,
-              borderColor: "grey",
-            }}
-          >
-            <Text
+  if (!UserStore.lyricsToggle) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={{ flexDirection: "column" }}>
+            <View
               style={{
-                fontSize: 30,
-                textAlign: "center",
-                color: "grey",
-                fontWeight: "600",
-                borderRadius: 10,
-                overflow: "hidden",
+                margin: 20,
+                borderBottomWidth: 2,
+                padding: 10,
+                borderColor: "grey",
               }}
             >
-              What We Singing Along to Today?
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 4, margin: 5 }}>
-              <TextInput
-                placeholder="Search for stuff"
-                autoCapitalize="none"
+              <Text
                 style={{
-                  justifyContent: "center",
-                  backgroundColor: "#000",
-                  borderRadius: 5,
-                  borderColor: "#fff",
-                  borderWidth: 0,
+                  fontSize: 30,
                   textAlign: "center",
-                  fontSize: 20,
-                  opacity: 0.4,
-                  color: "#fff",
-                  fontWeight: "bold",
-                  height: 50,
+                  color: "grey",
+                  fontWeight: "600",
+                  borderRadius: 10,
+                  overflow: "hidden",
                 }}
-                onChangeText={(val) => setSearchTerm(val)}
-              />
+              >
+                What We Singing Along to Today?
+              </Text>
             </View>
-
-            <View style={{ flex: 1, margin: 5 }}>
-              <TouchableOpacity onPress={search}>
-                <View
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ flex: 4, margin: 5 }}>
+                <TextInput
+                  placeholder="Search for stuff"
+                  autoCapitalize="none"
                   style={{
-                    backgroundColor: "#000",
-                    opacity: 0.4,
-                    borderRadius: 5,
-                    height: 50,
                     justifyContent: "center",
+                    backgroundColor: "#000",
+                    borderRadius: 5,
                     borderColor: "#fff",
                     borderWidth: 0,
+                    textAlign: "center",
+                    fontSize: 20,
+                    opacity: 0.4,
+                    color: "#fff",
+                    fontWeight: "bold",
+                    height: 50,
                   }}
-                >
-                  <EvilIcons
-                    name="search"
-                    size={40}
+                  onChangeText={(val) => setSearchTerm(val)}
+                />
+              </View>
+
+              <View style={{ flex: 1, margin: 5 }}>
+                <TouchableOpacity onPress={search}>
+                  <View
                     style={{
-                      color: "#fff",
-                      alignSelf: "center",
+                      backgroundColor: "#000",
+                      opacity: 0.4,
+                      borderRadius: 5,
+                      height: 50,
+                      justifyContent: "center",
+                      borderColor: "#fff",
+                      borderWidth: 0,
                     }}
-                  />
+                  >
+                    <EvilIcons
+                      name="search"
+                      size={40}
+                      style={{
+                        color: "#fff",
+                        alignSelf: "center",
+                      }}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={{ flexDirection: "row", margin: 15 }}>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: index == 0 ? "#fff" : "#292929",
+                  borderWidth: 0,
+                  borderColor: index == 0 ? "#292929" : "#fff",
+                  borderRadius: 5,
+                  margin: 5,
+                }}
+                onPress={() => setIndex(0)}
+              >
+                <View>
+                  <Text
+                    style={{
+                      color: index == 0 ? "#292929" : "#fff",
+                      opacity: 0.4,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    SELECT
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: index == 1 ? "#fff" : "#292929",
+                  borderWidth: 0,
+                  borderColor: index == 1 ? "#292929" : "#fff",
+                  borderRadius: 5,
+                  margin: 5,
+                }}
+                onPress={() => setIndex(1)}
+              >
+                <View>
+                  <Text
+                    style={{
+                      color: index == 1 ? "#292929" : "#fff",
+                      opacity: 0.4,
+                    }}
+                  >
+                    <FontAwesome5
+                      name="spotify"
+                      size={20}
+                      color={index == 1 ? "#1DB954" : "#fff"}
+                    />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "transparent",
+                  borderRadius: 5,
+                  margin: 5,
+                  borderWidth: 0,
+                  borderColor: index == 1 ? "#292929" : "#fff",
+                  backgroundColor: index == 2 ? "#fff" : "#292929", //
+                }}
+                onPress={() => setIndex(2)}
+              >
+                <View style={{ padding: 10 }}>
+                  <Text
+                    style={{
+                      color: index == 2 ? "#292929" : "#fff",
+                      opacity: 0.4,
+                    }}
+                  >
+                    <FontAwesome5
+                      name="soundcloud"
+                      size={20}
+                      color={index == 2 ? "#FE5000" : "#fff"}
+                    />
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
-
-          <View style={{ flexDirection: "row", margin: 15 }}>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: index == 0 ? "#fff" : "#292929",
-                borderWidth: 0,
-                borderColor: index == 0 ? "#292929" : "#fff",
-                borderRadius: 5,
-                margin: 5,
-              }}
-              onPress={() => setIndex(0)}
-            >
-              <View>
-                <Text
-                  style={{
-                    color: index == 0 ? "#292929" : "#fff",
-                    opacity: 0.4,
-                    fontWeight: "bold",
-                  }}
-                >
-                  SELECT
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: index == 1 ? "#fff" : "#292929",
-                borderWidth: 0,
-                borderColor: index == 1 ? "#292929" : "#fff",
-                borderRadius: 5,
-                margin: 5,
-              }}
-              onPress={() => setIndex(1)}
-            >
-              <View>
-                <Text
-                  style={{
-                    color: index == 1 ? "#292929" : "#fff",
-                    opacity: 0.4,
-                  }}
-                >
-                  <FontAwesome5
-                    name="spotify"
-                    size={20}
-                    color={index == 1 ? "#1DB954" : "#fff"}
-                  />
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                borderRadius: 5,
-                margin: 5,
-                borderWidth: 0,
-                borderColor: index == 1 ? "#292929" : "#fff",
-                backgroundColor: index == 2 ? "#fff" : "#292929", //
-              }}
-              onPress={() => setIndex(2)}
-            >
-              <View style={{ padding: 10 }}>
-                <Text
-                  style={{
-                    color: index == 2 ? "#292929" : "#fff",
-                    opacity: 0.4,
-                  }}
-                >
-                  <FontAwesome5
-                    name="soundcloud"
-                    size={20}
-                    color={index == 2 ? "#FE5000" : "#fff"}
-                  />
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "column" }}>
-            <ScrollView style={{ padding: 0, backgroundColor: "transparent" }}>
-              <LinearGradient
-                colors={["#292929", "#292929"]}
-                style={{
-                  borderRadius: 20,
-                  opacity: 0.9,
-                }}
+            <View style={{ flexDirection: "column" }}>
+              <ScrollView
+                style={{ padding: 0, backgroundColor: "transparent" }}
               >
-                {index == 1 ? (
-                  array.map((track, index) => (
-                    <Track track={track} index={index} />
-                  ))
-                ) : index == 2 ? (
-                  soundcloud_tracks.map((track, index) => (
-                    <SoundCloudTracks track={track} />
-                  ))
-                ) : (
+                <LinearGradient
+                  colors={["#292929", "#292929"]}
+                  style={{
+                    borderRadius: 20,
+                    opacity: 0.9,
+                  }}
+                >
+                  {index == 1 ? (
+                    array.map((track, index) => (
+                      <Track track={track} index={index} />
+                    ))
+                  ) : index == 2 ? (
+                    soundcloud_tracks.map((track, index) => (
+                      <SoundCloudTracks track={track} />
+                    ))
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flex: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 30,
+                          textAlign: "center",
+                          color: "white",
+                        }}
+                      >
+                        {" "}
+                        Some nice Splash Page telling users to choose spotify or
+                        soundcloud?
+                      </Text>
+                    </View>
+                  )}
+                </LinearGradient>
+              </ScrollView>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#292929" }}>
+        <ParallaxScrollView
+          backgroundColor="#292929"
+          contentBackgroundColor="#292929"
+          parallaxHeaderHeight={300}
+          renderForeground={() => (
+            <ImageBackground
+              source={{ uri: array[UserStore.trackIndex].image }}
+              style={{
+                height: 300,
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              imageStyle={{
+                borderRadius: 15,
+                paddingHorizontal: 10,
+              }}
+            >
+              <SafeAreaView
+                style={[
+                  styles.titleContainer,
+                  {
+                    top: 0,
+                    position: "absolute",
+                    width: "100%",
+                    padding: 25,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    backgroundColor: "#292929",
+                    opacity: 0.7,
+                  },
+                ]}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity
+                    onPress={() => (UserStore.lyricsToggle = false)}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        padding: 10,
+                      }}
+                    >
+                      <Icon name="back" size={20} color="#fff" />
+                    </View>
+                  </TouchableOpacity>
+
+                  <View style={{ alignSelf: "center", marginLeft: 0, flex: 5 }}>
+                    <View>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "#fff",
+                          fontWeight: "bold",
+                        }}
+                        numberOfLines={1}
+                      >
+                        {array[UserStore.trackIndex].title}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 0,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          color: "#44CF6C",
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                        numberOfLines={1}
+                      >
+                        {`${array[UserStore.trackIndex].artist}`}
+                      </Text>
+                    </View>
+                  </View>
                   <View
                     style={{
                       justifyContent: "center",
-                      alignItems: "center",
+                      marginLeft: 0,
                       flex: 1,
+                      alignItems: "center",
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 30,
-                        textAlign: "center",
-                        color: "white",
-                      }}
-                    >
-                      {" "}
-                      Some nice Splash Page telling users to choose spotify or
-                      soundcloud?
-                    </Text>
+                    <TouchableOpacity>
+                      <Icon name="dots-three-vertical" size={20} color="#fff" />
+                    </TouchableOpacity>
                   </View>
-                )}
-              </LinearGradient>
-            </ScrollView>
+                </View>
+              </SafeAreaView>
+            </ImageBackground>
+          )}
+        >
+          <View>
+            <Animatable.View
+              animation="bounceInUp"
+              style={{
+                backgroundColor: "#292929",
+                height: "100%",
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                paddingHorizontal: 10,
+              }}
+            >
+              <ScrollView style={{ padding: 5, marginTop: 5, paddingTop : 10 }}>
+                <Text style={{ color: "grey", fontSize: 20, fontWeight: "500" }}>
+                  {array[UserStore.trackIndex].lyrics}
+                </Text>
+              </ScrollView>
+            </Animatable.View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
-  );
+        </ParallaxScrollView>
+      </View>
+    );
+  }
 }
 
 export default observer(Tracks);

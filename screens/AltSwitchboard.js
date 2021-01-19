@@ -11,7 +11,13 @@ const Stack = createStackNavigator();
 
 export default function AltSwitchboard() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: "#292929",
+      },
+      headerTintColor: "grey",
+    }}>
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Users" component={People} />
