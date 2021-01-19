@@ -192,7 +192,7 @@ function Tracks() {
                   <Text
                     style={{
                       color: index == 0 ? "#292929" : "#fff",
-                      opacity: 0.4,
+                      opacity: index != 0 ? 0.4 : 1,
                       fontWeight: "bold",
                     }}
                   >
@@ -217,7 +217,7 @@ function Tracks() {
                   <Text
                     style={{
                       color: index == 1 ? "#292929" : "#fff",
-                      opacity: 0.4,
+                      opacity: index == 0 ? 0.4 : 1,
                     }}
                   >
                     <FontAwesome5
@@ -246,7 +246,7 @@ function Tracks() {
                   <Text
                     style={{
                       color: index == 2 ? "#292929" : "#fff",
-                      opacity: 0.4,
+                      opacity: index == 0 ? 0.4 : 1,
                     }}
                   >
                     <FontAwesome5
@@ -258,17 +258,17 @@ function Tracks() {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: "column" }}>
-              <ScrollView
-                style={{ padding: 0, backgroundColor: "transparent" }}
-              >
-                <LinearGradient
-                  colors={["#292929", "#292929"]}
-                  style={{
-                    borderRadius: 20,
-                    opacity: 0.9,
-                  }}
-                >
+            <View
+              style={{
+                flexDirection: "column",
+                backgroundColor: "grey",
+                height: 430,
+                borderRadius: 10,
+                opacity: 0.7
+              }}
+            >
+              <ScrollView>
+                <View>
                   {index == 1 ? (
                     array.map((track, index) => (
                       <Track track={track} index={index} />
@@ -285,20 +285,20 @@ function Tracks() {
                         flex: 1,
                       }}
                     >
-                      <Text
+                      {/* <Text
                         style={{
                           fontSize: 30,
                           textAlign: "center",
-                          color: "white",
+                          color: "black",
                         }}
                       >
                         {" "}
                         Some nice Splash Page telling users to choose spotify or
                         soundcloud?
-                      </Text>
+                      </Text> */}
                     </View>
                   )}
-                </LinearGradient>
+                </View>
               </ScrollView>
             </View>
           </View>
@@ -378,7 +378,7 @@ function Tracks() {
                       <Text
                         style={{
                           fontWeight: "bold",
-                          color: "#44CF6C",
+                          color: "#1DB954",
                           padding: 0,
                           textAlign: "center",
                         }}
@@ -416,8 +416,10 @@ function Tracks() {
                 paddingHorizontal: 10,
               }}
             >
-              <ScrollView style={{ padding: 5, marginTop: 5, paddingTop : 10 }}>
-                <Text style={{ color: "grey", fontSize: 20, fontWeight: "500" }}>
+              <ScrollView style={{ padding: 5, marginTop: 5, paddingTop: 10 }}>
+                <Text
+                  style={{ color: "grey", fontSize: 20, fontWeight: "500" }}
+                >
                   {array[UserStore.trackIndex].lyrics}
                 </Text>
               </ScrollView>

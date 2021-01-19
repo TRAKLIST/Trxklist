@@ -31,7 +31,7 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Lyrics")}
+            onPress={() => navigation.navigate("LYRICS.")}
           >
             <View style={{ flex: 1, justifyContent: "center" }}>
               <Text
@@ -65,7 +65,8 @@ export default function Categories({ navigation }) {
               margin: 10,
               borderRadius: 15,
             }}
-            onPress={() => navigation.navigate("Artists")}
+            // onPress={() => navigation.navigate("ARTISTS.")}
+            onPress={() => alert('Artist Info Coming Soon : Sit Tight')}
           >
             <View
               style={{
@@ -83,6 +84,7 @@ export default function Categories({ navigation }) {
                     fontSize: 25,
                     fontWeight: "bold",
                     textTransform: "uppercase",
+                    color: '#292929'
                   }}
                 >
                   Artists
@@ -108,7 +110,8 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Albums")}
+            // onPress={() => navigation.navigate("ALBUMS.")}
+            onPress={() => alert('Album Info Coming Soon : Sit Tight')}
           >
             <View
               style={{
@@ -126,6 +129,7 @@ export default function Categories({ navigation }) {
                     fontSize: 25,
                     fontWeight: "bold",
                     textTransform: "uppercase",
+                    color: '#292929'
                   }}
                 >
                   Albums
@@ -156,6 +160,8 @@ export default function Categories({ navigation }) {
               margin: 10,
               borderRadius: 15,
             }}
+            onPress={() => alert('Latest News Coming Soon : Sit Tight')}
+
           >
             <View
               style={{
@@ -173,6 +179,7 @@ export default function Categories({ navigation }) {
                     fontSize: 25,
                     fontWeight: "bold",
                     textTransform: "uppercase",
+                    color: '#292929'
                   }}
                 >
                   Latest
@@ -197,7 +204,7 @@ export default function Categories({ navigation }) {
               margin: 10,
               borderRadius: 15,
             }}
-            onPress={() => navigation.navigate("Users")}
+            onPress={() => navigation.navigate("USERS.")}
           >
             <View
               style={{
@@ -215,6 +222,7 @@ export default function Categories({ navigation }) {
                     fontSize: 25,
                     fontWeight: "bold",
                     textTransform: "uppercase",
+                    color: '#292929'
                   }}
                 >
                   Users

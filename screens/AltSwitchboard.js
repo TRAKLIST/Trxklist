@@ -3,10 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Categories from "./Categories";
 import Search from "./Search";
 import People from "./People";
-import Tracks from "./Tracks"
+import Tracks from "./Lyrics"
 import Artists from "./Artists"
 import Albums from "./Albums"
-import LyricsNav from "./LyricsNav"
 const Stack = createStackNavigator();
 
 export default function AltSwitchboard() {
@@ -18,12 +17,12 @@ export default function AltSwitchboard() {
       },
       headerTintColor: "grey",
     }}>
-      <Stack.Screen name="Categories" component={Categories} />
-      <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="Users" component={People} />
-      <Stack.Screen name="Lyrics" component={Tracks} />
-      <Stack.Screen name="Artists" component={Artists} />
-      <Stack.Screen name="Albums" component={Albums} />
+      <Stack.Screen name="CATEGORIES." component={Categories} />
+      <Stack.Screen name="SEARCH." component={Search} />
+      <Stack.Screen name="USERS." component={People} />
+      <Stack.Screen name="LYRICS." component={Tracks} />
+      <Stack.Screen name="ARTISTS." component={Artists} />
+      <Stack.Screen name="ALBUMS." component={Albums} />
     </Stack.Navigator>
   );
 }

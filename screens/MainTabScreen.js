@@ -82,7 +82,8 @@ const MainTabScreen = () => {
           tabBarLabel: "",
           tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
-            <Octicons name="search" color={color} size={26} />
+            <MI name="explore" color={color} size={26} />
+            
           ),
         }}
       />

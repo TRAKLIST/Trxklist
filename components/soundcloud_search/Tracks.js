@@ -29,7 +29,9 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 export default function Tracks(props) {
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => alert("Soundcloud Lyrics Coming Soon. Sit Tight")}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -37,6 +39,7 @@ export default function Tracks(props) {
             width: "100%",
             borderBottomWidth: 1,
             padding: 10,
+            borderColor: "#292929"
           }}
         >
           <View style={{ flex: 0.7 }}>
@@ -102,19 +105,13 @@ export default function Tracks(props) {
 
             <View style={{ flexDirection: "row" }}></View>
           </View>
-          <View style={{ flex: 0.5, flexDirection: "row" }}>
-            {/* <TouchableOpacity
-                              style={{ justifyContent: "center", margin: 5 }}
-                            >
-                              <View style={[styles.iconContainer2]}>
-                                <AntDesign
-                                  name="staro"
-                                  size={25}
-                                  color={"#ff7700"}
-                                />
-                              </View>
-                            </TouchableOpacity> */}
-          </View>
+          {/* <View style={{ flex: 0.5, flexDirection: "row" }}>
+            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+              <View style={[styles.iconContainer2]}>
+                <AntDesign name="staro" size={25} color={"#ff7700"} />
+              </View>
+            </TouchableOpacity>
+          </View> */}
         </View>
       </TouchableOpacity>
     </View>
@@ -122,85 +119,84 @@ export default function Tracks(props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#EAEAEB",
-    },
-    header: {
-      justifyContent: "flex-end",
-      paddingHorizontal: 10,
-      paddingBottom: 25,
-      paddingTop: 50,
-    },
-    footer: {
-      flex: 3,
-      backgroundColor: "transparent",
-      paddingHorizontal: 5,
-      // borderRadius: 20
-      // paddingVertical: 30,
-    },
-    text_header: {
-      color: "#fff",
-      fontWeight: "bold",
-      fontSize: 30,
-    },
-    text_footer: {
-      color: "#05375a",
-      fontSize: 18,
-    },
-    action: {
-      backgroundColor: "#fff",
-      flexDirection: "row",
-      marginTop: 10,
-      borderBottomWidth: 2,
-      borderBottomColor: "#fff",
-      padding: 5,
-      borderRadius: 15,
-    },
-    actionError: {
-      flexDirection: "row",
-      marginTop: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: "#FF0000",
-      paddingBottom: 5,
-    },
-    textInput: {
-      flex: 5,
-      marginTop: Platform.OS === "ios" ? 0 : -12,
-      padding: 10,
-      color: "#fff",
-      borderRadius: 10,
-      fontWeight: "bold",
-    },
-    errorMsg: {
-      color: "#FF0000",
-      fontSize: 14,
-    },
-    button: {
-      alignItems: "center",
-      marginTop: 50,
-    },
-    signIn: {
-      width: "100%",
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 10,
-    },
-    textSign: {
-      fontSize: 18,
-      fontWeight: "bold",
-    },
-    logo: {
-      width: "100%",
-      height: "100%",
-      // backgroundColor: "whitesmoke",
-      borderRadius: 20,
-    },
-    iconContainer2: {
-      flexDirection: "row",
-      alignItems: "center",
-      padding: 2,
-    },
-  });
-  
+  container: {
+    flex: 1,
+    backgroundColor: "#EAEAEB",
+  },
+  header: {
+    justifyContent: "flex-end",
+    paddingHorizontal: 10,
+    paddingBottom: 25,
+    paddingTop: 50,
+  },
+  footer: {
+    flex: 3,
+    backgroundColor: "transparent",
+    paddingHorizontal: 5,
+    // borderRadius: 20
+    // paddingVertical: 30,
+  },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 30,
+  },
+  text_footer: {
+    color: "#05375a",
+    fontSize: 18,
+  },
+  action: {
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    marginTop: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: "#fff",
+    padding: 5,
+    borderRadius: 15,
+  },
+  actionError: {
+    flexDirection: "row",
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#FF0000",
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 5,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
+    padding: 10,
+    color: "#fff",
+    borderRadius: 10,
+    fontWeight: "bold",
+  },
+  errorMsg: {
+    color: "#FF0000",
+    fontSize: 14,
+  },
+  button: {
+    alignItems: "center",
+    marginTop: 50,
+  },
+  signIn: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  logo: {
+    width: "100%",
+    height: "100%",
+    // backgroundColor: "whitesmoke",
+    borderRadius: 20,
+  },
+  iconContainer2: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 2,
+  },
+});
