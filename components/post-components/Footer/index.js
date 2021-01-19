@@ -32,6 +32,7 @@ const Footer = ({
   const [toggleComment, setToggleComment] = React.useState(false);
   const [captionTerm, setCaptionTerm] = React.useState("");
   const [toggleComments, setToggleComments] = React.useState(false);
+  const [toggleMakeComment, setToggleMakeComment] = React.useState(false);
 
   console.log(comments, "brvcjh");
   // useEffect(() => {
@@ -118,8 +119,28 @@ const Footer = ({
         }
       )
       .then((res) => {
-        setToggleComment(false);
-        console.log(res.data);
+        setToggleMakeComment(!toggleMakeComment);
+        setToggleComments(false);
+        console.log(res.data, "berhbu");
+
+        const data = {
+          data: res.data,
+          postID: "placeholder",
+        };
+
+        // add new comment
+        comments.push(data);
+
+        console.log(comments, "behwuby");
+
+        // refresh lists page
+        axios
+          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
+          .then((res) => {
+            // console.log(res.data);
+            UserStore.allPosts = res.data;
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
@@ -365,7 +386,7 @@ const Footer = ({
         });
     }
   }, []);
-  if (toggleComment == false) {
+  if (toggleMakeComment == false) {
     return (
       <View style={[styles.container, { flexDirection: "column" }]}>
         <View style={styles.iconsContainer}>
@@ -453,7 +474,9 @@ const Footer = ({
               )}
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setToggleComment(true)}>
+            <TouchableOpacity
+              onPress={() => setToggleMakeComment(!toggleMakeComment)}
+            >
               <View
                 style={(styles.iconContainer2, { flexDirection: "column" })}
               >
@@ -525,12 +548,21 @@ const Footer = ({
                 justifyContent: "center",
                 alignItems: "center",
                 padding: 5,
-                borderRadius: 15,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
                 marginTop: 10,
-                backgroundColor: "#292929",
+                marginLeft : 5,
+                marginRight : 5,
+                backgroundColor: index % 2 != 0 ? "grey" : "#292929",
               }}
             >
-              <Text style={{ color: "grey", fontWeight: "500" }}>
+              <Text
+                style={{
+                  color: index % 2 == 0 ? "grey" : "#292929",
+                  fontWeight: "600",
+                  fontStyle: "italic",
+                }}
+              >
                 see comments
               </Text>
             </View>
@@ -539,30 +571,87 @@ const Footer = ({
         {toggleComments && commentCount > 0 && (
           <View
             style={{
-              backgroundColor: "transparent",
+              // backgroundColor: "trans",
               width: "100%",
-              height: 50,
               marginTop: 10,
               borderRadius: 10,
-              padding : 5,
+              paddingTop: 5,
+
               justifyContent: "center",
             }}
           >
             {comments.map((comment) => (
-              <View style = {{flexDirection : 'column'}}>
-                <View style={{ flexDirection: "row" }}>
-                  <View style={{ flex: 1, alignItems: "center" }}>
-                    <Text>{comment.data.meloID}</Text>
+              <View
+                style={{
+                  flexDirection: "column",
+                  backgroundColor: index % 2 != 0 ? "grey" : "#292929",
+                  marginBottom: 10,
+                  borderRadius: 5,
+                  padding: 5,
+                  marginRight: 5,
+                  marginLeft: 5,
+                }}
+              >
+                <View style={{ flexDirection: "row", margin: 5 }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{ fontWeight: "bold", color: index % 2 == 0 ? "grey" : "#292929",}}
+                      numberOfLines={1}
+                    >
+                      {comment.data.meloID}
+                    </Text>
                   </View>
-                  <View style={{ flex: 2,  }}>
-                    <Text style={{ color: "#fff" }}>{comment.data.body}</Text>
+                  <View style={{ flex: 4 }}>
+                    <Text
+                      style={{
+                        color: index % 2 == 0 ? "grey" : "#292929",
+                        textAlign: "right",
+                        fontStyle: "italic",
+                        fontWeight: "bold",
+                        // backgroundColor : 'red'
+                      }}
+                    >
+                      {comment.data.body}
+                    </Text>
                   </View>
                 </View>
-                <View style = {{justifyContent : 'flex-end'}}>
-                  <Text style = {{textAlign : 'right'}}>{comment.data.createdAt}</Text>
+                <View style={{ justifyContent: "flex-end" }}>
+                  <Text style={{ textAlign: "right", fontSize: 10, color : index % 2 == 0 ? "grey" : "#292929" }}>
+                    {dayjs(comment.data.createdAt).fromNow()}
+                  </Text>
                 </View>
               </View>
             ))}
+            <TouchableOpacity
+              onPress={() => setToggleComments(!toggleComments)}
+            >
+              <View
+                style={{
+                  backgroundColor: index % 2 != 0 ? "grey" : "#292929",
+                  alignItems: "center",
+                  borderBottomLeftRadius: 5,
+                  borderBottomRightRadius: 5,
+                  padding: 5,
+                  marginLeft: 5,
+                  marginRight: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color:index % 2 == 0 ? "grey" : "#292929",
+                    fontWeight: "600",
+                    fontStyle: "italic",
+                  }}
+                >
+                  hide comments
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -575,6 +664,7 @@ const Footer = ({
             style={[
               styles.iconContainer2,
               {
+                marginTop : 5,
                 // backgroundColor : 'red',
                 borderBottomWidth: 2,
                 borderColor: index % 2 == 0 ? "grey" : "#292929",
@@ -583,24 +673,26 @@ const Footer = ({
               },
             ]}
           >
-            <TouchableOpacity onPress={() => setToggleComment(false)}>
+            <TouchableOpacity
+              onPress={() => setToggleMakeComment(!toggleMakeComment)}
+            >
               <View
                 style={{
-                  backgroundColor: "#000",
+                  backgroundColor: index % 2 == 0 ? "grey" : "#292929",
                   opacity: 0.4,
-                  borderRadius: 30,
+                  borderRadius: 5,
                   justifyContent: "center",
+                  alignItems: "center",
                   borderColor: "#fff",
-                  height: 50,
-                  width: 50,
+                  height: 35,
+                  width: 35,
                 }}
               >
                 <MaterialIcons
                   name="cancel"
-                  size={25}
+                  size={30}
                   style={{
-                    color: "grey",
-                    alignSelf: "center",
+                    color: index % 2 != 0 ? "grey" : "#292929",
                   }}
                 />
               </View>
@@ -610,6 +702,7 @@ const Footer = ({
           <View
             style={[
               {
+                marginTop : 5,
                 flex: 1,
                 marginLeft: 10,
                 borderBottomWidth: 2,
@@ -623,16 +716,16 @@ const Footer = ({
                 autoCapitalize="none"
                 style={{
                   justifyContent: "center",
-                  backgroundColor: "#000",
+                  backgroundColor: index % 2 == 0 ? "grey" : "#292929",
                   borderRadius: 5,
                   borderColor: "#fff",
                   borderWidth: 0,
                   textAlign: "center",
                   // fontSize: 20,
                   opacity: 0.4,
-                  color: "grey",
+                  color: index % 2 != 0 ? "grey" : "#292929",
                   fontWeight: "bold",
-                  height: 50,
+                  height: 35,
                 }}
                 onChangeText={(val) => setCaptionTerm(val)}
               />
@@ -643,6 +736,7 @@ const Footer = ({
             style={[
               styles.iconContainer2,
               {
+                marginTop : 5,
                 // backgroundColor : 'red',
                 borderBottomWidth: 2,
                 borderColor: index % 2 == 0 ? "grey" : "#292929",
@@ -654,26 +748,28 @@ const Footer = ({
             <TouchableOpacity onPress={commentOnPost}>
               <View
                 style={{
-                  backgroundColor: "#000",
+                  backgroundColor: index % 2 == 0 ? "grey" : "#292929",
                   opacity: 0.4,
-                  borderRadius: 30,
+                  borderRadius: 5,
                   justifyContent: "center",
                   borderColor: "#fff",
-                  height: 50,
-                  width: 50,
+                  height: 35,
+                  width: 35,
                 }}
               >
                 <Ionicons
                   name="ios-send"
                   size={25}
                   style={{
-                    color: "grey",
+                    color: index % 2 != 0 ? "grey" : "#292929",
                     alignSelf: "center",
                   }}
                 />
               </View>
             </TouchableOpacity>
           </View>
+
+          
         </View>
       </KeyboardAvoidingView>
     );

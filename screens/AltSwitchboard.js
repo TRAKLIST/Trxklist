@@ -13,8 +13,8 @@ export default function AltSwitchboard() {
     <Stack.Navigator>
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="People" component={People} />
-      <Stack.Screen name="Tracks" component={Tracks} />
+      <Stack.Screen name="Users" component={People} />
+      <Stack.Screen name="Lyrics" component={Tracks} />
       <Stack.Screen name="Artists" component={Artists} />
       <Stack.Screen name="Albums" component={Albums} />
     </Stack.Navigator>

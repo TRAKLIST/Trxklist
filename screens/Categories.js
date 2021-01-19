@@ -19,8 +19,7 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 
 export default function Categories({ navigation }) {
   return (
-    <View style={{ flex: 1, backgroundColor: "#292929" }}>
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#292929" }}>
       <View style={{ flex: 6 }}>
         <View style={{ flex: 1, margin: 10, flexDirection: "row" }}>
           <TouchableOpacity
@@ -32,17 +31,18 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress = {() => navigation.navigate("Tracks")}
+            onPress={() => navigation.navigate("Lyrics")}
           >
             <View style={{ flex: 1, justifyContent: "center" }}>
               <Text
                 style={{
-                  fontSize: 20,
-                  fontWeight: "500",
+                  fontSize: 30,
+                  fontWeight: "bold",
                   textTransform: "uppercase",
+                  color: "#292929",
                 }}
               >
-                Tracks
+                Lyrics
               </Text>
             </View>
 
@@ -52,48 +52,7 @@ export default function Categories({ navigation }) {
                 flex: 3,
               }}
             >
-              <MaterialIcons name="audiotrack" size={90} color="#292929" />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "grey",
-              margin: 10,
-              borderRadius: 15,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "grey",
-                margin: 10,
-                borderRadius: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1, justifyContent: "center" }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "500",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Lyrics
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  justifyContent: "flex-start",
-                  flex: 3,
-                }}
-              >
-                <Entypo name="text-document" size={80} color="#292929" />
-              </View>
+              <Entypo name="text-document" size={130} color="#292929" />
             </View>
           </TouchableOpacity>
         </View>
@@ -106,7 +65,7 @@ export default function Categories({ navigation }) {
               margin: 10,
               borderRadius: 15,
             }}
-            onPress = {() => navigation.navigate("Artists")}
+            onPress={() => navigation.navigate("Artists")}
           >
             <View
               style={{
@@ -121,8 +80,8 @@ export default function Categories({ navigation }) {
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text
                   style={{
-                    fontSize: 20,
-                    fontWeight: "500",
+                    fontSize: 25,
+                    fontWeight: "bold",
                     textTransform: "uppercase",
                   }}
                 >
@@ -136,7 +95,7 @@ export default function Categories({ navigation }) {
                   flex: 3,
                 }}
               >
-                <MaterialIcons name="face" size={80} color="#292929" />
+                <MaterialIcons name="face" size={130} color="#292929" />
               </View>
             </View>
           </TouchableOpacity>
@@ -149,7 +108,7 @@ export default function Categories({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress = {() => navigation.navigate("Albums")}
+            onPress={() => navigation.navigate("Albums")}
           >
             <View
               style={{
@@ -164,8 +123,8 @@ export default function Categories({ navigation }) {
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text
                   style={{
-                    fontSize: 20,
-                    fontWeight: "500",
+                    fontSize: 25,
+                    fontWeight: "bold",
                     textTransform: "uppercase",
                   }}
                 >
@@ -181,7 +140,7 @@ export default function Categories({ navigation }) {
               >
                 <MaterialCommunityIcons
                   name="album"
-                  size={80}
+                  size={130}
                   color="#292929"
                 />
               </View>
@@ -211,8 +170,8 @@ export default function Categories({ navigation }) {
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text
                   style={{
-                    fontSize: 20,
-                    fontWeight: "500",
+                    fontSize: 25,
+                    fontWeight: "bold",
                     textTransform: "uppercase",
                   }}
                 >
@@ -226,45 +185,55 @@ export default function Categories({ navigation }) {
                   flex: 3,
                 }}
               >
-                <Entypo name="news" size={80} color="#292929" />
+                <Entypo name="news" size={130} color="#292929" />
               </View>
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={() => navigation.navigate("People")}
             style={{
               flex: 1,
               backgroundColor: "grey",
               margin: 10,
               borderRadius: 15,
-              alignItems: "center",
-              justifyContent: "center",
             }}
+            onPress={() => navigation.navigate("Users")}
           >
-            <View style={{ flex: 1, justifyContent: "center" }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "500",
-                  textTransform: "uppercase",
-                }}
-              >
-                LISTERS
-              </Text>
-            </View>
-
             <View
               style={{
-                justifyContent: "flex-start",
-                flex: 3,
+                flex: 1,
+                backgroundColor: "grey",
+                margin: 10,
+                borderRadius: 5,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <SimpleLineIcons name="people" size={80} color="#292929" />
+              <View style={{ flex: 1, justifyContent: "center" }}>
+                <Text
+                  style={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Users
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  justifyContent: "flex-start",
+                  flex: 3,
+                }}
+              >
+                <SimpleLineIcons name="people" size={130} color="#292929" />
+              </View>
             </View>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

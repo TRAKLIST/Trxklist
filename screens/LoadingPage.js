@@ -179,6 +179,18 @@ function LoadingPage() {
       })
       .catch((err) => console.log(err));
 
+      axios
+      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/users`, {
+        headers: {
+          Authorization: `Bearer ${UserStore.authCode}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'uiohuwe')
+        UserStore.allUsers = res.data
+      })
+      .catch((err) => console.log(err))
+
     // console.log(UserStore.update);
 
     UserStore.loading = false;

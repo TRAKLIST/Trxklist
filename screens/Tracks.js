@@ -30,7 +30,7 @@ import Albums from "../components/spotify_search/Albums";
 import Artists from "../components/spotify_search/Artists";
 import SoundCloudTracks from "../components/soundcloud_search/Tracks";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 let list;
 let array = [];
 let array1 = [];
@@ -40,10 +40,11 @@ let isFollowing = false;
 
 function Tracks() {
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
   // Spotify
 
   const search = () => {
+    setIndex(0)
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${searchTerm}&client_id=NpVHurnc1OKS80l6zlXrEVN4VEXrbZG4&limit=20`
@@ -103,54 +104,68 @@ function Tracks() {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ backgroundColor: "#292929", flex: 1, padding: 10 }}>
+        <View style={{ flexDirection: "column" }}>
           <View
             style={{
-              flex: 1,
-              flexDirection: "row",
-              padding: 0,
-              backgroundColor: "transparent",
+              margin: 20,
+              borderBottomWidth: 2,
+              padding: 10,
+              borderColor: "grey",
             }}
           >
-            {/* search bar */}
-            <View style={{ flex: 5, justifyContent: "center", padding: 5 }}>
+            <Text
+              style={{
+                fontSize: 30,
+                textAlign: "center",
+                color: "grey",
+                fontWeight: "600",
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+            >
+              What We Singing Along to Today?
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 4, margin: 5 }}>
               <TextInput
                 placeholder="Search for stuff"
                 autoCapitalize="none"
                 style={{
                   justifyContent: "center",
                   backgroundColor: "#000",
-                  borderRadius: 30,
+                  borderRadius: 5,
                   borderColor: "#fff",
                   borderWidth: 0,
                   textAlign: "center",
                   // fontSize: 20,
                   opacity: 0.4,
-                  color: "grey",
+                  color: "#fff",
                   fontWeight: "bold",
                   height: 50,
                 }}
                 onChangeText={(val) => setSearchTerm(val)}
               />
             </View>
-            <View style={{ flex: 1, justifyContent: "center", padding: 5 }}>
+
+            <View style={{ flex: 1, margin: 5 }}>
               <TouchableOpacity onPress={search}>
                 <View
                   style={{
                     backgroundColor: "#000",
                     opacity: 0.4,
-                    borderRadius: 30,
+                    borderRadius: 5,
                     height: 50,
                     justifyContent: "center",
                     borderColor: "#fff",
                     borderWidth: 0,
                   }}
                 >
-                  <ADIcon
-                    name="search1"
-                    size={25}
+                  <EvilIcons
+                    name="search"
+                    size={40}
                     style={{
-                      color: "#292929",
+                      color: "#fff",
                       alignSelf: "center",
                     }}
                   />
@@ -159,89 +174,91 @@ function Tracks() {
             </View>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              backgroundColor: "transparent",
-            }}
-          >
-            <View
+          <View style={{ flexDirection: "row", margin: 15 }}>
+            <TouchableOpacity
               style={{
-                height: 50,
-                borderRadius: 10,
-                flexDirection: "row",
-                justifyContent: "space-between",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: index == 0 ? "#fff" : "#292929",
+                borderWidth: 0,
+                borderColor: index == 0 ? "#292929" : "#fff",
+                borderRadius: 5,
+                margin: 5,
               }}
+              onPress={() => setIndex(0)}
             >
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: index == 1 ? "#fff" : "#292929",
-                  borderWidth: 0,
-                  borderColor: index == 1 ? "#292929" : "#fff",
-                  borderRadius: 10,
-                  margin: 5,
-                }}
-                onPress={() => setIndex(1)}
-              >
-                <View>
-                  <Text
-                    style={{
-                      color: index == 1 ? "#292929" : "#fff",
-                      opacity: 0.4,
-                    }}
-                  >
-                    <FontAwesome5
-                      name="spotify"
-                      size={20}
-                      color={index == 1 ? "#292929" : "#fff"}
-                    />
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "transparent",
-                  borderRadius: 10,
-                  margin: 5,
-                  borderWidth: 0,
-                  borderColor: index == 1 ? "#292929" : "#fff",
-                  backgroundColor: index == 2 ? "#fff" : "#292929", //
-                }}
-                onPress={() => setIndex(2)}
-              >
-                <View>
-                  <Text
-                    style={{
-                      color: index == 2 ? "#292929" : "#fff",
-                      opacity: 0.4,
-                    }}
-                  >
-                    <FontAwesome5
-                      name="soundcloud"
-                      size={20}
-                      color={index == 2 ? "#292929" : "#fff"}
-                    />
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+              <View>
+                <Text
+                  style={{
+                    color: index == 0 ? "#292929" : "#fff",
+                    opacity: 0.4,
+                    fontWeight: "bold",
+                  }}
+                >
+                  SELECT
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: index == 1 ? "#fff" : "#292929",
+                borderWidth: 0,
+                borderColor: index == 1 ? "#292929" : "#fff",
+                borderRadius: 5,
+                margin: 5,
+              }}
+              onPress={() => setIndex(1)}
+            >
+              <View>
+                <Text
+                  style={{
+                    color: index == 1 ? "#292929" : "#fff",
+                    opacity: 0.4,
+                  }}
+                >
+                  <FontAwesome5
+                    name="spotify"
+                    size={20}
+                    color={index == 1 ? "#1DB954" : "#fff"}
+                  />
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "transparent",
+                borderRadius: 5,
+                margin: 5,
+                borderWidth: 0,
+                borderColor: index == 1 ? "#292929" : "#fff",
+                backgroundColor: index == 2 ? "#fff" : "#292929", //
+              }}
+              onPress={() => setIndex(2)}
+            >
+              <View style={{ padding: 10 }}>
+                <Text
+                  style={{
+                    color: index == 2 ? "#292929" : "#fff",
+                    opacity: 0.4,
+                  }}
+                >
+                  <FontAwesome5
+                    name="soundcloud"
+                    size={20}
+                    color={index == 2 ? "#FE5000" : "#fff"}
+                  />
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
-
-          <KeyboardAvoidingView
-            behavior="padding"
-            style={{
-              flex: 7,
-              backgroundColor: "transparent",
-              justifyContent: "flex-start",
-            }}
-          >
+          <View style={{ flexDirection: "column" }}>
             <ScrollView style={{ padding: 0, backgroundColor: "transparent" }}>
               <LinearGradient
                 colors={["#292929", "#292929"]}
@@ -254,21 +271,18 @@ function Tracks() {
                   ? array.map((track, index) => (
                       <Track track={track} index={index} />
                     ))
-                  : soundcloud_tracks.map((track, index) => (
+                  : index == 2 ? (
+                    soundcloud_tracks.map((track, index) => (
                       <SoundCloudTracks track={track} />
-                    ))}
-                {/* {index == 1 &&
-                  array.map((track, index) => (
-                    <Track track={track} index={index} />
-                  ))}
-
-                {index == 2 &&
-                  soundcloud_tracks.map((track, index) => (
-                    <SoundCloudTracks track={track} />
-                  ))} */}
+                    )
+                  ) ) : (
+                    <View style = {{justifyContent : 'center', alignItems: "center", flex: 1, backgroundColor : 'red'}}>
+                      <Text style = {{fontSize : 30}}>Spotify or Soundcloud?</Text>
+                    </View>
+                  )}
               </LinearGradient>
             </ScrollView>
-          </KeyboardAvoidingView>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -281,6 +295,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#292929",
+    paddingHorizontal: 20,
   },
   header: {
     justifyContent: "flex-end",
