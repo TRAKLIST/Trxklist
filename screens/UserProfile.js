@@ -1,17 +1,15 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  Button,
   Image,
   TouchableOpacity,
   Animated,
   RefreshControl,
   Dimensions,
-  StatusBar,
 } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import UserStore from "../stores/UserStore";
@@ -29,30 +27,80 @@ function wait(timeout) {
   });
 }
 
-const {
-  first_route,
-  second_route,
-  sticky_item_view,
-  recent_posts_markup,
-  render_tab_bar,
-} = require("../handlers/main");
+let recentPostsMarkup = [];
 
-let recentPostsMarkup = recent_posts_markup();
+const { sticky_item_view, recent_posts_markup } = require("../handlers/main");
 
-const Profile = ({ navigation }) => {
+const UserProfile = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [postData, setPostData] = React.useState([]);
-  useEffect;
+  const [image, setImage] = React.useState("");
+  const [name, setName] = React.useState("");
 
   useEffect(() => {
     axios
-      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/Keem`)
+      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/ADMIN`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "ebiu");
         setPostData(res.data.posts);
+        setImage(res.data.user.image);
+        setName(res.data.user.meloID);
       })
       .catch((err) => console.log(err));
+
+    /**DATA NEEDED?
+     * Following [count]
+     * Followers [count]
+     * Top Artists
+     * Top Tracks
+     * Playlists
+     * User Posts - done
+     */
   }, []);
+
+  recentPostsMarkup = postData ? (
+    postData.map((post, index) => (
+      <View
+        style={{
+          backgroundColor: index % 2 == 0 ? "grey" : "#292929",
+          padding: 0,
+        }}
+      >
+        <View
+          style={{
+            marginBottom: 0,
+            padding: 50,
+            borderRadius: 0,
+            paddingHorizontal: 20,
+            backgroundColor: index % 2 == 0 ? "#292929" : "grey",
+            borderTopLeftRadius: index % 2 == 0 ? 0 : 50,
+            borderTopRightRadius:
+              index != UserStore.allPosts.length - 1
+                ? index != 0
+                  ? index % 2 == 0
+                    ? 50
+                    : 0
+                  : 0
+                : 0,
+            borderBottomLeftRadius:
+              index != UserStore.allPosts.length - 1
+                ? index % 2 == 0
+                  ? 0
+                  : 50
+                : 0,
+            borderBottomRightRadius: index % 2 == 0 ? 50 : 0,
+            // backgroundColor : 'red'
+          }}
+        >
+          {/* <View style = {{padding : 5, backgroundColor : index % 2 == 0 ? "blue" : "red"}}> */}
+          <Post key={post.postID} post={post} index={index} />
+          {/* </View> */}
+        </View>
+      </View>
+    ))
+  ) : (
+    <Text>Loading</Text>
+  );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -78,12 +126,14 @@ const Profile = ({ navigation }) => {
         <Text
           numberOfLines={1}
           style={{
-            backgroundColor: "#007bff",
-            color: "#fff",
+            backgroundColor: "#292929",
+            color: "grey",
             fontWeight: "bold",
-            marginHorizontal: 10,
             textAlign: "center",
             margin: 5,
+            padding: 5,
+            borderRadius: 5,
+            overflow: "hidden",
           }}
         >
           {item.artistName}
@@ -102,15 +152,17 @@ const Profile = ({ navigation }) => {
         <Text
           numberOfLines={1}
           style={{
-            backgroundColor: "#007bff",
-            color: "#fff",
+            backgroundColor: "#292929",
+            color: "grey",
             fontWeight: "bold",
-            marginHorizontal: 10,
             textAlign: "center",
             margin: 5,
+            padding: 5,
+            borderRadius: 5,
+            overflow: "hidden",
           }}
         >
-          {item.artistName}
+          {item.name}
         </Text>
         <Image
           style={{ alignSelf: "center", marginBottom: 5, borderRadius: 10 }}
@@ -185,7 +237,7 @@ const Profile = ({ navigation }) => {
               backgroundColor: "#292929",
             }}
           >
-            <Text>vwcehbu</Text>
+            <Text>PLAYLISTS</Text>
           </View>
         )}
         stickyHeaderHeight={90}
@@ -205,27 +257,69 @@ const Profile = ({ navigation }) => {
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
             >
               <View
-                style={{ backgroundColor: "grey", padding: 5, borderRadius: 5 }}
+                style={{
+                  backgroundColor: "grey",
+                  padding: 5,
+                  borderRadius: 5,
+                  margin: 5,
+                }}
               >
-                <Text style={{ color: "#292929", fontWeight: "bold" }}>
-                  Followers
+                <Text
+                  style={{
+                    color: "#292929",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Following
                 </Text>
               </View>
-              <View>
-                <Text>Y</Text>
+              <View
+                style={{
+                  borderWidth: 2,
+                  paddingHorizontal: 20,
+                  borderRadius: 5,
+                  borderColor: "grey",
+                }}
+              >
+                <Text
+                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
+                >
+                  X
+                </Text>
               </View>
             </View>
             <View style={{ flex: 1, justifyContent: "center" }}>
               <TouchableOpacity onPress={() => search(data.track)}>
                 <View
                   // colors={["#272D2D", "#272D2D"]}
-                  style={styles.signIn}
+                  style={[styles.signIn]}
                 >
-                  <MaterialCommunityIcons
-                    name="circle"
-                    color="#FFF"
-                    size={55}
-                  />
+                  <View>
+                    <Image
+                      source={{ uri: image }}
+                      style={{
+                        height: 55,
+                        width: 55,
+                        borderRadius: 30,
+                        margin: 5,
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        fontWeight: "bold",
+                        color: "grey",
+                        padding: 5,
+                        borderRadius: 5,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {name}
+                    </Text>
+                  </View>
                 </View>
               </TouchableOpacity>
             </View>
@@ -233,14 +327,36 @@ const Profile = ({ navigation }) => {
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
             >
               <View
-                style={{ backgroundColor: "grey", padding: 5, borderRadius: 5 }}
+                style={{
+                  backgroundColor: "grey",
+                  padding: 5,
+                  borderRadius: 5,
+                  margin: 5,
+                }}
               >
-                <Text style={{ color: "#292929", fontWeight: "bold" }}>
+                <Text
+                  style={{
+                    color: "#292929",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
                   Followers
                 </Text>
               </View>
-              <View>
-                <Text>X</Text>
+              <View
+                style={{
+                  borderWidth: 2,
+                  paddingHorizontal: 20,
+                  borderRadius: 5,
+                  borderColor: "grey",
+                }}
+              >
+                <Text
+                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Y
+                </Text>
               </View>
             </View>
           </View>
@@ -384,127 +500,187 @@ const Profile = ({ navigation }) => {
                 // ref={(c) => { _carousel = c; }}
                 data={[
                   {
-                    artistName: "Drake",
+                    name: "Okafor's Law",
+                    albumName: "Anytime Soon(Deluxe Edition)",
+                    artistName: "Ajebutter22 and Studio Magic",
+                    trackName: "Okafor's Law",
                     image:
-                      "https://i.scdn.co/image/60cfab40c6bb160a1906be45276829d430058005",
-                    id: "3TVXtAsR1Inumwj472S9r4",
+                      "https://i.scdn.co/image/ab67616d0000b2738a292235ee6a87e93c32ce20",
+                    id: "5ZIcZTKGEHZoiPVsXoCv03",
                   },
                   {
-                    artistName: "Future",
-                    image:
-                      "https://i.scdn.co/image/fa9015ca2bf85af90b967500148da9706a156e3b",
-                    id: "1RyvyyTE3xzB2ZywiAwp0i",
-                  },
-                  {
-                    artistName: "PARTYNEXTDOOR",
-                    image:
-                      "https://i.scdn.co/image/797276c2f8da713f0534e012de4d144f338e1664",
-                    id: "2HPaUgqeutzr3jx5a9WyDV",
-                  },
-                  {
-                    artistName: "Bryson Tiller",
-                    image:
-                      "https://i.scdn.co/image/c65c74e7b7eb576b8dea4d5d43283ac279e3f87d",
-                    id: "2EMAnMvWE2eb56ToJVfCWs",
-                  },
-                  {
-                    artistName: "NAV",
-                    image:
-                      "https://i.scdn.co/image/d819f806207d520282f92cd7a8bb0438ddfff4c1",
-                    id: "7rkW85dBwwrJtlHRDkJDAC",
-                  },
-                  {
-                    artistName: "Yung Bleu",
-                    image:
-                      "https://i.scdn.co/image/24ed718b61468236cf6be503a80fe064c33af8eb",
-                    id: "3KNIG74xSTc3dj0TRy7pGX",
-                  },
-                  {
+                    name: "Day Dream$",
+                    albumName: "SANCIETY 2",
                     artistName: "San Bravura",
+                    trackName: "Day Dream$",
                     image:
-                      "https://i.scdn.co/image/cd0b73cb6de4b90dd0a1d65d81acfb1b217592bc",
-                    id: "2bl1hMyR2lrHrTlHaBtXKa",
+                      "https://i.scdn.co/image/ab67616d0000b27361ec35706a7b11046d88efcc",
+                    id: "4L9PyuSuEwLZGFy1x1fXnx",
                   },
                   {
-                    artistName: "JAY-Z",
+                    name: "Pain 1993 (with Playboi Carti)",
+                    albumName: "Dark Lane Demo Tapes",
+                    artistName: "Drake",
+                    trackName: "Pain 1993 (with Playboi Carti)",
                     image:
-                      "https://i.scdn.co/image/4912d27d6b01dd790313d8ef76586be6b100550f",
-                    id: "3nFkdlSjzX9mRTtwJOzDYB",
+                      "https://i.scdn.co/image/ab67616d0000b273bba7cfaf7c59ff0898acba1f",
+                    id: "6Kj17Afjo1OKJYpf5VzCeo",
                   },
                   {
-                    artistName: "Kendrick Lamar",
+                    name: "Not You Too (feat. Chris Brown)",
+                    albumName: "Dark Lane Demo Tapes",
+                    artistName: "Drake",
+                    trackName: "Not You Too (feat. Chris Brown)",
                     image:
-                      "https://i.scdn.co/image/3a836196bfb341f736c7fe2704fb75de53f8dfbb",
-                    id: "2YZyLoL8N0Wb9xBt1NhZWg",
+                      "https://i.scdn.co/image/ab67616d0000b273bba7cfaf7c59ff0898acba1f",
+                    id: "3Q4gttWQ6hxqWOa3tHoTNi",
                   },
                   {
-                    artistName: "Amel Larrieux",
+                    name: "Over My Dead Body",
+                    albumName: "Take Care (Deluxe)",
+                    artistName: "Drake",
+                    trackName: "Over My Dead Body",
                     image:
-                      "https://i.scdn.co/image/693317e45d8b5e19006d6460404c17de22e114b5",
-                    id: "4hVcxmC7igpot32EzQf7IR",
+                      "https://i.scdn.co/image/ab67616d0000b273c7ea04a9b455e3f68ef82550",
+                    id: "2Gnsof1hvZzjE1xdLRpjtf",
                   },
                   {
-                    artistName: "Teedra Moses",
+                    name: "Years Go By",
+                    albumName: "A N N I V E R S A R Y",
+                    artistName: "Bryson Tiller",
+                    trackName: "Years Go By",
                     image:
-                      "https://i.scdn.co/image/828d13af9750d5903b1755793c9df4640c2aa7fc",
-                    id: "6vfR5QRc3xca0KvpG8KZBE",
+                      "https://i.scdn.co/image/ab67616d0000b273008d8077814ce15da0085b47",
+                    id: "4SVTus5gJc5cfkFZ8ELK1p",
                   },
                   {
-                    artistName: "J. Cole",
+                    name: "Go To Hell",
+                    albumName: "Bad Habits (Deluxe)",
+                    artistName: "NAV",
+                    trackName: "Go To Hell",
                     image:
-                      "https://i.scdn.co/image/c58beb81196bbdda378b6746c51a10aace2f63a6",
-                    id: "6l3HvQ5sa6mXTsMTB19rO5",
+                      "https://i.scdn.co/image/ab67616d0000b273a4aaecb02b51550635d7c1b1",
+                    id: "6oHalJC4hM1cS4tt6fhzLH",
                   },
                   {
-                    artistName: "Jhené Aiko",
+                    name: "Focused",
+                    albumName: "Focused",
+                    artistName: "PsychoYP",
+                    trackName: "Focused",
                     image:
-                      "https://i.scdn.co/image/f677fc21079ba4985debb4d1b3b4eb9cd7554ec8",
-                    id: "5ZS223C6JyBfXasXxrRqOk",
+                      "https://i.scdn.co/image/ab67616d0000b27360215e5cb2e5e101392514f0",
+                    id: "5Yx0NLeMXCNgx1rAzHQh25",
                   },
                   {
-                    artistName: "XXXTENTACION",
+                    name: "Hit Different",
+                    albumName: "Hit Different",
+                    artistName: "SZA",
+                    trackName: "Hit Different",
                     image:
-                      "https://i.scdn.co/image/942afa81f0a2298ead0c154fb7b4b606de48d9e6",
-                    id: "15UsOTVnJzReFVN1VCnxy4",
+                      "https://i.scdn.co/image/ab67616d0000b273a135dd969dce9f38ed32ef98",
+                    id: "7Bar1kLTmsRmH6FCKKMEyU",
                   },
                   {
-                    artistName: "Travis Scott",
+                    name: "Always Forever",
+                    albumName: "A N N I V E R S A R Y",
+                    artistName: "Bryson Tiller",
+                    trackName: "Always Forever",
                     image:
-                      "https://i.scdn.co/image/ef784cfa3f4f87d656d3dfa5eedf0a24610faba9",
-                    id: "0Y5tJX1MQlPlqiwlOH1tJY",
+                      "https://i.scdn.co/image/ab67616d0000b273008d8077814ce15da0085b47",
+                    id: "1LV5cAo02H8h5YlZNcjULM",
                   },
                   {
-                    artistName: "Kodie Shane",
+                    name: "Youngest in Charge",
+                    albumName: "43 Drill Dippers #2",
+                    artistName: "SJ",
+                    trackName: "Youngest in Charge",
                     image:
-                      "https://i.scdn.co/image/f6de78864ed22fed34145183748f9e1314e3f9dc",
-                    id: "1CUeN4GnHAGUk9nAXPorF4",
+                      "https://i.scdn.co/image/ab67616d0000b27350f846315ae870a2cb11fb65",
+                    id: "3q1jlzcqeaft2nYFzCNOkN",
                   },
                   {
-                    artistName: "J.I the Prince of N.Y",
+                    name: "Home",
+                    albumName: "NRG 105",
+                    artistName: "Knucks",
+                    trackName: "Home",
                     image:
-                      "https://i.scdn.co/image/6f6e63accb6a8a74c267630f4443f717103455b4",
-                    id: "2eqoJbzUGDwys5ENUkbT3h",
+                      "https://i.scdn.co/image/ab67616d0000b2736896f87c9a0538afe9d8149c",
+                    id: "6Ncr1lCYnE3JHwtVK4nLAx",
                   },
                   {
-                    artistName: "Juice WRLD",
+                    name: "Sorry - Original Demo",
+                    albumName: "Lemonade",
+                    artistName: "Beyoncé",
+                    trackName: "Sorry - Original Demo",
                     image:
-                      "https://i.scdn.co/image/d8e62447a338a882b490460da20e90aac6d60ae7",
-                    id: "4MCBfE4596Uoi2O4DtmEMz",
+                      "https://i.scdn.co/image/ab67616d0000b27389992f4d7d4ab94937bf9e23",
+                    id: "6eR1N0EBHiDkGDzegX99d3",
                   },
                   {
+                    name: "Take Your Shot",
+                    albumName: "SANCIETY 2",
+                    artistName: "San Bravura",
+                    trackName: "Take Your Shot",
+                    image:
+                      "https://i.scdn.co/image/ab67616d0000b27361ec35706a7b11046d88efcc",
+                    id: "4xzHMCUYk8dvlziKZ9vWri",
+                  },
+                  {
+                    name: "Only You Freestyle",
+                    albumName: "Only You Freestyle",
                     artistName: "Headie One",
+                    trackName: "Only You Freestyle",
                     image:
-                      "https://i.scdn.co/image/334fc2728dbd443b03f288fd2f9dcac40f883a94",
-                    id: "6UCQYrcJ6wab6gnQ89OJFh",
+                      "https://i.scdn.co/image/ab67616d0000b273f7534e604b1a5c9d8182130d",
+                    id: "4OENnoidV0h8gJV6bhrw7r",
                   },
                   {
-                    artistName: "Pop Smoke",
+                    name: "Within A Day",
+                    albumName: "Me Before You (Original Motion Picture Score)",
+                    artistName: "Craig Armstrong",
+                    trackName: "Within A Day",
                     image:
-                      "https://i.scdn.co/image/8f0a45ff4868c7868a7996b57da64f2e89042e26",
-                    id: "0eDvMgVFoNV3TpwtrVCoTj",
+                      "https://i.scdn.co/image/ab67616d0000b273c30f84b2cb633637d1da3a69",
+                    id: "6X5BTmKnwmeP02pinepASv",
+                  },
+                  {
+                    name: "wicked, sexy!",
+                    albumName: "EVERYTHING YOU HEARD IS TRUE",
+                    artistName: "Odunsi (The Engine)",
+                    trackName: "wicked, sexy!",
+                    image:
+                      "https://i.scdn.co/image/ab67616d0000b2737b37913dd47d2214cc891ba2",
+                    id: "6IsOt1shnug3aISsedXatq",
+                  },
+                  {
+                    name: "Throw Away",
+                    albumName: "Monster",
+                    artistName: "Future",
+                    trackName: "Throw Away",
+                    image:
+                      "https://i.scdn.co/image/ab67616d0000b273e2528d35865f3114cfe9a16e",
+                    id: "2ML7vSeIZEmOCOiLUmz7Sv",
+                  },
+                  {
+                    name: "You Used to Love Me",
+                    albumName: "Faith",
+                    artistName: "Faith Evans",
+                    trackName: "You Used to Love Me",
+                    image:
+                      "https://i.scdn.co/image/ab67616d0000b273157ca087bea9d4e886abf7ce",
+                    id: "0KhXVmAN4sqeEgsqRd39f2",
+                  },
+                  {
+                    name: "No Promises",
+                    albumName: "The Bigger Artist",
+                    artistName: "A Boogie Wit da Hoodie",
+                    trackName: "No Promises",
+                    image:
+                      "https://i.scdn.co/image/ab67616d0000b273cdba7ee22968991250725ce1",
+                    id: "2BJpuAoDeQ1QuPvnryfAWK",
                   },
                 ]}
-                renderItem={_renderItem}
+                renderItem={_renderItem_b}
                 sliderWidth={Dimensions.get("window").width / 3}
                 itemWidth={Dimensions.get("window").width / 3}
                 onSnapToItem={(index) => setIndex(index)}
@@ -518,7 +694,7 @@ const Profile = ({ navigation }) => {
   );
 };
 
-export default Profile;
+export default observer(UserProfile);
 
 const styles = StyleSheet.create({
   container: {
