@@ -7,6 +7,7 @@ import Timeline from "./Timeline.js";
 import Main from "./Main";
 import Notifications from "./Notifications";
 import AddPost from "./AddPost";
+import Profile from './UserProfile'
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -44,9 +45,9 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => <MI name="home" color={color} size={26} />,
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Post"
-        component={AddPost}
+        component={Profile}
         options={{
           tabBarLabel: "",
           tabBarColor: "#292929",
@@ -54,7 +55,7 @@ const MainTabScreen = () => {
             <MI name="add-circle" color={color} size={26} />
             ),
           }}
-        /> */}
+        />
       {/* <Tab.Screen
         name="Notifications"
         component={Notifications}

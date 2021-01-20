@@ -15,7 +15,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Categories({ navigation }) {
   return (
@@ -52,7 +52,7 @@ export default function Categories({ navigation }) {
                 flex: 3,
               }}
             >
-              <Entypo name="text-document" size={130} color="#292929" />
+              <MaterialCommunityIcons name="playlist-music" size={120} color="#292929" />
             </View>
           </TouchableOpacity>
         </View>
@@ -97,7 +97,7 @@ export default function Categories({ navigation }) {
                   flex: 3,
                 }}
               >
-                <MaterialIcons name="face" size={130} color="#292929" />
+                <MaterialIcons name="face" size={120} color="#292929" />
               </View>
             </View>
           </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function Categories({ navigation }) {
               >
                 <MaterialCommunityIcons
                   name="album"
-                  size={130}
+                  size={120}
                   color="#292929"
                 />
               </View>
@@ -192,7 +192,7 @@ export default function Categories({ navigation }) {
                   flex: 3,
                 }}
               >
-                <Entypo name="news" size={130} color="#292929" />
+                <Entypo name="news" size={120} color="#292929" />
               </View>
             </View>
           </TouchableOpacity>
@@ -235,7 +235,7 @@ export default function Categories({ navigation }) {
                   flex: 3,
                 }}
               >
-                <SimpleLineIcons name="people" size={130} color="#292929" />
+                <MaterialIcons name="nature-people" size={120} color="#292929" />
               </View>
             </View>
           </TouchableOpacity>
