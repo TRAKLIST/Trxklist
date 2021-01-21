@@ -10,13 +10,14 @@ import {
   Animated,
   RefreshControl,
   Dimensions,
+  TextInput,
 } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import UserStore from "../stores/UserStore";
 import axios from "axios";
 import Post from "../components/Post";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
 import { observer } from "mobx-react";
 
 const AnimatedCustomScrollView = Animated.createAnimatedComponent(ScrollView);
@@ -123,6 +124,10 @@ const UserProfile = ({ navigation }) => {
   const _renderItem = ({ item, index }) => {
     return (
       <View style={{ borderRadius: 5 }}>
+        <Image
+          style={{ alignSelf: "center", marginBottom: 5, borderRadius: 10 }}
+          source={{ uri: item.image, height: 120, width: "100%" }}
+        />
         <Text
           numberOfLines={1}
           style={{
@@ -130,7 +135,7 @@ const UserProfile = ({ navigation }) => {
             color: "grey",
             fontWeight: "bold",
             textAlign: "center",
-            margin: 5,
+            // margin: 5,
             padding: 5,
             borderRadius: 5,
             overflow: "hidden",
@@ -138,10 +143,6 @@ const UserProfile = ({ navigation }) => {
         >
           {item.artistName}
         </Text>
-        <Image
-          style={{ alignSelf: "center", marginBottom: 5, borderRadius: 10 }}
-          source={{ uri: item.image, height: 100, width: 100 }}
-        />
       </View>
     );
   };
@@ -149,6 +150,10 @@ const UserProfile = ({ navigation }) => {
   const _renderItem_b = ({ item, index }) => {
     return (
       <View style={{ borderRadius: 5 }}>
+        <Image
+          style={{ alignSelf: "center", marginBottom: 5, borderRadius: 10 }}
+          source={{ uri: item.image, height: 120, width: "100%" }}
+        />
         <Text
           numberOfLines={1}
           style={{
@@ -156,7 +161,7 @@ const UserProfile = ({ navigation }) => {
             color: "grey",
             fontWeight: "bold",
             textAlign: "center",
-            margin: 5,
+            // margin: 5,
             padding: 5,
             borderRadius: 5,
             overflow: "hidden",
@@ -164,10 +169,6 @@ const UserProfile = ({ navigation }) => {
         >
           {item.name}
         </Text>
-        <Image
-          style={{ alignSelf: "center", marginBottom: 5, borderRadius: 10 }}
-          source={{ uri: item.image, height: 100, width: 100 }}
-        />
       </View>
     );
   };
@@ -362,139 +363,268 @@ const UserProfile = ({ navigation }) => {
           </View>
         )}
       >
-        <View style={{ flex: 1 }}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <Carousel
-                // ref={(c) => { _carousel = c; }}
-                data={[
-                  {
-                    artistName: "Drake",
-                    image:
-                      "https://i.scdn.co/image/60cfab40c6bb160a1906be45276829d430058005",
-                    id: "3TVXtAsR1Inumwj472S9r4",
-                  },
-                  {
-                    artistName: "Future",
-                    image:
-                      "https://i.scdn.co/image/fa9015ca2bf85af90b967500148da9706a156e3b",
-                    id: "1RyvyyTE3xzB2ZywiAwp0i",
-                  },
-                  {
-                    artistName: "PARTYNEXTDOOR",
-                    image:
-                      "https://i.scdn.co/image/797276c2f8da713f0534e012de4d144f338e1664",
-                    id: "2HPaUgqeutzr3jx5a9WyDV",
-                  },
-                  {
-                    artistName: "Bryson Tiller",
-                    image:
-                      "https://i.scdn.co/image/c65c74e7b7eb576b8dea4d5d43283ac279e3f87d",
-                    id: "2EMAnMvWE2eb56ToJVfCWs",
-                  },
-                  {
-                    artistName: "NAV",
-                    image:
-                      "https://i.scdn.co/image/d819f806207d520282f92cd7a8bb0438ddfff4c1",
-                    id: "7rkW85dBwwrJtlHRDkJDAC",
-                  },
-                  {
-                    artistName: "Yung Bleu",
-                    image:
-                      "https://i.scdn.co/image/24ed718b61468236cf6be503a80fe064c33af8eb",
-                    id: "3KNIG74xSTc3dj0TRy7pGX",
-                  },
-                  {
-                    artistName: "San Bravura",
-                    image:
-                      "https://i.scdn.co/image/cd0b73cb6de4b90dd0a1d65d81acfb1b217592bc",
-                    id: "2bl1hMyR2lrHrTlHaBtXKa",
-                  },
-                  {
-                    artistName: "JAY-Z",
-                    image:
-                      "https://i.scdn.co/image/4912d27d6b01dd790313d8ef76586be6b100550f",
-                    id: "3nFkdlSjzX9mRTtwJOzDYB",
-                  },
-                  {
-                    artistName: "Kendrick Lamar",
-                    image:
-                      "https://i.scdn.co/image/3a836196bfb341f736c7fe2704fb75de53f8dfbb",
-                    id: "2YZyLoL8N0Wb9xBt1NhZWg",
-                  },
-                  {
-                    artistName: "Amel Larrieux",
-                    image:
-                      "https://i.scdn.co/image/693317e45d8b5e19006d6460404c17de22e114b5",
-                    id: "4hVcxmC7igpot32EzQf7IR",
-                  },
-                  {
-                    artistName: "Teedra Moses",
-                    image:
-                      "https://i.scdn.co/image/828d13af9750d5903b1755793c9df4640c2aa7fc",
-                    id: "6vfR5QRc3xca0KvpG8KZBE",
-                  },
-                  {
-                    artistName: "J. Cole",
-                    image:
-                      "https://i.scdn.co/image/c58beb81196bbdda378b6746c51a10aace2f63a6",
-                    id: "6l3HvQ5sa6mXTsMTB19rO5",
-                  },
-                  {
-                    artistName: "Jhené Aiko",
-                    image:
-                      "https://i.scdn.co/image/f677fc21079ba4985debb4d1b3b4eb9cd7554ec8",
-                    id: "5ZS223C6JyBfXasXxrRqOk",
-                  },
-                  {
-                    artistName: "XXXTENTACION",
-                    image:
-                      "https://i.scdn.co/image/942afa81f0a2298ead0c154fb7b4b606de48d9e6",
-                    id: "15UsOTVnJzReFVN1VCnxy4",
-                  },
-                  {
-                    artistName: "Travis Scott",
-                    image:
-                      "https://i.scdn.co/image/ef784cfa3f4f87d656d3dfa5eedf0a24610faba9",
-                    id: "0Y5tJX1MQlPlqiwlOH1tJY",
-                  },
-                  {
-                    artistName: "Kodie Shane",
-                    image:
-                      "https://i.scdn.co/image/f6de78864ed22fed34145183748f9e1314e3f9dc",
-                    id: "1CUeN4GnHAGUk9nAXPorF4",
-                  },
-                  {
-                    artistName: "J.I the Prince of N.Y",
-                    image:
-                      "https://i.scdn.co/image/6f6e63accb6a8a74c267630f4443f717103455b4",
-                    id: "2eqoJbzUGDwys5ENUkbT3h",
-                  },
-                  {
-                    artistName: "Juice WRLD",
-                    image:
-                      "https://i.scdn.co/image/d8e62447a338a882b490460da20e90aac6d60ae7",
-                    id: "4MCBfE4596Uoi2O4DtmEMz",
-                  },
-                  {
-                    artistName: "Headie One",
-                    image:
-                      "https://i.scdn.co/image/334fc2728dbd443b03f288fd2f9dcac40f883a94",
-                    id: "6UCQYrcJ6wab6gnQ89OJFh",
-                  },
-                  {
-                    artistName: "Pop Smoke",
-                    image:
-                      "https://i.scdn.co/image/8f0a45ff4868c7868a7996b57da64f2e89042e26",
-                    id: "0eDvMgVFoNV3TpwtrVCoTj",
-                  },
-                ]}
-                renderItem={_renderItem}
-                sliderWidth={Dimensions.get("window").width / 3}
-                itemWidth={Dimensions.get("window").width / 3}
-                onSnapToItem={(index) => setIndex(index)}
+        <View style={{ flex: 1, padding: 15 }}>
+          <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
+            <Carousel
+              // ref={(c) => { _carousel = c; }}
+              data={[
+                {
+                  artistName: "Drake",
+                  image:
+                    "https://i.scdn.co/image/60cfab40c6bb160a1906be45276829d430058005",
+                  id: "3TVXtAsR1Inumwj472S9r4",
+                },
+                {
+                  artistName: "Future",
+                  image:
+                    "https://i.scdn.co/image/fa9015ca2bf85af90b967500148da9706a156e3b",
+                  id: "1RyvyyTE3xzB2ZywiAwp0i",
+                },
+                {
+                  artistName: "PARTYNEXTDOOR",
+                  image:
+                    "https://i.scdn.co/image/797276c2f8da713f0534e012de4d144f338e1664",
+                  id: "2HPaUgqeutzr3jx5a9WyDV",
+                },
+                {
+                  artistName: "Bryson Tiller",
+                  image:
+                    "https://i.scdn.co/image/c65c74e7b7eb576b8dea4d5d43283ac279e3f87d",
+                  id: "2EMAnMvWE2eb56ToJVfCWs",
+                },
+                {
+                  artistName: "NAV",
+                  image:
+                    "https://i.scdn.co/image/d819f806207d520282f92cd7a8bb0438ddfff4c1",
+                  id: "7rkW85dBwwrJtlHRDkJDAC",
+                },
+                {
+                  artistName: "Yung Bleu",
+                  image:
+                    "https://i.scdn.co/image/24ed718b61468236cf6be503a80fe064c33af8eb",
+                  id: "3KNIG74xSTc3dj0TRy7pGX",
+                },
+                {
+                  artistName: "San Bravura",
+                  image:
+                    "https://i.scdn.co/image/cd0b73cb6de4b90dd0a1d65d81acfb1b217592bc",
+                  id: "2bl1hMyR2lrHrTlHaBtXKa",
+                },
+                {
+                  artistName: "JAY-Z",
+                  image:
+                    "https://i.scdn.co/image/4912d27d6b01dd790313d8ef76586be6b100550f",
+                  id: "3nFkdlSjzX9mRTtwJOzDYB",
+                },
+                {
+                  artistName: "Kendrick Lamar",
+                  image:
+                    "https://i.scdn.co/image/3a836196bfb341f736c7fe2704fb75de53f8dfbb",
+                  id: "2YZyLoL8N0Wb9xBt1NhZWg",
+                },
+                {
+                  artistName: "Amel Larrieux",
+                  image:
+                    "https://i.scdn.co/image/693317e45d8b5e19006d6460404c17de22e114b5",
+                  id: "4hVcxmC7igpot32EzQf7IR",
+                },
+                {
+                  artistName: "Teedra Moses",
+                  image:
+                    "https://i.scdn.co/image/828d13af9750d5903b1755793c9df4640c2aa7fc",
+                  id: "6vfR5QRc3xca0KvpG8KZBE",
+                },
+                {
+                  artistName: "J. Cole",
+                  image:
+                    "https://i.scdn.co/image/c58beb81196bbdda378b6746c51a10aace2f63a6",
+                  id: "6l3HvQ5sa6mXTsMTB19rO5",
+                },
+                {
+                  artistName: "Jhené Aiko",
+                  image:
+                    "https://i.scdn.co/image/f677fc21079ba4985debb4d1b3b4eb9cd7554ec8",
+                  id: "5ZS223C6JyBfXasXxrRqOk",
+                },
+                {
+                  artistName: "XXXTENTACION",
+                  image:
+                    "https://i.scdn.co/image/942afa81f0a2298ead0c154fb7b4b606de48d9e6",
+                  id: "15UsOTVnJzReFVN1VCnxy4",
+                },
+                {
+                  artistName: "Travis Scott",
+                  image:
+                    "https://i.scdn.co/image/ef784cfa3f4f87d656d3dfa5eedf0a24610faba9",
+                  id: "0Y5tJX1MQlPlqiwlOH1tJY",
+                },
+                {
+                  artistName: "Kodie Shane",
+                  image:
+                    "https://i.scdn.co/image/f6de78864ed22fed34145183748f9e1314e3f9dc",
+                  id: "1CUeN4GnHAGUk9nAXPorF4",
+                },
+                {
+                  artistName: "J.I the Prince of N.Y",
+                  image:
+                    "https://i.scdn.co/image/6f6e63accb6a8a74c267630f4443f717103455b4",
+                  id: "2eqoJbzUGDwys5ENUkbT3h",
+                },
+                {
+                  artistName: "Juice WRLD",
+                  image:
+                    "https://i.scdn.co/image/d8e62447a338a882b490460da20e90aac6d60ae7",
+                  id: "4MCBfE4596Uoi2O4DtmEMz",
+                },
+                {
+                  artistName: "Headie One",
+                  image:
+                    "https://i.scdn.co/image/334fc2728dbd443b03f288fd2f9dcac40f883a94",
+                  id: "6UCQYrcJ6wab6gnQ89OJFh",
+                },
+                {
+                  artistName: "Pop Smoke",
+                  image:
+                    "https://i.scdn.co/image/8f0a45ff4868c7868a7996b57da64f2e89042e26",
+                  id: "0eDvMgVFoNV3TpwtrVCoTj",
+                },
+              ]}
+              firstItem={1}
+              renderItem={_renderItem}
+              sliderWidth={Dimensions.get("window").width}
+              itemWidth={Dimensions.get("window").width / 3}
+              onSnapToItem={(index) => setIndex(index)}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <View
+              /** dist. links */ style={{ flexDirection: "row", padding: 0 }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: "purple",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#F8F8FF",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    width: 40,
+                    borderRadius: 12,
+                  }}
+                >
+                  <Fontisto name="instagram" color="#cd486b" size={22} />
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: "black",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#F8F8FF",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    width: 40,
+                    borderRadius: 12,
+                  }}
+                >
+                  <Fontisto name="twitter" color="#00acee" size={22} />
+                </View>
+              </View>
+            </View>
+            <View /** bio. description */ style={{ padding: 10 }}>
+              <TextInput
+                placeholder="say sumn..."
+                autoCapitalize="none"
+                // value={caption}
+                // autoCorrect={false}
+                multiline="true"
+                numberOfLines={4}
+                // onChangeText={(val) => handleCaptionChange(val)}
+                style={{
+                  justifyContent: "center",
+                  backgroundColor: "#000",
+                  borderRadius: 10,
+                  borderColor: "grey",
+                  flex: 1,
+                  textAlign: "center",
+                  fontSize: 20,
+                  opacity: 0.4,
+                  color: "#fff",
+                  fontWeight: "bold",
+                  paddingTop: 40,
+                  paddingBottom: 40,
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                }}
               />
             </View>
+
+            <View
+              /** dist. links */ style={{ flexDirection: "row", padding: 0 }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: "pink",
+                  // padding: 10,
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#F8F8FF",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    width: 40,
+                    borderRadius: 12,
+                  }}
+                >
+                  <Fontisto name="spotify" color="#1DB954" size={22} />
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: "yellow",
+                  alignItems: "center",
+                  // padding : 10
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#F8F8FF",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    width: 40,
+                    borderRadius: 12,
+                  }}
+                >
+                  <Fontisto name="soundcloud" color="#ff7700" size={22} />
+                </View>
+              </View>
+            </View>
+
+          </View>
+          <View
+            style={{
+              flexDirection: "column",
+              // backgroundColor: "red",
+              flex: 1,
+              marginTop: 7,
+            }}
+          >
             <View style={{ flex: 1, alignItems: "center" }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
@@ -680,8 +810,9 @@ const UserProfile = ({ navigation }) => {
                     id: "2BJpuAoDeQ1QuPvnryfAWK",
                   },
                 ]}
+                firstItem={1}
                 renderItem={_renderItem_b}
-                sliderWidth={Dimensions.get("window").width / 3}
+                sliderWidth={Dimensions.get("window").width}
                 itemWidth={Dimensions.get("window").width / 3}
                 onSnapToItem={(index) => setIndex(index)}
               />
