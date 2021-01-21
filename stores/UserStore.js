@@ -18,6 +18,7 @@ class UserStore {
       enablePostScreen : false,
       isFollowing : false,
       topTracks : [],
+      topArtists : [],
       notifications : [],
       lyricsPage : false,
       trackIndex : 0,

@@ -51,19 +51,7 @@ function shuffle(array) {
 function LoadingPage() {
   const [image, setImage] = React.useState("");
   React.useEffect(() => {
-    // this.interval = setInterval(() => {
     UserStore.followingDetails = [];
-
-    // spotifyAPI
-    //   .getUser(UserStore.spotifyUserDetails.user_id)
-    //   .then((response) => {
-    //     setImage(response.images[0].url); // if not null then take value and update image field below
-    //   })
-    //   .catch((err) => console.log(err));
-
-    //   console.log(image)
-
-    // neeeds to be moved home
 
     spotifyAPI.getMyTopArtists().then((data) => {
       topArtistsArray = [];
@@ -75,6 +63,36 @@ function LoadingPage() {
         };
         topArtistsArray.push(topArtists);
       });
+
+      axios
+        .post(
+          "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
+          {
+            bio: "",
+            website: "",
+            location: "",
+            bookmarked: "",
+            playlists: "",
+            recentlyPlayed: "",
+            topArtists: JSON.stringify(topArtistsArray),
+            topTracks: "",
+            // image: !(image === undefined || image == "")
+            //   ? image
+            //   : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
+            image: "",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${UserStore.authCode}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data, "eweyubia");
+        })
+        .catch((err) => console.log(err));
+
+      UserStore.topArtists = topArtistsArray;
     });
 
     spotifyAPI.getMyTopTracks().then((data) => {
@@ -91,15 +109,38 @@ function LoadingPage() {
         items.push(topTracks);
       });
 
-      UserStore.topTracks = items
-      // UserStore.topArtists =
+      axios
+        .post(
+          "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
+          {
+            bio: "",
+            website: "",
+            location: "",
+            bookmarked: "",
+            playlists: "",
+            recentlyPlayed: "",
+            topArtists: "",
+            topTracks: JSON.stringify(items),
+            // image: !(image === undefined || image == "")
+            //   ? image
+            //   : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
+            image: "",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${UserStore.authCode}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data, "eweyubia");
+        })
+        .catch((err) => console.log(err));
 
-      // Randomise array
-      // console.log(items, "first");
+      UserStore.topTracks = items;
+
       shuffle(items);
-      // console.log(items, "finish");
 
-      // Recommendations - pick 3
       for (i = 0; i < 3; i++) {
         if (str == "") {
           str = `${items[i].id}`;
@@ -107,40 +148,52 @@ function LoadingPage() {
       }
 
       UserStore.str = str;
-      // console.log(str);
     });
 
-    // needs to be moved home
+    spotifyAPI
+      .getUserPlaylists(UserStore.spotifyUserDetails.user_id)
+      .then((data) => {
+        let playlists = [];
+        // console.log(UserStore.playlist);
+        data.items.map((item) => {
+          let playlist_item = {
+            id: item.id,
+            title: item.name,
+            images: item.images[0].url,
+            link: item.external_urls.spotify,
+          };
+          playlists.push(playlist_item);
+        });
+        // console.log(UserStore.playlist);
 
-    // console.log(topArtistsArray, items, "betrvcb");
-
-    axios
-      .post(
-        "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
-        {
-          bio: "",
-          website: "",
-          location: "",
-          bookmarked: "",
-          playlists: "",
-          recentlyPlayed: "",
-          topArtists: JSON.stringify(topArtistsArray),
-          topTracks: JSON.stringify(items),
-          // image: !(image === undefined || image == "")
-          //   ? image
-          //   : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
-          image: "",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${UserStore.authCode}`,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+        axios
+          .post(
+            "https://europe-west1-projectmelo.cloudfunctions.net/api/user",
+            {
+              bio: "",
+              website: "",
+              location: "",
+              bookmarked: "",
+              playlists: JSON.stringify(playlists),
+              recentlyPlayed: "",
+              topArtists: "",
+              topTracks: "",
+              // image: !(image === undefined || image == "")
+              //   ? image
+              //   : "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg", // look at later
+              image: "",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${UserStore.authCode}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data, "eweyubia");
+          })
+          .catch((err) => console.log(err));
+      });
 
     axios
       .get("https://europe-west1-projectmelo.cloudfunctions.net/api/posts")
@@ -179,17 +232,17 @@ function LoadingPage() {
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/users`, {
         headers: {
           Authorization: `Bearer ${UserStore.authCode}`,
         },
       })
       .then((res) => {
-        console.log(res.data, 'uiohuwe')
-        UserStore.allUsers = res.data
+        console.log(res.data, "uiohuwe");
+        UserStore.allUsers = res.data;
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
 
     // console.log(UserStore.update);
 
@@ -197,27 +250,25 @@ function LoadingPage() {
     // }, 10000);
   }, []);
   return (
-    (
-      <View style={styles.container}>
-        <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
-          <View>
-            <View style={{ alignItems: "center", margin: 10 }}>
-              <Text style={{ fontWeight: "bold", color: "grey" }}>
-                LOADING TRAKLIST....
-              </Text>
-            </View>
-            <View>
-              <ActivityIndicator size="large" color="blue" />
-            </View>
+    <View style={styles.container}>
+      <LinearGradient colors={["#A7A2A9", "#000"]} style={styles.header}>
+        <View>
+          <View style={{ alignItems: "center", margin: 10 }}>
+            <Text style={{ fontWeight: "bold", color: "grey" }}>
+              LOADING TRAKLIST....
+            </Text>
           </View>
-        </LinearGradient>
+          <View>
+            <ActivityIndicator size="large" color="blue" />
+          </View>
+        </View>
+      </LinearGradient>
 
-        <LinearGradient
-          colors={["#000", "#8D8D92", "#EAEAEB"]}
-          style={styles.footer}
-        ></LinearGradient>
-      </View>
-    )
+      <LinearGradient
+        colors={["#000", "#8D8D92", "#EAEAEB"]}
+        style={styles.footer}
+      ></LinearGradient>
+    </View>
   );
 }
 
