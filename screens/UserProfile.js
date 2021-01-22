@@ -43,7 +43,7 @@ const UserProfile = ({ navigation }) => {
 
   useEffect(() => {
     axios
-      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/ADMIN`)
+      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/${UserStore.meloID}`)
       .then((res) => {
         console.log(JSON.parse(res.data.user.topArtists), "etgrkle");
         setTopArtists(JSON.parse(res.data.user.topArtists));
@@ -255,24 +255,24 @@ const UserProfile = ({ navigation }) => {
             }
           />
         )}
-        renderStickyHeader={() => (
-          <View
-            style={{
-              padding: 10,
-              // marginBottom: 10,
-              backgroundColor: "#292929",
-              borderWidth: 0,
-              borderColor: "#fff",
-              borderRadius: 0,
-              minHeight: 80,
-              borderBottomWidth: 1,
-              //   flex : 1,
-              backgroundColor: "#292929",
-            }}
-          >
-            <Text>PLAYLISTS</Text>
-          </View>
-        )}
+        // renderStickyHeader={() => (
+        //   <View
+        //     style={{
+        //       padding: 10,
+        //       // marginBottom: 10,
+        //       backgroundColor: "#292929",
+        //       borderWidth: 0,
+        //       borderColor: "#fff",
+        //       borderRadius: 0,
+        //       minHeight: 80,
+        //       borderBottomWidth: 1,
+        //       //   flex : 1,
+        //       backgroundColor: "#292929",
+        //     }}
+        //   >
+        //     <Text>PLAYLISTS</Text>
+        //   </View>
+        // )}
         stickyHeaderHeight={90}
         // renderBackground = {0}
         renderForeground={() => (
@@ -331,9 +331,9 @@ const UserProfile = ({ navigation }) => {
           </View>
         )}
       >
-        <View style={{ flex: 1, padding: 15, backgroundColor: "black", }}>
+        <View style={{ flex: 1, padding: 10, backgroundColor: "grey", }}>
           <View style={{backgroundColor : 'transparent', flex: 1,}}>
-            <View style={{ flex: 1, alignItems: "center", padding: 5, backgroundColor : 'transparent' }}>
+            <View style={{ flex: 1, alignItems: "center", padding: 0, backgroundColor : 'transparent' }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={topArtists}
@@ -344,7 +344,7 @@ const UserProfile = ({ navigation }) => {
                 onSnapToItem={(index) => setIndex(index)}
               />
             </View>
-            <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
+            <View style={{ flex: 1, alignItems: "center", padding: 0 }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={playlists}

@@ -6,24 +6,25 @@ import { extendObservable } from "mobx";
 class UserStore {
   constructor() {
     extendObservable(this, {
+      meloID: "",
       authCode: "",
       loading: true,
       isLoggedIn: false,
       userDetails: [],
       spotifyUserDetails: {},
       followingDetails: [],
-      str: '',
-      allPosts : [],
-      trackDetails : [],
-      enablePostScreen : false,
-      isFollowing : false,
-      topTracks : [],
-      topArtists : [],
-      notifications : [],
-      lyricsPage : false,
-      trackIndex : 0,
-      allUsers : [],
-      lyricsToggle : false
+      str: "",
+      allPosts: [],
+      trackDetails: [],
+      enablePostScreen: false,
+      isFollowing: false,
+      topTracks: [],
+      topArtists: [],
+      notifications: [],
+      lyricsPage: false,
+      trackIndex: 0,
+      allUsers: [],
+      lyricsToggle: false,
     });
   }
 }

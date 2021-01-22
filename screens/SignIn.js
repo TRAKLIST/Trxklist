@@ -100,7 +100,9 @@ const SignInScreen = ({ navigation }) => {
                   res.data.access_token,
                   response.data.credentials.refresh_token
                 );
-                console.log(res.data, 'fverijnbyw')
+                console.log(res.data, "fverijnbyw");
+                console.log(response.data.credentials.meloID, "mtrhte");
+                UserStore.meloID = response.data.credentials.meloID;
                 // save notifications
                 // UserStore.notifications = response.data.notifications;
                 // console.log(response.data.notifications, "fgvs");
@@ -175,20 +177,24 @@ const SignInScreen = ({ navigation }) => {
 
         setAuthorizationCode(res.data.token);
         UserStore.authCode = res.data.token;
-        // axios
-        //   .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
-        //     headers: {
-        //       Authorization: `Bearer ${res.data.token}`,
-        //     },
-        //   })
-        //   .then((response) => {
-        //     UserStore.notifications = response.data.notifications;
-        //   })
-        //   .catch((err) => alert(`Error 1 : ${err}`))
 
-        UserStore.isLoggedIn = true;
+        axios
+          .get("https://europe-west1-projectmelo.cloudfunctions.net/api/user", {
+            headers: {
+              Authorization: `Bearer ${res.data.token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response.data.credentials.meloID, "mtrhte");
+            UserStore.meloID = response.data.credentials.meloID;
+            UserStore.isLoggedIn = true;
+          });
       })
-      .catch((err) => alert(`Error 500 : Please report this and sign in using email and password for the meanwhile. Thank you!`))
+      .catch((err) =>
+        alert(
+          `Error 500 : Please report this and sign in using email and password for the meanwhile. Thank you!`
+        )
+      );
   };
 
   // const renderScene = SceneMap({
