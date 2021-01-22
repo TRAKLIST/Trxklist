@@ -43,7 +43,9 @@ const UserProfile = ({ navigation }) => {
 
   useEffect(() => {
     axios
-      .get(`https://europe-west1-projectmelo.cloudfunctions.net/api/user/${UserStore.meloID}`)
+      .get(
+        `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${UserStore.meloID}`
+      )
       .then((res) => {
         console.log(JSON.parse(res.data.user.topArtists), "etgrkle");
         setTopArtists(JSON.parse(res.data.user.topArtists));
@@ -288,8 +290,7 @@ const UserProfile = ({ navigation }) => {
           >
             <View
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
-            >
-            </View>
+            ></View>
             <View style={{ flex: 1, justifyContent: "center" }}>
               <TouchableOpacity onPress={() => search(data.track)}>
                 <View
@@ -326,14 +327,20 @@ const UserProfile = ({ navigation }) => {
             </View>
             <View
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
-            >
-            </View>
+            ></View>
           </View>
         )}
       >
-        <View style={{ flex: 1, padding: 10, backgroundColor: "grey", }}>
-          <View style={{backgroundColor : 'transparent', flex: 1,}}>
-            <View style={{ flex: 1, alignItems: "center", padding: 0, backgroundColor : 'transparent' }}>
+        <View style={{ flex: 1, padding: 10, backgroundColor: "grey" }}>
+          <View style={{ backgroundColor: "transparent", flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                padding: 0,
+                backgroundColor: "transparent",
+              }}
+            >
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={topArtists}
@@ -344,7 +351,7 @@ const UserProfile = ({ navigation }) => {
                 onSnapToItem={(index) => setIndex(index)}
               />
             </View>
-            <View style={{ flex: 1, alignItems: "center", padding: 0 }}>
+            <View style={{ flex: 1, alignItems: "center", padding: 0, paddingTop : 10 }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={playlists}
@@ -355,25 +362,16 @@ const UserProfile = ({ navigation }) => {
                 onSnapToItem={(index) => setIndex(index)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: "column",
-                // backgroundColor: "red",
-                flex: 1,
-                marginTop: 7,
-              }}
-            >
-              <View style={{ flex: 1, alignItems: "center" }}>
-                <Carousel
-                  // ref={(c) => { _carousel = c; }}
-                  data={topTracks}
-                  firstItem={1}
-                  renderItem={_renderItem_b}
-                  sliderWidth={Dimensions.get("window").width - 40}
-                  itemWidth={Dimensions.get("window").width / 3}
-                  onSnapToItem={(index) => setIndex(index)}
-                />
-              </View>
+            <View style={{ flex: 1, alignItems: "center", paddingTop : 10 }}>
+              <Carousel
+                // ref={(c) => { _carousel = c; }}
+                data={topTracks}
+                firstItem={1}
+                renderItem={_renderItem_b}
+                sliderWidth={Dimensions.get("window").width - 40}
+                itemWidth={Dimensions.get("window").width / 3}
+                onSnapToItem={(index) => setIndex(index)}
+              />
             </View>
           </View>
         </View>
