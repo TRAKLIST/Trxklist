@@ -100,6 +100,7 @@ const SignInScreen = ({ navigation }) => {
                   res.data.access_token,
                   response.data.credentials.refresh_token
                 );
+                console.log(res.data, 'fverijnbyw')
                 // save notifications
                 // UserStore.notifications = response.data.notifications;
                 // console.log(response.data.notifications, "fgvs");

@@ -15,6 +15,7 @@ import { observer } from "mobx-react";
 import Main from "./screens/Main";
 import Home from "./screens/Home";
 import Notifications from "./screens/Notifications";
+import UserProfile from "./screens/UserProfile";
 
 import * as firebase from "firebase";
 import { Use } from "react-native-svg";
@@ -96,6 +97,7 @@ function App() {
             <Drawer.Screen name="Home" component={Main} />
             <Drawer.Screen name="Notifications" component={Notifications} />
             <Drawer.Screen name="Recommendations" component={Home} />
+            <Drawer.Screen name="Me" component={UserProfile} />
             {/* <Drawer.Screen name="Settings" component={} />
             <Drawer.Screen name="Support" component={MainTabScreen} /> */}
           </Drawer.Navigator>

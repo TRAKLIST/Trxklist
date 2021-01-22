@@ -221,6 +221,7 @@ function LoadingPage() {
               }
             )
             .then((res) => {
+              console.log(res.data, "vrjwenixeq")
               UserStore.followingDetails = [
                 ...UserStore.followingDetails,
                 res.data.user,

@@ -107,6 +107,15 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
+                <AntDesign name="user" color={color} size={size} />
+              )}
+              label="Me"
+              onPress={() => {
+                props.navigation.navigate("Me");
+              }}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
                 <AntDesign name="meh" color={color} size={size} />
               )}
               label="Support"

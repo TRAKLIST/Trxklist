@@ -289,38 +289,6 @@ const UserProfile = ({ navigation }) => {
             <View
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
             >
-              {/* <View
-                style={{
-                  backgroundColor: "grey",
-                  padding: 5,
-                  borderRadius: 5,
-                  margin: 5,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#292929",
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Following
-                </Text>
-              </View>
-              <View
-                style={{
-                  borderWidth: 2,
-                  paddingHorizontal: 20,
-                  borderRadius: 5,
-                  borderColor: "grey",
-                }}
-              >
-                <Text
-                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
-                >
-                  X
-                </Text>
-              </View> */}
             </View>
             <View style={{ flex: 1, justifyContent: "center" }}>
               <TouchableOpacity onPress={() => search(data.track)}>
@@ -359,110 +327,53 @@ const UserProfile = ({ navigation }) => {
             <View
               style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
             >
-              {/* <View
-                style={{
-                  backgroundColor: "grey",
-                  padding: 5,
-                  borderRadius: 5,
-                  margin: 5,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#292929",
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Followers
-                </Text>
-              </View>
-              <View
-                style={{
-                  borderWidth: 2,
-                  paddingHorizontal: 20,
-                  borderRadius: 5,
-                  borderColor: "grey",
-                }}
-              >
-                <Text
-                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
-                >
-                  Y
-                </Text>
-              </View> */}
             </View>
           </View>
         )}
       >
-        <View style={{ flex: 1, padding: 15 }}>
-          {/* <View style={{ padding: 10}}>
-            <TextInput
-              placeholder="say sumn..."
-              autoCapitalize="none"
-              value={caption}
-              autoCorrect={false}
-              multiline="true"
-              numberOfLines={4}
-              onChangeText={(val) => handleCaptionChange(val)}
-              style={{
-                justifyContent: "center",
-                backgroundColor: "#000",
-                borderRadius: 10,
-                borderColor: "grey",
-                flex: 1,
-                textAlign: "center",
-                fontSize: 20,
-                opacity: 0.4,
-                color: "#fff",
-                fontWeight: "bold",
-                paddingTop: 40,
-                paddingBottom: 40,
-                paddingLeft: 20,
-                paddingRight: 20,
-              }}
-            />
-          </View> */}
-          <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
-            <Carousel
-              // ref={(c) => { _carousel = c; }}
-              data={topArtists}
-              firstItem={1}
-              renderItem={_renderItem}
-              sliderWidth={Dimensions.get("window").width}
-              itemWidth={Dimensions.get("window").width / 3}
-              onSnapToItem={(index) => setIndex(index)}
-            />
-          </View>
-          <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
-            <Carousel
-              // ref={(c) => { _carousel = c; }}
-              data={playlists}
-              firstItem={1}
-              renderItem={_renderItem_c}
-              sliderWidth={Dimensions.get("window").width}
-              itemWidth={Dimensions.get("window").width / 3}
-              onSnapToItem={(index) => setIndex(index)}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: "column",
-              // backgroundColor: "red",
-              flex: 1,
-              marginTop: 7,
-            }}
-          >
-            <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ flex: 1, padding: 15, backgroundColor: "black", }}>
+          <View style={{backgroundColor : 'transparent', flex: 1,}}>
+            <View style={{ flex: 1, alignItems: "center", padding: 5, backgroundColor : 'transparent' }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
-                data={topTracks}
+                data={topArtists}
                 firstItem={1}
-                renderItem={_renderItem_b}
-                sliderWidth={Dimensions.get("window").width}
+                renderItem={_renderItem}
+                sliderWidth={Dimensions.get("window").width - 40}
                 itemWidth={Dimensions.get("window").width / 3}
                 onSnapToItem={(index) => setIndex(index)}
               />
+            </View>
+            <View style={{ flex: 1, alignItems: "center", padding: 5 }}>
+              <Carousel
+                // ref={(c) => { _carousel = c; }}
+                data={playlists}
+                firstItem={1}
+                renderItem={_renderItem_c}
+                sliderWidth={Dimensions.get("window").width - 40}
+                itemWidth={Dimensions.get("window").width / 3}
+                onSnapToItem={(index) => setIndex(index)}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                // backgroundColor: "red",
+                flex: 1,
+                marginTop: 7,
+              }}
+            >
+              <View style={{ flex: 1, alignItems: "center" }}>
+                <Carousel
+                  // ref={(c) => { _carousel = c; }}
+                  data={topTracks}
+                  firstItem={1}
+                  renderItem={_renderItem_b}
+                  sliderWidth={Dimensions.get("window").width - 40}
+                  itemWidth={Dimensions.get("window").width / 3}
+                  onSnapToItem={(index) => setIndex(index)}
+                />
+              </View>
             </View>
           </View>
         </View>
