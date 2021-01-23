@@ -45,7 +45,7 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => <MI name="home" color={color} size={26} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Post"
         component={Profile}
         options={{
@@ -55,7 +55,7 @@ const MainTabScreen = () => {
             <MI name="add-circle" color={color} size={26} />
             ),
           }}
-        />
+        /> */}
       {/* <Tab.Screen
         name="Notifications"
         component={Notifications}

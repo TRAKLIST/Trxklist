@@ -83,9 +83,10 @@ export function DrawerContent(props) {
                 <AntDesign name="bells" color={color} size={size} />
               )}
               label="Notifications"
-              // onPress={() => {
-              //   props.navigation.navigate("Notifications");
-              // }}
+              onPress={() => {
+                // props.navigation.navigate("Notifications");
+                alert("Notifcations Coming Soon : Sit tight");
+              }}
             />
             <DrawerItem
               icon={({ color, size }) => (
@@ -93,7 +94,7 @@ export function DrawerContent(props) {
               )}
               label="Recommendations"
               onPress={() => {
-                props.navigation.navigate("Recommendations");
+                props.navigation.navigate("HomeDrawer", { screen: "Swipe" });
               }}
             />
             <DrawerItem
@@ -102,7 +103,8 @@ export function DrawerContent(props) {
               )}
               label="Settings"
               onPress={() => {
-                props.navigation.navigate("Settings");
+                // props.navigation.navigate("Settings");
+                alert("Settings Coming Soon : Sit tight");
               }}
             />
             <DrawerItem
@@ -120,14 +122,16 @@ export function DrawerContent(props) {
               )}
               label="Support"
               onPress={() => {
-                props.navigation.navigate("Support");
+                // props.navigation.navigate("Support");
+                alert("Support Coming Soon : Sit tight");
               }}
             />
           </Drawer.Section>
           <Drawer.Section title="Preferences">
             <TouchableRipple
               onPress={() => {
-                toggleTheme();
+                // toggleTheme();
+                alert("Theme Toggle Coming Soon : Sit tight");
               }}
             >
               <View style={styles.preference}>
