@@ -17,7 +17,7 @@ import axios from "axios";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 
-function User({ user, isFollowing }) {
+function User({ user, isFollowing, navigation }) {
   const [following, setFollowing] = React.useState(isFollowing);
 
   const onFollow = (recipient) => {
@@ -71,7 +71,11 @@ function User({ user, isFollowing }) {
   };
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate("Me", { user });
+      }}
+    >
       <View
         style={{
           flexDirection: "column",
@@ -224,13 +228,13 @@ function User({ user, isFollowing }) {
                         <SimpleLineIcons
                           name="user-following"
                           size={25}
-                          color= {following == true ? "green" : "grey"}
+                          color={following == true ? "green" : "grey"}
                         />
                       ) : (
                         <SimpleLineIcons
                           name="user-follow"
                           size={25}
-                          color= {following == true ? "green" : "grey"}
+                          color={following == true ? "green" : "grey"}
                         />
                       )}
                     </View>

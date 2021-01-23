@@ -38,11 +38,10 @@ let array2 = [];
 let soundcloud_tracks = [];
 let isFollowing = false;
 
-function People() {
+function People({navigation}) {
   const [userDetails, setUserDetails] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [searchTerm, setSearchTerm] = React.useState("");
-
 
   list = userDetails
     .filter((val) => {
@@ -67,7 +66,7 @@ function People() {
           : (isFollowing = false);
       });
 
-      return index == 0 ? <User user={user} isFollowing={isFollowing} /> : null;
+      return index == 0 ? <User user={user} isFollowing={isFollowing} navigation = {navigation} /> : null;
     });
 
   React.useEffect(() => {
@@ -261,108 +260,6 @@ function People() {
                     </View>
                   )} */}
                 <View>{list}</View>
-
-                {index == 2 &&
-                  soundcloud_tracks.map((track, index) => {
-                    return <SoundCloudTracks track={track} />;
-                  })}
-
-                {index == 1 && (
-                  <View
-                    style={{
-                      height: 40,
-                      borderRadius: 10,
-                      flexDirection: "row",
-                    }}
-                  >
-                    <TouchableOpacity
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: status == 0 ? "#fff" : "#292929",
-
-                        borderRadius: 10,
-                      }}
-                      onPress={() => setStatus(0)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 0 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                          }}
-                        >
-                          TRACKS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: status == 1 ? "#fff" : "#292929",
-                        borderRadius: 10,
-                      }}
-                      onPress={() => setStatus(1)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 1 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                          }}
-                        >
-                          ARTISTS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "transparent",
-                        borderRadius: 10,
-                        backgroundColor: status == 2 ? "#fff" : "#292929",
-                      }}
-                      onPress={() => setStatus(2)}
-                    >
-                      <View>
-                        <Text
-                          style={{
-                            color: status == 2 ? "#292929" : "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                          }}
-                        >
-                          ALBUMS
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                )}
-
-                {index == 1 &&
-                  status == 0 &&
-                  array.map((track, index) => {
-                    return <Tracks track={track} index={index} />;
-                  })}
-
-                {index == 1 &&
-                  status == 1 &&
-                  array1.map((artist) => {
-                    return <Artists artist={artist} />;
-                  })}
-
-                {index == 1 &&
-                  status == 2 &&
-                  array2.map((album) => {
-                    return <Albums album={album} />;
-                  })}
               </LinearGradient>
             </ScrollView>
           </KeyboardAvoidingView>
