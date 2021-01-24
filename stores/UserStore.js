@@ -25,6 +25,7 @@ class UserStore {
       trackIndex: 0,
       allUsers: [],
       lyricsToggle: false,
+      userProfile : ''
     });
   }
 }

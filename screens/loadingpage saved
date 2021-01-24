@@ -1,0 +1,112 @@
+ // spotifyAPI
+    //   .getUser(UserStore.spotifyUserDetails.user_id)
+    //   .then((response) => {
+    //     setImage(response.images[0].url); // if not null then take value and update image field below
+    //   })
+    //   .catch((err) => console.log(err));
+
+    //   console.log(image)
+
+    // neeeds to be moved home
+
+
+    profile text input input
+          {/* <View style={{ padding: 10}}>
+            <TextInput
+              placeholder="say sumn..."
+              autoCapitalize="none"
+              value={caption}
+              autoCorrect={false}
+              multiline="true"
+              numberOfLines={4}
+              onChangeText={(val) => handleCaptionChange(val)}
+              style={{
+                justifyContent: "center",
+                backgroundColor: "#000",
+                borderRadius: 10,
+                borderColor: "grey",
+                flex: 1,
+                textAlign: "center",
+                fontSize: 20,
+                opacity: 0.4,
+                color: "#fff",
+                fontWeight: "bold",
+                paddingTop: 40,
+                paddingBottom: 40,
+                paddingLeft: 20,
+                paddingRight: 20,
+              }}
+            />
+          </View> */}
+
+
+          Followers =
+
+              {/* <View
+                style={{
+                  backgroundColor: "grey",
+                  padding: 5,
+                  borderRadius: 5,
+                  margin: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#292929",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Followers
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderWidth: 2,
+                  paddingHorizontal: 20,
+                  borderRadius: 5,
+                  borderColor: "grey",
+                }}
+              >
+                <Text
+                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Y
+                </Text>
+              </View> */}
+
+
+              Following 
+
+              {/* <View
+                style={{
+                  backgroundColor: "grey",
+                  padding: 5,
+                  borderRadius: 5,
+                  margin: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#292929",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Following
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderWidth: 2,
+                  paddingHorizontal: 20,
+                  borderRadius: 5,
+                  borderColor: "grey",
+                }}
+              >
+                <Text
+                  style={{ color: "grey", fontWeight: "bold", fontSize: 20 }}
+                >
+                  X
+                </Text>
+              </View> */}

@@ -13,7 +13,7 @@ import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Octicons from "react-native-vector-icons/Octicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserStore from "../stores/UserStore.js";
 import { observer } from "mobx-react";
 import Home from "./Home.js";
@@ -46,17 +46,6 @@ const MainTabScreen = () => {
         }}
       />
       {/* <Tab.Screen
-        name="Post"
-        component={Profile}
-        options={{
-          tabBarLabel: "",
-          tabBarColor: "#292929",
-          tabBarIcon: ({ color }) => (
-            <MI name="add-circle" color={color} size={26} />
-            ),
-          }}
-        /> */}
-      {/* <Tab.Screen
         name="Notifications"
         component={Notifications}
         options={{
@@ -85,6 +74,17 @@ const MainTabScreen = () => {
           tabBarIcon: ({ color }) => (
             <MI name="explore" color={color} size={26} />
             
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Me"
+        component={Profile}
+        options={{
+          tabBarLabel: "",
+          tabBarColor: "#292929",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user" color={color} size={26} />
           ),
         }}
       />

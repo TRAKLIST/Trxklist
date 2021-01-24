@@ -33,7 +33,7 @@ let recentPostsMarkup = [];
 
 const { sticky_item_view, recent_posts_markup } = require("../handlers/main");
 
-const UserProfile = ({ navigation, route }) => {
+const OtherProfiles = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [postData, setPostData] = React.useState([]);
   const [topArtists, setTopArtists] = React.useState([]);
@@ -46,11 +46,11 @@ const UserProfile = ({ navigation, route }) => {
     // console.log(route.params.user.user, 'efiejnu')
     axios
       .get(
-        `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${UserStore.meloID}`
+        `https://europe-west1-projectmelo.cloudfunctions.net/api/user/${route.params.user.user}`
       )
       .then((res) => {
         console.log(JSON.parse(res.data.user.topArtists), "etgrkle");
-        
+
         setTopArtists(JSON.parse(res.data.user.topArtists));
         setTopTracks(JSON.parse(res.data.user.topTracks));
         setPlaylists(JSON.parse(res.data.user.playlists));
@@ -354,7 +354,14 @@ const UserProfile = ({ navigation, route }) => {
                 onSnapToItem={(index) => setIndex(index)}
               />
             </View>
-            <View style={{ flex: 1, alignItems: "center", padding: 0, paddingTop : 10 }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                padding: 0,
+                paddingTop: 10,
+              }}
+            >
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={playlists}
@@ -365,7 +372,7 @@ const UserProfile = ({ navigation, route }) => {
                 onSnapToItem={(index) => setIndex(index)}
               />
             </View>
-            <View style={{ flex: 1, alignItems: "center", paddingTop : 10 }}>
+            <View style={{ flex: 1, alignItems: "center", paddingTop: 10 }}>
               <Carousel
                 // ref={(c) => { _carousel = c; }}
                 data={topTracks}
@@ -384,7 +391,7 @@ const UserProfile = ({ navigation, route }) => {
   );
 };
 
-export default observer(UserProfile);
+export default observer(OtherProfiles);
 
 const styles = StyleSheet.create({
   container: {

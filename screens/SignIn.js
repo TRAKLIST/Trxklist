@@ -160,7 +160,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const signIn2 = () => {
-    setLoading2(true)
+    setLoading2(true);
     axios
       .post("https://europe-west1-projectmelo.cloudfunctions.net/api/login2", {
         email: spotifyUserDetails.user_email,
@@ -181,7 +181,7 @@ const SignInScreen = ({ navigation }) => {
           .then((response) => {
             console.log(response.data.credentials.meloID, "mtrhte");
             UserStore.meloID = response.data.credentials.meloID;
-            setLoading2(false)
+            setLoading2(false);
             UserStore.isLoggedIn = true;
           });
       })
@@ -191,26 +191,6 @@ const SignInScreen = ({ navigation }) => {
         )
       );
   };
-
-  // const renderScene = SceneMap({
-  //   first: () =>
-  //     FirstRoute(request, spotifyUserDetails, promptAsync, lastPlayed),
-  //   second: () => SecondRoute(spotifyUserDetails, navigation),
-  // });
-
-  // const renderTabBar = (props) => (
-  //   <TabBar
-  //     {...props}
-  //     indicatorStyle={{ backgroundColor: "#1DB954" }}
-  //     style={{ backgroundColor: "grey" }}
-  //     renderLabel={({ route, focused, color }) => (
-  //       <Text style={{ color, margin: 8, fontWeight: "bold" }}>
-  //         {route.title}
-  //       </Text>
-  //     )}
-  //     activeColor="green"
-  //   />
-  // );
 
   const [request, response, promptAsync] = useAuthRequest(
     {

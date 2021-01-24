@@ -73,7 +73,7 @@ function User({ user, isFollowing, navigation }) {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate("Me", { user });
+        navigation.navigate("PROFILE.", { user, isMine : false });
       }}
     >
       <View
