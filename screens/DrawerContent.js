@@ -107,7 +107,7 @@ export function DrawerContent(props) {
                 alert("Settings Coming Soon : Sit tight");
               }}
             />
-            <DrawerItem
+            {/* <DrawerItem
               icon={({ color, size }) => (
                 <AntDesign name="user" color={color} size={size} />
               )}
@@ -115,7 +115,7 @@ export function DrawerContent(props) {
               onPress={() => {
                 props.navigation.navigate("Me");
               }}
-            />
+            /> */}
             <DrawerItem
               icon={({ color, size }) => (
                 <AntDesign name="meh" color={color} size={size} />

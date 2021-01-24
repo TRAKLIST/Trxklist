@@ -11,6 +11,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
   SafeAreaView,
 } from "react-native";
 
@@ -48,7 +49,8 @@ const initialLayout = { width: Dimensions.get("window").width };
 const SignInScreen = ({ navigation }) => {
   const [lastPlayed, setLastPlayed] = React.useState({});
   const [spotifyUserDetails, setSpotifyUserDetails] = useState({});
-  const [index, setIndex] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
+  const [loading2, setLoading2] = React.useState(false);
   const [routes] = React.useState([
     { key: "first", title: "Spotify" },
     { key: "second", title: "Traklist" },
@@ -57,6 +59,8 @@ const SignInScreen = ({ navigation }) => {
   const [authorizationCode, setAuthorizationCode] = useState("");
 
   const signIn = () => {
+    // loading hookset true
+    setLoading(true);
     const userData = {
       email: data.email,
       password: data.password,
@@ -103,25 +107,14 @@ const SignInScreen = ({ navigation }) => {
                 console.log(res.data, "fverijnbyw");
                 console.log(response.data.credentials.meloID, "mtrhte");
                 UserStore.meloID = response.data.credentials.meloID;
-                // save notifications
-                // UserStore.notifications = response.data.notifications;
-                // console.log(response.data.notifications, "fgvs");
+
+                // loading hookset false
+                setLoading(false);
 
                 UserStore.isLoggedIn = true;
               })
               .catch((err) => alert(err));
           });
-
-        // UserStore.isLoggedIn = true;
-        // if (userData.email == spotifyUserDetails.user_email) {
-        //   console.log("logged in");
-
-        //   UserStore.isLoggedIn = true;
-        // } else {
-        //   alert(
-        //     `E-Mail Mismatch Error : Enter the Email Associated with the Verified Spotify Account`
-        //   );
-        // }
       })
       .catch((err) => {
         console.log(err);
@@ -167,6 +160,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const signIn2 = () => {
+    setLoading2(true)
     axios
       .post("https://europe-west1-projectmelo.cloudfunctions.net/api/login2", {
         email: spotifyUserDetails.user_email,
@@ -187,6 +181,7 @@ const SignInScreen = ({ navigation }) => {
           .then((response) => {
             console.log(response.data.credentials.meloID, "mtrhte");
             UserStore.meloID = response.data.credentials.meloID;
+            setLoading2(false)
             UserStore.isLoggedIn = true;
           });
       })
@@ -362,13 +357,6 @@ const SignInScreen = ({ navigation }) => {
 
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          {/* <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-          renderTabBar={renderTabBar}
-        /> */}
           <LinearGradient colors={["grey", "#292929"]} style={styles.footer}>
             {/* <KeyboardAvoidingView behavior="padding"> */}
             <View style={{ marginTop: 15 }}>
@@ -478,9 +466,13 @@ const SignInScreen = ({ navigation }) => {
                   colors={["#292929", "#292929"]}
                   style={styles.signIn}
                 >
-                  <Text style={[styles.textSign, { color: "#000" }]}>
-                    enter traklist.
-                  </Text>
+                  {!loading ? (
+                    <Text style={[styles.textSign, { color: "#000" }]}>
+                      enter traklist.
+                    </Text>
+                  ) : (
+                    <ActivityIndicator size="large" color="green" />
+                  )}
                 </LinearGradient>
               </TouchableOpacity>
               <TouchableOpacity
@@ -551,14 +543,18 @@ const SignInScreen = ({ navigation }) => {
                       colors={["#1DB954", "#1DB954"]}
                       style={[styles.signIn, { flexDirection: "row" }]}
                     >
-                      <Text
-                        style={[
-                          styles.textSign,
-                          { color: "#fff", fontWeight: "500" },
-                        ]}
-                      >
-                        enter traklist. {""}
-                      </Text>
+                      {!loading2 ? (
+                        <Text
+                          style={[
+                            styles.textSign,
+                            { color: "#fff", fontWeight: "500" },
+                          ]}
+                        >
+                          enter traklist. {""}
+                        </Text>
+                      ) : (
+                        <ActivityIndicator size="large" color="green" />
+                      )}
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
