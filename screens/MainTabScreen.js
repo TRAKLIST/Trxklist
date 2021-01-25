@@ -7,7 +7,7 @@ import Timeline from "./Timeline.js";
 import Main from "./Main";
 import Notifications from "./Notifications";
 import AddPost from "./AddPost";
-import Profile from './UserProfile'
+import Profile from "./UserProfile";
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import MI from "react-native-vector-icons/MaterialIcons";
@@ -66,18 +66,6 @@ const MainTabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={AltSwitchboard}
-        options={{
-          tabBarLabel: "",
-          tabBarColor: "#292929",
-          tabBarIcon: ({ color }) => (
-            <MI name="explore" color={color} size={26} />
-            
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Me"
         component={Profile}
         options={{
@@ -85,6 +73,17 @@ const MainTabScreen = () => {
           tabBarColor: "#292929",
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={AltSwitchboard}
+        options={{
+          tabBarLabel: "",
+          tabBarColor: "#292929",
+          tabBarIcon: ({ color }) => (
+            <MI name="explore" color={color} size={26} />
           ),
         }}
       />
