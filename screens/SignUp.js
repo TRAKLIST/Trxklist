@@ -206,7 +206,7 @@ const SignUpScreen = ({ navigation }) => {
                     { color: "#1DB954", fontWeight: "500" },
                   ]}
                 >
-                  sign up with{" "}
+                  authenticate with{" "}
                 </Text>
                 <MaterialCommunityIcons
                   name="spotify"
@@ -230,7 +230,7 @@ const SignUpScreen = ({ navigation }) => {
     const signUp = () => {
       const newUserData = {
         email: data.email,
-        spotifyEmail : spotifyUserDetails.user_email,
+        spotifyEmail: spotifyUserDetails.user_email,
         password: data.password,
         confirmPassword: data.confirm_password,
         meloID: data.meloID,
@@ -489,10 +489,7 @@ const SignUpScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={[
-            styles.signIn,
-            { marginTop: 5, flexDirection : 'row' },
-          ]}
+          style={[styles.signIn, { marginTop: 5, flexDirection: "row" }]}
         >
           <Text
             style={{
@@ -573,7 +570,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
     color: "#fff",
-    fontWeight : 'bold'
+    fontWeight: "bold",
   },
   errorMsg: {
     color: "#FF0000",

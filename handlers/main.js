@@ -118,23 +118,12 @@ exports.first_route = (status) => {
     // if album or playlist get tracks
 
     if (status == "Playlist") {
-      // spotifyAPI.getPlaylist(item.id).then((response) => {
-      //   // console.log(response);
-      //   response.tracks.items.map((track) => {
-      //     track_playlist.push({
-      //       id: track.track.id,
-      //       title: track.track.name,
-      //     });
-      //   });
-      //   item.track = track_playlist;
-      //   console.log(item, 'fewfever')
-      //   // add to state here
-      // });
       UserStore.trackDetails = item;
     } else if (status == "Album") {
-      spotifyAPI.getAlbumTracks(item.id).then((response) => {
-        console.log(response, "jhy");
-      });
+      // spotifyAPI.getAlbumTracks(item.id).then((response) => {
+      //   console.log(response, "jhy");
+      // });
+      UserStore.trackDetails = item;
     } else if (status == "Track") {
       UserStore.trackDetails = item;
     }
@@ -446,15 +435,8 @@ exports.second_route = (caption, status) => {
         <Body
           thisTrack={UserStore.trackDetails}
           caption={caption}
-          status={"Album"}
+          status={"Track"}
           imageUri={UserStore.spotifyUserDetails.user_image}
-        />
-        <Footer
-          likesCount={0}
-          commentCount={0}
-          postID={"uuidv4()"}
-          status={"Album"}
-          trackID={UserStore.trackDetails.id}
         />
       </Animatable.View>
     );

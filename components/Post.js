@@ -103,23 +103,6 @@ export class Post extends Component {
           console.log(err);
         });
     } else if (this.props.post.status == "Playlist") {
-      // spotifyAPI
-      //   .getPlaylist(thisTrack.id)
-      //   .then((response) => {
-      //     // console.log(response);
-      //     response.tracks.items.map((track) => {
-      //       track_playlist.push({
-      //         id: track.track.id,
-      //         title: track.track.name,
-      //       });
-      //     });
-      //     setTracks(track_playlist);
-      //     console.log(tracks, "teregyo8gvrwvewrwe");
-      //     // this.setState({ thisTrack });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
 
       spotifyAPI
         .getPlaylist(this.props.post.trackID)

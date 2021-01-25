@@ -149,7 +149,7 @@ export default function AddPost({ navigation }) {
                   {/* <Picker.Item label="Lyric" value="lyric" /> */}
                   <Picker.Item label="Playlist" value="Playlist" /> 
                   <Picker.Item label="Track" value="Track" />
-                  {/* <Picker.Item label="Album" value="Album" /> */}
+                  <Picker.Item label="Tapes" value="Album" />
                   {/* <Picker.Item label="Artist" value="artist" /> */}
                 </Picker>
               </View>
