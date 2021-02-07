@@ -108,6 +108,27 @@ exports.first_route = (status) => {
           console.error(err);
         }
       );
+    } else if (status == "Cloud") {
+      axios
+        .get(
+          `https://api-v2.soundcloud.com/search/tracks?q=${query}&client_id=NpVHurnc1OKS80l6zlXrEVN4VEXrbZG4&limit=20`
+        )
+        .then((res) => {
+          // console.log(res.data, 'fg')
+          res.data.collection.map((track) => {
+            let trackQuery = {
+              id : track.id,
+              urn: track.urn,
+              title: track.title,
+              user_or_artist: track.user.username,
+              verified: track.user.verified,
+              image: track.artwork_url,
+              // releaseDate: track.album.release_date,
+            };
+            setQueryList((oldArray) => [...oldArray, trackQuery]);
+          });
+          console.log(queryList, "vrihb");
+        });
     }
   };
 
@@ -126,6 +147,9 @@ exports.first_route = (status) => {
       UserStore.trackDetails = item;
     } else if (status == "Track") {
       UserStore.trackDetails = item;
+    } else if (status = "Cloud") {
+      UserStore.trackDetails = item;
+      console.log(item, 'frew')
     }
   };
 
@@ -171,7 +195,7 @@ exports.first_route = (status) => {
                 style={{
                   bottom: 0,
                   position: "absolute",
-                  backgroundColor: "#44CF6C",
+                  backgroundColor: status == "Cloud" ? "#ff7700" : "#44CF6C",
                   borderRadius: 60,
                   borderWidth: 0,
                   // borderColor: "#44CF6C",
@@ -183,7 +207,7 @@ exports.first_route = (status) => {
                 }}
               >
                 <Fontisto
-                  name="spotify"
+                  name={status == "Cloud" ? "soundcloud" : "spotify"}
                   color="#fff"
                   size={11}
                   style={{ padding: 2 }}
@@ -214,62 +238,42 @@ exports.first_route = (status) => {
                   },
                 ]}
               >
-                {item.name}
+                {status == "Cloud" ? item.title : item.name}
               </Text>
             </View>
             <View>
               <Text
                 style={{
-                  color: "#44CF6C",
+                  color: status == "Cloud" ? "#ff7700" : "#44CF6C",
                   fontWeight: "bold",
                   // backgroundColor: "#fff",
                   paddingTop: 5,
                   alignSelf: "flex-start",
                 }}
               >
-                {item.artist}
+                {status == "Cloud" ? item.user_or_artist : item.artist}
               </Text>
             </View>
           </View>
-          <View
-            style={{
-              flex: 0.5,
-              flexDirection: "row",
-              justifyContent: "flex-end",
-            }}
-          >
-            {/* icons */}
-
-            <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
-              <View style={styles.iconContainer2}>
-                {/* {isSaved ? (
-                            <MaterialCommunityIcons
-                              name="content-save"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          ) : (
-                            <MaterialCommunityIcons
-                              name="content-save-outline"
-                              size={27}
-                              color={"#44CF6C"}
-                              style={{ marginTop: 8, paddingBottom: 4 }}
-                            />
-                          )} */}
-                <MaterialCommunityIcons
-                  name="content-save-outline"
-                  size={27}
-                  color={"#44CF6C"}
-                />
-              </View>
-            </TouchableOpacity>
-            {/* <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
-              <View style={[styles.iconContainer2]}>
-                <AntDesign name="staro" size={25} color={"#44CF6C"} />
-              </View>
-            </TouchableOpacity> */}
-          </View>
+          {status != "Cloud" && (
+            <View
+              style={{
+                flex: 0.5,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
+              <TouchableOpacity style={{ justifyContent: "center", margin: 5 }}>
+                <View style={styles.iconContainer2}>
+                  <MaterialCommunityIcons
+                    name="content-save-outline"
+                    size={27}
+                    color={"#44CF6C"}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </TouchableWithoutFeedback>
     ))
@@ -448,6 +452,19 @@ exports.second_route = (caption, status) => {
             thisTrack={UserStore.trackDetails}
             caption={caption}
             status={"Track"}
+            imageUri={UserStore.spotifyUserDetails.user_image}
+          />
+        </View>
+      </View>
+    );
+  } else if (status == "Cloud") {
+    return (
+      <View style={{ backgroundColor: "#292929", flex: 1 }}>
+        <View style={{ backgroundColor: "#292929", flex: 1, marginTop: 15 }}>
+          <Body
+            thisTrack={UserStore.trackDetails}
+            caption={caption}
+            status={"Cloud"}
             imageUri={UserStore.spotifyUserDetails.user_image}
           />
         </View>

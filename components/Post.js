@@ -24,9 +24,7 @@ export class Post extends Component {
 
   componentDidMount() {
     this.props.post.commentCount > 0
-      ? //https://europe-west1-projectmelo.cloudfunctions.net/api/post/2BzS0xXJEb4eTFDyXzXa
-
-        axios
+      ? axios
           .get(
             `https://europe-west1-projectmelo.cloudfunctions.net/api/post/${this.props.post.postID}`,
             {
@@ -36,12 +34,10 @@ export class Post extends Component {
             }
           )
           .then((res) => {
-            // setToggleComment(false);
             res.data.comments.map((item) => {
               this.setState({ comments: [...this.state.comments, item] }, () =>
                 console.log(this.state.comments, "tjyhtrbfs")
               );
-              // setComments([...comments, item]);
             });
             console.log(this.state.comments, "noceuhgieydcv");
           })
@@ -103,7 +99,6 @@ export class Post extends Component {
           console.log(err);
         });
     } else if (this.props.post.status == "Playlist") {
-
       spotifyAPI
         .getPlaylist(this.props.post.trackID)
         .then((response) => {
@@ -145,19 +140,13 @@ export class Post extends Component {
           borderRadius: 2,
           // borderColor: '#ddd',
           borderBottomWidth: 0,
-          shadowColor: this.props.index % 2 == 0 ? "#000": '#292929',
+          shadowColor: this.props.index % 2 == 0 ? "#000" : "#292929",
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.8,
           shadowRadius: 2,
           // paddingVertical : 10,
         }}
       >
-        {/* <Header
-          imageUri={this.state.profilePic}
-          name={this.props.post.meloID}
-          postedAt={this.props.post.createdAt}
-          imageUri={this.state.profilePic}
-        /> */}
         <Body
           thisTrack={this.state.thisTrack}
           caption={this.props.post.body}
@@ -169,7 +158,7 @@ export class Post extends Component {
           likesCount={this.props.post.likeCount}
           savesCount={this.props.post.saveCount}
           commentCount={this.props.post.commentCount}
-          comments = {this.state.comments}
+          comments={this.state.comments}
           postID={this.props.post.postID}
           status={this.props.post.status}
           trackID={this.props.post.trackID}

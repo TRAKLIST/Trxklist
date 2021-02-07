@@ -292,35 +292,6 @@ function Main() {
             )}
           >
             <View style={{ padding: 0, backgroundColor: "grey" }}>
-              {/* { UserStore.isnewPostsAvailable == true &&
-                  <TouchableOpacity onPress = {newPosts}>
-                    <View
-                      style={{
-                        backgroundColor: "#000",
-                        opacity: 0.4,
-                        height: 50,
-                        flex: 1,
-                        marginLeft: 10,
-                        marginRight: 10,
-                        marginBottom: 5,
-                        borderRadius: 15,
-                        justifyContent: "center",
-                        alignSelf: "center",
-                        padding: 15,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontWeight: "bold",
-                          color: "#fff",
-                        }}
-                      >
-                        new post(s) available...
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                } */}
 
               <View
                 style={{
@@ -335,42 +306,6 @@ function Main() {
             </View>
           </ParallaxScrollView>
         </SafeAreaView>
-        {/* <TouchableWithoutFeedback
-          onPress={() => {
-            setPickerHeader(true);
-            setCaptionHeader(false);
-            setIndex(0);
-
-            UserStore.enablePostScreen = true;
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "white",
-              height: 40,
-              width: 40,
-              position: "absolute",
-              bottom: 20,
-              right: 20,
-              borderRadius: 5,
-              justifyContent: "center",
-              alignItems: "center",
-              opacity: 0.8,
-            }}
-          >
-            <Entypo
-              name="new-message"
-              size={30}
-              style={{
-                color: "#000",
-                // padding: 4,
-                // alignSelf: "center",
-                borderRadius: 20,
-                // opacity: 1,
-              }}
-            />
-          </View>
-        </TouchableWithoutFeedback> */}
       </View>
     );
   } else if (loading == true){

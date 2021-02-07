@@ -147,9 +147,11 @@ export default function AddPost({ navigation }) {
                   }}
                 >
                   {/* <Picker.Item label="Lyric" value="lyric" /> */}
-                  <Picker.Item label="Playlist" value="Playlist" /> 
-                  <Picker.Item label="Track" value="Track" />
+                  <Picker.Item label="Playlists" value="Playlist" />
+                  <Picker.Item label="Tracks" value="Track" />
                   <Picker.Item label="Tapes" value="Album" />
+                  <Picker.Item label="SoundCloud" value="Cloud" />
+
                   {/* <Picker.Item label="Artist" value="artist" /> */}
                 </Picker>
               </View>
@@ -214,8 +216,8 @@ export default function AddPost({ navigation }) {
                           fontWeight: "bold",
                           paddingTop: 40,
                           paddingBottom: 40,
-                          paddingLeft : 20,
-                          paddingRight : 20
+                          paddingLeft: 20,
+                          paddingRight: 20,
                         }}
                       />
                     </View>
@@ -227,21 +229,19 @@ export default function AddPost({ navigation }) {
                       paddingTop: 5,
                     }}
                   >
-
-                      {!loading ? (
-                        <View
-                      style={{
-                        backgroundColor: "grey",
-                        borderRadius: 10,
-                        backgroundColor: "#000",
-                        opacity: 0.4,
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 30,
-                      }}
-                    >
-
+                    {!loading ? (
+                      <View
+                        style={{
+                          backgroundColor: "grey",
+                          borderRadius: 10,
+                          backgroundColor: "#000",
+                          opacity: 0.4,
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: 30,
+                        }}
+                      >
                         <TouchableWithoutFeedback onPress={makePost}>
                           <MaterialCommunityIcons
                             name="send-circle"
@@ -249,12 +249,10 @@ export default function AddPost({ navigation }) {
                             size={50}
                           />
                         </TouchableWithoutFeedback>
-
-                        </View>
-                      ) : (
-                        <ActivityIndicator size="large" color="green" />
-                      )}
-                    
+                      </View>
+                    ) : (
+                      <ActivityIndicator size="large" color="green" />
+                    )}
                   </View>
                 </View>
               </KeyboardAvoidingView>
